@@ -1,5 +1,13 @@
 import { loader } from 'fumadocs-core/source';
-import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
+import { createElement } from 'react';
+import { icons } from 'lucide-react';
+import {
+  ClaudeCodeIcon,
+  CodexIcon,
+  CursorIcon,
+  KiloCodeIcon,
+  OpenCodeIcon,
+} from './agent-icons';
 import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
 import { defineDocs } from 'fumadocs-mdx/macro';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
@@ -21,7 +29,22 @@ const docs = defineDocs({
 export const source = loader({
   baseUrl: docsRoute,
   source: docs.toFumadocsSource(),
-  plugins: [lucideIconsPlugin()],
+  icon(icon) {
+    const agentIcons = {
+      ClaudeCode: ClaudeCodeIcon,
+      Codex: CodexIcon,
+      Cursor: CursorIcon,
+      KiloCode: KiloCodeIcon,
+      OpenCode: OpenCodeIcon,
+      Atlas: () => createElement('img', { alt: '', className: 'size-4', src: '/icon.svg' }),
+    };
+    const AgentIcon = icon ? agentIcons[icon as keyof typeof agentIcons] : undefined;
+
+    if (AgentIcon) return createElement(AgentIcon);
+
+    const Icon = icon ? icons[icon as keyof typeof icons] : undefined;
+    return Icon ? createElement(Icon) : undefined;
+  },
 });
 
 export function getPageImageUrl(page: (typeof source)['$inferPage']) {
