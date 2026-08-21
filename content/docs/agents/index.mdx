@@ -1,49 +1,50 @@
 ---
-title: Agents
-description: How Atlas drives other people's coding agents.
+title: Supported agents
+description: Run the coding agent that fits the work.
+icon: Bot
 ---
 
-Atlas doesn't ship one coding agent and ask you to like it. It drives whichever agent you already trust (Claude Code, Codex, Cursor, and the rest) through the [Agent Client Protocol](https://agentclientprotocol.com), and gives all of them the same project, the same [shared memory](/docs/getting-started/concepts#shared-memory), and the same [timeline](/docs/getting-started/concepts#timeline).
+Choose the coding agent that fits the job. Atlas gives it your project, keeps its work in the same [timeline](/docs/getting-started/concepts#timeline), and carries forward the [shared memory](/docs/getting-started/concepts#shared-memory) your team has built.
 
-The point isn't that you can switch agents. It's that switching doesn't cost you the checkpoints and session history you've already built up.
+Switching agents does not mean starting from zero. Your sessions and [checkpoints](/docs/getting-started/concepts#checkpoint) stay connected to the same project.
 
-![The agent picker open in the composer, showing the recommended agents above installed ones](/screenshots/placeholder.svg)
+## Built-in agents
 
-## Every agent works
+Atlas includes six agents in the switcher when you open the app:
 
-Anything published to the ACP registry runs in Atlas. Install it from [the registry](/docs/agents/registry) and it joins the agent switcher, works against the same [project](/docs/getting-started/concepts#project), and records [sessions](/docs/getting-started/concepts#session) and [checkpoints](/docs/getting-started/concepts#checkpoint) like everything else. There's no approved list you have to be on.
+- [Claude Code](/docs/agents/claude-code)
+- [Codex](/docs/agents/codex)
+- [OpenCode](/docs/agents/opencode)
+- [Cursor](/docs/agents/cursor)
+- [Kilo Code](/docs/agents/kilo-code)
+- [Atlas Agent](/docs/agents/atlas)
 
-## What we recommend
+They have dedicated setup guidance and a fixed place at the top of the switcher. Claude Code and Codex have the deepest Atlas integration.
 
-Six agents ship with Atlas and sit at the top of the switcher: [Claude Code](/docs/agents/claude-code), [Codex](/docs/agents/codex), [OpenCode](/docs/agents/opencode), [Cursor](/docs/agents/cursor), [Kilo Code](/docs/agents/kilo-code), and [Atlas's own native agent](/docs/agents/atlas). Nothing to install: they're there when you open the app.
+## Add another agent
 
-These are our recommendations, and the reason is circular in the way recommendations usually are: they're the agents most people reach for, so they're the ones we've done the most work around.
+Atlas also supports agents published to the [Agent Client Protocol](https://agentclientprotocol.com) registry. Install one from [Discover agents](/docs/agents/registry) and it joins the switcher below the built-in agents.
 
-That work is concrete: a brand icon and a fixed position rather than a monogram in an alphabetised list, install and login hints written for that specific agent, and handling for how each one's transcripts load and resume inside Atlas.
+Atlas does not need an approved list for an agent to be useful. If it speaks ACP, it can work with your project.
 
-Claude Code and Codex have had the most of it.
+## What stays the same
 
-Everything else runs on the same protocol and gets the same treatment from the parts of Atlas that matter most: memory, timeline, checkpoints, mentions. What it doesn't get is that agent-specific polish, because Atlas doesn't hold per-agent knowledge for the whole catalog.
+Every agent you run in Atlas:
 
-## What every agent shares
+- Works in the project you opened.
+- Adds its sessions to the same timeline.
+- Links commits it makes back to its session as checkpoints.
+- Reads the same shared memory as every other agent.
 
-Whichever one you pick:
-
-- It works against the same project (the folder you opened).
-- Its sessions land in the same timeline, and Atlas links commits made during them to that session as checkpoints the same way.
-- It reads from the same shared memory, so what one agent learned about your codebase isn't lost when you switch to another.
-
-That last one matters more than which agent you picked. An agent you installed five minutes ago starts with the context Atlas has been accumulating all along.
+An agent you installed five minutes ago can use the context Atlas has already gathered about the codebase.
 
 ## Authentication and models
 
-Every agent authenticates the way it natively authenticates and offers whatever models it natively offers. Atlas doesn't wrap either, for the recommended six or for anything else.
+Each agent keeps its own authentication and model options. Atlas does not replace them with a generic login or model list.
 
-The difference is only how much Atlas can help you when it goes wrong.
-
-For a recommended agent it can tell you which CLI to install and which login command to run. For the rest, it points you at that agent's own repository and website, both linked on its registry card.
+For the built-in agents, Atlas can offer setup and sign-in help. For registry agents, use the repository and website linked from the agent card for agent-specific instructions.
 
 ## Next
 
-- [Agent registry](/docs/agents/registry): installing, removing, and what the badges mean
+- [Discover agents](/docs/agents/registry): browse, install, and manage more agents
 - [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once
