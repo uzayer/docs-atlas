@@ -1,10 +1,16 @@
 import { getPageImageUrl, source } from '@/lib/source';
+import { DocsOgImage } from '@/components/docs-og-image';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { generate as DefaultImage } from 'fumadocs-ui/og';
 import { appName } from '@/lib/shared';
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 
 export const revalidate = false;
+
+const atlasBrandmark = readFile(join(process.cwd(), 'public/atlas-brandmark.png'), 'base64').then(
+  (data) => `data:image/png;base64,${data}`,
+);
 
 export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...slug]'>) {
   const { slug } = await params;
@@ -12,7 +18,12 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
   if (!page) notFound();
 
   return new ImageResponse(
-    <DefaultImage title={page.data.title} description={page.data.description} site={appName} />,
+    <DocsOgImage
+      title={page.data.title}
+      description={page.data.description}
+      site={appName}
+      icon={<img alt="" src={await atlasBrandmark} style={{ height: '120px', width: '120px' }} />}
+    />,
     {
       width: 1200,
       height: 630,
