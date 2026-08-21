@@ -8,14 +8,14 @@ description: Planned and partially-built capability. Nothing on this page is ava
 There are no dates on this page, because nobody has committed to any.
 
 <Callout type="warn">
-  If you arrived here from a search result, note the page you're on. The features below are **not** in Atlas. For what Atlas actually does today, start with [Features](/docs/features).
+  If you arrived here from a search result, note the page you're on. The features below are **not** in Atlas. For what Atlas actually does today, start with [Getting Started](/docs).
 </Callout>
 
 ## Multiplayer AI
 
 **Not built.** This is the direction the rest of this page points at.
 
-Atlas today is single-player. You run agents against your own checkout, your [memory](/docs/features/memory) is on your device, and your [timeline](/docs/features/timeline) is your own record. Your team already shares the repository, and git handles that well. What it doesn't share is everything around the code: what an agent was asked, what it tried, why a change is shaped the way it is.
+Atlas today is single-player. You run agents against your own checkout, your [memory](/docs/context/memory) is on your device, and your [timeline](/docs/timeline) is your own record. Your team already shares the repository, and git handles that well. What it doesn't share is everything around the code: what an agent was asked, what it tried, why a change is shaped the way it is.
 
 The ambition is teammates and agents working from the same live context, not merely the same repo. The reasoning behind a change is available to the next person who touches it, whoever they are, and an agent picking up work inherits what the last agent and the last human both knew.
 
@@ -35,7 +35,7 @@ That flag flips when the service is deployed. Nothing else has to change, which 
 
 ## A team timeline
 
-**Not built.** The [timeline](/docs/features/timeline) today is single-user by construction, not by configuration: there is no setting that would turn it into a shared one.
+**Not built.** The [timeline](/docs/timeline) today is single-user by construction, not by configuration: there is no setting that would turn it into a shared one.
 
 Three things make that concrete:
 
@@ -53,7 +53,7 @@ A shared timeline would mean seeing which sessions produced which commits across
 
 Spaces is the canvas: a per-project board for laying work out visually. It exists in the app and works. It is not where most of the effort is going, and it may move from project scope to organisation scope, which would change where a board lives and who can reach it.
 
-Because that scope question is open, it isn't documented in [Features](/docs/features). Treat it as present but unsettled rather than planned.
+Because that scope question is open, it isn't documented in Product. Treat it as present but unsettled rather than planned.
 
 ## The browser
 
@@ -75,15 +75,16 @@ Each of these is a control or behaviour you may actually encounter, so they're w
 
 - **European hosting for organisations.** The region selector in the create-organisation form shows European Union, greyed out. Only United States is hosted. It's shown rather than hidden so the choice is visibly coming rather than absent.
 - **Invitation emails.** Inviting someone to an organisation does not send them an email. The accept link is copied to your clipboard and you pass it on yourself. See [members and invitations](/docs/organisation/members).
-- **Usage reporting for every agent.** [Mission Control](/docs/features/mission-control) reports Claude Code, Codex, and Review usage, because those expose the numbers. Sessions from other agents are recorded in your timeline but not counted in spend.
-- **The block terminal on shells other than zsh.** Command blocks depend on shell integration Atlas installs for zsh. Other shells run fine but present as a single plain stream. See [Terminal](/docs/features/terminal).
+- **Usage reporting for every agent.** [Mission Control](/docs/product/mission-control) reports Claude Code, Codex, and Review usage, because those expose the numbers. Sessions from other agents are recorded in your timeline but not counted in spend.
+- **The block terminal on shells other than zsh.** Command blocks depend on shell integration Atlas installs for zsh. Other shells run fine but present as a single plain stream. See [Terminal](/docs/product/terminal).
 
 ## What is built
 
 If you've read this far, the useful counterweight is that everything else in these docs describes shipped behaviour:
 
 <Cards>
-  <Card title="Features" href="/docs/features" description="Every surface in the app as it works today." />
+  <Card title="Product" href="/docs/product/chat" description="Every surface in the app as it works today." />
+  <Card title="Context" href="/docs/context/memory" description="What Atlas carries between sessions and agents." />
   <Card title="Agents" href="/docs/agents" description="The agents you can run right now." />
   <Card title="Quickstart" href="/docs/getting-started/quickstart" description="Open a project and run a session." />
 </Cards>

@@ -1,3 +1,16 @@
 {
-  "pages": ["getting-started", "agents", "features", "organisation", "roadmap"]
+  "pages": [
+    "---Getting Started---",
+    "...getting-started",
+    "---Source Control---",
+    "source-control/timeline",
+    "---Context---",
+    "...context",
+    "---Product---",
+    "...product",
+    "---Organisations---",
+    "...organisation",
+    "---Agents---",
+    "...agents"
+  ]
 }

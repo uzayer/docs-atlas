@@ -1,0 +1,11 @@
+{
+  "title": "Context",
+  "pages": [
+    "memory",
+    "agent-preferences",
+    "knowledge-base",
+    "research",
+    "skills",
+    "mission-control"
+  ]
+}

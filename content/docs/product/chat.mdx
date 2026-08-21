@@ -1,6 +1,7 @@
 ---
 title: Chat & Sessions
 description: The centre of Atlas, where you talk to an agent and where the work gets recorded.
+icon: MessageSquare
 ---
 
 A chat tab is one conversation with one [agent](/docs/getting-started/concepts#agent). Everything that agent does (files it reads, commands it runs, edits it makes) happens inside that conversation and is recorded as a [session](/docs/getting-started/concepts#session) you can come back to.
@@ -25,7 +26,7 @@ The pills along the composer are the session's controls: which agent, which perm
 
 Alongside them Atlas shows the state of the project's code index and a running token count for the session, with an estimated cost when it knows the model's price.
 
-`Enter` sends and `Shift+Enter` inserts a newline, unless you turn off **Enter to send** in [Settings → General](/docs/features/settings). `⌘Enter` sends either way.
+`Enter` sends and `Shift+Enter` inserts a newline, unless you turn off **Enter to send** in [Settings → General](/docs/product/settings). `⌘Enter` sends either way.
 
 Type while the agent is working and your message joins a queue instead of interrupting. Queued messages can be edited back into the input or dropped before their turn comes.
 
@@ -63,7 +64,7 @@ If the turn changed files, the card offers to commit them. Atlas drafts a Conven
 
 Atlas can also suggest two or three follow-up actions as clickable chips at the end of a turn. They come from the agent's own live context (no separate key), and the request is kept out of the thread.
 
-Toggle them in [Settings → General](/docs/features/settings).
+Toggle them in [Settings → General](/docs/product/settings).
 
 ## Reading a long thread
 
@@ -81,6 +82,6 @@ A separate model-chat tab talks directly to a model through your own API key: no
 
 ## Next
 
-- [Git & Diff](/docs/features/git): reviewing and committing what the agent wrote
+- [Git & Diff](/docs/product/git): reviewing and committing what the agent wrote
 - [Agents](/docs/agents): choosing which agent a session runs on
 - [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once

@@ -1,11 +1,12 @@
 ---
 title: Review
 description: A second opinion on a change, before it goes anywhere.
+icon: GitPullRequest
 ---
 
-Review runs a model over a set of changes and reports back per file. It's a tab in the right panel, next to [Source Control](/docs/features/git).
+Review runs a model over a set of changes and reports back per file. It's a tab in the right panel, next to [Source Control](/docs/product/git).
 
-The point is that the model reviewing isn't the model that wrote the code. You pick the provider and model yourself, from the keys in [Settings → API Keys](/docs/features/settings), so you can have one vendor's model read another's output.
+The point is that the model reviewing isn't the model that wrote the code. You pick the provider and model yourself, from the keys in [Settings → API Keys](/docs/product/settings), so you can have one vendor's model read another's output.
 
 ![The Review panel showing per-file verdicts for a set of changes](/screenshots/placeholder.svg)
 
@@ -18,7 +19,7 @@ Four sources, chosen before you run it:
 - **Commit**: a specific commit, picked from the log.
 - **Branch**: a whole branch's changes.
 
-You can also start a review from a commit in [Source Control](/docs/features/git)'s History view.
+You can also start a review from a commit in [Source Control](/docs/product/git)'s History view.
 
 ## The report
 
@@ -32,7 +33,7 @@ Each run records the tokens it used and what it cost.
 
 ## Acting on it
 
-A finding is a starting point, not a verdict. You can send the report (or a single file's findings) straight into a [chat](/docs/features/chat) as a prompt, which turns a review comment into work an agent picks up with the full context already attached.
+A finding is a starting point, not a verdict. You can send the report (or a single file's findings) straight into a [chat](/docs/product/chat) as a prompt, which turns a review comment into work an agent picks up with the full context already attached.
 
 Reports can also be copied out as markdown.
 
@@ -40,5 +41,5 @@ Reviews are saved, so you can reopen an earlier one rather than paying to run it
 
 ## Next
 
-- [Git & Diff](/docs/features/git): reading the change yourself
-- [Mission Control](/docs/features/mission-control): what reviews have cost you
+- [Git & Diff](/docs/product/git): reading the change yourself
+- [Mission Control](/docs/context/mission-control): what reviews have cost you

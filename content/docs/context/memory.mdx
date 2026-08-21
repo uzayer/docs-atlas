@@ -1,6 +1,7 @@
 ---
 title: Memory
 description: What Atlas carries between sessions, and between agents.
+icon: BrainCircuit
 ---
 
 Every agent you run in Atlas starts with what the others already learned. That's [shared memory](/docs/getting-started/concepts#shared-memory), and the important thing about it is that you don't have to do anything for it to work.
@@ -29,20 +30,20 @@ Facts that look durable get promoted to a cross-project memory: preferences and 
 The Memory panel is where you inspect what Atlas knows. You don't have to curate anything for the above to work; this is for when you want to see it, or when something looks wrong.
 
 - **Graph**: the structured facts and how they connect.
-- **[Agent preferences](/docs/features/agent-preferences)**: the working rules Atlas found in your existing files, editable in place. This one has its own page.
-- **Timeline**: memory, sessions, and commits on one calendar, showing which memory was in play when a session ran and what it committed. See [Timeline](/docs/features/timeline) for how sessions and commits link.
+- **[Agent preferences](/docs/context/agent-preferences)**: the working rules Atlas found in your existing files, editable in place. This one has its own page.
+- **Timeline**: memory, sessions, and commits on one calendar, showing which memory was in play when a session ran and what it committed. See [Timeline](/docs/source-control/timeline) for how sessions and commits link.
 - **Shared**: the cross-agent event log and the plans agents produced, as read-only tables you can search and clear.
 
 Alongside those, a per-agent browser lets you read the sessions each agent has recorded for this project, with counts per agent.
 
 ## The code index
 
-Separately from memory, Atlas builds an index of the project's code, which is what grounds memory recall against the actual repository. Its status shows as a pill in the [composer](/docs/features/chat), and you can force a rebuild from there.
+Separately from memory, Atlas builds an index of the project's code, which is what grounds memory recall against the actual repository. Its status shows as a pill in the [composer](/docs/product/chat), and you can force a rebuild from there.
 
-The embedding model behind both lives in [Settings → Local Models](/docs/features/settings). Changing it rebuilds the index, so Atlas asks before it does.
+The embedding model behind both lives in [Settings → Local Models](/docs/product/settings). Changing it rebuilds the index, so Atlas asks before it does.
 
 ## Next
 
-- [Agent preferences](/docs/features/agent-preferences): the rules Atlas extracted from what you already wrote
-- [Timeline](/docs/features/timeline): the record of sessions and checkpoints
-- [Knowledge base](/docs/features/knowledge-base): notes you write deliberately, rather than memory Atlas infers
+- [Agent preferences](/docs/context/agent-preferences): the rules Atlas extracted from what you already wrote
+- [Timeline](/docs/source-control/timeline): the record of sessions and checkpoints
+- [Knowledge base](/docs/context/knowledge-base): notes you write deliberately, rather than memory Atlas infers
