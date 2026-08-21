@@ -1,0 +1,66 @@
+---
+title: Agent registry
+description: Install coding agents from the official ACP registry.
+---
+
+Atlas mirrors the official Agent Client Protocol registry (the same published catalog Zed reads from) and surfaces it in **Settings → Agents**. Anything in it can be installed and used as a first-class [agent](/docs/getting-started/concepts#agent) in Atlas.
+
+![Settings → Agents, showing the registry as a searchable grid of agent cards](/screenshots/placeholder.svg)
+
+## Finding an agent
+
+The grid is searchable by name, id, or description. Three filter pills narrow it down:
+
+- **All**: the whole catalog.
+- **Installed**: what you have, including the built-in agents.
+- **Not Installed**: everything else.
+
+**Refresh** re-fetches the catalog from the registry. Atlas also refreshes on its own when the cached copy has gone stale, so you rarely need to press it.
+
+## Installing and removing
+
+**Install** on a card is all there is to it. What happens next depends on how that agent is distributed:
+
+- **Binary distributions** download and extract immediately, and the button shows a live percentage while they do. Switching to another settings section mid-download doesn't cancel it.
+- **npx and uvx distributions** have nothing to download up front. Atlas records the install and the package is fetched by npm or uv the first time you actually run the agent. These need Node.js or [uv](https://docs.astral.sh/uv) on your machine respectively. If the runtime is missing, you'll find out at that first run, with a message telling you what to install.
+
+Installed agents appear in the composer's agent switcher immediately, below the built-ins.
+
+**Remove** takes an agent back out of the switcher. Chat history from that agent is kept. Removing it doesn't erase the sessions you ran with it.
+
+## Badges
+
+Cards carry two badges worth understanding.
+
+**Built-in** means this registry entry duplicates an agent Atlas already ships. Five entries are marked this way: `claude-acp`, `codex-acp`, `opencode`, `cursor`, and `kilo`.
+
+You can't install over them, because doing so would shadow the version Atlas supports directly. You already have the agent, it's in the switcher.
+
+(Atlas's own native agent isn't in the registry at all; it doesn't run over ACP.)
+
+**Unverified** means that agent's binary download publishes no checksum, so Atlas can't confirm the bytes it fetched are the bytes that were published. When a checksum *is* published, Atlas verifies it before the download is ever used.
+
+Read that badge narrowly. It only ever applies to binary distributions: npx and uvx entries are never flagged, because there's no archive for Atlas to checksum in the first place. **The absence of the badge is not a safety claim about the agent.**
+
+## Platform support
+
+Not every agent runs everywhere. When an entry has no distribution usable on your machine, the card says so (with the reason, where there is one, such as needing `uv` installed) and the Install button is disabled.
+
+## Working offline
+
+The catalog is cached on disk. Atlas loads that cached copy first and refreshes in the background, so the grid renders instantly and still renders with no network at all: you'll see the last catalog Atlas successfully fetched.
+
+If a refresh fails, a line under the search bar tells you so and notes that you're looking at cached data. The install itself still needs the network.
+
+## What you get, and what you don't
+
+An installed registry agent joins the switcher and runs over ACP like any other agent. It works against the same [project](/docs/getting-started/concepts#project), and its [sessions](/docs/getting-started/concepts#session) and [checkpoints](/docs/getting-started/concepts#checkpoint) behave the same way.
+
+What it doesn't get is Atlas-side handling of its authentication or its model list. Both are whatever that agent does natively: you log in the way its own CLI expects, and you pick models from whatever it advertises.
+
+Atlas holds no capability metadata for the long tail beyond a name, a description, and links to its repository and website, both of which are on the card. If you need to know how a particular installed agent authenticates, its own documentation is the place to look.
+
+## Next
+
+- [Agents overview](/docs/agents): the built-in agents and what makes them different
+- [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once

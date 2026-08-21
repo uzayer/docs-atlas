@@ -1,0 +1,86 @@
+---
+title: Chat & Sessions
+description: The centre of Atlas, where you talk to an agent and where the work gets recorded.
+---
+
+A chat tab is one conversation with one [agent](/docs/getting-started/concepts#agent). Everything that agent does (files it reads, commands it runs, edits it makes) happens inside that conversation and is recorded as a [session](/docs/getting-started/concepts#session) you can come back to.
+
+![A chat session in progress, with the transcript on the left and tool detail on the right](/screenshots/placeholder.svg)
+
+## Sessions
+
+`⌘T` opens a new chat. Past sessions live in the agent sidebar (`⌘⌥J`) and behind the chevron in the chat header: both are the same searchable list, covering live tabs and the sessions each agent has on disk.
+
+Opening one resumes it: the transcript paints from disk immediately while the agent reconnects in the background, so you're reading before the agent is ready to take a new message.
+
+A session belongs to one agent for its whole life. Switching agents therefore means a new session, and Atlas picks the least destructive way to do it:
+
+- **Empty chat**: the agent flips in place.
+- **Chat with history**: the tab resets onto the new agent. The old conversation is already saved and stays in your history.
+- **Chat mid-turn**: Atlas leaves it running and opens a fresh tab on the new agent instead, so the live turn isn't orphaned.
+
+## The composer
+
+The pills along the composer are the session's controls: which agent, which permission mode (`⇧⇥` cycles it), which model, and (on models that support it) how much reasoning effort to spend.
+
+Alongside them Atlas shows the state of the project's code index and a running token count for the session, with an estimated cost when it knows the model's price.
+
+`Enter` sends and `Shift+Enter` inserts a newline, unless you turn off **Enter to send** in [Settings → General](/docs/features/settings). `⌘Enter` sends either way.
+
+Type while the agent is working and your message joins a queue instead of interrupting. Queued messages can be edited back into the input or dropped before their turn comes.
+
+## Mentions
+
+`@` opens the [mention](/docs/getting-started/concepts#mention) picker. It searches files, folders, symbols, [knowledge base](/docs/getting-started/concepts#knowledge-base) entries, components delivered by a [pack](/docs/getting-started/concepts#pack), repositories, projects, papers, git branches, and your own past messages and sessions.
+
+Light references are inlined into your prose. Heavier ones (a whole file, a past session) are appended below your message as a context block, so you can see exactly what the agent is being handed.
+
+## Slash commands
+
+`/` opens the command picker. Most entries are commands the agent itself advertises, and Atlas passes them straight through rather than interpreting them.
+
+A few are Atlas's own and open something in the app instead.
+
+<Callout type="info">
+  A passthrough command only runs when it's the first thing in the message. Type one mid-sentence and it's sent as ordinary text: the picker will still complete it, but the agent will read it as prose.
+</Callout>
+
+## Attachments
+
+The **+** menu attaches files and images, captures a screenshot or a region of your screen, clones a repository from GitHub into the project, and references another session.
+
+## While a turn runs
+
+When the agent publishes a plan, it docks above the composer (expanded as a checklist, collapsed as a one-line `PLAN 3/7` with the step in motion). When the agent asks permission to do something, it arrives as a card with the agent's own options on it (allow once, allow always, reject), not a generic yes/no.
+
+Stop is always available. If the agent hits a transient provider failure (a rate limit, an overload, a 5xx), a pill shows the retry countdown and the reason rather than leaving the turn looking stalled.
+
+## After a turn
+
+Each turn closes with a summary card: how long it took, tokens in and out, and every file the turn read or edited with its line counts. From there you can open the diff, jump to the file, or reveal it on disk.
+
+If the turn changed files, the card offers to commit them. Atlas drafts a Conventional Commits message from the turn using your own provider key, shows it to you in an editable dialog with the file list, and only stages and commits once you confirm.
+
+Atlas can also suggest two or three follow-up actions as clickable chips at the end of a turn. They come from the agent's own live context (no separate key), and the request is kept out of the thread.
+
+Toggle them in [Settings → General](/docs/features/settings).
+
+## Reading a long thread
+
+Tool arguments and tool output open in a panel beside the transcript rather than expanding inline, so the thread stays scannable. Diffs are the exception: they open full-window, where there's room for two panes.
+
+Three more ways through a long session:
+
+- `⌘F` searches your own messages and jumps to one.
+- The **Bash** panel lists every shell command the agent ran, in order, with a jump back to the message it came from.
+- The **Plans** panel collects the plans the agent produced.
+
+## Model chat
+
+A separate model-chat tab talks directly to a model through your own API key: no agent, no tools, no access to the project.
+
+## Next
+
+- [Git & Diff](/docs/features/git): reviewing and committing what the agent wrote
+- [Agents](/docs/agents): choosing which agent a session runs on
+- [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once

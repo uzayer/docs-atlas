@@ -1,0 +1,45 @@
+---
+title: Skills & Packs
+description: Reusable instructions, and bundles of them.
+---
+
+A [skill](/docs/getting-started/concepts#skill) is a `SKILL.md` file: a named piece of instruction an agent can invoke by name.
+
+A [pack](/docs/getting-started/concepts#pack) is an installable bundle that can ship several of them at once, along with commands, agents, rules, hooks, and scripts.
+
+Both live in [Settings → Skills](/docs/features/settings).
+
+![The Skills section listing installed skills and their enabled agents](/screenshots/placeholder.svg)
+
+## Scope
+
+Every skill is either **global** (available in every project) or **project**, scoped to the one you're in. You choose when you create or install it.
+
+## How an agent gets a skill
+
+Atlas keeps one canonical copy of each skill and links it into the agent's own skills directory. The agent reads it exactly as it would read a skill you installed by hand, which means enabling a skill costs no tokens until the agent actually invokes it.
+
+A skill can be enabled for some agents and not others, and the list shows which. Agents that don't support skills are marked as such rather than silently doing nothing.
+
+Skills that already exist in an agent's own directory (one you installed for Claude Code directly, say) are listed too, and can be adopted into Atlas's store so they work across every agent instead of just the one.
+
+## Packs
+
+A pack is one source repository, fetched whole and parsed into its components. Discovery searches the skills.sh registry; the content comes from the repository itself.
+
+You can preview a pack before installing it, so you can see the components it ships without committing to them. Installed packs are tracked with a lockfile, and Atlas can check whether a newer version exists.
+
+Components a pack delivers are usable like anything else: skills become invokable skills, and commands, agents, and rules become available to [mention](/docs/getting-started/concepts#mention) in the composer.
+
+## Invoking a skill
+
+Type `/` in the [composer](/docs/features/chat). Skills the agent advertises appear in the picker and pass straight through to it.
+
+<Callout type="info">
+  A passthrough command only runs when it's the first thing in your message. Mid-sentence it's sent as ordinary text.
+</Callout>
+
+## Next
+
+- [Agent preferences](/docs/features/agent-preferences): standing rules, as opposed to invokable instructions
+- [Chat & Sessions](/docs/features/chat): invoking a skill in a conversation

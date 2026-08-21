@@ -1,0 +1,61 @@
+---
+title: Agent preferences
+description: The working rules Atlas found in what you already wrote.
+---
+
+You don't create agent preferences. Atlas finds them.
+
+You have already told agents how you want to work: somewhere in an instruction file, a memory note, a line you wrote months ago and forgot. This view collects those statements into a readable list so you can see what your agents are actually operating under, and change any of it in one place.
+
+![The Agent preferences view listing found rules by category](/screenshots/placeholder.svg)
+
+## How they're found
+
+No model is involved. Atlas holds a fixed catalogue of twelve preference topics, each with a natural-language description of what it's looking for.
+
+Those descriptions are matched by embedding similarity against individual statements pulled from your existing memory and instruction files. Anything that matches well enough becomes a row.
+
+Each row's value is **the exact text from your file**, not a paraphrase, not a summary. Editing a row rewrites that span in place, in the original file, where the agent will actually read it.
+
+<Callout type="info">
+  This is a partial view, deliberately. It covers twelve topics, and it only surfaces statements that match one of them closely enough. A rule you wrote that doesn't appear here is still in your files and still in effect, it just isn't one of the things this view looks for.
+</Callout>
+
+## Strong and soft
+
+Each row is classified by how it was written:
+
+- **Strong**: a hard rule. Phrased as a requirement: must, never, always.
+- **Soft**: a preference. Guidance the agent should weigh, not a constraint.
+
+The distinction comes from your own wording, so if something is being treated as a suggestion when you meant it as a rule, the fix is to say so more firmly in the source text.
+
+## The twelve categories
+
+| Category | What it looks for |
+| --- | --- |
+| Version control | Whether agents may commit, push, and stage, or whether you handle git yourself |
+| Theme | Light or dark appearance |
+| Edit permissions | Auto-accept, bypass, or ask before changing files |
+| Testing | Running tests, writing tests, test-driven development |
+| Comments & style | Comment density and code style |
+| Package manager | npm, pnpm, yarn, bun |
+| Commit messages | Message format and style |
+| Languages & frameworks | The stack you prefer agents reach for |
+| Architecture | Where logic belongs, separation of concerns |
+| Communication | Verbosity, tone, how much the agent explains |
+| Dependencies & files | Rules about adding dependencies or creating new files |
+| Formatting & linting | Formatter and linter expectations |
+
+## Where a preference came from
+
+Every row names its source file and the agent whose memory it was found in, so a rule you don't recognise can be traced back rather than guessed at.
+
+Alongside the twelve catalogue topics, the list also includes behaviours Atlas recorded about the codebase itself. Those are marked separately: they came from working in the project, not from something you wrote as a rule.
+
+Conversation history is not treated as preferences. A thing you said once in a session is not a standing instruction, and isn't collected here.
+
+## Next
+
+- [Memory](/docs/features/memory): where these statements are indexed from
+- [Skills & Packs](/docs/features/skills-and-packs): reusable instructions you install deliberately

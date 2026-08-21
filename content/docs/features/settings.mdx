@@ -1,0 +1,63 @@
+---
+title: Settings
+description: Where everything configurable lives.
+---
+
+`⌘,` opens Settings as a tab. It's organised as a list of sections down the left; this page says what's in each one.
+
+![The Settings tab, open on the General section](/screenshots/placeholder.svg)
+
+## General
+
+Application preferences, and the section most worth reading once:
+
+- **Enter to send**: `Enter` sends and `Shift+Enter` newlines, or the reverse. `⌘Enter` sends either way.
+- **Auto-add `.atlas` to `.gitignore`**: Atlas keeps its per-project state in `.atlas/`, and adds it to the project's `.gitignore` when you open a git-tracked project.
+- **Show hidden files**: dotfiles in the [file tree](/docs/features/explorer). On by default.
+- **Inline Git blame**: the per-line annotation in the [editor](/docs/features/editor).
+- **Atlas Logs**: record Atlas's own events into the Logs tab, so you can hand over a timeline when something misbehaves.
+- **Usage data**: whether Atlas collects privacy-preserving usage data, and separately whether it's linked to your account or stays anonymous. Prompts, code, file paths, and keys are never included.
+- **Next-step suggestions**: the follow-up chips at the end of a [chat](/docs/features/chat) turn.
+- **Atlas CLI**: installs an `atlas` command so you can type `atlas .` in any terminal to open that folder as a project.
+- **Model pricing**: per-model prices from models.dev, shown in the model picker. Refreshed on launch; this button forces it.
+
+## Appearance
+
+Interface theme and editor theme, on separate tabs, plus interface zoom (`⌘+`, `⌘-`, `⌘0`).
+
+## Layouts
+
+Ready-made arrangements of panels and tabs. `⌘⌥L` switches between them from anywhere.
+
+## API Keys
+
+Provider keys for the parts of Atlas that call a model on your behalf: [Atlas's own agent](/docs/agents/atlas), commit-message drafting, and code review. Keys are stored locally; once saved, Atlas shows you only the last four characters and when you added it.
+
+## Skills
+
+Your installed [skills](/docs/getting-started/concepts#skill) and [packs](/docs/getting-started/concepts#pack), and the marketplace to add more.
+
+## Agents
+
+The [agent registry](/docs/agents/registry): searching, installing, and removing agents.
+
+## Local Models
+
+Embedding models that run on your machine, downloaded here. These back the project's code index and memory retrieval. Changing the embedding model rebuilds the index, so Atlas asks first.
+
+## Updates
+
+Automatic updates on or off, and a manual check. Updates are Apple-signed and notarised, and the signature is verified before anything is installed.
+
+## Keybindings
+
+A reference list of every shortcut, grouped by what it applies to: general, tabs, splits, layout, chat, and the knowledge base.
+
+## About
+
+Version information.
+
+## Next
+
+- [Agent registry](/docs/agents/registry): the Agents section, in full
+- [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once

@@ -1,0 +1,115 @@
+---
+title: Organisations
+description: Creating an organisation, cloud versus local, switching, and deleting.
+---
+
+An [organisation](/docs/getting-started/concepts#organisation) is the top-level container that owns your [projects](/docs/getting-started/concepts#project). Exactly one is active per window.
+
+The switcher sits at the top of the sidebar, showing the active organisation's name. Click it for the full list, the create action, member management, and the sync state.
+
+![The organisation switcher open, listing organisations](/screenshots/placeholder.svg)
+
+## Cloud and local
+
+When you create an organisation you pick one of two types, and the difference is where it exists.
+
+| | Cloud | Local |
+| --- | --- | --- |
+| Requires an account | Yes | No |
+| Handle checked globally | Yes | Only against your other organisations |
+| Members and roles | Yes | No |
+| Available on your other devices | Yes | No |
+| Region | United States | Not hosted anywhere |
+
+A local organisation is a real choice, not a downgrade. It never makes a network call, and if you're working alone that's usually the right one.
+
+You can link it to your account later with **Turn on sync**, which is the same path a signed-out user's organisations take once they sign in.
+
+Signed out, cloud is unavailable rather than merely unselected (there's no account to create it in), and the type is pinned to local.
+
+### What "synced" means
+
+The switcher describes a cloud organisation as synced, and offers **Turn on sync** for a local one. It's worth being exact about the scope of that word.
+
+Syncing an organisation means **the organisation itself lives in your Atlas account**: its name, its handle, its members, and their roles. That record is available on any device you sign in on, which is why the organisation appears in the switcher on a machine you've never used it on before.
+
+It does not mean your work syncs. Your [sessions](/docs/getting-started/concepts#session), chats, [memory](/docs/features/memory), and [timeline](/docs/features/timeline) stay on the device that produced them.
+
+Your code is shared the way it already was, through git.
+
+<Callout type="info">
+  More will sync over time. Today the account record is the whole of it, and the roadmap is where that story continues.
+</Callout>
+
+## Creating one
+
+**Create organisation…** in the switcher opens a form with four fields.
+
+**Name** is a display name and can be anything, though it has to be unique among your own organisations.
+
+**Handle** is the URL-safe identifier, shown under the `app.tryatlas.cc/` prefix. It's derived from the name as you type and stops tracking it the moment you edit the handle directly.
+
+Lowercase letters, numbers, and hyphens only.
+
+For a cloud organisation the handle is checked against every Atlas organisation as you type, and the field reports **That handle is available** or **That handle is already taken**. The check is advisory (the server holds the real guard), so a create can still fail on a handle claimed a moment before yours.
+
+That comes back as an error, and nothing half-made is left behind: the server settles the handle before anything is written locally.
+
+A local organisation's handle isn't probed, because it lives only on your machine and there's no shared namespace to check it against.
+
+**Type** is cloud or local, covered above.
+
+**Region** applies only to a cloud organisation. United States is available; European Union is shown but not selectable, because it isn't hosted yet.
+
+Creating an organisation switches you into it.
+
+## Switching
+
+Pick any organisation in the list to switch. Atlas tears down the current one and reloads, showing a loading overlay while it does.
+
+Each organisation remembers the project you had open, so switching back lands you where you were.
+
+### Access and locked organisations
+
+A cloud organisation belongs to an account, so Atlas won't leave you inside one that isn't yours. A locked row shows a padlock, can't be selected, and offers no rename or delete.
+
+- **Signed out**: every cloud organisation is locked. *Sign in to open this synced organisation.*
+- **Signed in, and you're not a member**: locked. *This account isn't a member of this organisation.*
+- **Signed in, but your membership isn't known yet**: allowed. On a machine that has never successfully listed your organisations, Atlas can't prove you don't belong, and locking you out of your own organisation offline is the worse mistake.
+
+Local organisations are never locked. They need no credential.
+
+The refresh button in the switcher header pulls your organisation list from the server again. It's quiet on failure: the last known list stays.
+
+## Renaming
+
+Hover any unlocked row and click the pencil for an inline rename. Names are unique among your organisations, case-insensitively, so a collision is refused with a message rather than silently applied.
+
+Renaming is local. It changes what you see in the switcher, not the handle, and not the name on the server.
+
+## Turning on sync
+
+For the active local organisation, the switcher footer offers **Turn on sync for *name*…**. It creates the organisation in your Atlas account under its existing name and handle, and links the two.
+
+Signed out, this starts sign-in instead, and signing in re-pulls your organisation list anyway.
+
+Once linked, the footer reads *name* **is synced** and the action is gone. Turning sync off isn't offered: to stop an organisation being in your account, delete it.
+
+## Deleting
+
+Hover a row and click the bin. The confirmation names the organisation and how many projects it holds.
+
+Deleting removes the organisation from Atlas along with its projects and their chats. **Your actual project files on disk are not touched.**
+
+What's removed is Atlas's record of them: which projects belonged to the organisation, and the recent-chat history for those projects. It can't be undone.
+
+You can't delete your last organisation.
+
+For a cloud organisation, the server-side delete is admin-only. If you're not an admin it's refused with a message, and the organisation is still removed from this machine.
+
+You leave it locally without deleting it for everyone else.
+
+## Next
+
+- [Members & roles](/docs/organisation/members): who else is in a cloud organisation
+- [Your account](/docs/organisation/accounts): what signing in involves

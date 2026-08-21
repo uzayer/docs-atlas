@@ -1,0 +1,71 @@
+---
+title: Your account
+description: Signing in to Atlas, and what that does and doesn't change.
+---
+
+An Atlas account is optional. Every feature that touches your code ([chat](/docs/features/chat), the [editor](/docs/features/editor), [memory](/docs/features/memory), the [timeline](/docs/features/timeline)) works signed out, on a machine that has never talked to our servers.
+
+Signing in adds exactly one thing: access to cloud [organisations](/docs/organisation/organisations), which is where members and roles live.
+
+![The account menu in the title bar](/screenshots/placeholder.svg)
+
+## Signing in
+
+Your account lives in the title bar, at the right. Signed out, clicking it starts sign-in.
+
+Atlas uses a device grant, so approval happens in your browser rather than in the app:
+
+1. Atlas opens the approval page in your default browser and shows you an eight-character code.
+2. You type or paste that code into the page, then press **Approve**.
+3. The dialog closes on its own once the approval lands.
+
+The code is the point. Atlas deliberately opens the *plain* approval page rather than a link with the code baked in.
+
+A link that carries its own code is exactly what lets someone else's sign-in be approved by whoever clicks it. Reading the code across is what proves the grant being approved is yours.
+
+If the browser doesn't open, the approval URL is printed in the dialog underneath the code. **Copy code** puts the code on your clipboard, and the code itself is selectable if the clipboard is unavailable.
+
+Closing the dialog abandons the attempt. Starting sign-in again resumes the same grant rather than issuing a competing code, so you can reopen the browser without invalidating the code you were already looking at.
+
+Codes expire. If yours does, or approval is denied, the dialog says so and offers **Try again**.
+
+## Staying signed in
+
+Once approved, the credential is stored on your machine and you stay signed in across restarts.
+
+<Callout type="info">
+  **No credential ever reaches the interface.** The session token and the access token are held in Atlas's Rust core and never cross into the window you're looking at.
+
+  That window renders agent-authored markdown, so a token living in it would be one prompt injection away from leaving your machine.
+
+  What the interface gets is your name, email, a locally cached profile photo, and your organisation list: identity, and nothing secret.
+</Callout>
+
+Your profile photo is downloaded once and read from disk after that, so opening Atlas doesn't tell your identity provider you did, and the avatar still renders offline.
+
+Being offline doesn't sign you out. Neither does an Atlas outage or a rate limit: those preserve the credential and retry quietly.
+
+Only an authoritative rejection from the server signs you out, which is what happens if you revoke the session from the web or it finally expires. That arrives as a notification rather than silently.
+
+## Signing out
+
+**Sign Out** is in the account menu.
+
+Nothing waits on the network. Atlas clears the credential, your identity, and the cached photo immediately, and the interface shows you signed out before the server has been contacted at all.
+
+Revocation then settles in the background.
+
+If that revocation can't be confirmed, you'll see a warning: *Signed out on this device. Your Atlas session may stay active on the server until it expires.* This device is signed out either way. The caveat is only about the server-side session, which matters if you were signing out because the machine isn't yours.
+
+Signing out does not delete or unlink anything. Your local organisations are untouched, and cloud organisations you belong to stay yours.
+
+You just can't open them until you sign back in. See [organisation access](/docs/organisation/organisations#access-and-locked-organisations).
+
+## What's in the account menu
+
+Alongside **Sign In** / **Sign Out**, the menu is a shortcut into the [Settings](/docs/features/settings) sections you reach for most: Settings (`⌘,`), Keybindings, Themes, Skills, and Layouts.
+
+## Next
+
+- [Organisations](/docs/organisation/organisations): what an account actually unlocks
+- [Members & roles](/docs/organisation/members): inviting people into one

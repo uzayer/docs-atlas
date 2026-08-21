@@ -1,0 +1,47 @@
+---
+title: Kilo Code
+description: Running Kilo Code inside Atlas.
+---
+
+Kilo Code is a fork of OpenCode with a much larger model catalog behind it, and the fullest session replay of any agent Atlas drives over the protocol.
+
+![A Kilo Code session running in the Atlas chat panel](/screenshots/placeholder.svg)
+
+## Install
+
+Install the CLI with npm or Homebrew, then relaunch Atlas:
+
+```bash
+npm install -g @kilocode/cli
+# or
+brew install Kilo-Org/tap/kilo
+```
+
+## Sign in
+
+Run `kilo auth login` in a terminal.
+
+## Models
+
+Kilo exposes several hundred models, written as `provider/model`, through its configuration options, along with a reasoning-effort level you can set per session. Both appear in the composer alongside the mode picker.
+
+## Modes
+
+Kilo's modes arrive as configuration options rather than in the older ACP shape, but they surface in the composer's mode picker like everything else.
+
+## Sessions
+
+Kilo replays a full transcript when you reopen a [session](/docs/getting-started/concepts#session), and the session ids Atlas holds are Kilo's own: the sessions in Atlas and the sessions in Kilo's local database are the same objects, not copies. Atlas still links commits made during one back to it as [checkpoints](/docs/getting-started/concepts#checkpoint) in your [timeline](/docs/getting-started/concepts#timeline).
+
+<Callout type="info">
+  Kilo doesn't implement ACP's terminal methods, so shell output arrives as tool-call content rather than as a live terminal. You see everything the agent ran and what it printed; it just isn't an interactive terminal view.
+</Callout>
+
+<Callout type="info">
+  This behaviour was verified against Kilo Code 7.4.20. Later versions may differ.
+</Callout>
+
+## Next
+
+- [Agents overview](/docs/agents): how Atlas drives agents in general
+- [Agent registry](/docs/agents/registry): installing other agents

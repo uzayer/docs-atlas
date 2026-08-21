@@ -1,0 +1,21 @@
+{
+  "title": "Features",
+  "icon": "LayoutGrid",
+  "pages": [
+    "index",
+    "chat",
+    "editor",
+    "terminal",
+    "git",
+    "explorer",
+    "timeline",
+    "memory",
+    "agent-preferences",
+    "skills-and-packs",
+    "knowledge-base",
+    "research",
+    "review",
+    "mission-control",
+    "settings"
+  ]
+}

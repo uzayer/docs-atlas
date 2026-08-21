@@ -1,0 +1,5 @@
+{
+  "title": "Organisation",
+  "icon": "Building2",
+  "pages": ["index", "accounts", "organisations", "members"]
+}

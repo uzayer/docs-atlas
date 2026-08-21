@@ -1,0 +1,48 @@
+---
+title: Memory
+description: What Atlas carries between sessions, and between agents.
+---
+
+Every agent you run in Atlas starts with what the others already learned. That's [shared memory](/docs/getting-started/concepts#shared-memory), and the important thing about it is that you don't have to do anything for it to work.
+
+![The Memory panel showing what Atlas has indexed for the project](/screenshots/placeholder.svg)
+
+## What happens automatically
+
+Agents write memory files as they work: their own instruction files, notes, and whatever else they persist. Atlas indexes all of it, continuously, and pulls the relevant parts back into each turn.
+
+The mechanics, briefly, because they explain the limits:
+
+- **Embedding runs on your machine.** A small model turns your memory files into vectors in a local index. No text is sent anywhere for this.
+- **Your prompt is matched against that index** when you send it, and weak matches are discarded rather than padded in.
+- **Structured facts are matched too**, from a graph Atlas builds alongside the index, weighted deliberately low, so a graph hit can never outrank a strong direct match.
+- **The results are handed to the agent.** Most agents receive them injected into the turn; [Atlas's own agent](/docs/agents/atlas) instead has a retrieval tool it can choose to call mid-turn.
+
+The effect is that an agent you switched to five minutes ago knows what the previous one figured out, without you re-explaining it.
+
+## Across projects
+
+Facts that look durable get promoted to a cross-project memory: preferences and constraints, held with high confidence, and seen in more than one project. Atlas is conservative here on purpose: the bar is high, and cross-project memory is only blended in when a project's own memory is thin.
+
+## The panel
+
+The Memory panel is where you inspect what Atlas knows. You don't have to curate anything for the above to work; this is for when you want to see it, or when something looks wrong.
+
+- **Graph**: the structured facts and how they connect.
+- **[Agent preferences](/docs/features/agent-preferences)**: the working rules Atlas found in your existing files, editable in place. This one has its own page.
+- **Timeline**: memory, sessions, and commits on one calendar, showing which memory was in play when a session ran and what it committed. See [Timeline](/docs/features/timeline) for how sessions and commits link.
+- **Shared**: the cross-agent event log and the plans agents produced, as read-only tables you can search and clear.
+
+Alongside those, a per-agent browser lets you read the sessions each agent has recorded for this project, with counts per agent.
+
+## The code index
+
+Separately from memory, Atlas builds an index of the project's code, which is what grounds memory recall against the actual repository. Its status shows as a pill in the [composer](/docs/features/chat), and you can force a rebuild from there.
+
+The embedding model behind both lives in [Settings → Local Models](/docs/features/settings). Changing it rebuilds the index, so Atlas asks before it does.
+
+## Next
+
+- [Agent preferences](/docs/features/agent-preferences): the rules Atlas extracted from what you already wrote
+- [Timeline](/docs/features/timeline): the record of sessions and checkpoints
+- [Knowledge base](/docs/features/knowledge-base): notes you write deliberately, rather than memory Atlas infers

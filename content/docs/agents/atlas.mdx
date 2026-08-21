@@ -1,0 +1,44 @@
+---
+title: Atlas
+description: Atlas's own agent, running inside the app.
+---
+
+Every other agent in this section is a separate program Atlas talks to over a protocol. This one isn't. Atlas's native agent runs inside the app itself, which is why it can do a few things the others structurally can't, and why it's set up differently.
+
+It's the last entry in the agent switcher, labelled **Atlas**.
+
+![The Atlas native agent selected in the composer's agent picker](/screenshots/placeholder.svg)
+
+## Bring your own key
+
+There's nothing to install and nothing to log into, but the native agent has no models of its own. You supply them. Add a provider key in **Settings → Providers** and the agent can use it.
+
+Supported providers today include Anthropic, OpenAI, Google, xAI, DeepSeek, Mistral, Groq, Together, Fireworks, DeepInfra, Cerebras, OpenRouter, Perplexity, and Cohere. Once a key is saved, Atlas only ever shows you its last four characters and when you added it.
+
+## Models
+
+Pick a model from the composer like you would for any other agent. If you haven't pinned one, Atlas chooses a sensible coding default for whichever provider you've configured, preferring Anthropic when you've given it more than one key.
+
+Two controls exist here that the ACP agents don't have: a **reasoning effort** level, which sets how much thinking budget the model gets, and **tool-output compression**, which trims long tool results before they eat the context window.
+
+## What it can do
+
+The native agent has the usual toolkit (read files, edit them, run shell commands, search the project) plus two things worth calling out:
+
+- **It can search memory directly.** Other agents receive relevant context injected into their prompt. This one has a retrieval tool it can decide to call, so it can go looking for something mid-turn rather than working only from what it was handed. See [shared memory](/docs/getting-started/concepts#shared-memory).
+- **It can delegate to subagents**, spinning up a scoped agent for a piece of work and folding the result back into the turn.
+
+It can also run [skills](/docs/getting-started/concepts#skill).
+
+## How it differs from the others
+
+Worth knowing before you pick it:
+
+- **It isn't in the [agent registry](/docs/agents/registry)** and doesn't run over ACP, so nothing on that page applies to it.
+- **It doesn't take image input yet.** Paste a screenshot and it degrades to a file path rather than reaching the model as an image. The ACP agents that support images handle them properly.
+- **Its sessions are its own.** They're recorded in your [timeline](/docs/getting-started/concepts#timeline) and replayed when you reopen them, like everything else. They're just stored in Atlas's own format rather than an agent vendor's.
+
+## Next
+
+- [Agents overview](/docs/agents): how Atlas drives agents in general
+- [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once

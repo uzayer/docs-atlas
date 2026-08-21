@@ -1,0 +1,89 @@
+---
+title: "Roadmap: what isn't built yet"
+description: Planned and partially-built capability. Nothing on this page is available in Atlas today.
+---
+
+**Everything on this page describes work that has not shipped.** None of it is available in Atlas today, and nothing here should be read as a description of how the app currently behaves. Every other page in these docs describes what exists now; this one is the single place where unbuilt work is written down.
+
+There are no dates on this page, because nobody has committed to any.
+
+<Callout type="warn">
+  If you arrived here from a search result, note the page you're on. The features below are **not** in Atlas. For what Atlas actually does today, start with [Features](/docs/features).
+</Callout>
+
+## Multiplayer AI
+
+**Not built.** This is the direction the rest of this page points at.
+
+Atlas today is single-player. You run agents against your own checkout, your [memory](/docs/features/memory) is on your device, and your [timeline](/docs/features/timeline) is your own record. Your team already shares the repository, and git handles that well. What it doesn't share is everything around the code: what an agent was asked, what it tried, why a change is shaped the way it is.
+
+The ambition is teammates and agents working from the same live context, not merely the same repo. The reasoning behind a change is available to the next person who touches it, whoever they are, and an agent picking up work inherits what the last agent and the last human both knew.
+
+Two primitives that ship today were built with that in mind. [Organisations](/docs/organisation) are an account model that already holds more than one person. The timeline is a durable, structured record of agent work rather than a scrollback buffer. Neither is a team feature yet. They are the foundations the team features would be built on, which is a different claim and a weaker one.
+
+## Cloud session sync
+
+**Not built: more precisely, built on this side and not on the other.**
+
+This is the piece where "coming soon" would be misleading, so here is the actual state.
+
+The client-side groundwork is real and in the app. Sessions are written to a local SQLite database whose tables already mirror the eventual server shape, so syncing would be a copy rather than a translation. The outbox isn't a separate queue but a sync-state column on each row, which means local-only operation is the same code path with draining switched off, rather than a second implementation to keep correct. The capture panel, the connect flow, and the local-to-cloud promotion path all exist as code.
+
+What doesn't exist is the service. The ingest service does not serve its read endpoints, so none of those paths are reachable. Cloud capture sits behind a disabled flag, the controls that would start it render as unavailable, no project can enter cloud mode, and **zero bytes leave your machine**.
+
+That flag flips when the service is deployed. Nothing else has to change, which is the reason for describing it this way rather than as a feature in design.
+
+## A team timeline
+
+**Not built.** The [timeline](/docs/features/timeline) today is single-user by construction, not by configuration: there is no setting that would turn it into a shared one.
+
+Three things make that concrete:
+
+- **The store is local.** It's a SQLite database in your project's gitignored state directory. Nothing writes to it but this machine.
+- **There is no author field.** A record carries no claim about who produced it, because authorship in a shared system has to be derived by the service receiving the data rather than declared by the client sending it. A client can say anything. The component that would stamp authorship is part of the ingest service, which isn't running.
+- **Git identity is deliberately not an account identity.** Commits carry an author name and email, and Atlas records them for display only. They're self-asserted (anyone can set them to anything), so they are never mapped to an organisation member. That mapping is a decision the team version has to make properly rather than inherit.
+
+And there is no inbound path at all: no mechanism exists by which a teammate's activity could arrive on your machine.
+
+A shared timeline would mean seeing which sessions produced which commits across everyone working in a repository, not just your own. It depends on cloud sync above.
+
+## Spaces
+
+**Built, but not a priority, and possibly moving.**
+
+Spaces is the canvas: a per-project board for laying work out visually. It exists in the app and works. It is not where most of the effort is going, and it may move from project scope to organisation scope, which would change where a board lives and who can reach it.
+
+Because that scope question is open, it isn't documented in [Features](/docs/features). Treat it as present but unsettled rather than planned.
+
+## The browser
+
+**Partly built.** What exists is a browser panel: an embedded webview you can open beside your work, read pages in, and save from, plus the plumbing that keeps it from painting over dialogs.
+
+What isn't built is the reason it's on this page. The intent is for the browser to be somewhere an agent can drive a real page and author tests against what it sees, rather than a viewer that happens to live in the window. None of that exists today.
+
+## Atlas's own agent
+
+Atlas's [native agent](/docs/agents/atlas) ships today, so this section is only about what it can't do yet.
+
+**Image input is not supported.** Paste a screenshot into a turn and it reaches the native agent as a file path rather than as an image. The third-party agents that support vision handle it properly, so this is a gap specific to Atlas's own agent.
+
+Beyond that, the native agent is where capabilities that depend on running in-process (rather than over a protocol) get built first. It already has direct memory retrieval and subagent delegation for that reason.
+
+## Smaller things not built yet
+
+Each of these is a control or behaviour you may actually encounter, so they're written down rather than left to be discovered.
+
+- **European hosting for organisations.** The region selector in the create-organisation form shows European Union, greyed out. Only United States is hosted. It's shown rather than hidden so the choice is visibly coming rather than absent.
+- **Invitation emails.** Inviting someone to an organisation does not send them an email. The accept link is copied to your clipboard and you pass it on yourself. See [members and invitations](/docs/organisation/members).
+- **Usage reporting for every agent.** [Mission Control](/docs/features/mission-control) reports Claude Code, Codex, and Review usage, because those expose the numbers. Sessions from other agents are recorded in your timeline but not counted in spend.
+- **The block terminal on shells other than zsh.** Command blocks depend on shell integration Atlas installs for zsh. Other shells run fine but present as a single plain stream. See [Terminal](/docs/features/terminal).
+
+## What is built
+
+If you've read this far, the useful counterweight is that everything else in these docs describes shipped behaviour:
+
+<Cards>
+  <Card title="Features" href="/docs/features" description="Every surface in the app as it works today." />
+  <Card title="Agents" href="/docs/agents" description="The agents you can run right now." />
+  <Card title="Quickstart" href="/docs/getting-started/quickstart" description="Open a project and run a session." />
+</Cards>

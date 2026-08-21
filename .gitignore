@@ -6,7 +6,7 @@
 
 # test & build
 /coverage
-/.next/
+.next/
 /out/
 /build
 *.tsbuildinfo
@@ -24,3 +24,6 @@ yarn-error.log*
 .env*.local
 .vercel
 next-env.d.ts
+
+# atlas reference repos
+.atlas/

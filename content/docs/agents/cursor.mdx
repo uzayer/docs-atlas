@@ -1,0 +1,41 @@
+---
+title: Cursor
+description: Running Cursor's agent inside Atlas.
+---
+
+Cursor ships a CLI that speaks ACP, which is what Atlas drives. You're getting Cursor's agent, not Cursor's editor.
+
+![A Cursor session running in the Atlas chat panel](/screenshots/placeholder.svg)
+
+## Install
+
+Install the Cursor CLI from [cursor.com/cli](https://cursor.com/cli), then relaunch Atlas. If Atlas can't find it, the error tells you where to get it and which login command to run next.
+
+## Sign in
+
+Run `cursor-agent login` in a terminal. Atlas also surfaces Cursor's sign-in method in the agent's own auth flow, but the CLI login is the reliable path.
+
+## Models
+
+Cursor advertises its model list when a session starts, and Atlas switches between them through the composer's model picker.
+
+## Modes
+
+Three modes, switchable from the composer: **agent**, **plan**, and **ask**.
+
+## Sessions
+
+Atlas records the session in your [timeline](/docs/getting-started/concepts#timeline) and links commits to it as [checkpoints](/docs/getting-started/concepts#checkpoint), the same as every other agent.
+
+<Callout type="warn">
+  On free plans, running out of quota arrives as an ordinary assistant message rather than an error. If Cursor starts replying with something about limits instead of doing the work, that's what happened. Atlas has no way to tell that message apart from a normal reply.
+</Callout>
+
+<Callout type="info">
+  This behaviour was verified against Cursor CLI 2026.07.23. Later versions may differ.
+</Callout>
+
+## Next
+
+- [Agents overview](/docs/agents): how Atlas drives agents in general
+- [Agent registry](/docs/agents/registry): installing other agents

@@ -1,0 +1,45 @@
+---
+title: Editor
+description: Reading and editing files alongside the agent.
+---
+
+Files open as tabs in the centre of the window. The editor is deliberately unambitious: it exists so you can read what the agent is doing and make the small corrections yourself rather than describing them.
+
+![A source file open in the editor with change bars in the gutter](/screenshots/placeholder.svg)
+
+## Syntax highlighting
+
+Grammars load per language, on demand. A file Atlas has no grammar for still opens: it renders as plain, readable text rather than refusing or guessing.
+
+Markdown files open rendered rather than as source.
+
+## Git in the gutter
+
+Two annotations, both live against the repository:
+
+- **Change bars** mark lines added, changed, or deleted relative to `HEAD`.
+- **Inline blame** shows who last touched the current line, when, and the commit summary, as a dim note at the end of the line that follows your cursor. Lines you've edited since the last commit read as uncommitted rather than borrowing the previous commit's author.
+
+Blame is off by default and only applies inside a git repository. Turn it on in [Settings → General](/docs/features/settings).
+
+## When the agent edits an open file
+
+This happens constantly, so it's worth knowing the rule:
+
+- If your buffer has **no unsaved changes**, Atlas reloads it from disk quietly. You see the agent's edit appear.
+- If you **do** have unsaved changes, Atlas doesn't touch your buffer. It flags the file and offers a Reload button, which discards your edits when you choose it.
+
+Atlas never overwrites work you haven't saved.
+
+<Callout type="info">
+  The change is detected from the file's modification time, so a file the agent read but didn't write costs nothing to check.
+</Callout>
+
+## Themes
+
+Editor themes are separate from the interface theme and live in [Settings → Appearance](/docs/features/settings). Switching one applies immediately: your open buffers and undo history survive the swap.
+
+## Next
+
+- [Explorer](/docs/features/explorer): finding the file in the first place
+- [Git & Diff](/docs/features/git): reviewing a change properly before committing it

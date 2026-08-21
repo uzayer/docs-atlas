@@ -1,0 +1,43 @@
+---
+title: Terminal
+description: A block-based terminal in the same window as the agent.
+---
+
+Atlas's terminal groups each command with its own output into a block, rather than giving you one continuous scroll. Every block carries the command, the directory it ran in, and how it ended.
+
+`⌘J` toggles the terminal panel; `⌘⇧T` opens a terminal in its own tab. From the [file tree](/docs/features/explorer), **Open in Terminal** starts one in the folder you right-clicked.
+
+![The block terminal with several finished commands and one running](/screenshots/placeholder.svg)
+
+<Callout type="info">
+  Blocks come from shell integration that Atlas installs for zsh. Under another shell the terminal still works: it just runs as one continuous stream without the per-command blocks.
+</Callout>
+
+## Blocks
+
+Each block can be collapsed, copied, searched, and re-run. Finished blocks show their exit status, so a failure is visible without reading the output for it.
+
+File paths and URLs in the output are clickable: paths open in Atlas or reveal in Finder, URLs open in your browser.
+
+Two things happen automatically on noisy commands: a block producing a very high volume of output is marked as such and its live rendering is throttled, and output past a generous limit is trimmed from the front rather than allowed to grow without bound.
+
+## Running things
+
+The input completes both command names and paths, and `Tab` cycles the suggestions. The current branch and whether the tree is dirty show next to it.
+
+While a command is running, the input feeds that command's stdin instead of composing a new one, so an installer's prompts, arrow keys, and `Enter` all reach it. A program that takes over the whole screen, like an editor or a pager, switches the view to a real terminal for as long as it runs.
+
+If a command asks for a password, Atlas detects it and gives you a masked field inline in the block rather than echoing what you type.
+
+## Stopping something
+
+The stop control interrupts first, the same as `Ctrl-C`. If the command is still alive a moment later, the control escalates to a force stop.
+
+## Splits
+
+A terminal tab can be split into panes horizontally and vertically, each running its own shell, with the tab strip showing which panes are busy.
+
+## Next
+
+- [Chat & Sessions](/docs/features/chat): the agent's own shell commands, and the Bash panel that lists them
+- [Explorer](/docs/features/explorer): opening a terminal in a specific folder

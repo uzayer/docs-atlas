@@ -1,0 +1,101 @@
+---
+title: Members & roles
+description: Inviting people to an organisation, the four roles, and what each one can do.
+---
+
+Members are a server-side surface, so member management needs two things: a **cloud** [organisation](/docs/organisation/organisations), and a live sign-in. Signing out doesn't move you out of an organisation, so both are checked separately: the switcher will tell you which one is missing.
+
+- Local organisation → *Turn on sync to manage members.*
+- Cloud organisation, signed out → *Sign in to manage members.*
+
+With both in place, **Invite & Manage members** in the switcher opens the roster.
+
+![The members list showing people, roles, and pending invitations](/screenshots/placeholder.svg)
+
+## The roster
+
+Two tabs, each with a count: **Members** for people who have joined, **Invitations** for invites that are outstanding or spent. A search box filters either by name or email.
+
+Each member row shows their photo, name, email, role, and how long ago they joined. Your own row is marked **You**.
+
+The roster is cached, so reopening it is instant and a refresh never blanks the table underneath you. The refresh button re-pulls it.
+
+The Invitations tab is admin-only at the API level. If you're not an admin it simply comes back empty rather than showing an error.
+
+## Inviting someone
+
+Admins get an invite bar above the table. Type or paste one or more email addresses: they become chips, and a malformed one is called out before you can send.
+
+Pick a role from the dropdown, then **Invite**.
+
+Invites are sent one at a time rather than as a batch, so if one fails the rest still land.
+
+<Callout type="warn">
+  **The invite link is the invite.** Atlas doesn't deliver invitation emails yet, so nothing arrives in your teammate's inbox.
+
+  On success the accept links are copied to your clipboard (*Invite link copied: send it to them*), and you have to pass them on yourself, over whatever channel you already use. Listing invitations later does **not** re-issue a link, so if you lose it, cancel the invitation and send a fresh one.
+</Callout>
+
+Once sent, the view switches to the Invitations tab so you can see what's pending. Admins can cancel any outstanding invitation from there.
+
+## The four roles
+
+Atlas has four roles, highest privilege first: **Admin**, **Product Owner**, **Developer**, and **Member**. Whoever creates an organisation is its admin.
+
+A role is set at invite time and changed from the **⋯** menu on a member's row. Roles are enforced by the server, from claims carried in your access token.
+
+The interface only hides buttons that would be refused anyway, so nothing is gated in the client alone.
+
+<Callout type="info">
+  **Inside Atlas, Admin is the only role that changes what you can do.** Product Owner, Developer, and Member are recorded on the account and shown against each person, but the desktop app grants all three the same access: they can open the organisation and read its roster, and that's it.
+
+  The distinctions exist for what's built on top of them later. Treat them today as labels you're choosing in advance, not as permissions.
+</Callout>
+
+### What Admin unlocks
+
+Only an admin can:
+
+- Invite people, and choose the role they're invited at
+- Change anyone's role
+- Cancel a pending invitation
+- Remove someone from the organisation
+- See the Invitations tab at all
+- Delete the organisation server-side
+
+### What everyone else can do
+
+Product Owner, Developer, and Member all get the same thing: open the organisation, see its projects, and view the member list. They have no invite bar, no row actions, and an empty Invitations tab.
+
+### When a role change takes effect
+
+A role change is applied immediately for you and shows in the roster right away. For the person whose role changed, it takes effect in **their next minted token**, so they may keep their old permissions briefly, until their client next refreshes.
+
+Nothing is wrong if a promoted teammate can't invite anyone for a moment.
+
+If a role change is refused by the server, the roster reverts to exactly what it was and tells you why.
+
+### Unknown roles
+
+If the server names a role this build of Atlas doesn't recognise (a fifth role added after your version shipped), the person's role renders as a dash rather than being guessed at.
+
+They're still a member; only the label is missing. Updating Atlas resolves it.
+
+The same applies to an organisation whose role you hold no claim for: it's listed without a role rather than hidden.
+
+## Removing someone
+
+An admin removes a member from the **⋯** menu on their row. It applies immediately and reverts with an explanation if the server refuses.
+
+Removing yourself is **Leave organisation** in the same place, with one exception:
+
+<Callout type="warn">
+  **An admin can't leave.** Doing so could strip an organisation of its last admin, leaving nobody able to invite, change roles, or delete it.
+
+  Give someone else the Admin role first, then leave. Removing *other* people (including other admins) stays allowed.
+</Callout>
+
+## Next
+
+- [Organisations](/docs/organisation/organisations): deleting one, and what that removes
+- [Your account](/docs/organisation/accounts): the sign-in that member management depends on
