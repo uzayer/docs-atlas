@@ -1,5 +1,6 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { Globe } from 'lucide-react';
+import Image from 'next/image';
 import { appName } from './shared';
 
 function DiscordIcon() {
@@ -30,7 +31,19 @@ export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       // JSX supported
-      title: appName,
+      title: (
+        <span className="flex items-center gap-2">
+          <Image
+            src="/icon.svg"
+            alt=""
+            aria-hidden="true"
+            width={28}
+            height={28}
+            className="rounded-[7px]"
+          />
+          <span>{appName}</span>
+        </span>
+      ),
     },
     githubUrl: 'https://github.com/pacifio/atlas',
     links: [
