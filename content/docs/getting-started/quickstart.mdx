@@ -9,15 +9,19 @@ Atlas has no setup wizard. You open a folder, and you're working.
 
 ## Open a project
 
-Press `⌘O` or click **Open Folder**, and pick a folder on disk. That folder becomes a [project](/docs/getting-started/concepts#project), and Atlas doesn't ask you to configure anything first.
+Press `⌘O` or click **Open Folder**, and pick a folder on disk. That folder becomes a [project](/docs/getting-started/concepts#project), and Atlas doesn't ask you to configure anything first: no prompts, no trust dialog.
 
 The next time you launch Atlas, that project shows up in the recent-projects list on the welcome screen.
+
+Atlas doesn't create a `.atlas/` directory up front, either. Each feature (memory, knowledge base, canvases, and the rest) creates its own piece of it the first time you use that feature. The one thing that happens automatically is quiet: Atlas adds `.atlas/` to your project's `.gitignore` if it isn't already there.
 
 ## Pick an agent
 
 Atlas opens on a chat panel. Click the agent icon in the composer to switch between agents: Claude Code, Codex, OpenCode, Cursor, Kilo Code, Atlas's native agent, or anything else you've installed from the agent registry.
 
 You can also press `⌥/` to cycle through them without touching the mouse. Each one is an [agent](/docs/getting-started/concepts#agent) driven the same way, against the same project.
+
+Each agent gets there differently. Atlas's native agent needs nothing, it's built into the app. Claude Code needs the `claude` CLI: if it's missing, a banner above the composer offers to install it and sign you in. Codex, Cursor, OpenCode, and Kilo Code install themselves in the background the first time you pick them. Anything else from the [agent registry](/docs/agents/registry) is installed manually, from Settings → Agents.
 
 ## Run a session
 

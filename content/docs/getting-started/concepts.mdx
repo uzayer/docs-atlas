@@ -7,48 +7,48 @@ Every term used across these docs is defined once, here. Other pages link back t
 
 ## Project
 
-A folder Atlas works in, plus its `.atlas/` directory.
+A folder Atlas works in, plus the `.atlas/` directory it creates alongside your code. Opening a folder is the only setup Atlas asks for, no config file, no wizard. Everything else, [organisations](#organisation), [agents](#agent), [shared memory](#shared-memory), attaches to a project rather than existing on its own. See [Quickstart](/docs/getting-started/quickstart).
 
 ## Organisation
 
-An online account container owning projects, with members and roles.
+An online account container owning projects, with members and roles. Every project belongs to exactly one organisation, and Atlas creates a local "Personal" one for you automatically, so you're never required to create one yourself. See [Organisations](/docs/organisation/organisations) for cloud versus local, and [Members & roles](/docs/organisation/members) for invites.
 
 ## Agent
 
-A coding agent Atlas drives: a built-in agent, one installed from the agent registry, or Atlas's native agent.
+A coding agent Atlas drives: a built-in agent, one installed from the [agent registry](/docs/agents/registry), or Atlas's native agent. Every agent goes through the same send path and reads from the same [shared memory](#shared-memory), so switching from one to another mid-task doesn't reset what either one knows.
 
 ## Session
 
-One agent conversation, recorded and resumable.
+One agent conversation, recorded and resumable: every message, tool call, and file change, kept as it happens. A session isn't the same as a [checkpoint](#checkpoint); one session can produce several commits, and each gets its own checkpoint.
 
 ## Checkpoint
 
-The link between a session and the commit containing its work.
+The link between a session and the commit containing its work. It's what a commit doesn't tell you on its own: which session produced it, what the agent was asked, and the reasoning behind the change. Checkpoints survive rebases and amends, and orphan rather than guess when a squash makes the link genuinely ambiguous.
 
 ## Timeline
 
-The record of your sessions and the checkpoints they produced.
+The record of your sessions and the checkpoints they produced. It's how you get back to the reasoning behind a change without reading a raw transcript, select a checkpoint and chat with it directly.
 
 ## Shared memory
 
-On-device index every agent reads from and writes to.
+On-device index every agent reads from and writes to: plans, decisions, file changes, and failures, matched against what you're asking about. It's what makes switching agents mid-task different from starting over, not the same thing as the [knowledge base](#knowledge-base), which is what you write down on purpose.
 
 ## Agent preferences
 
-A rule or preference Atlas distils from your instruction files and memory, and surfaces for editing.
+A rule or preference Atlas distils from your instruction files and memory, and surfaces for editing. It's a readable, editable view of what an agent has already picked up, not a separate rule system you maintain by hand. See [Agent preferences](/docs/context/agent-preferences).
 
 ## Skill
 
-A `SKILL.md` file scoped globally or per project.
+A `SKILL.md` file scoped globally or per project, enabled per agent by symlinking into that agent's own skills directory. Type `/` in the composer to invoke one directly.
 
 ## Pack
 
-An installable bundle of skills, commands, hooks, subagents, rules, and scripts.
+An installable bundle of skills, commands, hooks, subagents, rules, and scripts. Typically a GitHub repo, discovered through the skills.sh index and installed in one step rather than assembled by hand.
 
 ## Knowledge base
 
-Markdown notes in `.atlas/knowledge/`.
+Markdown notes in `.atlas/knowledge/`. The deliberate counterpart to [shared memory](#shared-memory): memory is what Atlas infers on its own, a knowledge base entry is what you decided was worth writing down.
 
 ## Mention
 
-`@` anything: files, folders, symbols, branches, notes, papers, sessions, and more.
+`@` anything: files, folders, symbols, branches, notes, papers, sessions, and more. A file resolves to a path the agent reads on demand rather than a paste, so mentioning a large file doesn't occupy the context window for the rest of the session.

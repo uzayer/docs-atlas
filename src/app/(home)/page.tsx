@@ -6,7 +6,7 @@ export default function HomePage() {
       <h1 className="text-2xl font-bold mb-4">Atlas Docs</h1>
       <p>
         Read the{' '}
-        <Link href="/docs/getting-started/introduction" className="font-medium underline">
+        <Link href="/docs" className="font-medium underline">
           documentation
         </Link>{' '}
         to get started.

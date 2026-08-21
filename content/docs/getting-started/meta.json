@@ -1,5 +1,5 @@
 {
   "title": "Getting Started",
-  "icon": "Rocket",
-  "pages": ["introduction", "quickstart", "concepts", "power-user"]
+  "defaultOpen": true,
+  "pages": ["index", "quickstart", "concepts", "power-user"]
 }
