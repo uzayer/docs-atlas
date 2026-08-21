@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
-  <rect width="1280" height="800" fill="#141414"/>
-  <rect x="1" y="1" width="1278" height="798" fill="none" stroke="#3d3d3d" stroke-width="2"/>
-  <text x="640" y="400" fill="#ffffff" font-family="ui-monospace, monospace" font-size="28" text-anchor="middle" dominant-baseline="middle">
-    Screenshot placeholder
-  </text>
-</svg>
