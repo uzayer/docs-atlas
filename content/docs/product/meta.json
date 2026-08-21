@@ -1,4 +1,4 @@
 {
   "title": "Product",
-  "pages": ["chat", "editor", "terminal", "git", "explorer", "review", "settings"]
+  "pages": ["chat", "editor", "terminal", "explorer", "review", "settings"]
 }

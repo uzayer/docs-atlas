@@ -4,11 +4,11 @@
   "pages": [
     "index",
     "registry",
+    "atlas",
     "claude-code",
     "codex",
     "opencode",
     "cursor",
-    "kilo-code",
-    "atlas"
+    "kilo-code"
   ]
 }
