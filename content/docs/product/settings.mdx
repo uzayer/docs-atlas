@@ -1,62 +1,30 @@
 ---
 title: Settings
-description: Where everything configurable lives.
+description: Configure Atlas for the way you work.
 icon: Settings
 ---
 
-`⌘,` opens Settings as a tab. It's organised as a list of sections down the left; this page says what's in each one.
+Press `⌘,` to open Settings in a tab.
 
-## General
+## Set the essentials
 
-Application preferences, and the section most worth reading once:
+**General** controls sending behaviour, `.atlas` gitignore setup, hidden files, inline blame, Atlas logs, privacy-preserving usage data, follow-up suggestions, the Atlas CLI, and model pricing.
 
-- **Enter to send**: `Enter` sends and `Shift+Enter` newlines, or the reverse. `⌘Enter` sends either way.
-- **Auto-add `.atlas` to `.gitignore`**: Atlas keeps its per-project state in `.atlas/`, and adds it to the project's `.gitignore` when you open a git-tracked project.
-- **Show hidden files**: dotfiles in the [file tree](/docs/product/explorer). On by default.
-- **Inline Git blame**: the per-line annotation in the [editor](/docs/product/editor).
-- **Atlas Logs**: record Atlas's own events into the Logs tab, so you can hand over a timeline when something misbehaves.
-- **Usage data**: whether Atlas collects privacy-preserving usage data, and separately whether it's linked to your account or stays anonymous. Prompts, code, file paths, and keys are never included.
-- **Next-step suggestions**: the follow-up chips at the end of a [chat](/docs/product/chat) turn.
-- **Atlas CLI**: installs an `atlas` command so you can type `atlas .` in any terminal to open that folder as a project.
-- **Model pricing**: per-model prices from models.dev, shown in the model picker. Refreshed on launch; this button forces it.
+Use **Appearance** for interface and editor themes, and **Layouts** for saved panel arrangements. Press `⌘⌥L` to switch layouts anywhere.
 
-## Appearance
+## Add integrations
 
-Interface theme and editor theme, on separate tabs, plus interface zoom (`⌘+`, `⌘-`, `⌘0`).
+Use **API Keys** for Atlas Agent, commit-message drafting, and Review. Atlas stores keys locally and shows only their last four characters after you save them.
 
-## Layouts
+Use **Skills** to manage skills and packs, **Agents** to manage the agent registry, and **Local Models** to download embedding models for code indexing and memory retrieval.
 
-Ready-made arrangements of panels and tabs. `⌘⌥L` switches between them from anywhere.
+Changing the embedding model rebuilds the index after Atlas asks for confirmation.
 
-## API Keys
+## Finish the setup
 
-Provider keys for the parts of Atlas that call a model on your behalf: [Atlas's own agent](/docs/agents/atlas), commit-message drafting, and code review. Keys are stored locally; once saved, Atlas shows you only the last four characters and when you added it.
-
-## Skills
-
-Your installed [skills](/docs/getting-started/concepts#skill) and [packs](/docs/getting-started/concepts#pack), and the marketplace to add more.
-
-## Agents
-
-The [agent registry](/docs/agents/registry): searching, installing, and removing agents.
-
-## Local Models
-
-Embedding models that run on your machine, downloaded here. These back the project's code index and memory retrieval. Changing the embedding model rebuilds the index, so Atlas asks first.
-
-## Updates
-
-Automatic updates on or off, and a manual check. Updates are Apple-signed and notarised, and the signature is verified before anything is installed.
-
-## Keybindings
-
-A reference list of every shortcut, grouped by what it applies to: general, tabs, splits, layout, chat, and the knowledge base.
-
-## About
-
-Version information.
+Use **Updates** to choose automatic updates or check manually. Use **Keybindings** for the full shortcut reference. **About** shows version information.
 
 ## Next
 
-- [Agent registry](/docs/agents/registry): the Agents section, in full
-- [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once
+- [Skills](/docs/context/skills): install reusable instructions
+- [Discover agents](/docs/agents/registry): manage coding agents

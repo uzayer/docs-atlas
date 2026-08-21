@@ -1,69 +1,34 @@
 ---
 title: Timeline
-description: Your record of what agents did, and which commits it became.
+description: Trace agent work from a session to the commit it produced.
 icon: Timeline
 ---
 
-A [session](/docs/getting-started/concepts#session) is one agent conversation. A [checkpoint](/docs/getting-started/concepts#checkpoint) is the link between a session and the commit its work landed in. The timeline is the record of both, kept per [project](/docs/getting-started/concepts#project).
+Use the timeline to answer a simple question: which agent session produced this commit? Atlas keeps sessions and [checkpoints](/docs/getting-started/concepts#checkpoint) together for each project.
 
-The reason it exists is simple: sessions are ephemeral. They scroll out of the sidebar, and six weeks later the reasoning behind a change is gone, including for the person who wrote it.
+## Follow a commit back to its work
 
-The commit survives. The timeline is what connects the commit back to the conversation that produced it.
+Open a commit from [Source Control](/docs/product/git) to see the sessions that contributed to it. Open a session in the timeline to see the commit it became.
 
-<Callout type="info">
-  This is your own record. It's stored locally in your project's Atlas directory, it never waits on a network connection, and it works offline as the ordinary case rather than a degraded one.
-</Callout>
+Atlas stores this record locally in the project's Atlas directory. It works offline and never requires a network connection.
 
-## How linking works
+## Let Atlas link the work
 
-This is the part worth understanding, because the behaviour is deliberate and some of it is surprising.
+Atlas watches repository history without installing git hooks, changing git configuration, or writing refs. It can therefore connect work committed from Atlas, another editor, or a terminal.
 
-### Commits are observed, not intercepted
+For existing files, Atlas links a session when the commit includes a path the agent touched. For new files, the committed content must match the agent's output. This keeps normal follow-up edits linked while avoiding credit for files you replaced yourself.
 
-Atlas installs no git hooks, writes no refs, and touches no git config. Your repository is never modified. Atlas watches where refs move and walks them when the project opens.
+Once Atlas settles a touched path, it stops using that touch to nominate future commits. Merge commits do not create checkpoints, and a purely human commit stays unlinked.
 
-The consequence is the useful part: a commit made from the integrated terminal, from lazygit, from a different editor, or on a day when Atlas was closed entirely still finds its session. A hook couldn't do that: a hook can't see a commit made before it existed.
+## Keep sessions without commits
 
-### The rule is asymmetric
+Atlas records a session even when it never produces a commit. Git is optional: non-repository folders still keep sessions, but cannot produce checkpoints.
 
-For each file present in both the commit and a session's touched files:
+## Protect what is stored
 
-- **The file already existed** in the parent commit → it links on the path alone. Reviewing and adjusting an agent's output before committing is the normal workflow, and demanding an exact content match would silently discard most real sessions.
-- **The file is new** → it links only if what was committed matches what the agent actually wrote. This is what stops "the agent created it, then I deleted it and wrote my own" from being credited to the agent.
-
-Getting either half wrong is invisible from the outside. Too strict and the timeline quietly records almost nothing; too loose and it confidently attributes your work to an agent. The asymmetry is the design.
-
-### Touches are consumed
-
-Once a commit settles a touched path (links it, or displaces it), that touch stops nominating the session for later commits. Without this, every future commit to a frequently-edited file would keep being attributed to the same session forever.
-
-### Merge commits produce no checkpoints
-
-A merge itself creates nothing, because linking it would credit every merged-in change a second time under a commit that didn't produce it, and `git pull` creates merge commits constantly.
-
-The side branch's own commits aren't lost. When the walk reaches a merge it evaluates the commits the merge brought in through the same rule, so work committed on a branch while Atlas was closed and then merged is linked exactly once, at the commit that actually produced it.
-
-### A purely human commit produces no checkpoint
-
-If you wrote it yourself, nothing links. That's correct behaviour, not a gap: most repositories have plenty of commits no agent was involved in, and the timeline is not trying to claim them.
-
-## Sessions without commits
-
-A session that never produced a commit is still recorded in full. Its transcript is the point, not its output.
-
-This also means git is optional: a directory that isn't a repository captures sessions perfectly well and simply produces no checkpoints.
-
-## Redaction
-
-Agents read files, and some of those files contain secrets: an agent that reads a `.env` puts its contents verbatim into the transcript.
-
-Atlas scrubs before it writes to disk, not before it uploads, because a guarantee that only holds at upload time doesn't hold at all for a local-only record.
-
-## Getting there
-
-From a commit in [Source Control](/docs/product/git), the History detail lists the sessions that produced it and opens them here. From the other direction, the timeline shows which commit a session ended up in.
+Atlas redacts secrets before it writes a transcript to disk. This protects local records when an agent reads a file such as `.env`.
 
 ## Next
 
-- [Memory](/docs/context/memory): what Atlas carries between sessions
-- [Git & Diff](/docs/product/git): where commits get made
+- [Memory](/docs/context/memory): carry context into the next session
+- [Git & Diff](/docs/product/git): review and create commits

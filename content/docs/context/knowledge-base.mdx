@@ -1,28 +1,24 @@
 ---
 title: Knowledge base
-description: Notes you write, in the project, that agents can read.
+description: Write project notes that agents can use.
 icon: BookOpen
 ---
 
-The [knowledge base](/docs/getting-started/concepts#knowledge-base) is a set of markdown notes stored in your project's Atlas directory. It's the deliberate counterpart to [memory](/docs/context/memory): memory is what Atlas infers, and this is what you decide to write down.
+Use the knowledge base for facts and decisions you want to write down deliberately. Atlas stores these markdown notes in your project's directory and indexes them alongside [memory](/docs/context/memory).
 
-It lives in the left panel, alongside the [file tree](/docs/product/explorer).
+## Write a note
 
-## Writing
+Open the knowledge base from the left panel. The block editor gives you headings, lists, an outline, properties, icons, and covers. Press `⌘S` to save.
 
-Notes are edited in a block editor rather than as raw markdown: headings, lists, and the usual structure, with an outline you can jump around. `⌘S` saves.
+Use the sidebar to move through notes. Press `⌘'` to inspect the current note and `⌘;` to show or hide the sidebar. Notes can link to each other and show their backlinks.
 
-Each note can carry properties, an icon, and a cover. A sidebar holds the tree of notes; an inspector (`⌘'`) shows the current note's details, and the sidebar toggles with `⌘;`.
+## Give a note to an agent
 
-Notes link to each other, and a note shows what links back to it.
+Type `@` in the [composer](/docs/product/chat) and select a note. Atlas appends its contents as a visible context block, so you know exactly what the agent received.
 
-## Using a note as context
-
-Type `@` in the [composer](/docs/product/chat) and knowledge base entries are one of the things you can [mention](/docs/getting-started/concepts#mention). The note's content is appended to your message as a context block, so you can see exactly what the agent was handed.
-
-Notes are also indexed into memory, so relevant ones can surface on their own without you naming them.
+Atlas also indexes notes, so relevant information can surface without an explicit mention.
 
 ## Next
 
-- [Memory](/docs/context/memory): what Atlas indexes without being asked
-- [Research](/docs/context/research): papers as agent context
+- [Memory](/docs/context/memory): carry useful context between sessions
+- [Research](/docs/context/research): add papers to a project

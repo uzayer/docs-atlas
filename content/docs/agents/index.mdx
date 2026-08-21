@@ -4,13 +4,11 @@ description: Run the coding agent that fits the work.
 icon: Bot
 ---
 
-Choose the coding agent that fits the job. Atlas gives it your project, keeps its work in the same [timeline](/docs/getting-started/concepts#timeline), and carries forward the [shared memory](/docs/getting-started/concepts#shared-memory) your team has built.
+Choose an agent, point it at your project, and keep the work in one shared record. Atlas keeps sessions, [checkpoints](/docs/getting-started/concepts#checkpoint), and [shared memory](/docs/getting-started/concepts#shared-memory) connected when you switch agents.
 
-Switching agents does not mean starting from zero. Your sessions and [checkpoints](/docs/getting-started/concepts#checkpoint) stay connected to the same project.
+## Start with a built-in agent
 
-## Built-in agents
-
-Atlas includes six agents in the switcher when you open the app:
+Atlas includes these agents in the switcher:
 
 - [Claude Code](/docs/agents/claude-code)
 - [Codex](/docs/agents/codex)
@@ -19,32 +17,19 @@ Atlas includes six agents in the switcher when you open the app:
 - [Kilo Code](/docs/agents/kilo-code)
 - [Atlas Agent](/docs/agents/atlas)
 
-They have dedicated setup guidance and a fixed place at the top of the switcher. Claude Code and Codex have the deepest Atlas integration.
+Claude Code and Codex have the deepest Atlas integration.
 
 ## Add another agent
 
-Atlas also supports agents published to the [Agent Client Protocol](https://agentclientprotocol.com) registry. Install one from [Discover agents](/docs/agents/registry) and it joins the switcher below the built-in agents.
+Install any compatible Agent Client Protocol agent from [Discover agents](/docs/agents/registry). Atlas adds it below the built-in agents and gives it the same project context.
 
-Atlas does not need an approved list for an agent to be useful. If it speaks ACP, it can work with your project.
+Every agent you run can work in the project you opened, add sessions to the timeline, link its commits to checkpoints, and read shared memory. An agent you installed moments ago can use context your team already built.
 
-## What stays the same
+## Handle sign-in and models
 
-Every agent you run in Atlas:
-
-- Works in the project you opened.
-- Adds its sessions to the same timeline.
-- Links commits it makes back to its session as checkpoints.
-- Reads the same shared memory as every other agent.
-
-An agent you installed five minutes ago can use the context Atlas has already gathered about the codebase.
-
-## Authentication and models
-
-Each agent keeps its own authentication and model options. Atlas does not replace them with a generic login or model list.
-
-For the built-in agents, Atlas can offer setup and sign-in help. For registry agents, use the repository and website linked from the agent card for agent-specific instructions.
+Agents keep their own authentication and model choices. Atlas offers setup help for built-in agents; for registry agents, use the repository or website linked from the agent card.
 
 ## Next
 
-- [Discover agents](/docs/agents/registry): browse, install, and manage more agents
-- [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once
+- [Discover agents](/docs/agents/registry): browse compatible agents
+- [Concepts](/docs/getting-started/concepts): learn Atlas terminology

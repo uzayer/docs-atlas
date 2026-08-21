@@ -1,30 +1,28 @@
 ---
 title: Explorer
-description: The file tree for the project you have open.
+description: Browse and manage the files in your project.
 icon: FolderTree
 ---
 
-The left panel (`⌘B`) holds the file tree for your [project](/docs/getting-started/concepts#project). It watches the filesystem, so an agent creating, renaming, or deleting files shows up without a refresh: there is no refresh button because there is nothing to refresh.
+Press `⌘B` to open the file tree. Atlas watches your project, so files an agent creates, renames, or deletes appear without a refresh.
 
-## Git status
+## Find changed files
 
-Changed files are coloured by their status: added, modified, deleted, renamed, conflicted, untracked. A collapsed folder takes the colour of the most serious change anywhere beneath it, so you can find the interesting part of a tree without expanding it.
+Atlas colours files by git status: added, modified, deleted, renamed, conflicted, or untracked. Collapsed folders take the most serious status beneath them.
 
-## Selecting and moving
+## Select and move files
 
-Click selects, `⌘`-click adds, `⇧`-click extends (the usual Finder behaviour), and every context-menu action applies to the whole selection.
+Click to select, `⌘`-click to add, and `⇧`-click to extend a selection. Drag files or folders onto another folder to move them, or drop files from Finder to copy them in.
 
-Dragging a file or folder onto another folder moves it. Hovering over a collapsed folder mid-drag expands it. Dropping files in from Finder copies them in.
+## Use the context menu
 
-## Context menu
+Right-click a row to create, open, cut, copy, duplicate, paste, rename, ignore, or delete files and folders. Right-click empty space to create at the project root, reveal it in Finder, or collapse the tree.
 
-Right-click a row for: **New File** and **New Folder**, **Open in Terminal**, **Cut** / **Copy** / **Duplicate** / **Paste**, **Copy Path** and **Copy Relative Path**, **Add to .gitignore**, **Rename**, and **Delete**. Right-clicking empty space gives you the same creation actions against the project root, plus **Reveal Project in Finder** and **Collapse All**.
+## Show hidden files
 
-## Hidden files
-
-Dotfiles and dot-directories are shown by default, so nothing about your project is quietly invisible. Turn them off in [Settings → General](/docs/product/settings) for a cleaner tree.
+Atlas shows dotfiles by default. Turn them off in [Settings → General](/docs/product/settings) when you want a cleaner tree.
 
 ## Next
 
-- [Editor](/docs/product/editor): what happens when you open one
-- [Git & Diff](/docs/product/git): the same changes, as diffs
+- [Editor](/docs/product/editor): read and change a file
+- [Git & Diff](/docs/product/git): review the diff

@@ -1,44 +1,34 @@
 ---
 title: Skills
-description: Reusable instructions, and bundles of them.
+description: Add reusable instructions and bundles of them.
 icon: Package
 ---
 
-A [skill](/docs/getting-started/concepts#skill) is a `SKILL.md` file: a named piece of instruction an agent can invoke by name.
+Use a [skill](/docs/getting-started/concepts#skill) to give an agent a named instruction it can invoke. Use a [pack](/docs/getting-started/concepts#pack) to install several skills, commands, agents, rules, hooks, or scripts together.
 
-A [pack](/docs/getting-started/concepts#pack) is an installable bundle that can ship several of them at once, along with commands, agents, rules, hooks, and scripts.
+Manage both in **Settings → Skills**.
 
-Both live in [Settings → Skills](/docs/product/settings).
+## Choose the scope
 
-## Scope
+Make a skill **global** to use it in every project, or **project** to keep it in one. Enable each skill only for the agents that should receive it.
 
-Every skill is either **global** (available in every project) or **project**, scoped to the one you're in. You choose when you create or install it.
+Atlas keeps one canonical copy and links it into each agent's own skills directory. A skill uses no context until the agent invokes it. You can also adopt an existing agent-specific skill into Atlas so it works across agents.
 
-## How an agent gets a skill
+## Install a pack
 
-Atlas keeps one canonical copy of each skill and links it into the agent's own skills directory. The agent reads it exactly as it would read a skill you installed by hand, which means enabling a skill costs no tokens until the agent actually invokes it.
+Search the skills.sh registry, preview a pack, then install it. Atlas fetches the source repository, tracks the installed version in a lockfile, and can check for updates.
 
-A skill can be enabled for some agents and not others, and the list shows which. Agents that don't support skills are marked as such rather than silently doing nothing.
+Skills become invokable instructions. Commands, agents, and rules from the pack become items you can [mention](/docs/getting-started/concepts#mention) in the composer.
 
-Skills that already exist in an agent's own directory (one you installed for Claude Code directly, say) are listed too, and can be adopted into Atlas's store so they work across every agent instead of just the one.
+## Invoke a skill
 
-## Packs
-
-A pack is one source repository, fetched whole and parsed into its components. Discovery searches the skills.sh registry; the content comes from the repository itself.
-
-You can preview a pack before installing it, so you can see the components it ships without committing to them. Installed packs are tracked with a lockfile, and Atlas can check whether a newer version exists.
-
-Components a pack delivers are usable like anything else: skills become invokable skills, and commands, agents, and rules become available to [mention](/docs/getting-started/concepts#mention) in the composer.
-
-## Invoking a skill
-
-Type `/` in the [composer](/docs/product/chat). Skills the agent advertises appear in the picker and pass straight through to it.
+Type `/` in the [composer](/docs/product/chat) and choose a skill the current agent advertises.
 
 <Callout type="info">
-  A passthrough command only runs when it's the first thing in your message. Mid-sentence it's sent as ordinary text.
+  A passthrough command runs only when it starts the message. Atlas sends it as ordinary text when it appears mid-sentence.
 </Callout>
 
 ## Next
 
-- [Agent preferences](/docs/context/agent-preferences): standing rules, as opposed to invokable instructions
-- [Chat & Sessions](/docs/product/chat): invoking a skill in a conversation
+- [Agent preferences](/docs/context/agent-preferences): edit standing rules
+- [Chat & Sessions](/docs/product/chat): work with an agent

@@ -1,54 +1,34 @@
 ---
 title: Claude Code
-description: Running Anthropic's Claude Code inside Atlas.
+description: Run Anthropic's Claude Code inside Atlas.
 icon: ClaudeCode
 ---
 
-Claude Code is the agent Atlas has done the most work around, and the one most people open the app to use. Atlas can install it for you, sign you in, and read Claude Code's own transcripts off disk when you resume a session.
+Atlas can install Claude Code, help you sign in, and reopen its saved conversations.
 
-## Install
+## Install and sign in
 
-You don't have to install it yourself.
+Pick Claude Code in the composer. If it is missing, select **Install Claude Code** and Atlas runs Anthropic's official installer while showing its output.
 
-If Claude Code isn't on your machine, a pill appears above the composer that says **Install Claude Code**. Click it and Atlas runs Anthropic's official install script, showing a live tail of its output while it works.
+You need Node.js. Atlas reads your login shell's `PATH`, so it finds Node installed with nvm, fnm, volta, asdf, or Homebrew even when you launch Atlas from the Dock.
 
-When it finishes, the pill turns into *Claude Code installed*. If the install fails, it becomes a retry button with the error attached.
+When Claude Code needs authentication, select **Sign in to Claude Code** and finish one of the methods it offers. Atlas checks again when you return.
 
-The agent itself launches through `npx`, so you'll need Node.js. If it's missing, Atlas says so specifically rather than surfacing a bare "file not found."
+## Choose a model or mode
 
-<Callout type="info">
-  Atlas reads your login shell's `PATH` at startup, so a `node` installed via nvm, fnm, volta, asdf, or Homebrew is found even when you launch Atlas from the Dock rather than a terminal.
-</Callout>
+Use the composer to select the model and mode Claude Code exposes for this session. You can change modes while the session is running.
 
-## Sign in
+## Resume your work
 
-Once Claude Code is installed but not authenticated, the pill becomes **Sign in to Claude Code**.
+Claude Code stores transcripts in `~/.claude/projects/`. Atlas reads them when you reopen a session, so the real conversation is ready before the interface reconnects to the agent.
 
-Clicking it opens a dialog listing the sign-in methods Claude Code itself advertises. Atlas doesn't hardcode them, it asks the agent.
-
-Pick one and Atlas runs it, then waits. The pill shows *Waiting for sign-in…* and re-checks when you come back.
-
-When both checks pass, the pill disappears entirely and the composer returns to its normal layout.
-
-## Models
-
-Claude Code exposes its model as a configuration option over ACP, and Atlas switches it through the composer's model picker. Your selection applies to the session you're in.
-
-## Modes
-
-Claude Code advertises its modes over ACP, and they appear in the composer's mode picker. Switching modes mid-session is fine.
-
-## Sessions
-
-This is where Claude Code gets treatment nothing else does. It writes its own transcripts to `~/.claude/projects/`, and Atlas parses them directly: when you reopen a session, Atlas hydrates it from that file before the UI even attaches, so you get the real conversation back rather than an empty panel.
-
-Everything else follows the usual rules: the session is recorded in your [timeline](/docs/getting-started/concepts#timeline), and Atlas links commits made during it to that session as [checkpoints](/docs/getting-started/concepts#checkpoint).
+Atlas also records the session in your [timeline](/docs/source-control/timeline) and connects its commits to [checkpoints](/docs/getting-started/concepts#checkpoint).
 
 <Callout type="warn">
-  If you launched Atlas from inside a Claude Code shell, Claude Code's anti-nesting guard would normally refuse to start. Atlas strips the variable that triggers it, so this just works, but it's why launching Atlas from a Claude Code session behaves differently than you might expect.
+  If you launch Atlas from a Claude Code shell, Atlas clears Claude Code's anti-nesting variable before starting the agent. That is why this path behaves differently from starting it in a fresh shell.
 </Callout>
 
 ## Next
 
-- [Codex](/docs/agents/codex): the other deeply supported agent
-- [Supported agents](/docs/agents): how Atlas connects coding agents
+- [Codex](/docs/agents/codex): another deeply integrated agent
+- [Supported agents](/docs/agents): see every available option

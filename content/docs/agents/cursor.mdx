@@ -1,40 +1,34 @@
 ---
 title: Cursor
-description: Running Cursor's agent inside Atlas.
+description: Run Cursor's agent inside Atlas.
 icon: Cursor
 ---
 
-Cursor ships a CLI that speaks ACP, which is what Atlas drives. You're getting Cursor's agent, not Cursor's editor.
+Atlas runs Cursor's coding agent through its ACP-enabled CLI. It does not embed Cursor's editor.
 
-## Install
+## Install and sign in
 
-Install the Cursor CLI from [cursor.com/cli](https://cursor.com/cli), then relaunch Atlas. If Atlas can't find it, the error tells you where to get it and which login command to run next.
+Install the [Cursor CLI](https://cursor.com/cli), then relaunch Atlas. Sign in with `cursor-agent login` in a terminal.
 
-## Sign in
+Atlas also surfaces Cursor's own sign-in flow, but the CLI login is the reliable path.
 
-Run `cursor-agent login` in a terminal. Atlas also surfaces Cursor's sign-in method in the agent's own auth flow, but the CLI login is the reliable path.
+## Choose a model or mode
 
-## Models
+Cursor provides its model list when a session starts. Select one from the composer, then choose **agent**, **plan**, or **ask** mode.
 
-Cursor advertises its model list when a session starts, and Atlas switches between them through the composer's model picker.
+## Resume your work
 
-## Modes
-
-Three modes, switchable from the composer: **agent**, **plan**, and **ask**.
-
-## Sessions
-
-Atlas records the session in your [timeline](/docs/getting-started/concepts#timeline) and links commits to it as [checkpoints](/docs/getting-started/concepts#checkpoint), the same as every other agent.
+Atlas records every Cursor session in your [timeline](/docs/source-control/timeline) and links its commits to [checkpoints](/docs/getting-started/concepts#checkpoint).
 
 <Callout type="warn">
-  On free plans, running out of quota arrives as an ordinary assistant message rather than an error. If Cursor starts replying with something about limits instead of doing the work, that's what happened. Atlas has no way to tell that message apart from a normal reply.
+  Cursor reports a free-plan quota limit as an ordinary assistant message. If it starts replying about limits instead of working, the quota is exhausted.
 </Callout>
 
 <Callout type="info">
-  This behaviour was verified against Cursor CLI 2026.07.23. Later versions may differ.
+  Atlas verified this behaviour with Cursor CLI 2026.07.23. Later versions may differ.
 </Callout>
 
 ## Next
 
-- [Supported agents](/docs/agents): how Atlas connects coding agents
-- [Discover agents](/docs/agents/registry): browse and install more agents
+- [Supported agents](/docs/agents): see every available option
+- [Discover agents](/docs/agents/registry): install another ACP agent

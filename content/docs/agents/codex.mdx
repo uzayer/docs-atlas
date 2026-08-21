@@ -1,42 +1,34 @@
 ---
 title: Codex
-description: Running OpenAI's Codex inside Atlas.
+description: Run OpenAI's Codex inside Atlas.
 icon: Codex
 ---
 
-Codex is the other agent Atlas supports in depth. If you already use the Codex CLI, there's almost nothing to set up. Atlas picks up the credentials you've got.
+If you already use the Codex CLI, choose Codex in Atlas and start working. Atlas uses the credentials you already have.
 
-## Install
+## Start Codex
 
-Nothing to install by hand. Atlas launches Codex through `npx`, which fetches the ACP adapter on first run, so the only prerequisite is Node.js. If it's missing, Atlas tells you exactly that and points you at nodejs.org.
+Atlas launches Codex through `npx`, which fetches the ACP adapter on its first run. You only need Node.js. If Atlas cannot find it, it tells you and links to nodejs.org.
 
-<Callout type="info">
-  Atlas reads your login shell's `PATH` at startup, so a `node` installed via nvm, fnm, volta, asdf, or Homebrew is found even when you launch Atlas from the Dock rather than a terminal.
-</Callout>
+Atlas reads your login shell's `PATH`, so Node installed with nvm, fnm, volta, asdf, or Homebrew works when Atlas opens from the Dock.
 
-## Sign in
+## Sign in once
 
-**You probably already are.** Codex inherits authentication from your environment and your Codex config directory: the ChatGPT login you did through the Codex CLI, or an `OPENAI_API_KEY` in your environment.
+Codex inherits the ChatGPT login from your Codex CLI or an `OPENAI_API_KEY` from your environment. Atlas does not ask you to sign in again or keep a second credential.
 
-Atlas doesn't ask you to log in again and doesn't store a separate credential of its own.
+If authentication fails, sign in with the Codex CLI, then return to Atlas.
 
-If Codex fails to start with an authentication error, fix it the way you would for the CLI: sign in with Codex directly, then come back.
+## Choose a model or mode
 
-## Models
+Use the composer to choose the model and mode Codex advertises for the current session.
 
-Codex exposes its model as a configuration option over ACP, and Atlas switches it through the composer's model picker. Your selection applies to the session you're in.
+## Resume your work
 
-## Modes
+Atlas keeps the session in your [timeline](/docs/source-control/timeline) and links its commits to [checkpoints](/docs/getting-started/concepts#checkpoint).
 
-Codex advertises its modes over ACP, and they appear in the composer's mode picker alongside the model.
-
-## Sessions
-
-Atlas records the session itself: it lands in your [timeline](/docs/getting-started/concepts#timeline), and Atlas links commits made during it to that session as [checkpoints](/docs/getting-started/concepts#checkpoint), so the history you care about is Atlas's, not the agent's.
-
-What Codex doesn't have is the on-disk transcript parsing [Claude Code](/docs/agents/claude-code#sessions) gets, where Atlas reads the agent's own log files to rebuild a conversation. That's specific to Claude Code's format.
+Unlike [Claude Code](/docs/agents/claude-code#resume-your-work), Codex does not provide an on-disk transcript Atlas can parse to rebuild a prior conversation.
 
 ## Next
 
-- [Claude Code](/docs/agents/claude-code): the other deeply supported agent
-- [Supported agents](/docs/agents): how Atlas connects coding agents
+- [Claude Code](/docs/agents/claude-code): another deeply integrated agent
+- [Supported agents](/docs/agents): see every available option

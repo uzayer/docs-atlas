@@ -1,60 +1,48 @@
 ---
 title: Agent preferences
-description: The working rules Atlas found in what you already wrote.
+description: Review and edit the working rules Atlas finds in your files.
 icon: SlidersHorizontal
 ---
 
-You don't create agent preferences. Atlas finds them.
+Atlas finds the instructions you already gave agents and puts them in one readable list. Use Agent preferences to check what your agents are working from and edit a rule at its source.
 
-You have already told agents how you want to work: somewhere in an instruction file, a memory note, a line you wrote months ago and forgot. This view collects those statements into a readable list so you can see what your agents are actually operating under, and change any of it in one place.
+## See what Atlas found
 
-## How they're found
-
-No model is involved. Atlas holds a fixed catalogue of twelve preference topics, each with a natural-language description of what it's looking for.
-
-Those descriptions are matched by embedding similarity against individual statements pulled from your existing memory and instruction files. Anything that matches well enough becomes a row.
-
-Each row's value is **the exact text from your file**, not a paraphrase, not a summary. Editing a row rewrites that span in place, in the original file, where the agent will actually read it.
+Atlas searches existing memory and instruction files for twelve kinds of preference. Each result shows the exact text from the source file, not a summary. Edit it here and Atlas updates that same span in the original file.
 
 <Callout type="info">
-  This is a partial view, deliberately. It covers twelve topics, and it only surfaces statements that match one of them closely enough. A rule you wrote that doesn't appear here is still in your files and still in effect, it just isn't one of the things this view looks for.
+  This is a focused view, not a replacement for your files. Rules outside these categories still apply even when they do not appear here.
 </Callout>
 
-## Strong and soft
+## Set the strength
 
-Each row is classified by how it was written:
+Atlas classifies your wording as either:
 
-- **Strong**: a hard rule. Phrased as a requirement: must, never, always.
-- **Soft**: a preference. Guidance the agent should weigh, not a constraint.
+- **Strong** for a requirement such as “must,” “never,” or “always.”
+- **Soft** for guidance an agent should weigh.
 
-The distinction comes from your own wording, so if something is being treated as a suggestion when you meant it as a rule, the fix is to say so more firmly in the source text.
+Use firmer language in the source when a suggestion should become a rule.
 
-## The twelve categories
+## Browse the categories
 
-| Category | What it looks for |
+| Category | Atlas looks for |
 | --- | --- |
-| Version control | Whether agents may commit, push, and stage, or whether you handle git yourself |
+| Version control | Commit, push, and staging rules |
 | Theme | Light or dark appearance |
-| Edit permissions | Auto-accept, bypass, or ask before changing files |
-| Testing | Running tests, writing tests, test-driven development |
-| Comments & style | Comment density and code style |
-| Package manager | npm, pnpm, yarn, bun |
+| Edit permissions | When agents may change files |
+| Testing | Tests and test-driven development |
+| Comments & style | Comments and code style |
+| Package manager | npm, pnpm, yarn, or bun |
 | Commit messages | Message format and style |
-| Languages & frameworks | The stack you prefer agents reach for |
-| Architecture | Where logic belongs, separation of concerns |
-| Communication | Verbosity, tone, how much the agent explains |
-| Dependencies & files | Rules about adding dependencies or creating new files |
+| Languages & frameworks | Your preferred stack |
+| Architecture | Where logic belongs |
+| Communication | Tone and explanation depth |
+| Dependencies & files | Rules for adding either |
 | Formatting & linting | Formatter and linter expectations |
 
-## Where a preference came from
-
-Every row names its source file and the agent whose memory it was found in, so a rule you don't recognise can be traced back rather than guessed at.
-
-Alongside the twelve catalogue topics, the list also includes behaviours Atlas recorded about the codebase itself. Those are marked separately: they came from working in the project, not from something you wrote as a rule.
-
-Conversation history is not treated as preferences. A thing you said once in a session is not a standing instruction, and isn't collected here.
+Each row names its source file and the agent memory it came from. Atlas keeps codebase behaviours separate, and it does not turn a one-off chat message into a standing rule.
 
 ## Next
 
-- [Memory](/docs/context/memory): where these statements are indexed from
-- [Skills](/docs/context/skills): reusable instructions you install deliberately
+- [Memory](/docs/context/memory): see what Atlas indexes
+- [Skills](/docs/context/skills): add reusable instructions deliberately

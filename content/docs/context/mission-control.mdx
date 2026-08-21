@@ -1,32 +1,26 @@
 ---
 title: Mission Control
-description: Agent usage and spend across all your projects.
+description: See agent usage and spend across your projects.
 icon: Gauge
 ---
 
-Mission Control is a dashboard covering every project you have open in Atlas, rather than the one you're currently in. It answers where your agent time and money actually went.
+Use Mission Control to see where agent time and money went across every project you have opened in Atlas.
 
-## What it shows
+## Review your usage
 
-Pick a window (7, 30, or 90 days, or everything) and the dashboard reports across it:
+Choose 7, 30, or 90 days, or view everything. Atlas shows totals for tokens, requests, sessions, and estimated cost, then breaks them down by date and project.
 
-- **Totals**: tokens, requests, sessions, and estimated cost.
-- **Usage over time**, so a spike has a date attached to it.
-- **Consumption by project**, as a share of the whole.
-- **A timeline per project**, showing when each was active.
-- **A log table** underneath the charts, for reading the detail behind a number.
-
-Token counts are broken out by kind where the provider reports them, including cache reads and cache writes, which is usually where an unexpected bill comes from.
+The dashboard also includes a per-project activity timeline and a log table for the detail behind each number. Where a provider reports them, token totals include cache reads and writes.
 
 <Callout type="info">
-  Coverage is per-agent, not universal. Mission Control reports usage for Claude Code, Codex, and [Review](/docs/product/review) runs: those are the sources that expose the numbers it needs. Other agents' sessions are recorded in your [timeline](/docs/source-control/timeline) but don't appear in these totals.
+  Mission Control currently tracks Claude Code, Codex, and [Review](/docs/product/review) runs. Atlas records other agents in your [timeline](/docs/source-control/timeline), but they do not report the usage data this dashboard needs.
 </Callout>
 
-## Exporting
+## Export a report
 
-The dashboard exports as PDF, as an image, or as markdown.
+Export the current view as a PDF, image, or markdown file.
 
 ## Next
 
-- [Timeline](/docs/source-control/timeline): the per-project record behind these numbers
-- [Review](/docs/product/review): one of the tracked sources
+- [Timeline](/docs/source-control/timeline): see the work behind each project
+- [Review](/docs/product/review): understand one tracked source

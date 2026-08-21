@@ -4,62 +4,35 @@ description: Browse, install, and manage coding agents.
 icon: Search
 ---
 
-Find more coding agents in **Settings → Agents**. Atlas reads the official [Agent Client Protocol](https://agentclientprotocol.com) registry and lets you install compatible agents directly into the switcher.
+Open **Settings → Agents** to add compatible agents from the official [Agent Client Protocol](https://agentclientprotocol.com) registry.
 
-## Finding an agent
+## Find an agent
 
-The grid is searchable by name, id, or description. Three filter pills narrow it down:
+Search by name, ID, or description. Filter the catalogue to **All**, **Installed**, or **Not Installed**. Atlas refreshes stale data itself, but **Refresh** fetches the latest catalogue whenever you need it.
 
-- **All**: the whole catalog.
-- **Installed**: what you have, including the built-in agents.
-- **Not Installed**: everything else.
+## Install or remove one
 
-**Refresh** fetches the latest catalogue. Atlas refreshes stale data automatically, so you rarely need it.
+Select **Install** on an agent card. Binary agents download immediately and show their progress. `npx` and `uvx` agents download on their first run, so they need Node.js or [uv](https://docs.astral.sh/uv) then.
 
-## Installing and removing
+Installed agents appear in the switcher below the built-in agents. Select **Remove** to hide one from the switcher without deleting its existing sessions.
 
-Select **Install** on an agent card. What happens next depends on how that agent is distributed:
+## Read the badges
 
-- **Binary distributions** download and extract immediately, and the button shows a live percentage while they do. Switching to another settings section mid-download doesn't cancel it.
-- **npx and uvx distributions** have nothing to download up front. Atlas records the install and the package is fetched by npm or uv the first time you actually run the agent. These need Node.js or [uv](https://docs.astral.sh/uv) on your machine respectively. If the runtime is missing, you'll find out at that first run, with a message telling you what to install.
+**Built-in** marks an agent Atlas already includes: `claude-acp`, `codex-acp`, `opencode`, `cursor`, or `kilo`. Installing another copy would shadow the supported version.
 
-Installed agents appear in the agent switcher immediately, below the built-in agents.
+**Unverified** means a binary download has no published checksum. Atlas verifies downloads whenever the registry supplies one. A missing badge is not a safety guarantee.
 
-**Remove** takes an agent out of the switcher. It does not erase the sessions you already ran with it.
+[Atlas Agent](/docs/agents/atlas) is not in the registry because it does not use ACP.
 
-## Badges
+## Work offline
 
-Two badges are worth understanding.
+Atlas opens its cached catalogue first and refreshes in the background. You can browse cached results offline; installing still needs a network connection.
 
-**Built-in** means the registry entry matches an agent Atlas already includes: `claude-acp`, `codex-acp`, `opencode`, `cursor`, or `kilo`.
+## Use the agent
 
-You already have these agents. Installing a second copy would shadow the version Atlas supports directly.
-
-[Atlas Agent](/docs/agents/atlas) is not in the registry because it does not run over ACP.
-
-**Unverified** means that agent's binary download publishes no checksum, so Atlas can't confirm the bytes it fetched are the bytes that were published. When a checksum *is* published, Atlas verifies it before the download is ever used.
-
-This only applies to binary distributions. `npx` and `uvx` entries have no archive for Atlas to checksum. **No badge is not a safety claim about an agent.**
-
-## Platform support
-
-Not every agent runs everywhere. When an entry has no distribution usable on your machine, the card says so (with the reason, where there is one, such as needing `uv` installed) and the Install button is disabled.
-
-## Working offline
-
-Atlas keeps the catalogue on disk. It loads that copy first and refreshes in the background, so the list opens quickly and still works offline.
-
-If a refresh fails, a line under the search bar tells you so and notes that you're looking at cached data. The install itself still needs the network.
-
-## What you get, and what you don't
-
-An installed agent joins the switcher and works against the same [project](/docs/getting-started/concepts#project). Its [sessions](/docs/getting-started/concepts#session) and [checkpoints](/docs/getting-started/concepts#checkpoint) work the same way too.
-
-What it doesn't get is Atlas-side handling of its authentication or its model list. Both are whatever that agent does natively: you log in the way its own CLI expects, and you pick models from whatever it advertises.
-
-Atlas shows the name, description, repository, and website supplied by the registry. For an agent's authentication or model details, use its own documentation.
+Registry agents work in the same [project](/docs/getting-started/concepts#project), timeline, and shared memory as built-in agents. They manage their own authentication and model options, so use the repository or website on the agent card for setup help.
 
 ## Next
 
-- [Supported agents](/docs/agents): the built-in agents and how Atlas connects them
-- [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once
+- [Supported agents](/docs/agents): compare built-in agents
+- [Concepts](/docs/getting-started/concepts): learn Atlas terminology

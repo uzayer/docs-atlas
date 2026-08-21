@@ -1,55 +1,34 @@
 ---
 title: Git & Diff
-description: Reviewing what the agent wrote, and committing it.
+description: Review agent changes and decide what to commit.
 icon: GitBranch
 ---
 
-Agents produce diffs. This is where you read them and decide what becomes a commit.
+Agents create diffs. Use the right panel (`⌘⇧B`) to read them, stage the parts you want, and make the commit.
 
-Git lives in the right panel (`⌘⇧B`), which holds four tabs: **Source Control** for the day-to-day workflow, [**Review**](/docs/product/review) for running a model over your changes, **Commit** for the graph, and **GitHub** for finding and cloning a repository.
+## Work in Source Control
 
-## Source Control
+Fetch, pull, push, or publish from the toolbar. Use the branch switcher to find, create, delete, check out, or merge a branch.
 
-The toolbar carries the branch switcher and the sync actions. Fetch is always there; pull and push show how far ahead or behind you are, and become a single **Publish** action when the branch has no upstream yet. Network operations report progress as they run.
+In **Changes**, review each modified file, stage or discard files and hunks, then write the commit summary, description, and optional co-authors. Select **Amend** to update the previous commit.
 
-The branch switcher filters, checks out, creates, deletes, and merges a branch into the current one.
+Resolve conflicts from the same view by taking ours or theirs, opening the file, or marking a completed resolution.
 
-Below the toolbar are three views:
+## Read history and stashes
 
-### Changes
+In **History**, select a commit to copy its SHA, revert it, cherry-pick it, tag it, undo it into staging, or reset to it. Open linked sessions in the [timeline](/docs/source-control/timeline) to see the work behind a commit.
 
-Every modified file, with its diff. Stage, unstage, and discard work per file or per hunk, so you can commit half of what an agent did and leave the rest.
+Use **Stashes** to save the working tree and restore it later.
 
-The commit form takes a summary, an optional description, and an optional list of co-authors, which become `Co-authored-by` trailers. **Amend** rewrites the previous commit instead: leave the summary empty to keep the original message.
+## Read a diff
 
-If a merge, rebase, or cherry-pick left conflicts, they surface here with a per-file conflict count. You can take ours or theirs in one click, open the file to resolve it by hand, or mark it resolved.
+Review diffs inline as a searchable unified view, or open a substantial change full-window for a side-by-side comparison, file list, and minimap.
 
-The count comes from the repository itself, so fixing a conflict in the editor drops it to zero without you re-marking anything.
+## Handle failures
 
-### History
-
-The commit list, and a detail view for whichever commit you select. From there: copy the SHA, revert it, cherry-pick it onto the current branch, tag it, undo it back into the staged area, or reset the branch to it.
-
-The detail view also lists the [sessions](/docs/getting-started/concepts#session) that produced the commit, with a link into the [timeline](/docs/getting-started/concepts#timeline): that connection is the timeline's story, not git's.
-
-### Stashes
-
-Stash the working tree, list what you've stashed, and bring one back.
-
-## Reading a diff
-
-Diffs render inline in the panel as a unified view with collapsible per-file cards, searchable and sortable by size of change.
-
-For anything substantial, open the diff full-window instead: a proper side-by-side view in its own tab, with the changed-file list beside it and a minimap of the whole diff for navigating a long one.
-
-## When git fails
-
-Atlas classifies git failures rather than surfacing a raw string: authentication, a rejected non-fast-forward push, a protected branch, unrelated histories, uncommitted changes in the way, a failing hook, a signing failure.
-
-Each opens a dialog naming the problem, with git's own output available underneath.
+Atlas identifies common git failures, including authentication, protected branches, rejected pushes, conflicts, hooks, and signing. It tells you what failed and keeps git's own output available.
 
 ## Next
 
-- [Chat & Sessions](/docs/product/chat): committing straight from a turn's summary card
-- [Explorer](/docs/product/explorer): git status colours in the file tree
-- [Concepts](/docs/getting-started/concepts#checkpoint): what a checkpoint is, and how commits become one
+- [Chat & Sessions](/docs/product/chat): return to the agent work
+- [Timeline](/docs/source-control/timeline): trace a commit back to its session

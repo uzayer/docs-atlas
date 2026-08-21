@@ -1,43 +1,34 @@
 ---
 title: Atlas Agent
-description: Atlas's built-in agent, running inside the app.
+description: Atlas's built-in agent, ready to work inside the app.
 icon: Atlas
 ---
 
-Every other agent in this section is a separate program Atlas talks to over a protocol. This one isn't. Atlas's native agent runs inside the app itself, which is why it can do a few things the others structurally can't, and why it's set up differently.
+Choose Atlas Agent when you want an agent that works natively with Atlas. It needs no install and appears as **Atlas** in the agent switcher.
 
-It's the last entry in the agent switcher, labelled **Atlas**.
+## Add a provider key
 
-## Bring your own key
+Atlas Agent brings no model of its own. Add a key in **Settings → Providers**, then choose a model from the composer.
 
-There's nothing to install and nothing to log into, but the native agent has no models of its own. You supply them. Add a provider key in **Settings → Providers** and the agent can use it.
+Atlas supports Anthropic, OpenAI, Google, xAI, DeepSeek, Mistral, Groq, Together, Fireworks, DeepInfra, Cerebras, OpenRouter, Perplexity, and Cohere. Atlas stores keys locally and shows only their last four characters after you save them.
 
-Supported providers today include Anthropic, OpenAI, Google, xAI, DeepSeek, Mistral, Groq, Together, Fireworks, DeepInfra, Cerebras, OpenRouter, Perplexity, and Cohere. Once a key is saved, Atlas only ever shows you its last four characters and when you added it.
+## Work with the agent
 
-## Models
+Atlas Agent can read and edit files, search the project, and run shell commands. It can also:
 
-Pick a model from the composer like you would for any other agent. If you haven't pinned one, Atlas chooses a sensible coding default for whichever provider you've configured, preferring Anthropic when you've given it more than one key.
+- Search shared memory while it works, rather than relying only on context added to the turn.
+- Delegate a scoped task to a subagent and bring the result back.
+- Run [skills](/docs/getting-started/concepts#skill).
 
-Two controls exist here that the ACP agents don't have: a **reasoning effort** level, which sets how much thinking budget the model gets, and **tool-output compression**, which trims long tool results before they eat the context window.
+Choose a reasoning effort to control its thinking budget. Turn on tool-output compression when long command output would crowd out useful context.
 
-## What it can do
+## Know the differences
 
-The native agent has the usual toolkit (read files, edit them, run shell commands, search the project) plus two things worth calling out:
+Atlas Agent does not use ACP and is not listed in the [agent registry](/docs/agents/registry). It cannot accept image input yet: a pasted screenshot reaches it as a file path.
 
-- **It can search memory directly.** Other agents receive relevant context injected into their prompt. This one has a retrieval tool it can decide to call, so it can go looking for something mid-turn rather than working only from what it was handed. See [shared memory](/docs/getting-started/concepts#shared-memory).
-- **It can delegate to subagents**, spinning up a scoped agent for a piece of work and folding the result back into the turn.
-
-It can also run [skills](/docs/getting-started/concepts#skill).
-
-## How it differs from the others
-
-Worth knowing before you pick it:
-
-- **It isn't in the [agent registry](/docs/agents/registry)** and doesn't run over ACP, so nothing on that page applies to it.
-- **It doesn't take image input yet.** Paste a screenshot and it degrades to a file path rather than reaching the model as an image. The ACP agents that support images handle them properly.
-- **Its sessions are its own.** They're recorded in your [timeline](/docs/getting-started/concepts#timeline) and replayed when you reopen them, like everything else. They're just stored in Atlas's own format rather than an agent vendor's.
+Its sessions still appear in your [timeline](/docs/source-control/timeline) and link to [checkpoints](/docs/getting-started/concepts#checkpoint), just like every other agent.
 
 ## Next
 
-- [Supported agents](/docs/agents): how Atlas connects coding agents
-- [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once
+- [Supported agents](/docs/agents): choose an agent for the task
+- [Skills](/docs/context/skills): add reusable instructions
