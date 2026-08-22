@@ -1,45 +1,33 @@
 # docs-atlas
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+Public documentation site for [Atlas](https://github.com/pacifio/atlas), source control for coding agents. Built with [Fumadocs](https://fumadocs.dev) on Next.js.
 
-Run development server:
+This repo has no product code, only docs content and the site that renders it.
+
+## Commands
+
+Bun is the runtime and package manager. Don't use npm, pnpm, or yarn.
 
 ```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
+bun install
+bun dev              # next dev, http://localhost:3000
+bun run build        # next build
+bun start            # serve the production build
+bun run types:check  # next typegen && tsc --noEmit
+bun run lint         # oxlint
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+There's no test suite. `types:check` plus `lint` is the full verification pass. Content changes are validated by the build, not the linter: MDX frontmatter is checked against the page schema when the collection compiles.
 
-## Explore
+## Structure
 
-In the project, you can see:
+- `content/docs/` is the published doc tree. A folder's `meta.json` is an allowlist that drives sidebar order; a page you forget to list there won't appear.
+- `src/lib/source.ts` wires the MDX collection and icon resolution. Every route reads from it.
+- `src/lib/shared.ts` holds the route constants that connect the proxy, the OG image route, and the markdown route.
+- Each page renders three ways from the same source: HTML at `/docs/...`, markdown at `/llms.mdx/docs/...`, and an OG image at `/og/docs/...`.
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+## Writing a page
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+Add an `.mdx` file under `content/docs/`, give it a `title` and a `description`, then list it in that folder's `meta.json`.
 
-### Fumadocs MDX
-
-Collections are defined with the [Macro API](https://fumadocs.dev/docs/mdx/macro) in `lib/source.ts`.
-
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
-
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+See `AGENTS.md` and `CLAUDE.md` for the fuller architecture and writing conventions.
