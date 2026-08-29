@@ -12,7 +12,7 @@ Most tools give you a chat panel bolted onto an editor, and the record of what a
 You open a project and run a session. After that:
 
 1. **Run any agent.** Claude Code, Codex, Atlas's own agent, or anything from the registry, side by side, against the same codebase.
-2. **Every commit becomes a checkpoint.** Linked back to the [session](/docs/getting-started/concepts#session) that produced it, with prompts, tool calls, and reasoning kept together. One session can produce several commits, and each gets its own checkpoint.
+2. **Every commit becomes a checkpoint.** It links back to the [session](/docs/getting-started/concepts#session) that produced it, keeping prompts, tool calls, and reasoning together. One session can produce several commits, and each gets its own checkpoint.
 3. **Every agent reads and writes the same memory.** Switching from Claude Code to Codex mid-task doesn't mean starting over: the new agent inherits the context the last one built up.
 4. **The workspace is part of the record.** Atlas is also an editor, terminal, and git client, so the record covers the planning and manual changes around a commit, not just the diff.
 5. **Your timeline is the through-line.** Every session and [checkpoint](/docs/getting-started/concepts#checkpoint) in a project, in one queryable record.
