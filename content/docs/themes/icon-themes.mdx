@@ -1,0 +1,143 @@
+---
+title: Icon themes
+description: File and folder icons, in VS Code's icon theme format.
+icon: Shapes
+---
+
+An icon theme decides which icon each file and folder gets. It is a separate track from the colour theme, with its own picker: press <Kbd>⌘,</Kbd> and choose **Icons**.
+
+Atlas uses VS Code's `iconThemes` contribution format, unchanged. An icon theme published for VS Code installs here as it is, with no conversion step and no Atlas-specific format to learn.
+
+## Pick one
+
+The picker opens on a preview strip and a grid of what is installed. Every card names the theme, its author, and its licence.
+
+Three kinds of entry:
+
+- **Material Icon Theme**, bundled with Atlas and selected on a fresh install. Version 5.38.1, MIT licensed, shipped whole with its licence and a provenance note.
+- **Minimal**, which is not an empty icon theme but no icon theme. Every row falls back to the lucide icon Atlas drew before icon themes existed.
+- Anything you installed, marked **Installed** and removable.
+
+Your choice is stored in `~/.config/atlas/config.toml`:
+
+```toml title="~/.config/atlas/config.toml"
+[settings]
+iconTheme = "material-icon-theme"   # or "minimal", or an installed id
+```
+
+The value names a directory, so it is restricted to letters, digits, `.`, `-`, and `_`. Anything else is refused when the config is read.
+
+## Where icons appear
+
+The file tree, the editor tab strip for tabs opened from a path, and the file-search palette on <Kbd>⌘P</Kbd>.
+
+Rows that do not stand for a real path, such as a knowledge page or a chat, keep their own icons.
+
+## Install from Open VSX
+
+Open VSX is the one remote source Atlas has for icons, at the bottom of the **Icons** page. Type a query, press Enter, and pick a result.
+
+Search results are filtered on each candidate's own manifest, so a theme appears only if it actually declares `contributes.iconThemes`. Colour themes do not clutter the list.
+
+A `.vsix` is a zip. Atlas unpacks only its `extension/` subtree, checks every entry for path traversal, and stages the result in a temporary directory that is swapped into place only once it loads as an icon theme. A failed install leaves what you had.
+
+Installed themes live in `~/.config/atlas/icon-themes/<namespace>.<name>/`, so Material installed from Open VSX would be `PKief.material-icon-theme`.
+
+<Callout type="info">
+  Nothing is fetched at startup or on a timer. Every request Atlas makes to Open VSX is one you asked for by clicking. Being offline costs you a search, not a launch: the failure is reported in place with a retry, and the installed list is untouched.
+</Callout>
+
+**To remove one**, hover its card and click the bin. Bundled entries and Minimal have no bin. If you remove the theme that is currently selected, Atlas falls back to Material.
+
+Installing, removing, and switching all take effect immediately. Every visible icon re-resolves with no reload.
+
+## How a theme decides
+
+Everything below is VS Code's format, not Atlas's. The authority is the theme document named by `contributes.iconThemes[0].path` in the extension manifest.
+
+### Definitions
+
+`iconDefinitions` maps an id to an icon, which is either an image or a font glyph:
+
+```json
+{
+  "iconDefinitions": {
+    "typescript": { "iconPath": "./../icons/typescript.svg" },
+    "_seti_ts": {
+      "fontCharacter": "\\E001",
+      "fontColor": "#519aba",
+      "fontSize": "150%",
+      "fontId": "seti"
+    }
+  }
+}
+```
+
+`iconPath` is relative to the theme document, and `.` and `..` are resolved. SVG and PNG both work. When a definition sets both, `iconPath` wins.
+
+Glyph themes declare their web fonts in a `fonts` array. Atlas reads the font file and hands it to the interface inline, so the font loads without any file access, and it is fetched only once a glyph icon has actually been resolved. An SVG-only theme never loads one.
+
+### Associations
+
+| Key | Matches |
+|---|---|
+| `file` | any file with no better answer |
+| `folder`, `folderExpanded` | any folder, closed or open |
+| `rootFolder`, `rootFolderExpanded` | the project root |
+| `fileNames` | a whole file name, optionally prefixed with its parent path |
+| `fileExtensions` | an extension, case-insensitively |
+| `languageIds` | the editor's language id for the file |
+| `folderNames`, `folderNamesExpanded` | a folder name, optionally prefixed |
+| `rootFolderNames`, `rootFolderNamesExpanded` | the root folder by name |
+
+A `light` and a `highContrast` section may override any of those tables. Both are partial: a key the section does not set falls through to the base set. The light section is used when the colour theme resolves to a light appearance, and high contrast falls back to the base set rather than to light, since the two are siblings.
+
+`hidesExplorerArrows` is honoured. A theme whose folder icons already say open or closed can ask the file tree to drop its chevrons, and the indent spacer stays so names still line up.
+
+### Precedence
+
+For a file, first hit wins:
+
+1. `fileNames`
+2. `fileExtensions`
+3. `languageIds`
+4. `file`
+
+For a folder, `folderNamesExpanded` when open, then `folderNames`, then `folderExpanded` or `folder`. For the root, the `rootFolder*` family first, falling back to the folder family.
+
+Two rules cut across all of it.
+
+**A parent-path-prefixed entry beats a bare one.** `.config/graphqlrc` wins over `graphqlrc`, and `.github/workflows` over `workflows`. Up to four path segments are considered. Material ships 204 prefixed file names and 25 prefixed folder names, so this decides a lot of rows.
+
+**The longest extension wins.** `types.d.ts` gets the `d.ts` icon, not the `ts` one. A dotfile's name is never read as an extension: `.gitignore` has a name, not an extension.
+
+The `light` or `highContrast` table is consulted at each step, not once for the whole chain. Otherwise a `light.fileExtensions` hit would beat a base `fileNames` hit, which inverts the order above for every theme whose light section is partial, and they all are.
+
+`languageIds` is matched against the editor's own language id for the path. There is no second language table, so a file the editor calls `rust` is the file a theme's `"rust"` entry matches. A path the editor cannot identify sends no language id at all.
+
+### Colour
+
+Where a theme sets colour, the theme wins. A glyph's `fontColor` is used as written, and an SVG's own `fill` values are drawn as authored, which is how all 1,251 Material icons paint.
+
+Where a theme leaves colour open, your colour theme supplies it. Atlas inlines SVG icons rather than pointing an `<img>` at them precisely so that an icon drawn in `currentColor` inherits the row's colour and follows the active theme. The Minimal fallbacks are Atlas's own icons and always follow the theme.
+
+Inlining third-party markup means every icon is sanitised first, against a drawing-only element allowlist, with no event handlers, no external references, and no `<style>`. An icon that does not survive that pass keeps its lucide fallback rather than rendering an empty box.
+
+## Limits
+
+These are known and deliberate. None of them stop a theme from loading, and an affected icon falls back rather than breaking.
+
+- **`<style>` elements inside an icon** are removed. CSS inside an inline SVG is document-scoped and would escape the icon.
+- **External references inside an icon** are removed for the same reason.
+- **`foreignObject` and embedded raster `<image>` elements** are not on the drawing allowlist.
+- **Product icon themes** (`contributes.productIconThemes`) are not read. An extension that contributes only a product icon theme is filtered out of search and refused at install.
+- **More than one icon theme per extension.** The first `contributes.iconThemes` entry is the one used.
+- **`showLanguageModeIcons`** is parsed and ignored. It controls a status-bar affordance Atlas does not have.
+- **Theme-supplied localisation** (`package.nls.*.json`) is not read. A theme's display name is shown as published, untranslated.
+- **Editing an installed theme's files in place** needs a restart. Colour themes watch `~/.config/atlas/themes/`; icon themes do not watch their directory. Installing and removing refresh the list.
+- **Nothing outside the icon theme is taken from a `.vsix`.** The compiled extension host, its commands, and its settings are dropped on unpack. Atlas does not run extensions.
+
+## Next
+
+- [Themes](/docs/themes): the colour side, which is chosen separately
+- [Authoring a theme](/docs/themes/authoring): write a colour theme of your own

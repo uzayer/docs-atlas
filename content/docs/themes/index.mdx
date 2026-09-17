@@ -24,6 +24,8 @@ When the variant you asked for is missing, Atlas uses the theme's other one. A d
 
 Put a `.toml` theme file in `~/.config/atlas/themes/`. It appears in the picker marked **Local**, next to the built-in themes.
 
+If the theme you want is written for somewhere else, **Import** in the same panel converts a shadcn, Zed, or VS Code theme into one of these files. See [importing a theme](/docs/themes/importing).
+
 Atlas watches that folder, so a file you add or edit is picked up without restarting the app. To repaint with an edit to the theme you already have applied, switch to another theme and back.
 
 <Callout type="info">
@@ -51,6 +53,8 @@ Two surfaces stay outside it:
 - **PDF page content.** The viewer's chrome follows the theme, but the page itself renders as the document was authored.
 - **The Browser tab.** It shows real web pages in a native webview, and those pages carry their own styling.
 
+File and folder icons are their own track, chosen in Settings → **Icons**. See [icon themes](/docs/themes/icon-themes).
+
 ## If you have written a theme before
 
 Two things work differently from most editors.
@@ -63,4 +67,6 @@ Atlas **derives what you omit**. A theme that only names its base colours is fin
 
 - [Authoring a theme](/docs/themes/authoring): write and iterate on a theme file
 - [Token reference](/docs/themes/tokens): every token and key, and what each one falls back to
-- [Compatibility](/docs/themes/compatibility): start from a shadcn or tweakcn theme
+- [Importing a theme](/docs/themes/importing): convert a shadcn, Zed, or VS Code theme
+- [Compatibility](/docs/themes/compatibility): start from a shadcn or tweakcn theme by hand
+- [Icon themes](/docs/themes/icon-themes): file and folder icons
