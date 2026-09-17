@@ -1,0 +1,66 @@
+---
+title: Themes
+description: One theme file colours the whole of Atlas.
+icon: Palette
+---
+
+A theme in Atlas is a single file that colours the entire app: the chrome, the code editor, the terminal, diffs, and syntax highlighting. There is no separate editor theme to keep in sync, and no third setting for the terminal.
+
+## Pick a theme
+
+Press <Kbd>⌘,</Kbd> to open Settings, then choose **Appearance**.
+
+Atlas ships 15 themes, among them Rosé Pine, the three Catppuccin flavours, Tokyo Night, Dracula, Monokai, One Dark, and Vesper. Search by theme name or author, and click a card to apply it.
+
+**Mode** decides which variant of a theme Atlas uses. **System** follows the macOS appearance, and **Dark** always asks for the dark variant.
+
+## A theme has one variant or two
+
+A theme file carries a dark variant, a light variant, or both. Each card in the picker says which it has.
+
+When the variant you asked for is missing, Atlas uses the theme's other one. A dark-only theme still works in system mode on a Mac set to light.
+
+## Install a theme of your own
+
+Put a `.toml` theme file in `~/.config/atlas/themes/`. It appears in the picker marked **Local**, next to the built-in themes.
+
+Atlas watches that folder, so a file you add or edit is picked up without restarting the app. To repaint with an edit to the theme you already have applied, switch to another theme and back.
+
+<Callout type="info">
+  A file that fails to parse is skipped rather than taken as a failure of the whole catalogue. The other themes, built-in ones included, keep working while you fix it.
+</Callout>
+
+## Colours you leave out are derived
+
+A theme file has three levels, and only the first is required:
+
+- **Base tokens**: the shadcn/ui colour set, plus radius, fonts, and shadows. Required.
+- **Palette**: eight named hues (red, orange, yellow, green, cyan, blue, purple, pink). Optional.
+- **Theme keys**: 135 Atlas roles such as `syntax.keyword`, `terminal.ansi.red`, and `element.hover`. Optional.
+
+Every theme key Atlas needs but your file does not set is worked out from the palette, then from the base tokens, then from an Atlas default. Nothing is left at a previous theme's colour, and nothing renders unstyled.
+
+That means a file with nothing but the base tokens is a complete, working theme. Set a palette on top of it and the syntax, terminal, diff, and status colours follow your hues. Set individual theme keys only where you want a specific result.
+
+## What one theme covers
+
+The active theme drives Atlas chrome, panels and tabs, the code editor and its syntax highlighting, the terminal, diff and review views, status and agent colours, charts, graphs, and the scrollbars.
+
+Two surfaces stay outside it:
+
+- **PDF page content.** The viewer's chrome follows the theme, but the page itself renders as the document was authored.
+- **The Browser tab.** It shows real web pages in a native webview, and those pages carry their own styling.
+
+## If you have written a theme before
+
+Two things work differently from most editors.
+
+Atlas has **one theme rather than two**. Elsewhere you pick a UI theme and a separate editor colour scheme, and a mismatch between them is yours to fix. In Atlas a single file covers both, so the editor and the window around it cannot drift apart.
+
+Atlas **derives what you omit**. A theme that only names its base colours is finished, not half-finished. You add palette entries and theme keys to take control of a surface, not to stop it being wrong.
+
+## Next
+
+- [Authoring a theme](/docs/themes/authoring): write and iterate on a theme file
+- [Token reference](/docs/themes/tokens): every token and key, and what each one falls back to
+- [Compatibility](/docs/themes/compatibility): start from a shadcn or tweakcn theme
