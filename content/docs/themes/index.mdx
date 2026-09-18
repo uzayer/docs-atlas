@@ -12,13 +12,17 @@ Press <Kbd>⌘,</Kbd> to open Settings, then choose **Appearance**.
 
 Atlas ships 15 themes, among them Rosé Pine, the three Catppuccin flavours, Tokyo Night, Dracula, Monokai, One Dark, and Vesper. Search by theme name or author, and click a card to apply it.
 
-**Mode** decides which variant of a theme Atlas uses. **System** follows the macOS appearance, and **Dark** always asks for the dark variant.
+**Mode** decides which variant of a theme Atlas uses. **Dark** and **Light** ask for that variant by name, and **System** follows the macOS appearance.
 
 ## A theme has one variant or two
 
 A theme file carries a dark variant, a light variant, or both. Each card in the picker says which it has.
 
-When the variant you asked for is missing, Atlas uses the theme's other one. A dark-only theme still works in system mode on a Mac set to light.
+When the variant you asked for is missing, Atlas uses the theme's other one. That is the defined behaviour of the format, not a failure: picking Light with a dark-only theme applied is not an error state, it just leaves the colours where they were.
+
+<Callout type="warn">
+  Of the 15 built-in themes, only Rosé Pine ships a light variant today. Every other built-in is dark-only, so choosing Light with one of them applied gives you its dark variant. Light mode is on, and the light themes to go with it are still being written.
+</Callout>
 
 ## Install a theme of your own
 
@@ -26,27 +30,29 @@ Put a `.toml` theme file in `~/.config/atlas/themes/`. It appears in the picker 
 
 If the theme you want is written for somewhere else, **Import** in the same panel converts a shadcn, Zed, or VS Code theme into one of these files. See [importing a theme](/docs/themes/importing).
 
-Atlas watches that folder, so a file you add or edit is picked up without restarting the app. To repaint with an edit to the theme you already have applied, switch to another theme and back.
+Atlas watches that folder. Save an edit to the theme you already have applied and the app repaints, with no restart and no reinstall.
 
 <Callout type="info">
-  A file that fails to parse is skipped rather than taken as a failure of the whole catalogue. The other themes, built-in ones included, keep working while you fix it.
+  A file that fails to parse is skipped rather than taken as a failure of the whole catalogue. The other themes, built-in ones included, keep working, and the picker names the file it could not read and why.
 </Callout>
 
 ## Colours you leave out are derived
 
 A theme file has three levels, and only the first is required:
 
-- **Base tokens**: the shadcn/ui colour set, plus radius, fonts, and shadows. Required.
+- **Base tokens**: the shadcn/ui colour set, plus radius, fonts, and shadows. 45 of them, all required.
 - **Palette**: eight named hues (red, orange, yellow, green, cyan, blue, purple, pink). Optional.
-- **Theme keys**: 135 Atlas roles such as `syntax.keyword`, `terminal.ansi.red`, and `element.hover`. Optional.
+- **Theme keys**: 73 Atlas roles such as `syntax.keyword`, `terminal.ansi.red`, and `element.hover`. Optional.
 
 Every theme key Atlas needs but your file does not set is worked out from the palette, then from the base tokens, then from an Atlas default. Nothing is left at a previous theme's colour, and nothing renders unstyled.
 
 That means a file with nothing but the base tokens is a complete, working theme. Set a palette on top of it and the syntax, terminal, diff, and status colours follow your hues. Set individual theme keys only where you want a specific result.
 
+A small number of colours are not on that list at all. A status badge's tinted fill is its status foreground at 12%, so Atlas works it out rather than asking, and a theme steers it through the foreground key instead. See [what a theme cannot set](/docs/themes/tokens#what-a-theme-cannot-set).
+
 ## What one theme covers
 
-The active theme drives Atlas chrome, panels and tabs, the code editor and its syntax highlighting, the terminal, diff and review views, status and agent colours, charts, graphs, and the scrollbars.
+The active theme drives Atlas chrome, panels and tabs, the code editor and its syntax highlighting, the terminal, diff and review views, status colours and the agent chip, charts, graphs, and the scrollbars.
 
 Two surfaces stay outside it:
 
@@ -66,7 +72,7 @@ Atlas **derives what you omit**. A theme that only names its base colours is fin
 ## Next
 
 - [Authoring a theme](/docs/themes/authoring): write and iterate on a theme file
-- [Token reference](/docs/themes/tokens): every token and key, and what each one falls back to
+- [Token reference](/docs/themes/tokens): where to start, then every key and what it falls back to
 - [Importing a theme](/docs/themes/importing): convert a shadcn, Zed, or VS Code theme
 - [Compatibility](/docs/themes/compatibility): start from a shadcn or tweakcn theme by hand
 - [Icon themes](/docs/themes/icon-themes): file and folder icons

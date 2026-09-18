@@ -38,10 +38,10 @@ border = "#302a39"
 input = "#302a39"
 ring = "#eb6f92"
 chart-1 = "#31748f"
-chart-2 = "#31748f"
-chart-3 = "#ebbcba"
-chart-4 = "#c4a7e7"
-chart-5 = "#ebbcba"
+chart-2 = "#f6c177"
+chart-3 = "#c4a7e7"
+chart-4 = "#9ccfd8"
+chart-5 = "#eb6f92"
 sidebar = "#100e14"
 sidebar-foreground = "#e0def4"
 sidebar-primary = "#eb6f92"
@@ -77,13 +77,13 @@ There are three levels, and each exists only to take over from the one below it.
 
 ### Base tokens, always
 
-The required set. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
+The required set, 45 of them. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
 
 Every colour in Atlas can be reached from these alone. Start here, and stop here if the result already looks right.
 
 ### A palette, when the derived colours are dull
 
-Eight named hues. Atlas derives syntax highlighting, terminal ANSI colours, diff tints, status colours, and agent chips from them:
+Eight named hues. Atlas derives syntax highlighting, terminal ANSI colours, diff tints, status colours, and search highlights from them:
 
 ```toml
 [dark.palette]
@@ -92,7 +92,7 @@ orange = "#ebbcba"
 yellow = "#f6c177"
 green = "#31748f"
 cyan = "#9ccfd8"
-blue = "#31748f"
+blue = "#9ccfd8"
 purple = "#c4a7e7"
 pink = "#ebbcba"
 ```
@@ -101,9 +101,13 @@ This is the highest-value eight lines in a theme file. Without a palette, a key 
 
 Set some of the eight and leave the others out if you prefer. Each is looked up on its own.
 
+<Callout type="warn">
+  The names are hues, not slots. Everything downstream trusts them, so a `green` holding your theme's cyan puts that cyan into ANSI green, added lines, and success messages at once.
+</Callout>
+
 ### Theme keys, for the surfaces you care about
 
-135 named roles. Set one when you want a specific colour rather than a derived one:
+73 named roles. Set one when you want a specific colour rather than a derived one:
 
 ```toml
 [dark.keys]
@@ -112,10 +116,10 @@ Set some of the eight and leave the others out if you prefer. Each is looked up 
 "editor.background" = "#191724"
 "editor.selection.background" = "#403d52"
 "terminal.ansi.red" = "#eb6f92"
-"tab.active.border" = "#eb6f92"
+"border.subtle" = "#1b1721"
 ```
 
-The [token reference](/docs/themes/tokens) lists all of them with what each one colours and where it comes from when omitted.
+The [token reference](/docs/themes/tokens) lists them, with the handful worth setting first separated from the long tail.
 
 Nested tables mean the same thing as dotted keys, so this is equivalent:
 
@@ -130,6 +134,24 @@ green = "#31748f"
 </Callout>
 
 An explicit key is the final colour. Where Atlas would have applied a transparency or a tint while deriving that key, it does not do so to a value you wrote yourself, so include the alpha you want.
+
+### A theme key is a colour, and only a colour
+
+The value may be written bare or as a one-field table, and the two mean the same thing:
+
+```toml
+"syntax.keyword" = "#c9a2f5"          # bare
+"syntax.string" = { color = "#9ecf8a" }  # the same thing, as a table
+```
+
+There is no font style. Nothing between a resolved key and the editor, the chat highlighter, or the markdown renderer can carry one, so `font_style` is refused by name rather than accepted and ignored:
+
+```toml
+# This does not load.
+"syntax.comment" = { color = "#6e6a86", font_style = "italic" }
+```
+
+The error names the key, so a file that picked the field up from a Zed or VS Code theme tells you where to remove it.
 
 ## Add a light variant
 
@@ -148,12 +170,14 @@ orange = "#d7827e"
 yellow = "#ea9d34"
 green = "#286983"
 cyan = "#56949f"
-blue = "#286983"
+blue = "#56949f"
 purple = "#907aa9"
 pink = "#d7827e"
 ```
 
-The two variants are independent. Give the light one its own shadow values rather than copying the dark ones across, or its surfaces will carry heavy dark halos on a pale background.
+The two variants are independent. Give the light one its own shadow values rather than copying the dark ones across, or its surfaces will carry heavy dark halos on a pale background. Tint a light ramp from the theme's own foreground at a much lower alpha.
+
+Shipping a light variant is worth doing. Atlas's Light and System modes are on for everyone, and a theme without one falls back to its dark variant on a light Mac.
 
 ## Write colours Atlas accepts
 
@@ -161,7 +185,7 @@ Hex (3, 4, 6, or 8 digits), `rgb()`, `rgba()`, `hsl()`, `hsla()`, and `oklch()`.
 
 ```toml
 "editor.active_line.background" = "#ffffff0a"
-"diff.add_side.background" = "rgba(34,197,94,0.13)"
+"diff.added.background" = "rgba(34,197,94,0.13)"
 "status.info.foreground" = "oklch(0.72 0.12 250)"
 ```
 
@@ -179,7 +203,9 @@ schema = 1
 id = "my-theme"
 ```
 
-A TOML-aware editor then completes token names and flags a misspelling as you type. The line is an ordinary comment, and Atlas ignores it.
+The schema enumerates the whole key set, so a TOML-aware editor completes key names, shows each key's description on hover, and underlines a name Atlas does not have. That catches the one mistake nothing else can: a misspelled key loads without complaint and simply never paints anything.
+
+The schema is stricter than the loader on purpose. Atlas keeps an unknown key with a warning, for the forward compatibility described below; your editor should still tell you about it.
 
 The schema ships in the [Atlas repository](https://github.com/pacifio/atlas) at `crates/atlas-theme/schema/theme-v1.json`.
 
@@ -189,13 +215,13 @@ The schema ships in the [Atlas repository](https://github.com/pacifio/atlas) at 
 2. Open Settings → **Appearance**. The theme is already in the list, marked **Local**.
 3. Click it.
 
-For each later edit, switch to another theme and back to see the change. Atlas rereads the file, so there is no restart and no reinstall.
+Every later edit repaints as you save. Atlas watches the folder, rereads the file, and reapplies the theme you are wearing, so there is no restart, no reinstall, and no switching away and back.
 
 Keep a terminal, a diff, and a file open in the editor while you work. Those three surfaces use most of the palette between them, and they are where a derived colour that does not suit your theme shows up first.
 
 ## What happens when something is wrong
 
-**A file that does not parse is skipped.** Atlas loads every other theme, so the picker keeps working and the app keeps its current colours. The theme simply does not appear in the list, and the reason is written to the Atlas log.
+**A file that does not parse is skipped.** Atlas loads every other theme, so the picker keeps working and the app keeps its current colours. The picker names the file and the reason above the grid, so a theme that never appeared tells you why.
 
 These are the errors that stop a file loading:
 
@@ -206,8 +232,9 @@ These are the errors that stop a file loading:
 - a base token or palette name Atlas does not know
 - a value that is not one of the accepted colour formats
 - a key used as both a value and a prefix
+- a key that sets `font_style`
 
-**An unknown theme key is a warning, not an error.** The theme still loads and the key is kept. That is deliberate: a file written against a newer version of Atlas still works on an older one, rather than failing outright over a key that version has never heard of.
+**An unknown theme key is a warning, not an error.** The theme still loads and the key is kept, and its card in the picker carries a badge with the count. That is deliberate: the key set changes between versions, and a file written against a newer Atlas should still work on an older one rather than failing outright over a key that version has never heard of. The same rule is what lets a key be retired without breaking the themes that set it.
 
 ## Share a theme
 
@@ -217,6 +244,6 @@ Set `author` and `license` before you publish, and if your colours come from an 
 
 ## Next
 
-- [Token reference](/docs/themes/tokens): the full list of tokens and keys
+- [Token reference](/docs/themes/tokens): where to start, then the full list
 - [Importing a theme](/docs/themes/importing): start from a shadcn, Zed, or VS Code theme
 - [Compatibility](/docs/themes/compatibility): begin from a shadcn or tweakcn theme by hand

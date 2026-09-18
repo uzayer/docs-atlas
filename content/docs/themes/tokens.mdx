@@ -1,10 +1,10 @@
 ---
 title: Token reference
-description: Every base token, palette entry, and theme key, and what each falls back to.
+description: What a theme actually needs to set, then every token and key in full.
 icon: Table
 ---
 
-A theme has three levels: **base tokens** (required), a **palette** (optional), and **theme keys** (optional). This page lists all of them.
+A theme has three levels: **base tokens** (required), a **palette** (optional), and **theme keys** (optional).
 
 Every theme key resolves in the same order:
 
@@ -13,7 +13,21 @@ Every theme key resolves in the same order:
 3. The base token the key derives from, if the key has one.
 4. An Atlas default for the active appearance.
 
-A key that derives its colour is often transformed on the way: given a transparency, lightened, or mixed toward the background. Those transforms apply only while deriving. A value you write in `keys` is used exactly as written.
+A key that derives its colour is often transformed on the way: given a transparency, or mixed toward the background or the foreground. Those transforms apply only while deriving. A value you write in `keys` is used exactly as written.
+
+## Start here
+
+There are 73 theme keys, and a theme does not need most of them.
+
+The 15 built-in themes set 34 of the 73 between them, and 30 of those appear in every one. None of them sets a single terminal, status, search, or agent key, because the palette already gets those right.
+
+So the realistic shape of a theme is:
+
+1. **The 45 base tokens.** Required, and on their own they are a complete theme.
+2. **The eight palette hues.** Eight lines that fix syntax, terminal, diff, status, and search colours at once.
+3. **About thirty theme keys**, listed under [the working set](#the-working-set) below. These are the surfaces where a theme's own judgement genuinely differs from its base tokens: the syntax roles, the editor's own chrome, two borders, two panel surfaces, and the diff tints.
+
+Everything below that is the long tail. Reach into it when a derived colour is not the one you wanted, not as a checklist.
 
 ## Base tokens
 
@@ -26,15 +40,15 @@ All 45 are required in every variant. Leave one out and the file will not load. 
 | `background`, `foreground` | the app background and default text |
 | `card`, `card-foreground` | elevated panels |
 | `popover`, `popover-foreground` | menus, popovers, and overlay panels |
-| `primary`, `primary-foreground` | the signature colour: active tab indicator, selection tint, marching-ants stroke |
+| `primary`, `primary-foreground` | the signature colour: selection tints, the brand fill and its hover state |
 | `secondary`, `secondary-foreground` | secondary surfaces and their text |
-| `muted`, `muted-foreground` | muted surfaces, dimmed text, comments, line numbers |
-| `accent`, `accent-foreground` | the shadcn hover surface: active tab background, bracket match |
-| `destructive`, `destructive-foreground` | destructive actions, and the fallback for error colours |
-| `border` | separators and control borders |
+| `muted`, `muted-foreground` | muted surfaces, dimmed text, comments, line numbers, ANSI bright black |
+| `accent`, `accent-foreground` | the shadcn hover surface, and the matching-bracket fill |
+| `destructive`, `destructive-foreground` | destructive actions, and the fallback for the error colour |
+| `border` | separators and control borders, and the source for the strong border |
 | `input` | input borders |
-| `ring` | the keyboard focus ring, and strong borders |
-| `chart-1` … `chart-5` | chart series |
+| `ring` | the keyboard focus ring, and the matching-bracket outline |
+| `chart-1` … `chart-5` | chart series. Five series, so keep them tellable apart: two that differ only slightly render as one line |
 | `sidebar`, `sidebar-foreground` | panel and rail backgrounds, and their text |
 | `sidebar-primary`, `sidebar-primary-foreground` | the signature colour inside a panel |
 | `sidebar-accent`, `sidebar-accent-foreground` | a panel's hover surface |
@@ -61,91 +75,52 @@ All 45 are required in every variant. Leave one out and the file will not load. 
 
 ## Palette
 
-Eight optional hues. Each one is the first source for a group of theme keys, so setting the palette is the cheapest way to make syntax, terminal, diff, and status colours belong to your theme.
+Eight optional hues. Each one is the first source for a group of theme keys, so setting the palette is the cheapest way to make syntax, terminal, diff, status, and search colours belong to your theme.
 
 | Hue | Feeds |
 |---|---|
-| `red` | error status, ANSI red, diff removals, `syntax.tag`, `syntax.regexp`, `syntax.builtin`, removed-line counts |
-| `orange` | orange status, `syntax.number`, `syntax.constant`, `syntax.boolean`, `syntax.null`, the Claude chip |
-| `yellow` | `text.accent`, warning status, ANSI yellow, `syntax.attribute`, `syntax.meta`, the Cursor and Kilo chips |
-| `green` | success status, ANSI green, diff additions, `syntax.string`, unread indicators, added-line counts, capture, the GPT and Codex chips |
-| `cyan` | ANSI cyan, `syntax.type`, `syntax.operator`, `syntax.property` |
-| `blue` | informational status, ANSI blue, `diff.modified.background`, `syntax.function`, the Gemini chip |
-| `purple` | purple status, ANSI magenta, `syntax.keyword`, the local-agent chip |
-| `pink` | `syntax.escape`, the Amp chip |
+| `red` | error status, ANSI red and bright red, the diff removal family, `syntax.tag`, `syntax.regexp` |
+| `orange` | `syntax.number`, `syntax.constant` |
+| `yellow` | warning status, ANSI yellow and bright yellow, `syntax.attribute`, both search-match highlights |
+| `green` | success status and the live-capture indicator, ANSI green and bright green, the diff addition family, `syntax.string` |
+| `cyan` | ANSI cyan and bright cyan, `syntax.type`, `syntax.operator`, `syntax.property` |
+| `blue` | informational status, ANSI blue and bright blue, `syntax.function` |
+| `purple` | ANSI magenta and bright magenta, `syntax.keyword` |
+| `pink` | `syntax.escape` |
 
 Set as many or as few as you like. Each entry is looked up on its own.
 
-## Theme keys
+The names are hues, and everything downstream trusts them. A `green` holding your theme's cyan puts that cyan into ANSI green, added lines, and every success message at once.
 
-135 optional roles. The **Falls back to** column is what Atlas uses when you do not set the key; where that column is empty for a source, the next source in the chain applies, ending at an Atlas default for the active appearance.
+## The working set
 
-### Borders
+These are the keys the built-in themes actually set, and the ones to reach for first. The **Falls back to** column is what Atlas uses when you do not set the key.
 
-| Key | Colours | Falls back to |
-|---|---|---|
-| `border.default` | default separator and control border | base `border` |
-| `border.subtle` | low-emphasis separator | base `sidebar-border` |
-| `border.variant` | alternate low-emphasis border | base `sidebar-border` |
-| `border.strong` | high-emphasis border | base `ring` |
-| `border.focus` | focused-control border | base `ring` |
+### Syntax
 
-### Interactive states
+Fifteen roles. They colour code everywhere it appears: the editor, diffs, chat, and rendered markdown. This is where a theme's personality lives, and it is the one family worth setting by hand even when the palette is already right.
 
 | Key | Colours | Falls back to |
 |---|---|---|
-| `element.hover` | hover overlay on an ordinary element | base `foreground` at 4% |
-| `element.selected` | selected overlay | base `foreground` at 6% |
-| `element.active` | pressed overlay | base `foreground` at 8% |
-| `element.highlight` | the top edge on a raised surface | base `foreground` at 6% |
-| `element.primary_hover` | hovered signature-colour fill | base `primary`, lightened |
-| `element.primary_muted` | muted signature-colour fill | base `primary` at 6% |
-| `ghost_element.hover` | hover overlay on a ghost control | base `foreground` at 3% |
-| `ghost_element.selected` | selected overlay on a ghost control | base `foreground` at 5% |
-| `ghost_element.active` | pressed overlay on a ghost control | base `foreground` at 7% |
-| `selection.background` | document text selection | base `primary` at 18% |
-
-### Text
-
-| Key | Colours | Falls back to |
-|---|---|---|
-| `text.muted` | muted prose and metadata | base `muted-foreground` |
-| `text.placeholder` | input placeholder text | base `muted-foreground`, mixed toward the background |
-| `text.disabled` | disabled and unavailable text | base `muted-foreground`, mixed further toward the background |
-| `text.accent` | the rare text-only signature accent | palette `yellow`, then base `primary` |
-
-### Status
-
-| Key | Colours | Falls back to |
-|---|---|---|
-| `status.success.foreground` | success text and icons | palette `green` |
-| `status.success.background` | success fill | palette `green` at 12% |
-| `status.warning.foreground` | warning text and icons | palette `yellow` |
-| `status.warning.background` | warning fill | palette `yellow` at 12% |
-| `status.error.foreground` | error text and icons | palette `red`, then base `destructive` |
-| `status.error.background` | error fill | palette `red`, then base `destructive`, at 12% |
-| `status.info.foreground` | informational text and icons | palette `blue` |
-| `status.info.background` | informational fill | palette `blue` at 12% |
-| `status.purple.foreground` | purple categorical status | palette `purple` |
-| `status.orange.foreground` | orange categorical status | palette `orange` |
-
-### Panels and tabs
-
-| Key | Colours | Falls back to |
-|---|---|---|
-| `panel.background` | panel background | base `sidebar` |
-| `panel.rail.background` | the project rail | base `sidebar` |
-| `panel.elevated.background` | an elevated panel | base `card` |
-| `panel.overlay.background` | a panel drawn over another | base `popover` |
-| `panel.input.background` | an input inside a panel | base `background` |
-| `tab.active.background` | the active tab | base `accent` |
-| `tab.inactive.background` | inactive tabs | base `sidebar` |
-| `tab.active.border` | the active tab indicator | base `primary` |
-| `scrollbar.track.background` | scrollbar track | base `background` |
-| `scrollbar.thumb.background` | scrollbar thumb | base `foreground` at 16% |
-| `scrollbar.thumb.hover` | hovered scrollbar thumb | base `foreground` at 26% |
+| `syntax.comment` | comments and prose quotes | base `muted-foreground` |
+| `syntax.keyword` | keywords and control flow | palette `purple` |
+| `syntax.string` | strings | palette `green` |
+| `syntax.number` | numbers | palette `orange` |
+| `syntax.type` | types, classes, and namespaces | palette `cyan` |
+| `syntax.function` | functions and headings | palette `blue`, then base `primary` |
+| `syntax.variable` | variables | base `foreground` |
+| `syntax.operator` | operators | palette `cyan` |
+| `syntax.tag` | markup tags | palette `red` |
+| `syntax.attribute` | markup attributes, pragmas, and metadata | palette `yellow` |
+| `syntax.constant` | constants, atoms, and booleans | palette `orange` |
+| `syntax.regexp` | regular expressions | palette `red` |
+| `syntax.escape` | escape sequences | palette `pink` |
+| `syntax.definition` | definitions and strong prose | base `foreground` |
+| `syntax.property` | properties and object keys | palette `cyan` |
 
 ### Editor
+
+Ten keys. Worth setting when the editor surface is meant to differ from the app around it, which is common: Rosé Pine's editor background is a shade off its app background, and that difference is the whole reason this family exists.
 
 | Key | Colours | Falls back to |
 |---|---|---|
@@ -159,46 +134,48 @@ Set as many or as few as you like. Each entry is looked up on its own.
 | `editor.selection.background` | selected code | base `primary` at 24% |
 | `editor.match_bracket.background` | matching bracket fill | base `accent` |
 | `editor.match_bracket.border` | matching bracket outline | base `ring` |
-| `editor.fold.background` | a fold placeholder | base `secondary` |
-| `editor.fold.border` | a fold placeholder's border | base `border` |
-| `editor.fold.foreground` | a fold placeholder's text | base `muted-foreground` |
 
-### Syntax
-
-These colour code everywhere it appears: the editor, diffs, chat, and rendered markdown.
+### Borders and panel surfaces
 
 | Key | Colours | Falls back to |
 |---|---|---|
-| `syntax.comment` | comments and prose quotes | base `muted-foreground` |
-| `syntax.punctuation` | punctuation | base `muted-foreground` |
-| `syntax.variable` | variables | base `foreground` |
-| `syntax.definition` | definitions and strong prose | base `foreground` |
-| `syntax.keyword` | keywords and control flow | palette `purple` |
-| `syntax.string` | strings | palette `green` |
-| `syntax.function` | functions and headings | palette `blue`, then base `primary` |
-| `syntax.type` | types, classes, and namespaces | palette `cyan` |
-| `syntax.operator` | operators | palette `cyan` |
-| `syntax.property` | properties and object keys | palette `cyan` |
-| `syntax.number` | numbers | palette `orange` |
-| `syntax.constant` | constants and atoms | palette `orange` |
-| `syntax.boolean` | booleans | palette `orange` |
-| `syntax.null` | null-like literals | palette `orange` |
-| `syntax.tag` | markup tags | palette `red` |
-| `syntax.regexp` | regular expressions | palette `red` |
-| `syntax.builtin` | built-in symbols | palette `red` |
-| `syntax.attribute` | markup attributes | palette `yellow` |
-| `syntax.meta` | pragmas and metadata | palette `yellow` |
-| `syntax.escape` | escape sequences | palette `pink` |
+| `border.subtle` | low-emphasis separator | base `sidebar-border` |
+| `border.strong` | high-emphasis border, including a focused control's | base `border` |
+| `panel.background` | panel and rail background | base `sidebar` |
+| `panel.input.background` | an input inside a panel | base `background` |
+
+<Callout type="info">
+  `border.strong` comes from `border`, not from `ring`. The focus ring is a brand colour in most themes, and the strongest border is a grey one. A focused control's border is `border.strong` rather than a key of its own.
+</Callout>
+
+### Diffs
+
+| Key | Colours | Falls back to |
+|---|---|---|
+| `diff.added.background` | an added line or hunk | palette `green` at 13% |
+| `diff.added.emphasis` | the changed words inside an added line | palette `green` at 34% |
+| `diff.added.text` | added text, and the `+N` line count | palette `green` |
+| `diff.removed.background` | a removed line or hunk | palette `red` at 13% |
+| `diff.removed.emphasis` | the changed words inside a removed line | palette `red` at 34% |
+| `diff.removed.text` | removed text, and the `-N` line count | palette `red` |
+| `diff.context.background` | unchanged context | base `background` |
+
+One fill serves both diff renderers, so a colour you set here applies to the inline view and the side-by-side view alike.
+
+## The rest of the key set
+
+The other 39 keys. Every one of them derives correctly from a good palette and a good set of base tokens, which is why no built-in theme sets any of them. Set one when a derived colour is specifically not what you wanted.
 
 ### Terminal
+
+All nineteen. The bright ramp is the theme's hue pulled 15% toward the foreground, which reads as brighter in both appearances. Terminal authors who care about the exact ANSI ramp will want to set these; nobody else needs to.
 
 | Key | Colours | Falls back to |
 |---|---|---|
 | `terminal.background` | the terminal background | base `background` |
 | `terminal.foreground` | default terminal text | base `foreground` |
 | `terminal.cursor` | the cursor | base `foreground` |
-| `terminal.selection` | selected terminal text | base `primary` at 30% |
-| `terminal.ansi.black` | ANSI black | base `background`, lightened |
+| `terminal.ansi.black` | ANSI black | base `background`, 12% toward the foreground |
 | `terminal.ansi.red` | ANSI red | palette `red` |
 | `terminal.ansi.green` | ANSI green | palette `green` |
 | `terminal.ansi.yellow` | ANSI yellow | palette `yellow` |
@@ -207,72 +184,73 @@ These colour code everywhere it appears: the editor, diffs, chat, and rendered m
 | `terminal.ansi.cyan` | ANSI cyan | palette `cyan` |
 | `terminal.ansi.white` | ANSI white | base `foreground` |
 | `terminal.ansi.bright_black` | ANSI bright black | base `muted-foreground` |
-| `terminal.ansi.bright_red` | ANSI bright red | palette `red`, lightened |
-| `terminal.ansi.bright_green` | ANSI bright green | palette `green`, lightened |
-| `terminal.ansi.bright_yellow` | ANSI bright yellow | palette `yellow`, lightened |
-| `terminal.ansi.bright_blue` | ANSI bright blue | palette `blue`, lightened |
-| `terminal.ansi.bright_magenta` | ANSI bright magenta | palette `purple`, lightened |
-| `terminal.ansi.bright_cyan` | ANSI bright cyan | palette `cyan`, lightened |
+| `terminal.ansi.bright_red` | ANSI bright red | palette `red`, toward the foreground |
+| `terminal.ansi.bright_green` | ANSI bright green | palette `green`, toward the foreground |
+| `terminal.ansi.bright_yellow` | ANSI bright yellow | palette `yellow`, toward the foreground |
+| `terminal.ansi.bright_blue` | ANSI bright blue | palette `blue`, toward the foreground |
+| `terminal.ansi.bright_magenta` | ANSI bright magenta | palette `purple`, toward the foreground |
+| `terminal.ansi.bright_cyan` | ANSI bright cyan | palette `cyan`, toward the foreground |
 | `terminal.ansi.bright_white` | ANSI bright white | base `foreground`, lightened |
 
-### Diffs
+### Status
+
+Four foregrounds. The tinted fill behind each one is not a key. See [what a theme cannot set](#what-a-theme-cannot-set).
 
 | Key | Colours | Falls back to |
 |---|---|---|
-| `diff.added.text` | added text | palette `green` |
-| `diff.added.background` | an added region | palette `green` at 8% |
-| `diff.add_line.background` | an added line | palette `green` at 13% |
-| `diff.add_side.background` | an addition in the side-by-side view | palette `green` at 13% |
-| `diff.emphasis_added.background` | the changed run inside an added line | palette `green` at 34% |
-| `diff.removed.text` | removed text | palette `red` |
-| `diff.removed.background` | a removed region | palette `red` at 8% |
-| `diff.remove_line.background` | a removed line | palette `red` at 13% |
-| `diff.remove_side.background` | a removal in the side-by-side view | palette `red` at 13% |
-| `diff.emphasis_removed.background` | the changed run inside a removed line | palette `red` at 34% |
-| `diff.modified.background` | a modified region | palette `blue` at 8% |
-| `diff.context.background` | unchanged context | base `background` |
-| `stat.added` | the added-line count | palette `green` |
-| `stat.removed` | the removed-line count | palette `red` |
+| `status.success.foreground` | success text and icons, and the live-capture indicator | palette `green` |
+| `status.warning.foreground` | warning text and icons | palette `yellow` |
+| `status.error.foreground` | error text and icons | palette `red`, then base `destructive` |
+| `status.info.foreground` | informational text and icons | palette `blue` |
 
-### Team chat
+### Interactive states and overlays
 
 | Key | Colours | Falls back to |
 |---|---|---|
-| `comms.outer.background` | the surrounding chat surface | base `sidebar` |
-| `comms.surface.background` | the transcript | base `background` |
-| `comms.mention.background` | a mention of you | base `foreground` at 16% |
-| `comms.mention.foreground` | the text of a mention of you | base `foreground` |
-| `comms.other_mention.background` | a mention of someone else | base `foreground` at 8% |
-| `comms.other_mention.foreground` | the text of a mention of someone else | base `muted-foreground` |
-| `comms.unread.foreground` | unread and presence indicators | palette `green` |
-| `comms.unread_strong.foreground` | a strong unread indicator | palette `green`, mixed toward the background |
+| `element.hover` | hover overlay on an element | base `foreground` at 4% |
+| `element.selected` | selected overlay | base `foreground` at 6% |
+| `element.active` | pressed overlay | base `foreground` at 8% |
+| `element.highlight` | the 1px top edge on a raised surface | base `foreground` at 6% |
+| `primary.hover` | hovered brand fill | base `primary`, 15% toward the foreground |
+| `primary.muted` | muted brand fill | base `primary` at 6% |
+| `selection.background` | document text selection | base `primary` at 18% |
 
-### Agent chips
+These derive from the theme's own foreground, so they invert correctly between a dark and a light variant. A hardcoded white wash would not.
 
-Each agent has a foreground and a background, and the background is the same hue at 10%.
-
-| Keys | Falls back to |
-|---|---|
-| `agent.claude.foreground`, `agent.claude.background` | palette `orange` |
-| `agent.gpt.foreground`, `agent.gpt.background` | palette `green` |
-| `agent.codex.foreground`, `agent.codex.background` | palette `green` |
-| `agent.gemini.foreground`, `agent.gemini.background` | palette `blue` |
-| `agent.local.foreground`, `agent.local.background` | palette `purple` |
-| `agent.cursor.foreground`, `agent.cursor.background` | palette `yellow` |
-| `agent.kilo.foreground`, `agent.kilo.background` | palette `yellow` |
-| `agent.amp.foreground`, `agent.amp.background` | palette `pink` |
-| `agent.opencode.foreground`, `agent.opencode.background` | base `muted-foreground` |
-
-### Everything else
+### Text, search, scrollbars, and the agent chip
 
 | Key | Colours | Falls back to |
 |---|---|---|
-| `capture.live` | the active capture indicator | palette `green` |
-| `atlas.ants` | the animated marching-ants stroke | base `primary` |
+| `text.disabled` | disabled and unavailable text | base `muted-foreground`, 20% toward the background |
+| `search.match.background` | a search match in the document | palette `yellow` at 22% |
+| `search.match.active_background` | the match the cursor is on | palette `yellow` at 50% |
+| `scrollbar.thumb.background` | scrollbar thumb | base `foreground` at 16% |
+| `scrollbar.thumb.hover` | hovered scrollbar thumb | base `foreground` at 26% |
+| `agent.chip.foreground` | agent identity chip text | base `foreground` |
+| `agent.chip.background` | agent identity chip fill | base `foreground` at 6% |
+
+<Callout type="info">
+  There is one agent chip, not one per vendor. Atlas discovers the agents you have installed at runtime, so a theme cannot enumerate them, and no agent gets a colour the others do not. This neutral pair is what a monochrome theme sets to flatten the chip entirely.
+</Callout>
+
+## What a theme cannot set
+
+Six colours reach the app as `--atlas-*` custom properties but are not theme keys. Each is a pure function of a key that is, so writing one in a theme file is an unknown-key warning rather than an override.
+
+| Variable | Derived from | How |
+|---|---|---|
+| `status.success.background` | `status.success.foreground` | that colour at 12% |
+| `status.warning.background` | `status.warning.foreground` | that colour at 12% |
+| `status.error.background` | `status.error.foreground` | that colour at 12% |
+| `status.info.background` | `status.info.foreground` | that colour at 12% |
+| `element.emphasis` | base `foreground` | at 16%: the strongest neutral overlay, such as a chat mention addressed to you |
+| `terminal.selection` | base `primary` | at 30% |
+
+The reason is that none of them is a judgement call. A status badge's fill is its status foreground at 12%, and an author who wants a different green wants a different green, not two greens that have to be kept in step. Change the key and the derived colour follows.
 
 ## Where these end up
 
-Atlas resolves the whole set on every theme change and writes it out as CSS custom properties. A base token becomes `--` plus its name, so `sidebar-border` is `--sidebar-border`. A theme key becomes `--atlas-` plus its name with dots and underscores turned into dashes, so `terminal.ansi.bright_red` is `--atlas-terminal-ansi-bright-red`.
+Atlas resolves the whole set on every theme change and writes it out as CSS custom properties. A base token becomes `--` plus its name, so `sidebar-border` is `--sidebar-border`. A theme key becomes `--atlas-` plus its name with dots and underscores turned into dashes, so `terminal.ansi.bright_red` is `--atlas-terminal-ansi-bright-red`. The six derived variables use the same `--atlas-` spelling.
 
 ## Next
 

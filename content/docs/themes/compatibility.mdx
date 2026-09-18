@@ -35,7 +35,7 @@ primary = "#eb6f92"
 radius = "8px"
 ```
 
-In shadcn, `:root` is the light theme and `.dark` is the dark one, so they become `[light.base]` and `[dark.base]` respectively.
+In shadcn, `:root` is the light theme and `.dark` is the dark one, so they become `[light.base]` and `[dark.base]` respectively. Carry both across if your source has both: Atlas's Light and System modes are on, and a theme with one variant is used for the other as well.
 
 Atlas accepts `oklch()` as well as hex, `rgb()`, and `hsl()`, so a tweakcn export usually pastes straight across.
 
@@ -47,7 +47,7 @@ Atlas accepts `oklch()` as well as hex, `rgb()`, and `hsl()`, so a tweakcn expor
 
 All 45 base tokens must be present in each variant you ship. A shadcn theme normally covers the colours, `radius`, the charts, and the sidebar family. It often does not cover the rest.
 
-Copy these from any built-in Atlas theme if your source has no opinion:
+Copy these from any built-in Atlas theme if your source has no opinion, giving a light variant a lighter shadow ramp than the dark values below:
 
 ```toml
 font-sans = "-apple-system, \"SF Pro Text\", system-ui, sans-serif"
@@ -72,6 +72,8 @@ Everything the base tokens reach, which is most of the window: the app backgroun
 
 That is a complete, working theme. It will load and it will look like your palette.
 
+Two shadcn tokens carry more weight in Atlas than they do in a web app, so give them a second look. `chart-1` through `chart-5` are five series that have to stay tellable apart, since two that differ only slightly render as one line. And `ring` is a real accent, used for the focus ring and the matching-bracket outline, so a `ring` set to a grey leaves the editor without one.
+
 ## What a shadcn theme cannot say
 
 A shadcn token set describes an interface. It has no vocabulary for the things a code tool needs:
@@ -79,11 +81,12 @@ A shadcn token set describes an interface. It has no vocabulary for the things a
 - **Syntax highlighting.** No keyword, string, type, or comment colour.
 - **Terminal ANSI colours.** No red, green, yellow, blue, magenta, or cyan.
 - **Diff tints.** No addition or removal colour.
-- **Status and category hues.** No success, warning, or informational colour beyond `destructive`.
+- **Status hues.** No success, warning, or informational colour beyond `destructive`.
+- **Search highlights.** No match colour.
 
 Atlas will derive all of them rather than leave them unstyled, but with nothing to derive from it falls back to its own defaults, and those will not match your theme.
 
-**Add a palette.** Eight lines fix all four groups at once:
+**Add a palette.** Eight lines fix all five groups at once:
 
 ```toml
 [dark.palette]
@@ -92,12 +95,14 @@ orange = "#ebbcba"
 yellow = "#f6c177"
 green = "#31748f"
 cyan = "#9ccfd8"
-blue = "#31748f"
+blue = "#9ccfd8"
 purple = "#c4a7e7"
 pink = "#ebbcba"
 ```
 
-This is the single step that turns a converted interface theme into an Atlas theme. See the [token reference](/docs/themes/tokens) for what each hue feeds, and set individual `keys` afterwards wherever a derived colour is not the one you wanted.
+This is the single step that turns a converted interface theme into an Atlas theme. The names are hues rather than slots, and everything downstream trusts them, so file each colour under the name it actually is.
+
+See the [token reference](/docs/themes/tokens) for what each hue feeds. After the palette, the keys worth adding by hand are the fifteen syntax roles and the ten editor keys. No built-in theme sets a terminal, status, search, or agent key at all, because a good palette already gets those right.
 
 ## What Atlas does with the extras
 
@@ -111,4 +116,4 @@ Three tokens come along with a shadcn or tweakcn theme and behave differently fr
 
 - [Authoring a theme](/docs/themes/authoring): iterate on the result
 - [Importing a theme](/docs/themes/importing): let Atlas convert it instead
-- [Token reference](/docs/themes/tokens): every token and key
+- [Token reference](/docs/themes/tokens): where to start, then every token and key
