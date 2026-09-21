@@ -13,39 +13,42 @@ There are no dates on this page, because nobody has committed to any.
 
 ## Multiplayer AI
 
-**Not built.** This is the direction the rest of this page points at.
+**Not shipped. The capture half is built; the reading half is not.** This is the direction the rest of this page points at.
 
-Atlas today is single-player. You run agents against your own checkout, your [memory](/docs/context/memory) is on your device, and your [timeline](/docs/timeline) is your own record. Your team already shares the repository, and git handles that well. What it doesn't share is everything around the code: what an agent was asked, what it tried, why a change is shaped the way it is.
+Atlas today is single-player. You run agents against your own checkout, your [memory](/docs/context/memory) is on your device, and your [timeline](/docs/source-control/timeline) is your own record. Your team already shares the repository, and git handles that well. What it doesn't share is everything around the code: what an agent was asked, what it tried, why a change is shaped the way it is.
 
 The ambition is teammates and agents working from the same live context, not merely the same repo. The reasoning behind a change is available to the next person who touches it, whoever they are, and an agent picking up work inherits what the last agent and the last human both knew.
 
-Two primitives that ship today were built with that in mind. [Organisations](/docs/organisation) are an account model that already holds more than one person. The timeline is a durable, structured record of agent work rather than a scrollback buffer. Neither is a team feature yet. They are the foundations the team features would be built on, which is a different claim and a weaker one.
+It splits into two halves. Getting each developer's sessions into the organisation is team capture, below, and it is nearly done. Reading them back as a shared record is the team timeline, further down, and it has not started in the client.
 
-## Cloud session sync
+## Team capture
 
-**Not built: more precisely, built on this side and not on the other.**
+**Not shipped: built in the client, switched off by one flag.**
 
-This is the piece where "coming soon" would be misleading, so here is the actual state.
+Session capture ships today in Local mode (see [Session capture](/docs/source-control/capture)). Everything needed to send a project's sessions to its organisation is also in the app:
 
-The client-side groundwork is real and in the app. Sessions are written to a local SQLite database whose tables already mirror the eventual server shape, so syncing would be a copy rather than a translation. The outbox isn't a separate queue but a sync-state column on each row, which means local-only operation is the same code path with draining switched off, rather than a second implementation to keep correct. The capture panel, the connect flow, and the local-to-cloud promotion path all exist as code.
+- **Create as Cloud.** Register the project with the active organisation under a slug. Slug availability is checked as you type.
+- **Connect.** Join a project a teammate already registered. Atlas pre-selects the match by root commit and origin URL, and refuses to guess when several projects share a root commit (repositories made from one template do).
+- **Promote.** Move a Local project to Cloud and bring its history. There is no separate backfill path: local rows join the same queue as new ones.
+- **Disclosure with real numbers.** Importing history and promoting both stop on a confirmation showing session count, date range, and secrets redacted. Nothing is sent until you confirm, and cancelling leaves the project exactly as it was.
+- **An offline-first queue.** Capture never waits for the network. Rows queue as pending and drain when they can. A blob uploads before the row that references it, so a teammate never opens a message whose body is missing. A `403` stops the drain as "no longer authorized" and local capture carries on.
+- **No local paths on the wire.** Records carry the server-assigned project id, never the folder path.
 
-What doesn't exist is the service. The ingest service does not serve its read endpoints, so none of those paths are reachable. Cloud capture sits behind a disabled flag, the controls that would start it render as unavailable, no project can enter cloud mode, and **zero bytes leave your machine**.
+Cloud follows the active organisation only, and it needs you signed in to a cloud (or synced) organisation.
 
-That flag flips when the service is deployed. Nothing else has to change, which is the reason for describing it this way rather than as a feature in design.
+What remains is `CLOUD_CAPTURE_ENABLED` in the capture popover, which is still `false`. Until it flips, Cloud and Connect render disabled with "Cloud capture isn't available yet", no project can enter Cloud mode, and **zero bytes leave your machine**. The ingest service now answers its read routes (they return `401` unauthenticated, not the `405` the flag's comment describes), so the flag is the last client step.
 
 ## A team timeline
 
-**Not built.** The [timeline](/docs/timeline) today is single-user by construction, not by configuration: there is no setting that would turn it into a shared one.
+**Not built.** The [timeline](/docs/source-control/timeline) is organisation-scoped (it spans every project in the active organisation) but single-user: it reads only this machine's local stores.
 
 Three things make that concrete:
 
-- **The store is local.** It's a SQLite database in your project's gitignored state directory. Nothing writes to it but this machine.
-- **There is no author field.** A record carries no claim about who produced it, because authorship in a shared system has to be derived by the service receiving the data rather than declared by the client sending it. A client can say anything. The component that would stamp authorship is part of the ingest service, which isn't running.
-- **Git identity is deliberately not an account identity.** Commits carry an author name and email, and Atlas records them for display only. They're self-asserted (anyone can set them to anything), so they are never mapped to an organisation member. That mapping is a decision the team version has to make properly rather than inherit.
+- **There is no inbound path.** Team capture sends sessions to the organisation. Nothing in the app reads a teammate's sessions back.
+- **Authorship is the server's job.** A record carries no author field, because a client can claim anything. The ingest service stamps who sent it. Nothing in the app displays that yet.
+- **Git identity is not account identity.** Commits carry an author name and email, and Atlas records them for display only. They're self-asserted, so they are never mapped to an organisation member.
 
-And there is no inbound path at all: no mechanism exists by which a teammate's activity could arrive on your machine.
-
-A shared timeline would mean seeing which sessions produced which commits across everyone working in a repository, not just your own. It depends on cloud sync above.
+A shared timeline would mean seeing which sessions produced which commits across everyone working in a repository, not just your own.
 
 ## Spaces
 
@@ -75,7 +78,7 @@ Each of these is a control or behaviour you may actually encounter, so they're w
 
 - **European hosting for organisations.** The region selector in the create-organisation form shows European Union, greyed out. Only United States is hosted. It's shown rather than hidden so the choice is visibly coming rather than absent.
 - **Invitation emails.** Inviting someone to an organisation does not send them an email. The accept link is copied to your clipboard and you pass it on yourself. See [members and invitations](/docs/organisation/members).
-- **Usage reporting for every agent.** [Mission Control](/docs/product/mission-control) reports Claude Code, Codex, and Review usage, because those expose the numbers. Sessions from other agents are recorded in your timeline but not counted in spend.
+- **Usage reporting for every agent.** [Mission Control](/docs/context/mission-control) reports Claude Code, Codex, and Review usage, because those expose the numbers. Sessions from other agents are recorded in your timeline but not counted in spend.
 - **The block terminal on shells other than zsh.** Command blocks depend on shell integration Atlas installs for zsh. Other shells run fine but present as a single plain stream. See [Terminal](/docs/product/terminal).
 
 ## What is built

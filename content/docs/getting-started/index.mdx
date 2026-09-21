@@ -1,25 +1,26 @@
 ---
 title: Welcome to Atlas
-description: What Atlas is, how it works, and what it takes to start.
+description: How it works and how to get started
 ---
 
-Atlas is source control for coding agents. You open a [project](/docs/getting-started/concepts#project) and run Claude Code, Codex, Atlas's own agent, or anything from the [agent registry](/docs/agents/registry) against your codebase. Every commit an agent makes becomes a checkpoint, linked back to the session that produced it.
+Atlas is source control for coding agents, and the IDE where you manage their context. You open a [project](/docs/getting-started/concepts#project) and run Claude Code, Codex, Atlas's own agent, or anything from the [agent registry](/docs/agents/registry) against your codebase.
 
-Most tools give you a chat panel bolted onto an editor, and the record of what an agent did disappears the moment the terminal scrolls. Atlas keeps it.
+Atlas is the harness around all of them. Every agent goes through the same send path, reads the same memory, and writes to the same record. Every commit an agent makes becomes a checkpoint, linked back to the session that produced it.
 
 ## How it works
 
-You open a project and run a session. After that:
+You open a project, turn on [session capture](/docs/source-control/capture), and run a session. After that:
 
 1. **Run any agent.** Claude Code, Codex, Atlas's own agent, or anything from the registry, side by side, against the same codebase.
 2. **Every commit becomes a checkpoint.** It links back to the [session](/docs/getting-started/concepts#session) that produced it, keeping prompts, tool calls, and reasoning together. One session can produce several commits, and each gets its own checkpoint.
-3. **Every agent reads and writes the same memory.** Switching from Claude Code to Codex mid-task doesn't mean starting over: the new agent inherits the context the last one built up.
-4. **The workspace is part of the record.** Atlas is also an editor, terminal, and git client, so the record covers the planning and manual changes around a commit, not just the diff.
-5. **Your timeline is the through-line.** Every session and [checkpoint](/docs/getting-started/concepts#checkpoint) in a project, in one queryable record.
+3. **Context carries across agents.** Every agent reads and writes the same [memory](/docs/context/memory), so switching from Claude Code to Codex mid-task doesn't mean starting over.
+4. **You decide what an agent sees.** The [knowledge base](/docs/context/knowledge-base), [skills](/docs/context/skills), and `@` mentions put the right context in front of any agent, without pasting it in.
+5. **The workspace is part of the record.** Atlas is also an editor, terminal, and git client, so the record covers the planning and manual changes around a commit, not just the diff.
+6. **Your timeline is the through-line.** Every session and [checkpoint](/docs/getting-started/concepts#checkpoint), across the projects in your organisation, in one queryable record.
 
 ## What you need to do
 
-Install Atlas, open a project, and run a session. There's nothing to configure first.
+Install Atlas, open a project, turn on session capture, and run a session. Capture is one click and needs no account.
 
 <Cards>
   <Card title="Quickstart" href="/docs/getting-started/quickstart" description="Open a project and run your first session." />

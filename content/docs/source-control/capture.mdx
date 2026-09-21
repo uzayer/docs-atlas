@@ -1,0 +1,53 @@
+---
+title: Session capture
+description: Record a project's agent work so its sessions and checkpoints reach the timeline.
+icon: CircleDot
+---
+
+Session capture records what agents do in a project: every prompt, response, tool call, and file write. It feeds the [timeline](/docs/source-control/timeline) and is what lets a commit become a [checkpoint](/docs/getting-started/concepts#checkpoint).
+
+Capture is off until you turn it on, one project at a time.
+
+## Turn it on
+
+Select the project name in the title bar to open **Session capture**. Under **Where sessions are stored**, keep **Local** and select **Enable**.
+
+Local capture needs no account and makes no network call. Records stay in the project's `.atlas/` directory on this machine.
+
+Once capture is on, a green dot pulses beside the project name. Hover it for a one-line status.
+
+## Bring in earlier Claude Code sessions
+
+When you enable capture, Atlas imports the Claude Code transcripts already on disk for that folder. Your timeline starts with the work you've already done, not an empty page.
+
+Atlas keeps checking while the project is open. A Claude Code session you run in a terminal outside Atlas is brought in too. Transcripts it has already imported, and duplicates of sessions recorded in the app, are skipped.
+
+## Capture without git
+
+A folder does not need to be a git repository. Sessions are recorded either way, but they can't link to commits.
+
+In a folder without git, the capture panel offers **Initialise git**. It runs `git init` so future commits can become checkpoints.
+
+## Pause and resume
+
+Select **Pause capture** to stop recording new work. Nothing already recorded is deleted. Select **Resume capture** to start again.
+
+## When something is wrong
+
+The dot turns amber when capture is degraded and red when it has stopped. Open the panel to see the reason and what to do next.
+
+| Problem | What to do |
+| --- | --- |
+| The git watcher stopped, so commits aren't linking | Select retry. Commits made meanwhile are still picked up. |
+| Another Atlas window is recording this project | Close the other window to record here. |
+| The session store can't be written | Check free disk space and permissions on `.atlas/`. |
+| The capture worker stopped | Restart Atlas. What was already captured is safe. |
+
+## Protect what is stored
+
+Atlas redacts secrets before it writes a transcript to disk. This protects local records when an agent reads a file such as `.env`.
+
+## Next
+
+- [Timeline](/docs/source-control/timeline): follow captured sessions into commits
+- [Git & Diff](/docs/source-control/git): review and create commits

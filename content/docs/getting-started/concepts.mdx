@@ -21,13 +21,17 @@ A coding agent Atlas drives: a built-in agent, one installed from the [agent reg
 
 One agent conversation, recorded and resumable: every message, tool call, and file change, kept as it happens. A session isn't the same as a [checkpoint](#checkpoint); one session can produce several commits, and each gets its own checkpoint.
 
+## Session capture
+
+The per-project switch that records sessions. It's off until you turn it on, and local capture keeps every record on your machine with no account and no network call. Without it, sessions still run, but nothing reaches the [timeline](#timeline). See [Session capture](/docs/source-control/capture).
+
 ## Checkpoint
 
 The link between a session and the commit containing its work. It's what a commit doesn't tell you on its own: which session produced it, what the agent was asked, and the reasoning behind the change. Checkpoints survive rebases and amends, and orphan rather than guess when a squash makes the link genuinely ambiguous.
 
 ## Timeline
 
-The record of your sessions and the checkpoints they produced. It's how you get back to the reasoning behind a change without reading a raw transcript: select a checkpoint and chat with it directly.
+The record of your sessions and the checkpoints they produced, across every project in the active [organisation](#organisation). It's how you get back to the reasoning behind a change without reading a raw transcript: select a checkpoint and chat with it directly.
 
 ## Shared memory
 

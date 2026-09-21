@@ -6,6 +6,8 @@ icon: Timeline
 
 Use the timeline to answer a simple question: which agent session produced this commit? Atlas keeps sessions and [checkpoints](/docs/getting-started/concepts#checkpoint) together for each project.
 
+The timeline shows projects with [session capture](/docs/source-control/capture) turned on. Open it from **Timeline** in the sidebar. It spans every project in the active [organisation](/docs/organisation/organisations).
+
 ## Follow a commit back to its work
 
 Open a commit from [Source Control](/docs/source-control/git) to see the sessions that contributed to it. Open a session in the timeline to see the commit it became.
@@ -24,11 +26,8 @@ Once Atlas settles a touched path, it stops using that touch to nominate future 
 
 Atlas records a session even when it never produces a commit. Git is optional: non-repository folders still keep sessions, but cannot produce checkpoints.
 
-## Protect what is stored
-
-Atlas redacts secrets before it writes a transcript to disk. This protects local records when an agent reads a file such as `.env`.
-
 ## Next
 
+- [Session capture](/docs/source-control/capture): turn recording on for a project
 - [Memory](/docs/context/memory): carry context into the next session
 - [Git & Diff](/docs/source-control/git): review and create commits
