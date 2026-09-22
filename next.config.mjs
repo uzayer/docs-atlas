@@ -17,6 +17,27 @@ const config = {
         destination: '/docs/getting-started',
         permanent: false,
       },
+      {
+        source:
+          '/docs/agents/:agent(atlas|claude-code|codex|cursor|kilo-code|opencode)',
+        destination: '/docs/agents',
+        permanent: true,
+      },
+      {
+        source: '/docs/context/mission-control',
+        destination: '/docs/context/usage',
+        permanent: true,
+      },
+      {
+        source: '/docs/context/research',
+        destination: '/docs/context/knowledge-base',
+        permanent: true,
+      },
+      {
+        source: '/docs/product/review',
+        destination: '/docs/source-control/git',
+        permanent: true,
+      },
     ];
   },
 };

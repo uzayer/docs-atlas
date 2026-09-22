@@ -4,8 +4,7 @@
     "memory",
     "agent-preferences",
     "knowledge-base",
-    "research",
     "skills",
-    "mission-control"
+    "usage"
   ]
 }

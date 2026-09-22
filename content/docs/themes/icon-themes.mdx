@@ -125,7 +125,19 @@ Inlining third-party markup means every icon is sanitised first, against a drawi
 
 ## Limits
 
-These are known and deliberate. None of them stop a theme from loading, and an affected icon falls back rather than breaking.
+Atlas reads part of the VS Code format rather than all of it. These limits are known and deliberate, and none of them stop a theme from loading: an affected icon falls back rather than breaking.
+
+<Mermaid chart={`
+flowchart LR
+    subgraph V["the VS Code icon theme format"]
+        direction LR
+        I["what Atlas reads<br/>icon definitions, file and folder<br/>rules, light and high contrast"]
+        X["not read<br/>product icons, translations,<br/>unsafe SVG elements"]
+        I ~~~ X
+    end
+    I ==>|"nothing matches"| L["the lucide icon"]
+    X -.-> L
+`} />
 
 - **`<style>` elements inside an icon** are removed. CSS inside an inline SVG is document-scoped and would escape the icon.
 - **External references inside an icon** are removed for the same reason.

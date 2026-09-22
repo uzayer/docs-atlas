@@ -10,9 +10,9 @@ Manage both in **Settings → Skills**.
 
 ## Choose the scope
 
-Make a skill **global** to use it in every project, or **project** to keep it in one. Enable each skill only for the agents that should receive it.
+Make a skill **global** to use it in every project, or **project** to keep it in one. Enable each skill only for the supported targets that should receive it.
 
-Atlas keeps one canonical copy and links it into each agent's own skills directory. A skill uses no context until the agent invokes it. You can also adopt an existing agent-specific skill into Atlas so it works across agents.
+Atlas keeps one canonical copy and links it into the skill directories it knows for Atlas Agent, Claude Code, and Codex. A registry agent is not automatically a skill target merely because it speaks ACP. You can also adopt an existing skill from one of those agents into Atlas and project it to the others.
 
 ## Install a pack
 
@@ -22,7 +22,7 @@ Skills become invokable instructions. Commands, agents, and rules from the pack 
 
 ## Invoke a skill
 
-Type `/` in the [composer](/docs/product/chat) and choose a skill the current agent advertises.
+Type `/` in the [composer](/docs/product/chat) and choose a skill the current agent advertises. If an agent does not expose skills or commands through ACP, Atlas does not invent a compatible invocation path for it.
 
 <Callout type="info">
   A passthrough command runs only when it starts the message. Atlas sends it as ordinary text when it appears mid-sentence.

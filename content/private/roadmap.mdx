@@ -66,7 +66,7 @@ What isn't built is the reason it's on this page. The intent is for the browser 
 
 ## Atlas's own agent
 
-Atlas's [native agent](/docs/agents/atlas) ships today, so this section is only about what it can't do yet.
+Atlas's [native agent](/docs/agents) ships today, so this section is only about what it can't do yet.
 
 **Image input is not supported.** Paste a screenshot into a turn and it reaches the native agent as a file path rather than as an image. The third-party agents that support vision handle it properly, so this is a gap specific to Atlas's own agent.
 
@@ -78,7 +78,7 @@ Each of these is a control or behaviour you may actually encounter, so they're w
 
 - **European hosting for organisations.** The region selector in the create-organisation form shows European Union, greyed out. Only United States is hosted. It's shown rather than hidden so the choice is visibly coming rather than absent.
 - **Invitation emails.** Inviting someone to an organisation does not send them an email. The accept link is copied to your clipboard and you pass it on yourself. See [members and invitations](/docs/organisation/members).
-- **Usage reporting for every agent.** [Mission Control](/docs/context/mission-control) reports Claude Code, Codex, and Review usage, because those expose the numbers. Sessions from other agents are recorded in your timeline but not counted in spend.
+- **Usage reporting for every agent.** [Usage](/docs/context/usage) reads Atlas's captured session record for every agent. Token detail appears when the agent reports it, and an unknown or unpriced model contributes no estimated cost.
 - **The block terminal on shells other than zsh.** Command blocks depend on shell integration Atlas installs for zsh. Other shells run fine but present as a single plain stream. See [Terminal](/docs/product/terminal).
 
 ## What is built

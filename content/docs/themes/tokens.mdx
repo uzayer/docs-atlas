@@ -13,6 +13,15 @@ Every theme key resolves in the same order:
 3. The base token the key derives from, if the key has one.
 4. An Atlas default for the active appearance.
 
+Each arrow below is the step failing. The first stop that has an answer is the one Atlas uses.
+
+<Mermaid chart={`
+flowchart LR
+    K["a theme key"] -->|"not in keys"| P["palette entry"]
+    P -->|"no palette source"| B["base token"]
+    B -->|"no base source"| D["Atlas default"]
+`} />
+
 A key that derives its colour is often transformed on the way: given a transparency, or mixed toward the background or the foreground. Those transforms apply only while deriving. A value you write in `keys` is used exactly as written.
 
 ## Start here
@@ -21,11 +30,20 @@ There are 73 theme keys, and a theme does not need most of them.
 
 The 15 built-in themes set 34 of the 73 between them, and 30 of those appear in every one. None of them sets a single terminal, status, search, or agent key, because the palette already gets those right.
 
+<Mermaid chart={`
+flowchart LR
+    subgraph A["73 theme keys"]
+        subgraph B["34 set by some built-in theme"]
+            C["30 set by all 15"]
+        end
+    end
+`} />
+
 So the realistic shape of a theme is:
 
 1. **The 45 base tokens.** Required, and on their own they are a complete theme.
 2. **The eight palette hues.** Eight lines that fix syntax, terminal, diff, status, and search colours at once.
-3. **About thirty theme keys**, listed under [the working set](#the-working-set) below. These are the surfaces where a theme's own judgement genuinely differs from its base tokens: the syntax roles, the editor's own chrome, two borders, two panel surfaces, and the diff tints.
+3. **About thirty-five theme keys**, listed under [the working set](#the-working-set) below. These are the surfaces where a theme's own judgement genuinely differs from its base tokens: the syntax roles, the editor's own chrome, two borders, two panel surfaces, and the diff tints.
 
 Everything below that is the long tail. Reach into it when a derived colour is not the one you wanted, not as a checklist.
 
@@ -94,7 +112,7 @@ The names are hues, and everything downstream trusts them. A `green` holding you
 
 ## The working set
 
-These are the keys the built-in themes actually set, and the ones to reach for first. The **Falls back to** column is what Atlas uses when you do not set the key.
+These are the keys to reach for first, and very nearly the set the built-in themes use: 34 of the 36 below appear in at least one built-in, the exceptions being the two diff text colours. The **Falls back to** column is what Atlas uses when you do not set the key.
 
 ### Syntax
 
@@ -164,7 +182,7 @@ One fill serves both diff renderers, so a colour you set here applies to the inl
 
 ## The rest of the key set
 
-The other 39 keys. Every one of them derives correctly from a good palette and a good set of base tokens, which is why no built-in theme sets any of them. Set one when a derived colour is specifically not what you wanted.
+The other 37 keys. Every one of them derives correctly from a good palette and a good set of base tokens, which is why no built-in theme sets any of them. Set one when a derived colour is specifically not what you wanted.
 
 ### Terminal
 

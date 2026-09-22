@@ -73,7 +73,19 @@ Where the names differ, it is because Zed's roles do not map one-to-one. Zed's `
 
 **Font styles do not cross.** An Atlas theme key carries a colour and nothing else, so a Zed scope with `font_style` is imported with its colour and no italics. The report counts those under **font styles**, with the scopes named, rather than writing a field the loader would reject.
 
-**What is derived.** All 45 base tokens, because Zed has no shadcn layer to take them from. If the chrome looks off after an import, check `primary` (from `text.accent`), `accent` (from `element.hover`, since shadcn's `accent` is a hover surface), and `card` (from `elevated_surface.background`) first.
+**What is derived.** Sixteen of the 45 base tokens. Zed has no shadcn layer, but 29 of the 45 still come from a Zed style role, so the ones Atlas genuinely invents are the three foregrounds with no source, `radius`, the three font stacks, `tracking-normal`, `spacing`, and the seven shadows.
+
+<Mermaid chart={`
+flowchart LR
+    subgraph B["the 45 base tokens, after a Zed import"]
+        direction LR
+        M["29 mapped<br/>from a Zed style role"]
+        D["16 derived<br/>foregrounds, radius, fonts, shadows"]
+        M ~~~ D
+    end
+`} />
+
+If the chrome looks off after an import, check the mapped ones first: `primary` (from `text.accent`), `accent` (from `element.hover`, since shadcn's `accent` is a hover surface), and `card` (from `elevated_surface.background`).
 
 **What is dropped**, by category: icon roles, the `players[1..]` collaboration colours, editor furniture Atlas does not draw (wrap guides, invisibles, subheaders, the read and write highlight pair), app chrome that follows the panel tokens, the status backgrounds Atlas derives, the version-control states Atlas has no colour for (`conflict`, `renamed`, `ignored`, `hidden`, `unreachable`), `hint` and `predictive`, the ghost-element overlay ladder, Zed's dim ANSI ramp, and whichever `syntax` scopes are finer than Atlas's 15 roles.
 
@@ -152,7 +164,7 @@ Under the counts:
 - **What was dropped** expands into one row per category, with a count and the reason. "22 workbench chrome" with "widgets and surfaces Atlas does not have" is an honest summary; a bare "ignored: 87" is not.
 - **Mapped keys** and **Derived keys** expand into the full lists, each row a swatch, the fully qualified target such as `dark.base.background`, and where the value came from.
 
-A high derived count is normal and not a problem. For a Zed theme it will be at least 45, because that is the whole shadcn layer. What to look at is the derived list itself: those are the colours Atlas guessed, and they are the ones worth overriding by hand afterwards.
+A high derived count is normal and not a problem. For a Zed theme it starts at about 22: the 16 base tokens with no Zed source, plus the six theme keys that have none either. What to look at is the derived list itself: those are the colours Atlas guessed, and they are the ones worth overriding by hand afterwards.
 
 ## Where the imported theme lands
 

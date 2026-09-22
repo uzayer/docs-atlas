@@ -1,35 +1,44 @@
 ---
-title: Supported agents
-description: Run the coding agent that fits the work.
+title: Agents
+description: Run Atlas Agent or install an ACP agent from the official registry.
 icon: Bot
 ---
 
-Choose an agent, point it at your project, and keep the work in one shared record. Atlas keeps sessions, [checkpoints](/docs/getting-started/concepts#checkpoint), and [shared memory](/docs/getting-started/concepts#shared-memory) connected when you switch agents.
+Atlas has one native agent and can run supported coding agents published in the official [Agent Client Protocol registry](/docs/agents/registry). You choose the agent in the composer; Atlas supplies the project and renders the conversation through the same interface.
 
-## Start with a built-in agent
+## Start with Atlas Agent
 
-Atlas includes these agents in the switcher:
+Atlas Agent is available on every installation and runs in the Atlas process. It uses your Atlas account and the model access attached to your active organisation, so it does not need a provider key from **Settings → API Keys**.
 
-- [Claude Code](/docs/agents/claude-code)
-- [Codex](/docs/agents/codex)
-- [OpenCode](/docs/agents/opencode)
-- [Cursor](/docs/agents/cursor)
-- [Kilo Code](/docs/agents/kilo-code)
-- [Atlas Agent](/docs/agents/atlas)
+Atlas Agent can read and edit files, search the project, run commands, use [skills](/docs/context/skills), and search [shared memory](/docs/context/memory). Choose its model, mode, and reasoning effort from the controls it exposes in the composer.
 
-Claude Code and Codex have the deepest Atlas integration.
+## Install an ACP agent
 
-## Add another agent
+Open **Settings → Agents** to browse the registry. Atlas does not ship a separate built-in copy of Claude Code, Codex, Cursor, OpenCode, Kilo Code, or any other external agent. Installing one from the registry is the source of truth for whether it appears in the agent switcher.
 
-Install any compatible Agent Client Protocol agent from [Discover agents](/docs/agents/registry). Atlas adds it below the built-in agents and gives it the same project context.
+The composer also offers a short list of popular registry agents as one-click installs. These are shortcuts into the same registry, not a different class of integration.
 
-Every agent you run can work in the project you opened, add sessions to the timeline, link its commits to checkpoints, and read shared memory. An agent you installed moments ago can use context your team already built.
+See [ACP registry](/docs/agents/registry) for installation, platform support, updates, and removal.
 
-## Handle sign-in and models
+## Expect capabilities to vary
 
-Agents keep their own authentication and model choices. Atlas offers setup help for built-in agents; for registry agents, use the repository or website linked from the agent card.
+ACP lets an agent advertise what it supports. Atlas shows only the controls and actions the connected agent provides, including:
+
+- authentication methods
+- models, modes, and configuration controls
+- commands and permission requests
+- session listing, loading, and forking
+- images and embedded terminals
+
+An entry shown in Atlas's registry catalogue means Atlas can install and start it. It does not promise that every agent implements every optional ACP capability. Use the repository or website on its registry card for account setup and agent-specific behaviour.
+
+## Keep the record in Atlas
+
+Every agent runs against the open [project](/docs/getting-started/concepts#project). Atlas keeps its chats in session history, and [session capture](/docs/source-control/capture) adds the work to the timeline and links qualifying commits to checkpoints.
+
+Shared memory is capability-based. When memory sharing is on, Atlas offers its memory tools to agents that advertise HTTP MCP support. The agent decides when to call those tools; agents without that capability do not receive memory automatically.
 
 ## Next
 
-- [Discover agents](/docs/agents/registry): browse compatible agents
+- [ACP registry](/docs/agents/registry): install or remove an agent
 - [Concepts](/docs/getting-started/concepts): learn Atlas terminology

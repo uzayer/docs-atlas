@@ -76,7 +76,19 @@ Two shadcn tokens carry more weight in Atlas than they do in a web app, so give 
 
 ## What a shadcn theme cannot say
 
-A shadcn token set describes an interface. It has no vocabulary for the things a code tool needs:
+A shadcn token set describes an interface. Atlas keeps its names exactly, so the 45 you converted sit inside the larger set Atlas colours from, and everything outside them is worked out rather than asked for.
+
+<Mermaid chart={`
+flowchart LR
+    subgraph A["what Atlas colours"]
+        direction LR
+        B["the 45 you converted<br/>chrome, panels, editor<br/>background, charts"]
+        R["syntax, terminal, diff,<br/>status, search<br/>derived, not written"]
+        B ~~~ R
+    end
+`} />
+
+It has no vocabulary for the things a code tool needs:
 
 - **Syntax highlighting.** No keyword, string, type, or comment colour.
 - **Terminal ANSI colours.** No red, green, yellow, blue, magenta, or cyan.

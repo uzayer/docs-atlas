@@ -1,14 +1,5 @@
 {
   "title": "Agents",
   "icon": "Bot",
-  "pages": [
-    "index",
-    "registry",
-    "atlas",
-    "claude-code",
-    "codex",
-    "opencode",
-    "cursor",
-    "kilo-code"
-  ]
+  "pages": ["index", "registry"]
 }

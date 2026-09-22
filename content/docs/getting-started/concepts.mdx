@@ -15,7 +15,7 @@ An online account container owning projects, with members and roles. Every proje
 
 ## Agent
 
-A coding agent Atlas drives: a built-in agent, one installed from the [agent registry](/docs/agents/registry), or Atlas's native agent. Every agent goes through the same send path and reads from the same [shared memory](#shared-memory), so switching from one to another mid-task doesn't reset what either one knows.
+A coding agent Atlas drives: either Atlas Agent, which runs in process, or an external agent installed from the [ACP registry](/docs/agents/registry). External agents advertise their capabilities when they connect, so models, modes, authentication, session restoration, images, terminals, and memory access can vary by agent.
 
 ## Session
 
@@ -35,7 +35,7 @@ The record of your sessions and the checkpoints they produced, across every proj
 
 ## Shared memory
 
-On-device index every agent reads from and writes to: plans, decisions, file changes, and failures, matched against what you're asking about. It's what makes switching agents mid-task different from starting over, not the same thing as the [knowledge base](#knowledge-base), which is what you write down on purpose.
+An on-device record of plans, decisions, facts, file changes, and failures from work in the project. Atlas Agent and external agents that advertise HTTP MCP support can pull from it through Atlas's memory tools. It is not the same thing as the [knowledge base](#knowledge-base), which is what you write down on purpose.
 
 ## Agent preferences
 
@@ -43,7 +43,7 @@ A rule or preference Atlas distils from your instruction files and memory, and s
 
 ## Skill
 
-A `SKILL.md` file scoped globally or per project, enabled per agent by symlinking into that agent's own skills directory. Type `/` in the composer to invoke one directly.
+A `SKILL.md` file scoped globally or per project. Atlas keeps a canonical copy and can project it into Atlas Agent, Claude Code, and Codex, whose skill locations it knows. Type `/` in the composer to invoke a skill the connected agent advertises.
 
 ## Pack
 

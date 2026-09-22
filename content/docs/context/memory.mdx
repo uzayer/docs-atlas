@@ -1,37 +1,48 @@
 ---
 title: Memory
-description: Carry useful context between sessions and agents.
+description: Let capable agents pull project context from one shared record.
 icon: BrainCircuit
 ---
 
-Start a new agent without starting from zero. Atlas indexes the context agents leave behind and brings back the useful parts when you send your next message.
+Shared memory keeps durable context from agent work in the project. It records decisions, facts, failures, architecture notes, plans, file changes, and session activity so another session can find them later.
 
-## Let Atlas handle the handoff
+## Turn on sharing
 
-Agents write instruction files, notes, and other persistent context as they work. Atlas indexes those files continuously, matches them to your prompt, and gives the strongest results to the agent.
+Open **Memory** and turn on sharing for the project. The switch controls both reads and writes: when it is off, Atlas does not offer the memory server, searches return nothing, and agents cannot add entries.
 
-Embedding runs on your machine, so Atlas does not send this text elsewhere. It also uses a low-weight graph of structured facts, but a graph match never outranks a stronger direct match.
+Atlas does not prepend memory to every prompt. Instead, it offers an MCP memory server to Atlas Agent and to external agents that advertise HTTP MCP support. The server asks an agent to:
 
-Most agents receive relevant context in the turn. [Atlas Agent](/docs/agents/atlas) can search memory itself while it works.
+- load a briefing when a session starts
+- check what other sessions changed when it resumes
+- search before asking you to repeat project history or retrying an old approach
+- remember or forget durable context as the work changes
+
+The agent decides whether to call those tools. An ACP agent without HTTP MCP support receives no shared memory, and an agent that never calls the tools gets no automatic injection.
+
+## Build the record
+
+Atlas records session lifecycle and extracts durable entries from captured work. The durable kinds are **decision**, **fact**, **failure**, and **architecture**. It also keeps the active plan, recently changed files, and the tail of the previous session for briefings.
+
+The same search can reach indexed project documents, instruction files, knowledge notes, and imported agent memory. Embeddings run on your machine.
 
 ## Carry durable preferences further
 
-Atlas promotes only high-confidence preferences and constraints that appear in more than one project to cross-project memory. It uses that memory only when the current project has little relevant context.
+Atlas promotes a fact to cross-project memory only when the same high-confidence content appears in at least two distinct repositories. Cross-project results fill gaps when local retrieval is sparse; they do not outrank stronger local matches.
 
 ## Inspect or correct memory
 
 Open the Memory panel when you want to see what Atlas knows:
 
-- **Graph** shows structured facts and their connections.
+- **Graph** visualises the semantic index built from project documents.
 - **[Agent preferences](/docs/context/agent-preferences)** shows editable rules Atlas found in your files.
-- **Timeline** puts memory, sessions, and commits on one calendar.
-- **Shared** shows the cross-agent event log and saved plans.
+- **Timeline** places indexed context, sessions, and commits on branch lanes over time.
+- **Shared** shows the cross-agent event log, plans, and durable memory entries with their provenance and confidence.
 
-Use the per-agent browser to read the sessions each agent has recorded for this project.
+Edit an incorrect durable entry or forget it from the Shared view. Atlas keeps the change in the event log rather than silently rewriting history.
 
 ## Keep the code index current
 
-Atlas separately indexes your codebase so memory retrieval stays grounded in the repository. Its status appears in the [composer](/docs/product/chat), where you can rebuild it. Choose the embedding model in [Settings → Local Models](/docs/product/settings); changing it rebuilds the index after Atlas asks for confirmation.
+Atlas separately indexes your codebase so memory search stays grounded in the repository. Its status appears in the [composer](/docs/product/chat), where you can rebuild it. Choose the embedding model in [Settings → Local Models](/docs/product/settings); changing it rebuilds the index after Atlas asks for confirmation.
 
 ## Next
 

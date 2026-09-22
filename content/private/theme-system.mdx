@@ -1,0 +1,393 @@
+---
+title: "Theme system: audit and plan"
+description: Internal. The 2026-09-17 audit of Atlas theming, the decisions taken, and the PR sequence that implements them.
+---
+
+**Internal planning page.** Read this page before touching theming. It is the specification each implementation PR works from.
+
+- **Decision record:** ADR-0009 (`atlas/docs/adr/0009-one-theme-format-shadcn-base-with-derived-keys.md`)
+- **Vocabulary:** the "Theming" section of `atlas/CONTEXT.md`. Use its terms exactly: *theme*, *variant*, *base tokens*, *palette*, *theme keys*, *theme override*, *theme import*, *icon theme*.
+
+## Audit (2026-09-17, branch `0.3.3`)
+
+### Two parallel theme systems, both hardcoded in TypeScript and dark-only
+- **Interface themes.** `ATLAS_THEMES` in `src/features/theme/themes.ts:57` defines 6 themes (atlas-black, chyral, mirage, rose-pine, one-dark, phosphor). Each has 17 hex fields, which `buildThemeVars` (:236) turns into 33 CSS vars. `apply-atlas-theme.ts:19` sets them as inline styles on `<html>`.
+- **Editor themes.** `EDITOR_THEMES` in `src/features/editor/themes/themes.ts` defines 10 themes (atlas, atlas-mono, dracula, one-dark, monokai, tokyo-night, catppuccin frappé/macchiato/mocha, vesper). Each has 37 colours, which become the 33 `--cm-*` / `--diff-*` vars.
+- **Persistence.** `config.toml` stores `atlasTheme` and `codeEditorTheme` (`src-tauri/src/state/atlas_config.rs:137-142`). Ids are not validated, and an unknown id silently falls back to the default.
+- **Startup.** Both are applied from `project-store.ts` (hydrate at :486, settings side effects at :308).
+
+### Token sprawl
+- **Two definition sites.** `src/styles/tokens.css` defines 170 vars on `:root`. `globals.css:10-129` holds 64 `@theme inline` entries.
+- **Duplicate names for one colour.** For example, `--bg-surface` = `--bg-primary` = `--background`. There are also two diff families (`--diff-added-bg` and `--diff-add-line-bg`).
+- **`accent` collision.** Tailwind `bg-accent` resolves to the brand colour, but shadcn's `--accent` is a hover surface. Any stock shadcn component renders wrong.
+- **Radius mismatch.** `--radius-sm` is 3px in `tokens.css` but 2px in `@theme`.
+- **Type-scale clash.** The `--text-xs…xl` vars collide with Tailwind's font-size namespace.
+- **Undefined vars in use.** `--danger`, `--warning`, `--status-success-bg`, `--font-size-sm` and `--atlas-ants-color` are referenced but never defined.
+- **Two ways of using a token.** 1,976 semantic utilities versus 2,581 `[var(--x)]` arbitrary classes.
+
+### Coverage gaps
+- **What themes never set.** Status colours (and `--status-success` is grey), agent chips, the tokens.css diff vars, comms surfaces, selection, `--text-accent` (`#ffff00`) and shadows.
+- **Colour literals.** 686 in 141 files, including `bg-white` ×107, `bg-black` ×51 and 112 arbitrary `-[#…]` classes.
+  - Worst folders: comms 85, components 66, spaces 51, terminal 45, organisations 41, chat 38, capture 37.
+  - Worst files: `capture-popover.tsx`, `terminal-session.ts`, `chart-theme.ts`, `line-emulator.ts`, `feedback-panel.tsx`, `browser-panel.tsx`, `titlebar.tsx`.
+- **Subsystems that ignore the theme:**
+  - xterm uses a fixed One Dark palette (`terminal-session.ts:103`).
+  - Chat, markdown and README code uses `highlight.js/styles/github-dark.css`.
+  - The pixi knowledge and memory graphs use hex constants.
+  - Recharts uses `mission-control/lib/chart-theme.ts`.
+  - The xyflow dot grid is a hardcoded colour.
+  - The launch background is black in both `index.html` and `lib.rs:133`.
+- **What already follows the theme:** CodeMirror (through the editor theme), mermaid (reads vars at render time), sonner toasts, and the PDF chrome.
+
+### shadcn compatibility
+- **Missing tokens.** About 20 shadcn tokens exist. Missing: `chart-1..5`, all 8 `sidebar-*`, `font-serif`, `tracking-normal`, `spacing`, and `shadow-2xs/xs/xl/2xl`.
+- **No shadcn setup.** There is no `components.json`, and `src/ui` has only `context-menu.tsx` and `tooltip.tsx`.
+- **Direct Radix imports.** 66 files import Radix directly: dialog ×26, popover ×25, dropdown-menu ×16, context-menu ×3, tooltip ×1.
+
+### File icons
+- **Lucide only.** Every file is rendered with the same generic `File` icon (`tree-row.tsx:202-216`).
+- **No icon theme exists.**
+
+### Non-colour tokens (second audit, same day)
+
+Atlas is a dense, px-based UI. Its real scales live in arbitrary values, not tokens.
+
+- **Collisions change rendering.** `tokens.css` `:root` beats Tailwind's theme variables, so the utilities render Atlas values:
+  - `text-xs` = 11px, `text-sm` = 12px, `text-base` = 13px
+  - `rounded-sm` = 2px, `rounded` = `rounded-md` = 4px, `rounded-lg` = 6px
+  - `shadow-lg`/`shadow-xl` still render Tailwind's 10%-black shadows, which are invisible on black.
+- **Type.**
+  - 95% of 1,427 size utilities are arbitrary: `[11px]` 533, `[10px]` 318, `[12px]` 180, `[9px]` 112, and about 130 half-steps (9.5, 10.5, 11.5, 12.5).
+  - Weights: 500 and 600 only.
+  - Fonts: system stacks only; no web fonts are loaded.
+  - The de facto eyebrow label is `.eyebrow` (10px, semibold, uppercase, `tracking-wider`).
+- **Spacing.** Code follows Tailwind's 4px grid with half-steps; `--space-*` has 0 references.
+  - Control heights: 20 / 22 / 24 / 26 / 28 / 30 / 32 / 36px. 294 of 930 `h-*` utilities are arbitrary, and many duplicate a scale step.
+  - Titlebar 30px, tab strip 36px, compact control 26px.
+- **Radius.** 2 / 3 / 4 / 5 / 6 / 8 / 10 / 12 / 16px and full are all in use.
+- **Elevation.**
+  - One real shadow: `shadow-[var(--shadow-overlay)]`, used 83 times.
+  - About 12 literal shadows, plus 17 inline inset top highlights.
+  - 81 backdrop-blur uses, mostly `backdrop-blur-2xl`.
+- **Z-index.** The tiers are nominal only.
+  - `--z-sticky`, `--z-toast` and `--z-tooltip` are never used.
+  - Nearly every floating layer sits at 9999 to 100000, and tooltips share 9999 with menus.
+  - 56 inline `zIndex` values.
+- **Motion.** No motion library.
+  - `@theme` defines 3 easings and 5 animations. `tooltip-timing.ts` is the one fully specified system (from motion pass `e0e9178e`), and reduced-motion handling exists.
+  - Otherwise, 17 hardcoded curves and about 15 distinct durations (80–450ms).
+- **Icons.** Lucide sizes are set with `size=`: 11 (289), 12 (223), 10 (106), 13 (94), 14 (44), and others. `strokeWidth` takes 10 distinct values.
+- **States.**
+  - Disabled opacity varies: 30 / 40 / 45 / 50 / 60.
+  - **There is no consistent keyboard focus indicator.** Outlines are removed globally, and `--ring` equals `--border-strong`.
+- **Layout.**
+  - Panel sizes are in % (`app-layout.tsx:140-162`), and px constants are scattered (detail panel 320/900/460, `CHAT_WIDTH = 420`, `PICKER_WIDTH = 460`).
+  - Scaling uses native webview zoom (`ui-scale.ts`).
+- **No component gallery.** `src/ui` has no Button, Input or Dialog primitive.
+
+### Mock backend coverage (audit, 2026-09-18)
+
+- **80 of 384 invoked commands are faked (80% unmocked); 3 of 37 event channels are emitted.** The app declares **388** `#[tauri::command]` fns — `CLAUDE.md` ("365") and `tests/ipc-contract.test.ts` both carry stale counts and should be corrected.
+- **Works today:** titlebar, chat (best covered), file tree, knowledge (under `?scenario=knowledge`).
+- **Empty today:** terminal, editor (mounts with no document), diff, PDF, memory, canvas, spaces, comms, mission control, log, artifacts, git graph, skills, packs, marketplace.
+- **Settings renders but every control is inert** (`update_atlas_settings` returns `null`) — and settings is where a theme is chosen.
+- **Only the Browser tab is genuinely impossible** (native `WebviewWindow`). The terminal is fakeable with scripted output through the real event channel; the editor needs an in-memory file system behind 4 commands.
+- **Effort:** ~80–90 fakes to bring every non-impossible surface to at least PARTIAL. The first ~25 — editor/media (4), settings writes and BYOK (~8), log and mission control (5), git depth (~10) — unblock every theme-sensitive surface.
+
+## Decisions
+
+These are the answers from the grilling session with the maintainer.
+
+| # | Decision |
+|---|---|
+| 1 | Full community ecosystem. Themes are a public contract, versioned with `schema = 1`. |
+| 2 | Three levels per variant: **base tokens** (shadcn names, required) → **palette** (optional) → **theme keys** (optional). |
+| 3 | "Applied everywhere" means everything: CodeMirror, xterm, diffs, chat code, graphs, charts, canvas, mermaid, PDF chrome and launch background. Documented exceptions: PDF page content and the native Browser webview. |
+| 4 | Icon themes are a separate track that uses VS Code's `iconThemes` format verbatim. |
+| 5 | Public docs go in `content/docs/themes/`; this page stays in `content/private`. |
+| 6 | One file holds dark and/or light variants. Light variants ship behind a flag until every feature has been checked in light mode. |
+| 7 | **One theme, one picker.** The editor-theme picker is removed. Users tweak colours with `themeOverrides`. |
+| 8 | The existing 16 themes merge into about 14 full themes. Rosé Pine gains Moon and Dawn. |
+| 9 | Theme keys use Zed-style dotted role names. Base tokens keep shadcn names verbatim. |
+| 10 | Theme files are **TOML** and come with a published JSON Schema (`#:schema`). No key may be both a leaf and a prefix of another key. |
+| 11 | Sources: built-in themes, `~/.config/atlas/themes/` (hot reload), and Open VSX for VS Code icon themes. A community index from an `atlas-themes` GitHub repo is **out of scope** — the repo is not being created, so nothing depends on it. |
+| 12 | Material Icon Theme (MIT) is bundled as the default icon theme, loaded lazily. "Minimal" (lucide) remains an option. vscode-icons is **not** bundled, because its icons are CC BY-SA. |
+| 13 | Chat, markdown and diff code use the theme's `syntax.*` keys. The highlighting engines stay as they are (no Shiki). |
+| 14 | Resolution happens in TypeScript and produces a fully resolved variable map. No `color-mix()` or relative colour syntax: the minimum is macOS 11 / WKWebView. |
+| 15 | Imports (shadcn/tweakcn, Zed, VS Code colour themes) are one-time conversions to TOML. |
+| 16 | Radix → Base UI migration is in scope. It gets its own PR, after the token core and before the colour sweep. |
+| 17 | The work lays the **design-system foundation**, not just theming: colour, typography, spacing, radius, elevation (shadows and z-index), motion, icon sizes, focus and disabled states, and density. A **Foundations** PR after PR 1 (it may run alongside PR 2) sets the scales and their lint guards; the colour sweep then moves code onto the final names in a single pass. |
+| 18 | Colour has **role tokens only**: no raw 12-step ramps and no component-token tier. A theme key exists only when a theme author needs that component to differ from the base tokens. |
+| 19 | Non-colour scales use **Tailwind v4's own namespaces** (`--text-*`, `--radius-*`, `--shadow-*`, `--ease-*`, `--spacing`), plus a custom `--z-*`. `--space-*` is deleted. |
+| 20 | A theme may set radius, fonts, shadows and tracking. Spacing and the type scale are app-owned: imports keep tweakcn's `spacing` value but ignore it and show a warning. If density exists, it is a user setting. |
+| 21 | A dev-only design-system scenario in the browser mock renders every token and `src/ui` primitive in the active theme. It is built in the Foundations PR and used by every visual check. |
+| 22 | Theme-author docs go in the public `content/docs/themes/`. The design-system reference lives in the atlas repo at `docs/reference/design-system.md`, next to the code. |
+| 23 | Snapping existing values to the scale **is allowed** in Foundations and the colour sweep. Every shift is checked with before/after screenshots on the design-system scenario. |
+| 24 | **Type scale.** `3xs` 9, `2xs` 10, `xs` 11, `sm` 12, `base` 13, `md` 14, `lg` 16, `xl` 20, `2xl` 24 (px). Half-pixel sizes round up. Named text styles as `@utility`: `eyebrow`, `label`, `body`, `caption`, `code`, `heading`. Weights 500 and 600 only. |
+| 25 | **Control heights.** `--control-xs` 20, `sm` 24, `md` 26, `lg` 32. 22, 28 and 30 snap to the nearest step. Titlebar (30) and tab strip (36) are named layout constants. |
+| 26 | **Radius** derives from the theme's `--radius` (default 8px): `sm` = r−4, `md` = r−2, `lg` = r, `xl` = r+4, plus `full`. Bare `rounded` = `sm`. Use `sm` for controls, `md` for cards, `lg` for popovers, `xl` for dialogs. |
+| 27 | **Elevation.** `shadow-sm` (raised), `shadow-md` (menus and popovers), `shadow-lg` (dialogs), an `inset-highlight` utility, and one `--blur-glass`. Shadow colour comes from the theme. The one-off shadows are deleted. |
+| 28 | **Z-index layers.** `panel` 10, `titlebar` 40, `overlay` 100, `modal` 110, `popover` 200 (above modals), `toast` 300, `tooltip` 400, `drag` 500. Arbitrary z-index ≥ 60 and inline numeric `zIndex` are banned. |
+| 29 | **Motion.** `--duration-instant` 80, `fast` 120, `base` 180, `slow` 260. Only the three existing easing curves are allowed. `tooltip-timing.ts` is the model for how a component specifies its motion. |
+| 30 | **Icons** go through a `src/ui/icon.tsx` wrapper. Sizes 10 / 12 / 14 / 16 / 20 (11→12, 13→14, 9→10), default stroke width 1.75. |
+| 31 | **States.** A global `:focus-visible` ring (2px, `var(--ring)`) replaces `outline: none`, and `--ring` is a real accent. Disabled is `opacity-50` plus `cursor-not-allowed`. |
+| 32 | **Primitives.** The Base UI PR builds Dialog, Popover, Menu, ContextMenu and Tooltip. Foundations adds Button, IconButton, Input, Badge and Kbd, with variants from `class-variance-authority` (the one approved new dependency) sized on the control heights. |
+| 33 | **Enforcement.** An 11th contract test bans arbitrary text-size, z-index, shadow and radius values, colour literals, `bg-white`/`bg-black`, and inline numeric `zIndex`, `fontSize` and `boxShadow`. It works as a ratchet: during the sweep the count only goes down, and it must be zero (apart from an allowlist) before the sweep merges. |
+| 34 | The browser mock backend is extended until **every surface renders something plausible**, so a theme change can be judged everywhere. Faking all 365 commands is not the goal; the unmocked badge reaching zero is a side effect. |
+| 35 | It is its own PR, queued straight after PR 1 and before Foundations and PR 2, because both are checked through it. |
+| 36 | Fixtures cover **states, not just happy paths**: long names, errors, loading, empty, selected, disabled, unread, conflicted, running, cancelled. Colour lives in states. |
+| 37 | The terminal and editor are faked too — scripted PTY output through the real event channel, and an in-memory file tree — so xterm and CodeMirror render real content with real theming. |
+| 38 | One rich `default` scenario covers every surface in a single session; focused scenarios (`git-conflict`, `chat-tools`, knowledge) stay for specific states. |
+| 39 | Surfaces that cannot be faked (native Browser webview, Finder drag-and-drop, native window chrome) render a labelled placeholder naming them as native-only, and are listed in the docs as the known exceptions of decision 3. |
+| 40 | **The review loop.** The orchestrator never checks visuals itself: an implementer agent writes the code, a review agent opens it in Chrome. When a surface fails because a command it needs is unmocked, that is a mock gap, not a defect in the work under review — it is fixed by extending the mock backend (a follow-up implementer agent), then re-reviewed. Over the sequence this grows mock coverage until the whole app is inspectable. |
+| 41 | **Keep the mock Storybook-ready** (do this in the next task that touches the mock backend). Two cheap affordances, both far easier now than retrofitted: (a) the installer takes an explicit scenario argument instead of only reading `?scenario=` from the URL, so a future Storybook decorator can pass one; (b) a store-reset helper lands alongside the fixtures, so per-story isolation is possible without bleeding Zustand singleton state. Storybook itself is NOT in scope — this only avoids painting it into a corner. |
+| 42 | **The key registry is generated from one source of truth.** A hand-edited TOML file describes every theme key — its description, what it derives from, and the operation (`alpha`, `mix`, `lighten`, `towardBackground`…) — and everything else is generated from it: the TS registry, the Rust key list, the key enum inside `theme-v1.json` (so `#:schema` catches an author's typo), `docs/reference/theme-keys.md`, and the public token table. Today the same facts live in five places, which is how a 134-vs-135 drift and a mis-documented scrollbar rule both survived review. Derivation rules are a small closed vocabulary, so they are data, not code. Format split: **TOML** for anything a human authors (themes, this source file), **JSON** for anything a machine consumes (the schema — JSON Schema has no TOML form and the TOML editor tooling fetches JSON — plus generated snapshots and IPC payloads). |
+
+## Theme file shape (schema 1)
+
+```toml
+#:schema https://docs.tryatlas.cc/schema/theme-v1.json
+schema = 1
+id = "rose-pine"
+name = "Rosé Pine"
+author = "Rosé Pine"
+license = "MIT"
+
+[dark.base]            # shadcn names, verbatim
+background = "#191724"
+foreground = "#e0def4"
+primary = "#c4a7e7"
+primary-foreground = "#191724"
+# … card, popover, secondary, muted, accent, destructive, border, input, ring,
+#   chart-1..5, sidebar-*, radius, font-sans/serif/mono, shadow-*, tracking-normal
+
+[dark.palette]         # optional
+red = "#eb6f92"
+yellow = "#f6c177"
+# … orange, green, cyan, blue, purple, pink
+
+[dark.keys]            # optional; nested tables and quoted dotted keys are equivalent
+"element.hover" = "#26233a"
+terminal.ansi.red = "#eb6f92"
+syntax.keyword = { color = "#31748f", font_style = "italic" }
+
+[light.base]           # optional second variant
+background = "#faf4ed"
+```
+
+**Loader.** Rust flattens nested tables into dotted keys. It rejects unknown base tokens, unknown top-level fields, and any key that is both a leaf and a prefix. Unknown theme keys produce a warning, not an error, so that newer themes still load on older Atlas builds.
+
+**User config (`config.toml`):**
+```toml
+theme = "rose-pine"
+themeMode = "system"   # system | dark | light
+[themeOverrides.keys]  # same shape as a variant, applied to the active variant
+"syntax.comment" = "#6e6a86"
+```
+
+If the variant the mode asks for is missing, Atlas uses the theme's other variant.
+
+## Resolution
+
+For each theme key: explicit → palette rule → base rule → Atlas default for the appearance. The rules live in one TS table next to the key list, so each key has exactly one rule.
+
+**Resolver output.** A flat `Record<cssVarName, string>` and a typed object for JS consumers (xterm, pixi, recharts).
+
+**Required tests:**
+- Every built-in theme resolves every key.
+- Every CSS var the app references is either produced by the resolver or defined in `tokens.css`.
+- No resolved value is empty.
+
+## Status (final, 2026-09-18 overnight run)
+
+**The branch is complete and unpushed.** `worktree-agent-afbf978575d0248fb`, 149 commits on top of `0.3.3` (`93e4d922`), 1,795 files, +52,171 / −13,378. It opens as **one PR into `0.3.3`** when the maintainer chooses; nothing has been pushed and no PR exists.
+
+Everything in the queue below has landed: the theme core, the mock-backend expansion, the `workspace`→`project` rename, Foundations, the theme-blind subsystems, Base UI, icon themes, theme import/export, the generated key registry, the key-set cut, the sweep, and the public docs. Two review rounds plus a final adversarial review ran; all findings are fixed, and a last verification pass is running.
+
+Final numbers: **73 theme keys + 6 derived variables** (from 135), **ratchet closed at zero on every rule** (from 1,335 / 383 / 156 / 140 / 106 / 77 / 29), **~265 mock commands faked** (from 80 of 384), light mode on, Radix gone.
+
+### Historical status (kept for the record)
+
+
+**Where the work lives.** Everything so far is on branch `worktree-agent-afbf978575d0248fb` in the git worktree `atlas/.claude/worktrees/agent-afbf978575d0248fb`, based on `0.3.3` (`93e4d922`). Nothing is pushed and no PR is open. The dev server for visual checks runs from that worktree.
+
+### Done
+
+- **PR 1 — Theme core.** `crates/atlas-theme` (TOML loader, validation, watcher, JSON schema, `include_str!` built-ins), `commands/themes.rs` (`list_themes`, `get_theme`, `atlas:themes-changed`), 15 built-in themes in TOML (Rosé Pine carries dark + light/Dawn; Moon is its own theme), a TS theme-key registry + resolver (179 resolved vars, 135 `--atlas-*` keys), one applier writing a `:root` style element plus a `dark` class, `tokens.css`/`globals.css` reworked onto shadcn base tokens with every legacy var kept as an alias, `accent` collision fixed, config migrated to `theme`/`themeMode`/`themeOverrides`, one theme picker, `docs/reference/theme-keys.md`. All gates green. Verified in Chrome: 15 themes load, Rosé Pine repaints chrome, aliases and `--cm-*` follow.
+  - Two defects found and fixed during review: a **second `mockIPC` installer** wired into `main.tsx` (themes never reached the app) and leftover dead editor-theme picker files.
+  - Rendered text sizes, radii and shadows were pinned to today's values, so nothing outside colour moved.
+- **PR 1a — Mock backend coverage** (waves 1 and 2 plus knowledge seeding). ~265 commands faked across editor/files, settings + BYOK, log + mission control, git reads and writes, artifacts/timeline, comms (with live `atlas:comms`), memory, terminal (scripted ANSI output), spaces/canvas, skills/packs/marketplace, capture, explorer mutations, auth/orgs, GitHub, feedback, PDF, and knowledge in every scenario. `__atlasMock.unmocked()` is empty after a full click-through. Fixtures live in `src/dev/mock-backend/fixtures/<domain>.ts`; `install.ts` remains the only installer. `src/dev/mock-backend/README.md` lists the native-only surfaces.
+
+### In flight
+
+- **workspace → project rename** (see the queue below). It temporarily breaks the tree mid-refactor.
+
+### Queue (in order)
+
+1. **Rename `workspace` → `project`** — also splits today's `project` feature into `features/app` (app-global store) and `features/settings`. Stored names, IPC command names and event channels stay frozen with a comment. Glossary entry added to `CONTEXT.md`.
+2. **PR 1b — Foundations** — decisions 17–33: type scale, control heights, radius formula, elevation, z-index layers, motion tokens, icon wrapper, focus ring and disabled state, Button/IconButton/Input/Badge/Kbd on `cva`, the design-system scenario in the mock, the ratchet contract test (baseline committed), `docs/reference/design-system.md`.
+3. **PR 2 — Theme-blind subsystems** — xterm, highlight.js (chat/markdown/README code), the pixi knowledge and memory graphs, recharts (`chart-1..5`), the xyflow dot grid, mermaid re-render on theme change, and the launch background (Rust window colour + `index.html`).
+4. **PR 3 — Base UI** — Radix → `@base-ui/react` for dialog (26 files), popover (25), dropdown-menu (16), context-menu (3), tooltip (1); add `components.json`; build the `src/ui` wrappers on the new tokens; remove the Radix deps. Use the `migrate-radix-to-base` skill in engine mode (Atlas is not a shadcn CLI project).
+5. **PR 4 — Colour and scale sweep + light QA** — the 686 colour literals and the arbitrary type/height/radius/shadow/z-index/icon values, one agent per feature folder in separate worktrees, then light-variant checks per surface, then remove the legacy aliases and flip the ratchet to zero.
+6. **PR 5 — Theme import** — shadcn/tweakcn (registry JSON and pasted CSS), Zed, VS Code colour themes; import UI; export to shadcn registry JSON; round-trip tests.
+7. **PR 6 — Icon themes** — VS Code `iconThemes` format, bundled Material Icon Theme (MIT, lazy-loaded), `.vsix` install from Open VSX, picker, "Minimal" lucide option.
+9. **Public docs** — `content/docs/themes/`: overview, authoring, token reference, importing, icon themes, contributing.
+
+### Working rules for this run
+
+- **One agent per worktree at a time.** Two agents in a shared tree cannot distinguish each other's half-finished work from breakage, and they share a git index (observed: a mock agent nearly committed the rename agent's staged files). Parallelism only across separate worktrees — which the sweep will use.
+- **The orchestrator reviews nothing itself.** Every PR is checked by a review agent that runs the gates, reads the diff against the spec, and opens the app in Chrome, then reports a verdict with specifics (decision 40). The orchestrator only dispatches, arbitrates (e.g. "this failure is a mock gap, not a defect in this PR") and keeps the queue moving. Reviews are read-only: a review agent never fixes what it finds — a follow-up implementer does.
+- **Model choice is justified per launch.** Opus where judgement or cross-type correctness is needed (fixtures typed against unfamiliar APIs, the rename's collisions, Foundations, Base UI, importers); Sonnet where the compiler or a test is the oracle (the sweep, mechanical moves, read-only review).
+- **Never run `cargo test -p atlas-theme -p atlas-icon-theme -p atlas` in one invocation.** Combining them makes cargo's feature unification pull `serde_json/preserve_order` in through the codex dependency graph reachable via `-p atlas`, which changes JSON key ordering and spuriously fails `atlas_theme::tests::generated_schema_is_current` (it compares the schema byte for byte). Run each crate in its own invocation, which is what CI's per-crate matrix does anyway. It is not a regression.
+- **Shared `/target` across worktrees serves stale artifacts.** Agents share `CARGO_TARGET_DIR` (recompiling the 1,161-crate graph per worktree is not affordable), and cargo keys a crate's artifacts by one metadata hash regardless of which worktree built it — so a sibling's build can make `cargo` here see a "fresh" rmeta missing your modules. Symptom: `cannot find … in atlas_theme` against source that plainly has it. Fix: `touch` the crate's sources and re-run. Two agents hit this.
+- **Codex is not used** — the user's Codex quota is spent; Claude subagents only.
+- Commits are local, conventional, and never carry a Co-Authored-By or attribution footer.
+
+## PR framing (maintainer's words, for the description)
+
+The diff is large, and a lot of it is the mock IPC backend rather than the theme work. That is deliberate and worth saying plainly in the PR:
+
+- **It lays the foundation for a Storybook design system later.** The expensive half of Storybook for this codebase is a swappable IPC layer with typed fakes and fixtures that cover real states; that now exists, along with an installer that takes an explicit scenario and a store-reset helper (decision 41).
+- **It cuts developer machine load.** Frontend work no longer needs a Rust build: `bun run dev` boots in ~140 ms against the fakes, where `dev:app` costs minutes. Reviewing a UI change no longer means compiling 1,161 crates.
+- **It restores something that used to be true.** In Atlas's early days the README said you could run `bun run dev` for frontend work. That stopped being true as the app grew and commands multiplied; this brings it back.
+
+## Final review (verdict: fix first) — open findings
+
+All 12 gates green, console clean in every scenario, but 14 findings. Fix pass queued.
+
+**HIGH**
+1. **Silent data loss.** `Organisation.activeProjectId` (frontend) vs `active_workspace_id` (Rust, `app_state.rs:119`) — a *nested* `state.json` key that the rename froze at the top level but not inside `organisations`. Rust drops the unknown field and commits `null`, so every existing install loses its per-org last-active-project on first save. Invisible to `tsc` and to both contract tests, which check command and channel **names** only, never payload keys.
+2. **Three dialogs render under their own scrim** — `thread-history-view.tsx:89`, `import-threads-modal.tsx:97`, `permission-modal.tsx:241` use literal `z-50` where 24 other call sites use `z-modal`; the overlay is `z-overlay` (100). The permission modal is a blocking prompt.
+3. **Reduced motion plays the exit animation on open.** `globals.css:1453-1454` guards with `:not([data-state])`, a Radix-ism; Base UI sets `data-open` and never `data-state`, so an opening popup matches the exit rule and wins on specificity. Fix: add `:not([data-open])`; `:1451-1452` are dead Radix selectors.
+
+**MEDIUM**
+4. `applyTheme` never refreshes the `--atlas-boot-*` inline properties, so `color-scheme` and the root background stay on the previous theme for the whole session (native scrollbars and form controls follow the wrong appearance).
+5. Zed importer writes the derived `terminal.selection`, so every Zed import warns. The VS Code importer gets this right.
+6. `scrollbar.thumb.background`/`.hover` are documented, resolved and consumed by **nothing** — `globals.css:816-822` still hardcodes white alphas, invisible on a light theme.
+7. `dither-field.tsx:104,106` hardcode white — the chat hero art is invisible in light.
+8. `hint-group.tsx:247` carries a literal 50%-black shadow on an otherwise tokenised popover.
+9. User-visible import-report copy says "20 syntax roles" (15) and "46 shadcn base tokens" (45).
+10. **24 `color-mix()` sites contradict decision 14 and ADR-0009**, two of them in `globals.css`. Pre-existing (22 at the base commit) but this PR wrote the docs asserting the ban and built a ratchet blind to it. Either enforce or correct both documents.
+
+**LOW**
+11. Ratchet coverage gaps: Tailwind palette utilities (`bg-amber-500/10` in `settings-panel.tsx:286`), `text-white`/`text-black`/`border-black` (only `bg-` is matched), `color-mix(`, and `EXEMPT_FILES` entries never checked for existence. `src/lib`, `src/hooks`, `src/types` verified genuinely clean.
+12. `text.disabled` claim verified (1.70–4.23:1 across 16 variants) but phosphor/chyral/mirage remain functionally invisible; disclosed in the registry comment, so a known trade-off.
+13. Stale keys in mock fixtures (`theme-import.ts:192,236,286`) and ~12 in `docs/reference/theme-import.md`.
+14. Activity-log payload keys renamed with no reader — historic rows will not reconcile.
+
+**`src/ui` and `src/dev` are excluded from the ratchet wholesale**, and findings 7 and 8 were hiding there. The stated rationale ("they define these values") is untrue of most files in `src/ui`; tighten it to the files that genuinely define scales.
+
+**Riskiest area, in the reviewer's words:** subsystems that read theme colours **once at construction** rather than subscribing — xterm, both pixi graphs, recharts, highlight.js, CodeMirror, mermaid. Every check so far switched themes against a freshly-mounted tree, which cannot catch a cached palette. Test *switch-while-mounted* on each of the six before shipping.
+
+## Merge-time tasks (branches are finished but not yet merged)
+
+Six side branches wait to merge into the main theme branch. These must be handled as part of that merge, not after:
+
+1. **`font_style` conflict — would ship broken.** `uzayer/palette-fixes` now **rejects** `font_style` at load (a field that works in one of three consumers is worse than none). `uzayer/theme-import` deliberately **preserves** `font_style` when converting Zed and VS Code themes. Merged as-is, every imported theme with an italic syntax rule fails to load. **Resolution: the importer strips `font_style` and reports it in the dropped list**, consistent with the rejection decision. Revisit only if `font_style` is later wired through the resolver, CodeMirror and the highlight.js rules together.
+2. **"134 keys" survives on the import branch** — `docs/reference/theme-import.md` (twice) and `crates/atlas-theme/src/import/report.rs:5`. The count is 135, and after the key-set cut it changes again, so derive it rather than restating it.
+3. **Regenerate after merging.** `uzayer/key-registry` makes the TS registry, `theme-keys.txt`, the schema key enum and the reference table generated from `keys.toml`; `uzayer/palette-fixes` hand-edited some of those same outputs (scrollbar transforms, missing `bright_*` rows). Merge, then regenerate (`bun run theme:keys` plus the schema example) so the generated files match the source, and confirm `theme:keys:check` passes.
+4. **Pre-existing clippy warning** `unnecessary_lazy_evaluations` at `crates/atlas-theme/src/lib.rs:613` — `atlas-theme` has `clippy: true` in the CI matrix, so it fails the PR. Fix during the merge.
+5. **Three copies of the config-root resolver** now exist (`atlas_config.rs`, `atlas-theme`, `atlas-icon-theme`), each with mirrored tests and doc comments naming the other two. **Decided: no shared crate.** The duplication is three ~15-line functions with byte-identical logic; the mirrored fixtures already turn a divergence into a red test, which is the only protection a shared crate would add, and a new crate costs the three registration edits plus another sequential CI job on a graph where build time is the documented bottleneck. Revisit if a fourth consumer appears or the resolver grows platform-specific branches.
+
+## Key-set audit (2026-09-18) — cut 135 keys to ~72
+
+A read-only audit reimplemented the resolver and ran it against all 16 shipped variants. Queued as its own stage, to land **after** Base UI and the palette fixes merge and **before** the sweep, so the sweep rewrites call sites to final names once.
+
+**Evidence:** 81 of 135 keys are set by no shipped theme; 12 are set by every theme to exactly their derived value; every theme file is structurally identical (a mechanical conversion, not 15 authorial judgements — so "all themes agree" is weaker evidence than it looks, and is trusted here only for exact synonyms of a base token and for zero-consumer keys).
+
+**Two structural facts:** removing a key is a *soft* break (unknown keys load with a warning — `lib.rs:517-528`), unlike unknown base tokens or palette colours, which are hard errors. And `theme-v1.json` types `keys` as an open map, so `#:schema` validates nothing at level 3.
+
+**Top changes, in value order**
+1. Fix the built-in palettes first — every "this derives fine" argument depends on it (already in flight on `uzayer/palette-fixes`).
+2. **Agent chips 18 → 2** (`agent.chip.foreground`/`.background`). Only 6 agent identities exist, so 8 keys colour nothing; 3 more are overridden by hardcoded CSS. ADR-0002 forbids privileging agents, and the set is discovered at runtime so an author cannot enumerate it. The 2 survivors let a monochrome theme (`atlas-mono`, `vesper`) flatten the brand colours.
+3. **Delete all 8 `comms.*`** — three have zero consumers; the rest are `sidebar`, `background`, `status.success`, `status.info` under local names.
+4. **Delete the 12 exact restatements**: `border.default`, `border.variant`, `text.muted`, `text.accent`, `text.placeholder` (nothing reads it, and its rule is backwards), the three `tab.*`, `panel.elevated.background`, `panel.overlay.background`, and merge `panel.rail.background` into `panel.background`.
+5. **Merge `border.focus` into `border.strong`, re-sourced from `border` not `ring`.** Live bug: since decision 31 made `ring` a real accent, an unset theme gets a brand-coloured border. Wrong in 15 of 16 variants.
+6. **Diff family 14 → 7**, renamed to `diff.<state>.<role>` (`diff.added.background`/`.emphasis`/`.text`, same for removed), absorbing `stat.*` and `capture.live`.
+7. **Add `search.match.background` / `search.match.active_background`** and delete the `rgba(249,115,22,…) !important` in `globals.css:1630-1638` — a hardcoded orange that clashes in every theme and is unreadable in light.
+8. **Generate the key names into `theme-v1.json`** so `#:schema` catches typos.
+9. **Decide `font_style`**: wire it through the resolver or drop it from the schema — it is in the Rust type, the TS type, the JSON Schema and the spec's example, and `resolve-theme.ts:25-27` discards it.
+10. Also delete: `ghost_element.*` (zero consumers anywhere), `status.purple`/`status.orange` (palette slots wearing a status name), `atlas.ants` (always overwritten inline), `syntax.punctuation`/`syntax.builtin` (the app already routes them elsewhere), `scrollbar.track.background` (the track is painted transparent), `editor.fold.*` (derive), the four status backgrounds (derive at alpha 0.12), `terminal.selection` (derive).
+
+**Keep:** 15 syntax roles (a theme's signature; assignments genuinely diverge), all 19 terminal keys (PR 2 now consumes them; deriving `bright_*` is what terminal authors reject), 10 editor keys (Rosé Pine's editor surface differs from its chrome), 6 interaction overlays (`element.hover` alone has 221 consuming sites), 2 borders, 4 status foregrounds.
+
+**Rename:** `element.primary_hover`/`primary_muted` → `primary.hover`/`primary.muted` (they are brand-fill variations, not element overlays).
+
+**Docs consequence:** state plainly that the 15 built-ins set only 54 keys and zero terminal/status/comms/agent keys, and mark the ~25 that matter in `tokens.mdx`.
+
+## Findings from writing the public docs (2026-09-18)
+
+Writing `content/docs/themes/` against the implementation surfaced five bugs the code reviews missed. A fix pass is running on `uzayer/palette-fixes`.
+
+1. **Several built-in palettes are mis-ported.** `one-dark` has `red = "#98c379"` (One Dark's green) and `pink = "#56b6c2"` (its cyan); `dracula` has `yellow` = cyan, `green` = yellow, `blue` = green; `tokyo-night` and `catppuccin-mocha` have similar swaps. The palette drives ANSI, diff tints and status colours, so every derived colour in those themes is wrong.
+2. **Editing a theme file does not repaint.** The watcher refreshes the catalogue but nothing re-applies the active theme, and re-picking the same theme is a no-op because settings side effects compare values.
+3. **A skipped theme file is invisible.** `list_themes` logs warnings; `ThemeSummary.warnings` is carried but never rendered in the picker.
+4. **Light mode is hidden but reachable** — `ENABLE_LIGHT_MODE = false` hides the button, yet System mode still resolves to light on a light Mac.
+5. **Docs drift:** `theme-keys.md`'s scrollbar row claims "(alpha/lighten)" where both keys are plain alpha; the registry has **135** keys, not 134 (this plan said 134 — now corrected); and `font_style` is accepted by the schema and carried in the TS type but nothing reads it, so italic syntax silently does nothing.
+
+Also noted, to fix before shipping: `content/docs/product/editor.mdx` and `settings.mdx` still describe choosing an editor theme separately from the interface theme, which the one-theme model contradicts.
+
+## Review findings, round 2 (verdict: ship — one open item)
+
+Review of `e318defa..01f888d6` (Foundations + fix pass). All seven gates green; findings 1–8 and items 9–12 verified fixed adversarially; the ratchet exclusion independently recomputed and judged legitimate.
+
+**Open — MEDIUM (content, pre-existing): light variants have dark shadows.** `crates/atlas-theme/themes/rose-pine.toml:161-167` copies the dark `shadow-2xs`…`shadow-2xl` byte-for-byte into `[light.base]`, so Dawn renders heavy black halos on its cream background. Two statements are therefore false and must be corrected with the fix: commit `2c8576e3`'s message ("a light variant gets a light shadow for free") and `docs/reference/design-system.md:124` ("the shadow colour comes from the theme"). `element.highlight` does vary correctly by appearance — only the shadow half is wrong. Fix before the sweep multiplies light variants, and give every light variant a real light shadow ramp.
+
+## Review findings, 2026-09-18 (open — fix pass queued)
+
+Review of `93e4d922..e318defa` (theme core + mock coverage + rename). All six gates passed; verdict **fix first**.
+
+1. **HIGH — config migration writes wrong editor colours.** `atlas_config.rs:910-949`. The old `default_code_editor_theme()` always returned `"atlas"` and was written into every fresh `config.toml`, so a user of chyral/mirage/rose-pine/phosphor who never touched the old editor picker reads as "deliberately diverging" and gets Atlas's black/white/yellow `editor.*`/`syntax.*`/`diff.*` keys forced into their `themeOverrides`. Only the one correct case has a test.
+2. **MEDIUM-HIGH — Settings/Appearance renders off-screen intermittently.** Root flex container at `x: -140…-320`, clipping the nav and the first column of theme cards; self-corrects on reopen, so a mount-time width-measurement race. Sits where the rename's feature split meets the new picker.
+3. **MEDIUM — one malformed user theme kills the whole catalog.** `atlas-theme/src/lib.rs:267-283` collects into `Result`, so the first bad file in `~/.config/atlas/themes/` short-circuits `all_themes()` and the built-ins never load; the frontend's fallback throws too (`theme-store.ts:44`). A theme author mid-edit hits this.
+4. **MEDIUM — bare `rounded` is 3.25px, not 4px.** `globals.css:74-76` pins `--radius-sm/-md/-lg` but not bare `--radius`, so Tailwind's own `.25rem` resolves against the 13px root font size. Pre-existing, but this PR rewrote that block.
+5. **MEDIUM (latent) — `chart-1..5` and `sidebar-*` are not mapped in `@theme inline`,** so `bg-sidebar`/`text-chart-1` generate no utility. Blocks the Base UI stage the moment real shadcn markup lands.
+6. **LOW-MEDIUM — two `accent` call sites missed:** `changed-files-tree.tsx:184` (`var(--accent, #6ea8fe)` fallback never fires → near-invisible badge) and `settings-panel.tsx:111` (`border-l-accent` active-tab indicator). Both should follow `primary`.
+7. **LOW (mock gap) — the Browser tab renders a normal-looking start page** instead of the native-only placeholder decision 39 requires.
+8. **LOW (test-only) — `app_state.rs:585`** uses `"activeProjectId"` where the frozen wire key is `activeWorkspaceId`, so the test never exercises the real key.
+
+Verified correct and not to be re-checked: registry (135 keys, no duplicates or leaf/prefix violations), resolver chain, Rust loader validation, full shadcn base-token coverage in all 15 themes, `accent` semantics, legacy aliases intact, one picker with no dead code, `theme-keys.md` accurate, all frozen rename surfaces, mock backend single installer and state coverage, and a live browser pass across Rosé Pine / Moon / Catppuccin Mocha / Vesper.
+
+Not covered by that pass: PDF, Comms, Mission Control, Marketplace, standalone Git Diff, Keybindings content, Editor with real file content.
+
+## Bugs found along the way (not fixed here)
+
+Found while building the mock fakes, all pre-existing and outside theme scope:
+
+- **`comms_send`** is typed `{ client_msg_id }` on the frontend but Rust sends `clientMsgId`.
+- **`session_chat_thread_get`** silently drops `checkpoint_scope`, so a thread's checkpoint scope does not survive a reload.
+- **`EventKind`** is missing the `failure` and `architecture` variants Rust can send.
+- **`MemoryEdge`** omits Rust's `weight` field.
+- **`file-tree.tsx:370`** calls `recent_files_rename` without the required `workspaceId`, so recents go stale after a drag-move. The rejection is swallowed by a `.catch`.
+- **`mention-picker.tsx:290`** and **`history-view.tsx:463`** crash on a `null` the real backend does not currently return; a guard would be cheap.
+
+## PR sequence
+
+**One branch, one PR.** Every stage below lands as commits on the single branch `worktree-agent-afbf978575d0248fb`, which opens as **one PR into `0.3.3` at the very end**. The "PR" numbering is a sequencing device, not separate pull requests: nothing is opened or pushed until the whole scope is finished. Commits stay logical and per-stage so the one PR is readable.
+
+**Division of labour.** A Codex agent implements each PR in its own worktree; a Claude agent reviews the diff and checks the result visually. Codex never builds or runs the Tauri app: its Rust obligation is `cargo check --workspace` plus the crate's tests. Visual checking runs on `bun run dev` (the browser mock backend) in Chrome, which needs no Rust build — so every PR must keep the mock fakes complete and correctly typed.
+
+Every PR branches from the current version branch (`0.3.3`), keeps all gates green (`bun run lint`, `format:check`, `typecheck`, `test`; `cargo check --workspace` and the relevant `cargo test -p` when Rust changes), and ends with a visual check in the browser mock (`bun run dev`).
+
+| PR | Scope | Done when |
+|---|---|---|
+| **1. Theme core** | See the list below the table. | Picking Rosé Pine repaints every tokenised surface; the tests above pass; the old config keys migrate. |
+| **1a. Mock backend coverage** | Decisions 34–39: fakes and fixtures until every tab type, settings page and panel renders plausible content in `bun run dev`, with state coverage; scripted PTY and an in-memory file tree for terminal and editor; one rich `default` scenario; native-only placeholders. | Every surface is at least PARTIAL in the browser, and the native-only list is written down. |
+| **1b. Foundations** | Decisions 17–33: the type, control-height, radius, elevation, z-index and motion scales in Tailwind namespaces; delete `--space-*`; the icon wrapper; the focus ring and disabled state; Button, IconButton, Input, Badge and Kbd with `cva`; the design-system scenario in the browser mock; the ratchet contract test (baseline counts committed); `docs/reference/design-system.md`. Existing call sites are not migrated here beyond what the new primitives need. | The design-system scenario renders every token and primitive in every theme; the ratchet test is live. May run alongside PR 2. |
+| **2. Theme-blind subsystems** | Resolved theme applied to CodeMirror, xterm (drop the hardcoded palette and `line-emulator.ts` copy), highlight.js (replace `github-dark.css` with `syntax.*`-driven rules), the pixi knowledge and memory graphs, recharts (`chart-1..5`), the xyflow grid, mermaid (re-render on theme change), and the launch background (Rust window colour from the theme; `index.html` uses a cached value). | Switching theme live recolours all of them with no reload. |
+| **3. Base UI** | Radix → `@base-ui/react`, using the `migrate-radix-to-base` skill in engine mode. Add `components.json`, build `src/ui` wrappers (dialog, popover, dropdown-menu, context-menu, tooltip) on the new tokens, repoint the 66 consumers family by family, then remove the Radix deps. | No `@radix-ui` imports remain, and `.migration/*.md` reports exist. |
+| **4. Colour and scale sweep + light QA** | Replace the 686 colour literals and every arbitrary type, z-index, shadow, radius, icon and control-height value with the Foundations scales, one agent per feature folder. Remove the legacy aliases. Check every feature in light variants, then remove the light flag. | A guard test fails on new hex, `rgb()` or `bg-white`/`bg-black` literals in `src/features` (with an allowlist). |
+| **5. Theme import** | Converters for shadcn registry JSON / pasted CSS, Zed theme JSON and VS Code colour theme JSON (resolving `include`; TextMate scope → syntax key table). Import UI in settings. Export to shadcn registry JSON. | Round-trip tests using fixtures (tweakcn catppuccin, a Zed theme, a VS Code theme). |
+| **6. Icon themes** | VS Code `iconThemes` renderer (file/folder/names/extensions/languageIds, light and high-contrast sections, font glyphs), bundled Material Icon Theme, install from a `.vsix` via Open VSX, and a picker. | The file tree, tabs and the file-search palette show per-type icons. |
+
+**PR 1 scope:**
+- **`atlas-theme` crate:** TOML schema types, loader, validation, flattening, built-in themes via `include_str!`, and a watcher on `~/.config/atlas/themes/`.
+- **Commands:** `list_themes` / `get_theme`, plus an `atlas:themes-changed` event.
+- **JSON Schema** file generated for `schema = 1`.
+- **TS resolver** and theme-key registry.
+- **`tokens.css` cleanup.** Base tokens become the source of truth. Legacy `--bg-*`/`--text-*` vars stay as **aliases** of the new vars, to be removed in PR 4. Fix the `accent` collision: brand usages move to `primary`.
+- **Built-in themes.** Port all 16 existing themes into about 14 TOML files. Add Rosé Pine Moon and Dawn.
+- **Settings.** Migrate the config keys, merge the two pickers into one, and fake the new commands in the browser mock backend.
+- **Key reference.** Write `docs/reference/theme-keys.md`, mapping every former `tokens.css` var to its new base token, theme key or deletion.
+
+**Public docs.** They follow each PR in `content/docs/themes/`: overview, authoring a theme, token reference, importing, icon themes, contributing.

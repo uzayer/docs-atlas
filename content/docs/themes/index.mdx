@@ -12,7 +12,7 @@ Press <Kbd>⌘,</Kbd> to open Settings, then choose **Appearance**.
 
 Atlas ships 15 themes, among them Rosé Pine, the three Catppuccin flavours, Tokyo Night, Dracula, Monokai, One Dark, and Vesper. Search by theme name or author, and click a card to apply it.
 
-**Mode** decides which variant of a theme Atlas uses. **Dark** and **Light** ask for that variant by name, and **System** follows the macOS appearance.
+**Mode** decides which variant of a theme Atlas uses. **Dark** and **Light** ask for that variant by name, and **System** follows your operating system's appearance.
 
 ## A theme has one variant or two
 
@@ -20,8 +20,8 @@ A theme file carries a dark variant, a light variant, or both. Each card in the 
 
 When the variant you asked for is missing, Atlas uses the theme's other one. That is the defined behaviour of the format, not a failure: picking Light with a dark-only theme applied is not an error state, it just leaves the colours where they were.
 
-<Callout type="warn">
-  Of the 15 built-in themes, only Rosé Pine ships a light variant today. Every other built-in is dark-only, so choosing Light with one of them applied gives you its dark variant. Light mode is on, and the light themes to go with it are still being written.
+<Callout type="info">
+  Thirteen of the 15 built-in themes ship both variants. Monokai and Vesper are dark-only, so choosing Light with either of them still uses its dark variant.
 </Callout>
 
 ## Install a theme of your own
@@ -43,6 +43,17 @@ A theme file has three levels, and only the first is required:
 - **Base tokens**: the shadcn/ui colour set, plus radius, fonts, and shadows. 45 of them, all required.
 - **Palette**: eight named hues (red, orange, yellow, green, cyan, blue, purple, pink). Optional.
 - **Theme keys**: 73 Atlas roles such as `syntax.keyword`, `terminal.ansi.red`, and `element.hover`. Optional.
+
+Each level contains the one before it. A file that stops at the first is finished, and every level you add takes back a surface Atlas was working out for you.
+
+<Mermaid chart={`
+flowchart LR
+    subgraph K["plus theme keys: up to 73, exact control"]
+        subgraph P["plus palette: 8 hues"]
+            B["base tokens: 45, required"]
+        end
+    end
+`} />
 
 Every theme key Atlas needs but your file does not set is worked out from the palette, then from the base tokens, then from an Atlas default. Nothing is left at a previous theme's colour, and nothing renders unstyled.
 

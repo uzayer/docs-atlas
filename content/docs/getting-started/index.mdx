@@ -3,20 +3,20 @@ title: Welcome to Atlas
 description: How it works and how to get started
 ---
 
-Atlas is source control for coding agents, and the IDE where you manage their context. You open a [project](/docs/getting-started/concepts#project) and run Claude Code, Codex, Atlas's own agent, or anything from the [agent registry](/docs/agents/registry) against your codebase.
+Atlas is source control for coding agents, and the IDE where you manage their context. You open a [project](/docs/getting-started/concepts#project) and run Atlas Agent or install an external agent from the [ACP registry](/docs/agents/registry).
 
-Atlas is the harness around all of them. Every agent goes through the same send path, reads the same memory, and writes to the same record. Every commit an agent makes becomes a checkpoint, linked back to the session that produced it.
+Atlas is the harness around all of them. Every agent uses the same chat surface and project, while the controls and integrations available in a session come from the capabilities that agent advertises. With session capture on, Atlas records the work and can link its commits back to the session that produced them.
 
 ## How it works
 
 You open a project, turn on [session capture](/docs/source-control/capture), and run a session. After that:
 
-1. **Run any agent.** Claude Code, Codex, Atlas's own agent, or anything from the registry, side by side, against the same codebase.
-2. **Every commit becomes a checkpoint.** It links back to the [session](/docs/getting-started/concepts#session) that produced it, keeping prompts, tool calls, and reasoning together. One session can produce several commits, and each gets its own checkpoint.
-3. **Context carries across agents.** Every agent reads and writes the same [memory](/docs/context/memory), so switching from Claude Code to Codex mid-task doesn't mean starting over.
+1. **Run the agent you want.** Use Atlas Agent immediately, or install an agent from the registry and run it against the same codebase.
+2. **Agent commits become checkpoints.** Atlas links a qualifying commit back to the [session](/docs/getting-started/concepts#session) that produced it, keeping prompts, tool calls, and reasoning together. One session can produce several commits, and each gets its own checkpoint.
+3. **Share context across capable agents.** Agents with HTTP MCP support can search and update the same [memory](/docs/context/memory), so they can pick up decisions and failures from earlier sessions.
 4. **You decide what an agent sees.** The [knowledge base](/docs/context/knowledge-base), [skills](/docs/context/skills), and `@` mentions put the right context in front of any agent, without pasting it in.
 5. **The workspace is part of the record.** Atlas is also an editor, terminal, and git client, so the record covers the planning and manual changes around a commit, not just the diff.
-6. **Your timeline is the through-line.** Every session and [checkpoint](/docs/getting-started/concepts#checkpoint), across the projects in your organisation, in one queryable record.
+6. **Your timeline is the through-line.** Captured sessions and [checkpoints](/docs/getting-started/concepts#checkpoint), across the projects in your organisation, stay in one queryable record.
 
 ## What you need to do
 

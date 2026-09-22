@@ -15,11 +15,13 @@ Atlas doesn't create a `.atlas/` directory up front, either. Each feature (memor
 
 ## Pick an agent
 
-Atlas opens on a chat panel. Click the agent icon in the composer to switch between agents: Claude Code, Codex, OpenCode, Cursor, Kilo Code, Atlas's native agent, or anything else you've installed from the agent registry.
+Atlas opens on a chat panel with Atlas Agent ready to use. Click the agent icon in the composer to switch to anything else you have installed from the ACP registry.
 
 You can also press `⌥/` to cycle through them without touching the mouse. Each one is an [agent](/docs/getting-started/concepts#agent) driven the same way, against the same project.
 
-Each agent gets there differently. Atlas's native agent needs nothing, it's built into the app. Claude Code needs the `claude` CLI: if it's missing, a banner above the composer offers to install it and sign you in. Codex, Cursor, OpenCode, and Kilo Code install themselves in the background the first time you pick them. Install anything else from the [agent registry](/docs/agents/registry) manually, from Settings → Agents.
+Open **Settings → Agents** to install an external agent. The composer also offers several popular registry entries as one-click installs. Both routes create the same registry-backed installation; Atlas does not ship a separate built-in copy of any external agent.
+
+The connected agent tells Atlas which sign-in methods, models, modes, and other controls it supports. Use the repository or website on its registry card when setup is specific to that agent.
 
 ## Turn on session capture
 
