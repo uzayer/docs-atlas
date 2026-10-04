@@ -21,9 +21,10 @@ bun run build        # next build
 bun start            # serve the production build
 bun run types:check  # next typegen && tsc --noEmit
 bun run lint         # oxlint
+bun run test         # the design-system ratchet (bun test)
 ```
 
-There is no test suite. `types:check` plus `lint` is the full verification pass, and `types:check` must run `next typegen` first because route types under `.next/types` are generated.
+`types:check`, `lint` and `test` are the full verification pass. `types:check` must run `next typegen` first because route types under `.next/types` are generated. The only test is `tests/design-system-ratchet.test.ts`, standards' ratchet held over `src/`: no colour literals, raised shadows, `dark:` variants, stock Tailwind palettes or arbitrary sizes in components. Escape a line with `ratchet-allow: <reason>` only when the token layer genuinely cannot express it.
 
 Content changes are validated by the build, not the linter: MDX frontmatter is checked against `pageSchema` when `bun run build` (or `bun dev`) compiles the collection.
 
@@ -45,7 +46,18 @@ Next.js 16 App Router + Fumadocs. Source lives under `src/`, content under `cont
 
 **Search** is Fumadocs' built-in static index at `src/app/api/search/route.ts`, derived from `source` with no external service.
 
-**Layout chrome** (nav brand, GitHub URL, social links) lives once in `src/lib/layout.shared.tsx` and is spread into both the docs layout and the home layout.
+**Layout chrome** (nav brand, GitHub URL, social links) lives once in `src/lib/layout.shared.tsx` and is spread into the docs layout. There is no home page: `/` redirects to `/docs/getting-started` in `next.config.mjs`.
+
+## Design system
+
+The site wears **Atlas Standards** (`../standards`), the design system for Atlas products. Fumadocs keeps the behaviour; standards decides the look.
+
+- `src/styles/{tokens,themes,globals,utilities}.css` are **verbatim copies** of standards' `src/styles/`, with the source commit in each header. Never edit them here: change standards, then copy across.
+- `src/styles/docs.css` is the only bridge. It maps every Fumadocs `--color-fd-*` onto a standards role, sets the reading scale (prose at 15px via `--tw-prose-size`, against standards' 12px app body) and draws the frame. `src/styles/mdx.css` holds the content components' CSS.
+- Theme is written to **both** `class` and `data-theme` on `<html>` (`RootProvider` in `src/app/layout.tsx`): standards keys off `data-theme`, Fumadocs' Shiki and `dark:` off `.dark`.
+- The shell is Fumadocs' `DocsLayout` with standards components in its **slots** (`src/components/shell/`): `DocsFrame` (container; owns the full-bleed grid template, with the text column and TOC centred together in the page panel), `DocsHeader` (the brand bar below md, the sticky top bar with breadcrumb and page actions from md; a page fills the actions with `<TopBarActions>`), `DocsSidebar` (built from `fumadocs-ui/components/sidebar/base` parts, so tree, collapse, drawer and auto-scroll stay Fumadocs'), and `PageFooter`. Restyle through a slot before reaching for `@fumadocs/cli` to eject.
+- `src/components/ui/` holds standards primitives (button, icon, icon-button, popover, tooltip, kbd, scroll-fade), copied with `cn` from `@/lib/cn`. Use them rather than Fumadocs' own `buttonVariants`.
+- The window stays the scroll container (unlike the app shell's fixed panels) so anchors, TOC scroll-spy and find-in-page work.
 
 ## Content
 
@@ -57,7 +69,7 @@ Next.js 16 App Router + Fumadocs. Source lives under `src/`, content under `cont
 
 The root `content/docs/meta.json` uses the full syntax: `---Section Name---` inserts a separator label, `...folder` splices in that folder's own ordered pages, and `source-control/timeline` is referenced by full path because that folder has no `meta.json`. `[Discord](https://...)` adds an external link (see `community/meta.json`). Two escape hatches this repo does not use yet: a bare `...` appends everything not explicitly listed, and `!name` excludes an item.
 
-Available MDX components come from `src/components/mdx.tsx`, which is Fumadocs' default set (`Callout`, `Card`, `Cards`, and the rest). Internal links are written as absolute site paths such as `/docs/getting-started/concepts#session`; `createRelativeLink` also allows relative file paths.
+Available MDX components come from `src/components/mdx.tsx`: Fumadocs' default set with the standards-styled overrides layered on top. Internal links are written as absolute site paths such as `/docs/getting-started/concepts#session`; `createRelativeLink` also allows relative file paths.
 
 ## Writing conventions
 
