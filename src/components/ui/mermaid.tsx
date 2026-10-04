@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from 'react';
 import { useTheme } from 'next-themes';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/cn';
 
 /**
  * Renders a mermaid diagram.
@@ -17,38 +17,44 @@ import { cn } from '@/lib/utils';
  * it meant and leave the rest of the page intact.
  */
 /**
- * The site's palette, in a form mermaid can do colour arithmetic on.
+ * The site's palette, read from the standards roles (themes.css), in a form
+ * mermaid can do colour arithmetic on.
  *
- * Fumadocs writes these as `lab(...)` and as hex with an alpha pair, neither of
- * which mermaid's colour library parses. Assigning a value to `color` and
- * reading it back makes the browser normalise it to `rgb()` or `rgba()` first.
+ * Standards writes these as `oklch(...)`, which mermaid's colour library does
+ * not parse, and the browser keeps oklch when it serialises a computed
+ * colour. So each one is painted into a single canvas pixel and read back as
+ * sRGB bytes. Everything read here is achromatic, so the diagram carries no
+ * hue in either theme.
  */
 function siteColours() {
-  const probe = document.createElement('span');
-  probe.style.display = 'none';
-  document.body.append(probe);
   const root = getComputedStyle(document.documentElement);
+  const canvas = document.createElement('canvas');
+  canvas.width = 1;
+  canvas.height = 1;
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
   const read = (name: string, fallback: string) => {
     const raw = root.getPropertyValue(name).trim();
-    if (!raw) return fallback;
-    probe.style.color = '';
-    probe.style.color = raw;
-    return getComputedStyle(probe).color || fallback;
+    if (!raw || !ctx) return fallback;
+    ctx.clearRect(0, 0, 1, 1);
+    ctx.fillStyle = fallback;
+    ctx.fillStyle = raw;
+    ctx.fillRect(0, 0, 1, 1);
+    const [r, g, b, a] = ctx.getImageData(0, 0, 1, 1).data;
+    return `rgba(${r}, ${g}, ${b}, ${Math.round((a / 255) * 100) / 100})`;
   };
 
-  try {
-    return {
-      background: read('--color-fd-background', '#ffffff'),
-      foreground: read('--color-fd-foreground', '#000000'),
-      card: read('--color-fd-card', '#ffffff'),
-      muted: read('--color-fd-muted', '#f4f4f5'),
-      mutedForeground: read('--color-fd-muted-foreground', '#71717a'),
-      border: read('--color-fd-border', '#e4e4e7'),
-    };
-  } finally {
-    probe.remove();
-  }
+  // Fallbacks only matter if the token layer failed to load; they are the
+  // neutral ends of the ramp, not a palette.
+  return {
+    background: read('--background', 'rgb(255, 255, 255)'),
+    foreground: read('--foreground', 'rgb(0, 0, 0)'),
+    card: read('--card', 'rgb(255, 255, 255)'),
+    muted: read('--muted', 'rgb(245, 245, 245)'),
+    secondaryForeground: read('--secondary-foreground', 'rgb(64, 64, 64)'),
+    mutedForeground: read('--muted-foreground', 'rgb(115, 115, 115)'),
+    borderStrong: read('--border-strong', 'rgba(0, 0, 0, 0.18)'),
+  };
 }
 
 export function Mermaid({ chart, className }: { chart: string; className?: string }) {
@@ -70,24 +76,36 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
           securityLevel: 'strict',
           suppressErrorRendering: true,
           theme: 'base',
-          // Borders carry the structure, not fills. In the light palette
-          // background, card and muted are all within four values of each
-          // other, so nested boxes distinguished by fill would be invisible.
+          // Mermaid 12 defaults to the 'neo' look, which drops a shadow under
+          // every node. Standards raises with rings, never shadows.
+          look: 'classic',
+          // Borders carry the structure, not fills: in light the ramp
+          // saturates at white after the card, so nested boxes told apart by
+          // fill would be invisible. Nodes sit on the muted step inside the
+          // card frame, clusters on the page step, and every rule is the
+          // strong border, the same ink a focused edge uses.
           themeVariables: {
             background: site.card,
-            mainBkg: site.card,
-            primaryColor: site.card,
+            mainBkg: site.muted,
+            primaryColor: site.muted,
             primaryTextColor: site.foreground,
-            primaryBorderColor: site.mutedForeground,
+            primaryBorderColor: site.borderStrong,
             secondaryColor: site.background,
+            secondaryTextColor: site.foreground,
+            secondaryBorderColor: site.borderStrong,
             tertiaryColor: site.background,
-            nodeBorder: site.mutedForeground,
+            tertiaryTextColor: site.foreground,
+            tertiaryBorderColor: site.borderStrong,
+            nodeBorder: site.borderStrong,
+            nodeTextColor: site.foreground,
             clusterBkg: site.background,
-            clusterBorder: site.mutedForeground,
+            clusterBorder: site.borderStrong,
+            titleColor: site.secondaryForeground,
             lineColor: site.mutedForeground,
+            arrowheadColor: site.mutedForeground,
             textColor: site.foreground,
             edgeLabelBackground: site.card,
-            fontSize: '14px',
+            fontSize: '13px',
           },
           fontFamily: 'inherit',
           // wrappingWidth defaults to 200px, which re-wraps labels that already
@@ -118,14 +136,19 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
 
   if (failed) {
     return (
-      <pre className={cn('overflow-x-auto', className)}>
+      <pre
+        className={cn(
+          'not-prose code my-6 overflow-x-auto rounded-xl bg-card p-4 text-secondary-foreground ring-1 ring-foreground/10',
+          className,
+        )}
+      >
         <code>{chart.trim()}</code>
       </pre>
     );
   }
 
   const wrapper = cn(
-    'not-prose my-6 flex justify-center overflow-x-auto rounded-lg border bg-fd-card p-4',
+    'not-prose my-6 flex justify-center overflow-x-auto rounded-xl bg-card p-4 ring-1 ring-foreground/10',
     '[&_svg]:h-auto [&_svg]:max-w-full',
     className,
   );
@@ -147,7 +170,7 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
 
   return (
     <div data-slot="mermaid" className={wrapper}>
-      <span className="text-sm text-fd-muted-foreground">Loading diagram…</span>
+      <span className="text-xs text-muted-foreground">Loading diagram…</span>
     </div>
   );
 }
