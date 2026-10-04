@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { LayoutGroup, motion } from 'motion/react';
+import { LayoutGroup, MotionConfig, motion } from 'motion/react';
 import { PanelLeftIcon } from 'lucide-react';
 import {
   SidebarCollapseTrigger,
@@ -171,6 +171,9 @@ function PanelBody({ components }: Pick<SidebarProps, 'components'>) {
         <SearchButton />
       </div>
       <ScrollFade fade={24} className="min-h-0 flex-1 px-2 pt-1 pb-4">
+        {/* motion's springs are JS, so standards' reduced-motion CSS cannot
+            reach them; "user" makes the pill jump instead of slide. */}
+        <MotionConfig reducedMotion="user">
         <LayoutGroup id="docs-rail">
           {links.length > 0 && (
             <div className="mb-4 flex flex-col gap-px">
@@ -183,6 +186,7 @@ function PanelBody({ components }: Pick<SidebarProps, 'components'>) {
             <PageTree {...components} />
           </div>
         </LayoutGroup>
+        </MotionConfig>
       </ScrollFade>
       <SidebarControls />
     </>
