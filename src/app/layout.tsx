@@ -20,11 +20,13 @@ export const metadata: Metadata = {
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={cn(geist.variable, geistMono.variable)} suppressHydrationWarning>
-      <head>
-        {/* Before first paint, so a reader at 115% never sees a 100% frame. */}
-        <script dangerouslySetInnerHTML={{ __html: uiScaleInitScript }} />
-      </head>
       <body className="flex min-h-screen flex-col">
+        {/* Before first paint, so a reader at 115% never sees a 100% frame.
+            First in <body>, as next-themes places its own: an inline script
+            here still runs before anything after it is parsed, and unlike
+            one in <head> it is not re-rendered when a not-found boundary
+            renders the root layout on the client. */}
+        <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: uiScaleInitScript }} />
         <RootProvider
           search={{ SearchDialog }}
           theme={{

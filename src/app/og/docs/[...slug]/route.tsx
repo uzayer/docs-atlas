@@ -22,7 +22,7 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
       title={page.data.title}
       description={page.data.description}
       site={appName}
-      icon={<img alt="" src={await atlasBrandmark} style={{ height: '120px', width: '120px' }} />}
+      icon={<img alt="" src={await atlasBrandmark} style={{ height: '72px', width: '72px' }} />}
     />,
     {
       width: 1200,
