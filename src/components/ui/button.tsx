@@ -1,55 +1,118 @@
+import { isValidElement } from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva } from "class-variance-authority"
+import type { VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/cn"
 
-import { cn } from "@/lib/utils"
+/**
+ * The pattern-setter for every control in this system.
+ *
+ * Things that are deliberate here and should be copied, not re-litigated:
+ *
+ * - Sizes are the named control ladder (`h-control-*`), never `h-7`. The
+ *   ladder is the only place a control height is written down.
+ * - Hover changes `background-color` and nothing else, at `duration-fast`.
+ *   An opacity modifier like `bg-primary/80` compiles to a `color-mix` that
+ *   re-rasterises the glyph inside the button, which reads as a flicker.
+ *   `bg-primary-hover` is a real token with a real light-mode counterpart.
+ * - No focus ring. `globals.css` draws one `:focus-visible` outline for the
+ *   whole system; a second ring here would render inside it.
+ * - No `active:translate-y-px`. Controls in a dense UI do not bounce.
+ * - Base UI has no `asChild` — pass `render` to change the element.
+ *
+ * DO NOT use this for navigation. `<Button render={<Link/>}>` produces an
+ * anchor that Base UI then stamps with `role="button"`, so a screen reader
+ * announces "button" for something that changes the page — and the link
+ * affordances (open in new tab, the links rotor) go with it. A thing that
+ * navigates is a link: render a real `<a>` or `<Link>` and style it with the
+ * exported `buttonVariants`. That is what the export is for.
+ */
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  [
+    "group/button inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5",
+    "rounded-full border border-transparent whitespace-nowrap select-none",
+    "font-medium",
+    // Named properties, not `transition-all`: the press scale needs a
+    // transition, and animating everything would drag border-color and
+    // colour along with it and make the glyph shimmer.
+    "duration-fast transition-[background-color,transform] ease-out-strong",
+    "active:scale-[0.99]",
+    "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
+    "aria-invalid:border-destructive",
+    "[&_svg]:pointer-events-none [&_svg]:shrink-0",
+  ],
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
-        outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+        /** The one loud element on a screen. Use at most once per view. */
+        default: "bg-primary text-primary-foreground hover:bg-primary-hover",
+        /** A filled but quiet control — the default for toolbars. */
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "bg-secondary text-foreground hover:bg-element-hover aria-expanded:bg-element-active",
+        /** Bordered and transparent. Pairs with `default` as the cancel. */
+        outline:
+          "bg-card text-foreground ring-1 ring-foreground/15 hover:bg-element-hover aria-expanded:bg-element-active",
+        /** No chrome until you touch it. Row actions, icon buttons. */
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+          "bg-transparent text-secondary-foreground hover:bg-element-hover hover:text-foreground aria-expanded:bg-element-active aria-expanded:text-foreground",
+        /**
+         * Tinted, not filled. A solid red button is louder than the primary
+         * action on the same screen, which inverts the hierarchy on every
+         * confirm dialog. The solid treatment belongs to AlertDialog's
+         * confirm, where destruction genuinely is the primary action.
+         */
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-error-muted text-error hover:bg-error-muted hover:brightness-110",
+        link: "bg-transparent text-foreground underline-offset-2 hover:underline",
       },
       size: {
-        default:
-          "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        icon: "size-8",
-        "icon-xs":
-          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm":
-          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
-        "icon-lg": "size-9",
+        xs: "h-control-xs gap-1 px-1.5 text-2xs [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-control-sm px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5",
+        md: "h-control-md px-2.5 text-xs [&_svg:not([class*='size-'])]:size-4",
+        lg: "h-control-lg px-3 text-sm [&_svg:not([class*='size-'])]:size-4",
+        xl: "h-control-xl px-4 text-sm [&_svg:not([class*='size-'])]:size-4.5",
+        /** Square: one control height on both axes. Prefer <IconButton>. */
+        icon: "size-control-md [&_svg:not([class*='size-'])]:size-4",
+        "icon-xs": "size-control-xs [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm": "size-control-sm [&_svg:not([class*='size-'])]:size-3.5",
+        "icon-lg": "size-control-lg [&_svg:not([class*='size-'])]:size-4",
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "secondary",
+      size: "md",
     },
   }
 )
 
 function Button({
   className,
-  variant = "default",
-  size = "default",
+  variant,
+  size,
+  nativeButton,
+  render,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  /**
+   * Base UI warns — loudly, at runtime — when a button-role component renders
+   * as something other than a real <button> while `nativeButton` is still
+   * true, because that silently drops form submission and native keyboard
+   * behaviour. A link-styled button is common enough (`render={<Link/>}`,
+   * `render={<a/>}`) that making every call site remember the prop guarantees
+   * someone forgets. Infer it from what is actually being rendered, and let
+   * an explicit value win.
+   */
+  const rendersNativeButton =
+    !isValidElement(render) || render.type === "button"
+
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      nativeButton={nativeButton ?? rendersNativeButton}
+      render={render}
+      className={cn(buttonVariants({ variant, size }), className)}
       {...props}
     />
   )

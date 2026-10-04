@@ -1,0 +1,95 @@
+/* MDX content components: code blocks, callouts, cards. Owned by the
+   components in src/components/mdx/.
+
+   Only what a component cannot say with its own classes lives here: rules
+   for elements the MDX compiler emits bare (cells, rows, quotes), and
+   overrides of the typography plugin, which writes its own borders. Every
+   value is a token. */
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Headings. The heading text is a link to its own hash; it reads as a
+   heading, not as a link, so the prose underline is taken off it.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.prose [data-slot="heading-anchor"] {
+  font-weight: inherit;
+  text-decoration-line: none;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Tables. The wrapper (prose.tsx) is the raised block, so the table itself
+   draws no outer edge: `--border` under the header, `--hairline` between
+   rows and columns, header text small and muted.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.prose [data-slot="mdx-table"] table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: transparent;
+  overflow: visible;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+
+.prose [data-slot="mdx-table"] :is(th, td) {
+  padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 3.5);
+  border-inline-start: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: top;
+}
+
+.prose [data-slot="mdx-table"] :is(th, td):first-child {
+  border-inline-start: 0;
+}
+
+.prose [data-slot="mdx-table"] tbody tr:last-child > :is(th, td) {
+  border-bottom: 0;
+}
+
+.prose [data-slot="mdx-table"] thead th {
+  background: transparent;
+  border-bottom-color: var(--border);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: 500;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Blockquotes. A hairline rule and muted text; no italics, no curly quotes
+   generated around it.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.prose blockquote:not(:where(.not-prose, .not-prose *)) {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--muted-foreground);
+  border-inline-start: 2px solid var(--border);
+  padding-inline-start: 1em;
+}
+
+.prose blockquote:not(:where(.not-prose, .not-prose *)) p::before,
+.prose blockquote:not(:where(.not-prose, .not-prose *)) p::after {
+  content: none;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Shiki on a theme subtree. Fumadocs flips token colours on `.dark` only;
+   standards lets any element switch theme with `data-theme`, so a code block
+   inside a flipped subtree follows it too.
+   ────────────────────────────────────────────────────────────────────────── */
+
+[data-theme="dark"] .shiki:not(.not-fumadocs-codeblock *) code span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style);
+}
+
+[data-theme="light"] .shiki:not(.not-fumadocs-codeblock *) code span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+}

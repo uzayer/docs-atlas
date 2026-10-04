@@ -1,0 +1,245 @@
+/* ==========================================================================
+   Atlas Docs: the bridge from Atlas Standards to Fumadocs.
+
+   tokens.css, themes.css, globals.css and utilities.css are standards,
+   copied verbatim. This file is the only place the docs add to them, and it
+   does three things:
+
+   1. Points every `--color-fd-*` Fumadocs reads at a standards role, so the
+      layouts, search dialog and MDX components inherit the achromatic
+      palette without being forked.
+   2. Sets the reading scale. Standards is an app at a 12px body; a docs page
+      is read for minutes at a time, so prose sits at 16px. Both are rem, so
+      the interface-scale control still grows them together.
+   3. Draws the frame: a canvas with the sidebar and the page set into it as
+      curved panels, as the Atlas app shell does, full bleed.
+   ========================================================================== */
+
+/* next/font registers Geist under its own family name, so the stack standards
+   writes ("Geist Variable" from fontsource) is pointed at it here. */
+:root {
+  --font-sans: var(--font-geist), -apple-system, "SF Pro Text", system-ui,
+    sans-serif;
+  --font-mono: var(--font-geist-mono), "SF Mono", "JetBrains Mono", monospace;
+
+  /* Docs layout constants. The rail is wider than the app's (14rem) because
+     page titles are longer than app destinations and set larger. The text
+     column holds about 75 characters at the reading size. */
+  --docs-sidebar-width: 17rem;
+  --docs-content-width: 48rem;
+  --docs-toc-width: 15rem;
+}
+
+/* Declared on every theme scope for the reason themes.css gives: a variable
+   holding var(--x) resolves where it is declared, so a subtree flipped with
+   data-theme has to re-resolve these against its own values. */
+:root,
+[data-theme="dark"],
+[data-theme="light"] {
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  --color-fd-card: var(--card);
+  --color-fd-card-foreground: var(--card-foreground);
+  --color-fd-border: var(--border);
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-secondary-foreground: var(--foreground);
+  --color-fd-accent: var(--element-selected);
+  --color-fd-accent-foreground: var(--foreground);
+  --color-fd-ring: var(--ring);
+  --color-fd-overlay: oklch(0 0 0 / 60%);
+
+  --color-fd-info: var(--info);
+  --color-fd-warning: var(--warning);
+  --color-fd-error: var(--error);
+  --color-fd-success: var(--success);
+  --color-fd-idea: var(--hue-amber);
+  --color-fd-diff-add: var(--diff-added);
+  --color-fd-diff-add-symbol: var(--diff-added-foreground);
+  --color-fd-diff-remove: var(--diff-removed);
+  --color-fd-diff-remove-symbol: var(--diff-removed-foreground);
+}
+
+@layer base {
+  /* The canvas the panels are set into. Fumadocs paints the body with its
+     background; the frame needs it one step out. */
+  html,
+  body {
+    background-color: var(--shell-canvas);
+  }
+
+  /* Fumadocs' Base UI dialogs lock scroll by padding the body. Scrollbars
+     are hidden everywhere in standards, so there is no width to make up. */
+  html > body[data-scroll-locked] {
+    margin-right: 0 !important;
+    --removed-body-scroll-bar-size: 0px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   The frame.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@variant md {
+  #nd-docs-layout {
+    --fd-sidebar-width: var(--docs-sidebar-width);
+  }
+}
+
+@variant xl {
+  #nd-docs-layout {
+    --fd-toc-width: var(--docs-toc-width);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Reading.
+
+   Fumadocs' typography plugin sizes everything as `rem × --tw-prose-size`,
+   so one number moves the whole article. 1 is 16px at scale 1.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.prose {
+  --tw-prose-size: 1;
+  --tw-prose-body: var(--secondary-foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--muted-foreground);
+  --tw-prose-links: var(--foreground);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: var(--muted-foreground);
+  --tw-prose-hr: var(--hairline);
+  --tw-prose-quotes: var(--muted-foreground);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--hairline);
+  --tw-prose-kbd: var(--muted-foreground);
+
+  /* Long-form text reads lighter than the 500 chrome weight; emphasis and
+     headings step up from there. */
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  font-variant-numeric: normal;
+
+  :where(h1, h2, h3, h4):not(:where(.not-prose, .not-prose *)) {
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  :where(strong):not(:where(.not-prose, .not-prose *)) {
+    font-weight: 600;
+  }
+
+  /* Links are ink with a quiet underline that darkens on hover, never a hue. */
+  :where(a):not(:where(.not-prose, .not-prose *)) {
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-color: var(--border-strong);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color var(--duration-fast)
+      var(--ease-out-strong);
+  }
+
+  :where(a):not(:where(.not-prose, .not-prose *)):hover {
+    text-decoration-color: var(--foreground);
+  }
+
+  /* Inline code: mono on a card with a hairline, as prose-session draws it. */
+  :where(:not(pre) > code):not(:where(.not-prose, .not-prose *)) {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    padding: 0.1em 0.35em;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--hairline);
+    background: var(--card);
+  }
+
+  :where(li::marker):not(:where(.not-prose, .not-prose *)) {
+    color: var(--muted-foreground);
+  }
+
+  /* Keycaps are standards' Kbd: flat, a hairline and a card fill. The
+     typography plugin's bevel shadow would draw a second edge under it. */
+  :where(kbd):not(:where(.not-prose, .not-prose *)) {
+    box-shadow: none;
+  }
+
+  /* The section divider is dashed, never solid. */
+  :where(hr):not(:where(.not-prose, .not-prose *)) {
+    border-top: 1px dashed var(--border);
+  }
+}
+
+::selection {
+  background: var(--selection);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   The rail's children hang off a hairline with L-connectors, as standards'
+   SidebarItem draws them; the connector turns to ink on the active row.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.docs-rail::before {
+  content: "";
+  position: absolute;
+  inset-block: 0 0.875rem;
+  inset-inline-start: 0;
+  width: 1px;
+  background: var(--sidebar-border);
+}
+
+.docs-rail-child::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: -0.75rem;
+  top: 50%;
+  width: 0.625rem;
+  height: 1px;
+  background: var(--sidebar-border);
+  transition: background-color var(--duration-fast) var(--ease-out-strong);
+}
+
+.docs-rail-child[data-active="true"]::after {
+  background: var(--foreground);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   The TOC: its heading is a `micro` group label, its rows the reading size.
+   ────────────────────────────────────────────────────────────────────────── */
+
+#nd-toc #toc-title {
+  font-size: var(--text-3xs);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 0.5rem;
+
+  svg {
+    display: none;
+  }
+}
+
+#nd-toc a,
+[data-toc-popover] a {
+  font-size: calc((var(--text-xs) + var(--text-sm)) / 2);
+  line-height: 1.25rem;
+}
+
+/* The page title. Larger than standards' top step (text-2xl, 28px), which is
+   sized for an app screen's header, not the head of a document. */
+@utility type-title {
+  font-size: 2.25rem;
+  line-height: 2.625rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
