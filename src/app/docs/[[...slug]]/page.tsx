@@ -3,7 +3,6 @@ import {
   DocsBody,
   DocsDescription,
   DocsPage,
-  DocsTitle,
   MarkdownCopyButton,
   ViewOptionsPopover,
 } from 'fumadocs-ui/layouts/docs/page';
@@ -12,6 +11,9 @@ import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
+import { buttonVariants } from '@/components/ui/button';
+import { PageFooter } from '@/components/shell/page-footer';
+import { TopBarActions } from '@/components/shell/docs-frame';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -21,17 +23,46 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
 
+  const githubUrl = `https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`;
+  const actions = (
+    <>
+      <MarkdownCopyButton
+        markdownUrl={markdownUrl}
+        className={buttonVariants({ variant: 'secondary', size: 'sm' })}
+      />
+      <ViewOptionsPopover
+        className={buttonVariants({ variant: 'secondary', size: 'sm' })}
+        markdownUrl={markdownUrl}
+        githubUrl={githubUrl}
+      />
+    </>
+  );
+
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
-      <div className="flex flex-row gap-2 items-center border-b pb-6">
-        <MarkdownCopyButton markdownUrl={markdownUrl} />
-        <ViewOptionsPopover
-          markdownUrl={markdownUrl}
-          githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`}
-        />
-      </div>
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      tableOfContent={{
+        style: 'clerk',
+        // Sticks below the top bar rather than under it.
+        container: {
+          className: 'top-(--fd-docs-row-2) h-[calc(var(--fd-docs-height)-var(--fd-docs-row-2))] pt-10 xl:pt-12',
+        },
+      }}
+      tableOfContentPopover={{ style: 'clerk' }}
+      // From md the breadcrumb and the actions live in the top bar.
+      breadcrumb={{ className: 'text-xs md:hidden' }}
+      slots={{ footer: PageFooter }}
+      className="md:pt-10 xl:pt-12"
+    >
+      <TopBarActions>{actions}</TopBarActions>
+      {/* A plain h1: DocsTitle hard-codes its own size, which outranks a utility. */}
+      <h1 className="type-title">{page.data.title}</h1>
+      <DocsDescription className="mb-0 text-md font-normal text-muted-foreground">
+        {page.data.description}
+      </DocsDescription>
+      <div className="flex flex-row items-center gap-1.5 md:hidden">{actions}</div>
+      <hr className="rule-dashed my-2" />
       <DocsBody>
         <MDX
           components={getMDXComponents({
