@@ -8,7 +8,8 @@
     "start": "next start",
     "types:check": "next typegen && tsc --noEmit",
     "lint": "oxlint",
-    "test": "bun test"
+    "test": "bun test",
+    "sync:standards": "bun scripts/sync-standards.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

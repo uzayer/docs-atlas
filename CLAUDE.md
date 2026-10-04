@@ -22,6 +22,7 @@ bun start            # serve the production build
 bun run types:check  # next typegen && tsc --noEmit
 bun run lint         # oxlint
 bun run test         # the design-system ratchet (bun test)
+bun run sync:standards  # re-copy standards' stylesheets from ../standards
 ```
 
 `types:check`, `lint` and `test` are the full verification pass. `types:check` must run `next typegen` first because route types under `.next/types` are generated. The only test is `tests/design-system-ratchet.test.ts`, standards' ratchet held over `src/`: no colour literals, raised shadows, `dark:` variants, stock Tailwind palettes or arbitrary sizes in components. Escape a line with `ratchet-allow: <reason>` only when the token layer genuinely cannot express it.
@@ -52,7 +53,7 @@ Next.js 16 App Router + Fumadocs. Source lives under `src/`, content under `cont
 
 The site wears **Atlas Standards** (`../standards`), the design system for Atlas products. Fumadocs keeps the behaviour; standards decides the look.
 
-- `src/styles/{tokens,themes,globals,utilities}.css` are **verbatim copies** of standards' `src/styles/`, with the source commit in each header. Never edit them here: change standards, then copy across.
+- `src/styles/{tokens,themes,globals,utilities}.css` are **verbatim copies** of standards' `src/styles/`, with the source commit in each header. Never edit them here: change standards, commit there, then `bun run sync:standards` (it refuses uncommitted styles, so the stamp always names a real commit).
 - `src/styles/docs.css` is the only bridge. It maps every Fumadocs `--color-fd-*` onto a standards role, sets the reading scale (prose at 15px via `--tw-prose-size`, against standards' 12px app body) and draws the frame. `src/styles/mdx.css` holds the content components' CSS.
 - Theme is written to **both** `class` and `data-theme` on `<html>` (`RootProvider` in `src/app/layout.tsx`): standards keys off `data-theme`, Fumadocs' Shiki and `dark:` off `.dark`.
 - The shell is Fumadocs' `DocsLayout` with standards components in its **slots** (`src/components/shell/`): `DocsFrame` (container; owns the full-bleed grid template, with the text column and TOC centred together in the page panel), `DocsHeader` (the brand bar below md, the sticky top bar with breadcrumb and page actions from md; a page fills the actions with `<TopBarActions>`), `DocsSidebar` (built from `fumadocs-ui/components/sidebar/base` parts, so tree, collapse, drawer and auto-scroll stay Fumadocs'), and `PageFooter`. Restyle through a slot before reaching for `@fumadocs/cli` to eject.
