@@ -1,0 +1,329 @@
+/* Verbatim copy of atlas standards src/styles/globals.css at 172759a.
+   Do not edit here: change standards, then copy it across again.
+   Docs-only overrides live in docs.css. */
+
+/* ==========================================================================
+   Atlas Standards — the Tailwind bridge.
+
+   `@theme inline` turns tokens.css and themes.css into utilities. `inline`
+   keeps the var() reference in the generated CSS instead of resolving it at
+   build time, which is the only reason a theme swap at runtime works.
+   ========================================================================== */
+
+@theme inline {
+  /* --- shadcn base roles --- */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-illustration: var(--illustration);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-muted: var(--primary-muted);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-disabled: var(--text-disabled);
+
+  /* --- edges --- */
+  --color-hairline: var(--hairline);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-border-illustration: var(--border-illustration);
+  --color-segment-track: var(--segment-track);
+  --color-shell-canvas: var(--shell-canvas);
+  --color-shell-edge: var(--shell-edge);
+  --color-segment-thumb: var(--segment-thumb);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* --- element states --- */
+  --color-element-hover: var(--element-hover);
+  --color-element-selected: var(--element-selected);
+  --color-element-active: var(--element-active);
+  --color-element-emphasis: var(--element-emphasis);
+
+  /* --- status --- */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  --color-success-muted: var(--success-muted);
+  --color-warning-muted: var(--warning-muted);
+  --color-error-muted: var(--error-muted);
+  --color-info-muted: var(--info-muted);
+
+  /* --- hues: identity, not status --- */
+  --color-hue-grey: var(--hue-grey);
+  --color-hue-indigo: var(--hue-indigo);
+  --color-hue-purple: var(--hue-purple);
+  --color-hue-cyan: var(--hue-cyan);
+  --color-hue-green: var(--hue-green);
+  --color-hue-amber: var(--hue-amber);
+  --color-hue-orange: var(--hue-orange);
+  --color-hue-red: var(--hue-red);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+
+  --color-diff-added: var(--diff-added);
+  --color-diff-added-foreground: var(--diff-added-foreground);
+  --color-diff-removed: var(--diff-removed);
+  --color-diff-removed-foreground: var(--diff-removed-foreground);
+  --color-syntax-comment: var(--syntax-comment);
+  --color-syntax-keyword: var(--syntax-keyword);
+  --color-syntax-string: var(--syntax-string);
+  --color-syntax-number: var(--syntax-number);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+
+  /* --- type scale -------------------------------------------------------
+
+     Named steps. 10, 11 and 12px carry ~90% of the UI;
+     the body default is `text-xs`. rem at a 16 base so the scale control
+     grows it. Half-pixel sizes round UP to the next step; no tenth step. */
+  --text-4xs: 0.5625rem;
+  --text-4xs--line-height: 0.75rem;
+  --text-3xs: 0.625rem;
+  --text-3xs--line-height: 0.875rem;
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-md: 1rem;
+  --text-md--line-height: 1.375rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.5rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.625rem;
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 1;
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+  --radius-3xl: var(--radius-3xl);
+  --radius-full: 9999px;
+
+  /* Two rungs. Tailwind rewrites --shadow-* at build time, so they point at
+     variables outside the namespace. Everything else is a ring. */
+  --shadow-md: var(--elevation-menu);
+  --shadow-lg: var(--elevation-dialog);
+  --inset-shadow-highlight: var(--inset-highlight);
+
+  --blur-glass: var(--blur-glass);
+
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-panel: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-in: fade-in 0.15s var(--ease-out-strong);
+  --animate-fade-out: fade-out 0.12s var(--ease-out-strong);
+  --animate-scale-in: scale-in 0.15s var(--ease-out-strong);
+  --animate-scale-out: scale-out 0.12s var(--ease-out-strong);
+  --animate-slide-in-right: slide-in-right 0.18s var(--ease-drawer);
+  --animate-slide-in-left: slide-in-left 0.18s var(--ease-drawer);
+  --animate-shimmer-row: shimmer-row 1.6s linear infinite;
+  /* A ring expanding out of a globe marker. Delay per ring is inline. */
+  --animate-pulse-ring: pulse-ring 2s var(--ease-out-strong) infinite;
+
+  @keyframes pulse-ring {
+    from {
+      transform: scale(0.3);
+      opacity: 0.8;
+    }
+    to {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes scale-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slide-in-left {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes shimmer-row {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+}
+
+/* Registered so they can transition. Without this, `transition: --fade-top`
+   in ScrollFade does nothing and the fade snaps. */
+@property --fade-top {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --fade-bottom {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* `dark`/`light` variants exist for third-party artwork with baked-in fills
+   the token layer cannot reach. Application code should not write them. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--border, currentColor);
+  }
+
+  html {
+    /* The scale multiplier. Every measurement is rem, so this grows all of
+       them together. See tokens.css. */
+    font-size: calc(16px * var(--ui-scale, 1));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    /* The density decision, made visible: the document default is 12px. */
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    /* Global, not per-component: a figure that reflows as it ticks is wrong
+       everywhere, so nowhere should have to remember to ask for this. */
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* One focus treatment. 1px at 1px offset in the action colour — an
+     inverted-ink 2px ring on a 28px control reads as a filled state. */
+  :focus {
+    outline: none;
+  }
+  :focus-visible {
+    outline: 1px solid var(--ring);
+    outline-offset: 1px;
+  }
+
+  ::selection {
+    background: var(--selection);
+    color: var(--foreground);
+  }
+
+  /* Native-app feel: scrolling works, scrollbars do not show. Edges dissolve
+     instead — see ScrollFade. */
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  /* Only background-color, at the hover duration. Transitioning colour or
+     opacity on an element containing an icon makes the glyph jitter. */
+  button,
+  a,
+  select,
+  summary {
+    transition: background-color var(--duration-fast) var(--ease-out-strong);
+  }
+
+  [data-panel] {
+    contain: layout style paint;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

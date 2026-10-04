@@ -1,0 +1,578 @@
+/* Verbatim copy of atlas standards src/styles/utilities.css at 172759a.
+   Do not edit here: change standards, then copy it across again.
+   Docs-only overrides live in docs.css. */
+
+/* ==========================================================================
+   Atlas Standards — named utilities.
+
+   Everything here exists so a component never writes a measurement. If you
+   reach for text-[11px], h-[28px] or z-[60], the utility you want is here —
+   and if it genuinely is not, add it here rather than inlining the number.
+   The ratchet enforces this.
+   ========================================================================== */
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Named text styles.
+
+   `micro` is the small-caps group label — the one place uppercase and
+   tracking are allowed. `figure` is the oversized hero number: LIGHT, never
+   bold, and the only use of weight 300 in the system.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@utility micro {
+  font-size: var(--text-3xs);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility figure {
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility label {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+@utility body {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+@utility caption {
+  font-size: var(--text-2xs);
+  line-height: var(--text-2xs--line-height);
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+@utility code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: 500;
+  font-feature-settings: "zero", "ss02";
+}
+
+@utility heading {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "zero", "ss02";
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Control heights.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@utility h-control-xs {
+  height: var(--control-xs);
+}
+@utility h-control-sm {
+  height: var(--control-sm);
+}
+@utility h-control-md {
+  height: var(--control-md);
+}
+@utility h-control-lg {
+  height: var(--control-lg);
+}
+@utility h-control-xl {
+  height: var(--control-xl);
+}
+
+@utility min-w-control-xs {
+  min-width: var(--control-xs);
+}
+@utility min-w-control-sm {
+  min-width: var(--control-sm);
+}
+@utility min-w-control-md {
+  min-width: var(--control-md);
+}
+
+@utility size-control-xs {
+  width: var(--control-xs);
+  height: var(--control-xs);
+}
+@utility size-control-sm {
+  width: var(--control-sm);
+  height: var(--control-sm);
+}
+@utility size-control-md {
+  width: var(--control-md);
+  height: var(--control-md);
+}
+@utility size-control-lg {
+  width: var(--control-lg);
+  height: var(--control-lg);
+}
+@utility size-control-xl {
+  width: var(--control-xl);
+  height: var(--control-xl);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Layout constants.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@utility w-sidebar {
+  width: var(--sidebar-width);
+}
+@utility w-sidebar-collapsed {
+  width: var(--sidebar-width-collapsed);
+}
+@utility h-topbar {
+  height: var(--topbar-height);
+}
+@utility min-h-topbar {
+  min-height: var(--topbar-height);
+}
+@utility w-dock {
+  width: var(--dock-width);
+}
+@utility min-w-dock {
+  min-width: var(--dock-width);
+}
+@utility w-list-pane {
+  width: var(--list-pane-width);
+}
+@utility w-properties {
+  width: var(--properties-width);
+}
+@utility h-row {
+  height: var(--row-height);
+}
+@utility min-h-row {
+  min-height: var(--row-height);
+}
+@utility w-settings-nav {
+  width: var(--settings-nav-width);
+}
+@utility max-w-settings {
+  max-width: var(--settings-content-max);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Z-layers. Nothing outside this file may write a z-index.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@utility z-panel {
+  z-index: var(--z-panel);
+}
+@utility z-titlebar {
+  z-index: var(--z-titlebar);
+}
+@utility z-drawer {
+  z-index: var(--z-drawer);
+}
+@utility z-overlay {
+  z-index: var(--z-overlay);
+}
+@utility z-modal {
+  z-index: var(--z-modal);
+}
+@utility z-popover {
+  z-index: var(--z-popover);
+}
+@utility z-toast {
+  z-index: var(--z-toast);
+}
+@utility z-tooltip {
+  z-index: var(--z-tooltip);
+}
+@utility z-drag {
+  z-index: var(--z-drag);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Surfaces.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* One glass. The topbar, and the command palette. */
+@utility glass {
+  background: var(--glass);
+  backdrop-filter: blur(var(--blur-glass)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(180%);
+}
+
+/* Structural rules — a pane seam, a table row — use the WEAKER edge, so
+   rules inside content read lighter than the ring around it. */
+@utility hairline-x {
+  border-bottom: 1px solid var(--hairline);
+}
+@utility hairline-y {
+  border-right: 1px solid var(--hairline);
+}
+
+/* The section divider. Dashed, never solid, between things on a page. */
+@utility rule-dashed {
+  border-top: 1px dashed color-mix(in oklch, var(--foreground) 10%, transparent);
+}
+
+/* A blueprint grid from hairlines. */
+@utility grid-lines {
+  background-image:
+    linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+}
+
+/* A scrim is deliberately NOT themed: its job is to push what is behind it
+   away from the reader, and only darkening does that. */
+@utility scrim {
+  background-color: rgb(0 0 0 / 0.6);
+}
+@utility scrim-soft {
+  background-color: rgb(0 0 0 / 0.2);
+}
+
+@utility inset-highlight {
+  box-shadow: var(--inset-highlight);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   The hue-coded tag, in rem.
+
+   A pill whose fill and edge are the hue mixed at per-theme ratios, so the
+   same tone reads as a tint on light and a glow on dark without two sets of
+   colours. Set the hue with `tag-<tone>`.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@utility tag {
+  --tag: var(--hue-grey);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 9999px;
+  border: 1px solid
+    color-mix(in oklch, var(--tag) var(--tag-border-mix), transparent);
+  background: color-mix(in oklch, var(--tag) var(--tag-bg-mix), transparent);
+  color: var(--tag);
+  padding: 0 0.4375rem;
+  height: 1.125rem;
+  font-size: var(--text-3xs);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+@utility tag-grey {
+  --tag: var(--hue-grey);
+}
+@utility tag-indigo {
+  --tag: var(--hue-indigo);
+}
+@utility tag-purple {
+  --tag: var(--hue-purple);
+}
+@utility tag-cyan {
+  --tag: var(--hue-cyan);
+}
+@utility tag-green {
+  --tag: var(--hue-green);
+}
+@utility tag-amber {
+  --tag: var(--hue-amber);
+}
+@utility tag-orange {
+  --tag: var(--hue-orange);
+}
+@utility tag-red {
+  --tag: var(--hue-red);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Scroll regions: edges dissolve, and only on the
+   side there is more content. ScrollFade measures and writes the two vars;
+   they are registered in globals.css so the change animates.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@utility scroll-fade {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--fade-top, 0px),
+    #000 calc(100% - var(--fade-bottom, 0px)),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--fade-top, 0px),
+    #000 calc(100% - var(--fade-bottom, 0px)),
+    transparent 100%
+  );
+}
+
+/* Keep the scroll, lose the bar — already global; kept for explicitness. */
+@utility hide-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Rendered Markdown in a session reader — an agent's response. The Atlas
+   desktop app's `.prose-chat`, on this system's tokens: body text in the
+   secondary ink, emphasis and headings in the foreground, code in the mono
+   face on a card, lists with their markers in the muted ink. */
+/* 13px, between the xs and sm steps — the desktop app's reading size. Not
+   `text-*`: `cn` would read an unknown `text-` class as a colour and drop it
+   next to `text-foreground`. A
+   session's entry labels and its body text share it, so a label reads as
+   the line's name rather than a heading over it. */
+@utility type-reading {
+  font-size: calc((var(--text-xs) + var(--text-sm)) / 2);
+  line-height: 1.25rem;
+}
+
+@utility prose-session {
+  font-size: calc((var(--text-xs) + var(--text-sm)) / 2);
+  line-height: 1.6;
+  color: var(--secondary-foreground);
+  overflow-wrap: anywhere;
+
+  & > * + * {
+    margin-top: 0.55em;
+  }
+  & strong {
+    font-weight: 500;
+    color: var(--foreground);
+  }
+  & em {
+    font-style: italic;
+  }
+  & a {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  & h1,
+  & h2,
+  & h3,
+  & h4 {
+    font-size: inherit;
+    font-weight: 500;
+    color: var(--foreground);
+    margin-top: 0.9em;
+  }
+  & ul,
+  & ol {
+    padding-left: 1.25em;
+  }
+  & ul {
+    list-style: disc;
+  }
+  & ol {
+    list-style: decimal;
+  }
+  & li + li {
+    margin-top: 0.2em;
+  }
+  & li::marker {
+    color: var(--muted-foreground);
+  }
+  & :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    padding: 0.05em 0.3em;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--hairline);
+    background: var(--card);
+    color: var(--foreground);
+  }
+  & pre {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+    padding: 0.75rem 0.875rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--hairline);
+    background: var(--card);
+    color: var(--foreground);
+    overflow-x: auto;
+  }
+  & blockquote {
+    padding-left: 0.875em;
+    border-left: 2px solid var(--border);
+    color: var(--muted-foreground);
+  }
+}
+
+/* One face in an AvatarStack. `--shift` and `--scale-active` are written
+   per item by the component on hover; translate comes before scale so the
+   scale does not amplify the lift. */
+@utility avatar-spring {
+  transform-origin: center;
+  transform: translateY(var(--shift, 0px)) scale(var(--scale-active, 1));
+  transition: transform var(--avatar-dur) var(--avatar-ease-in);
+  will-change: transform;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   States.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@utility disabled-look {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@utility focus-ring-none {
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+@utility contain-row {
+  contain: layout style;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Morph — a trigger that grows into the panel it opens.
+
+   On the `--morph-*` tokens. The
+   container is the button when closed and the panel when open; `overflow:
+   hidden` clips the content while the box grows. The open size is read from
+   `--morph-open-w` / `--morph-open-h`, set by the component. The trigger
+   glyph is pinned to the bottom-right corner so it stays put while the box
+   grows up and left out of it; `data-anchor="start"` mirrors that.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@layer components {
+  .t-morph {
+    position: relative;
+    width: var(--morph-closed, 2rem);
+    height: var(--morph-closed, 2rem);
+    border-radius: var(--morph-r-closed);
+    overflow: hidden;
+    transition:
+      width var(--morph-close-dur) var(--morph-close-ease),
+      height var(--morph-close-dur) var(--morph-close-ease),
+      border-radius var(--morph-close-dur) var(--morph-close-ease);
+  }
+  .t-morph[data-open="true"] {
+    width: var(--morph-open-w);
+    height: var(--morph-open-h);
+    border-radius: var(--morph-r-open);
+    transition:
+      width var(--morph-open-dur) var(--morph-ease),
+      height var(--morph-open-dur) var(--morph-ease),
+      border-radius var(--morph-open-dur) var(--morph-ease);
+  }
+  .t-morph-surface {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--morph-fade-dur) var(--morph-close-ease);
+  }
+  .t-morph[data-open="true"] .t-morph-surface {
+    opacity: 1;
+  }
+  .t-morph-trigger {
+    position: absolute;
+    inset: auto 0 0 auto;
+    width: var(--morph-closed, 2rem);
+    height: var(--morph-closed, 2rem);
+    transition:
+      opacity var(--morph-fade-dur) var(--morph-close-ease),
+      transform var(--morph-open-dur) var(--morph-close-ease),
+      filter var(--morph-fade-dur) var(--morph-close-ease);
+  }
+  .t-morph-trigger svg {
+    transition: transform var(--morph-open-dur) var(--morph-close-ease);
+  }
+  .t-morph[data-open="true"] .t-morph-trigger {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--morph-slide)));
+    filter: blur(var(--morph-blur));
+    pointer-events: none;
+  }
+  .t-morph[data-open="true"] .t-morph-trigger svg {
+    transform: scale(var(--morph-scale)) rotate(var(--morph-rotate));
+  }
+  .t-morph-menu {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateX(var(--morph-slide)) scale(var(--morph-scale));
+    transform-origin: bottom right;
+    filter: blur(var(--morph-blur));
+    pointer-events: none;
+    transition:
+      opacity var(--morph-fade-dur) var(--morph-close-ease),
+      transform var(--morph-open-dur) var(--morph-close-ease),
+      filter var(--morph-fade-dur) var(--morph-close-ease);
+  }
+  .t-morph[data-open="true"] .t-morph-menu {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+    pointer-events: auto;
+  }
+
+  /* Anchored at the bottom-LEFT: the glyph pins to that corner and the
+     box grows up and right, so every slide runs the other way. */
+  .t-morph[data-anchor="start"] .t-morph-trigger {
+    inset: auto auto 0 0;
+  }
+  .t-morph[data-anchor="start"][data-open="true"] .t-morph-trigger {
+    transform: translateX(var(--morph-slide));
+  }
+  .t-morph[data-anchor="start"][data-open="true"] .t-morph-trigger svg {
+    transform: scale(var(--morph-scale)) rotate(calc(-1 * var(--morph-rotate)));
+  }
+  .t-morph[data-anchor="start"] .t-morph-menu {
+    transform: translateX(calc(-1 * var(--morph-slide)))
+      scale(var(--morph-scale));
+    transform-origin: bottom left;
+  }
+  .t-morph[data-anchor="start"][data-open="true"] .t-morph-menu {
+    transform: translateX(0) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .t-morph,
+    .t-morph-surface,
+    .t-morph-trigger,
+    .t-morph-trigger svg,
+    .t-morph-menu {
+      transition: none !important;
+    }
+  }
+}
+
+/* An entry the reader has just jumped to: a soft outline that fades. */
+@layer components {
+  [data-slot="session-reader"] [data-entry] {
+    border-radius: var(--radius-lg);
+    outline: 2px solid transparent;
+    outline-offset: 6px;
+    transition: outline-color var(--duration-slow) var(--ease-out-strong);
+  }
+  [data-slot="session-reader"] [data-entry][data-focus] {
+    outline-color: var(--border-strong);
+  }
+}

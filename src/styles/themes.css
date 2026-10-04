@@ -1,0 +1,222 @@
+/* Verbatim copy of atlas standards src/styles/themes.css at 172759a.
+   Do not edit here: change standards, then copy it across again.
+   Docs-only overrides live in docs.css. */
+
+/* ==========================================================================
+   Atlas Standards — colour.
+
+   Achromatic. Every chrome value is OKLCH with chroma 0, and the action
+   colour is a foreground INVERSION: a near-white button on dark, a near-black
+   one on light. There is no brand hue anywhere in the chrome.
+
+   Chroma exists in exactly two places, and both carry meaning rather than
+   decoration: the four status inks, and the eight-hue tag palette that gives
+   an entity — a label, a project, an agent — a stable identity.
+
+   The surface ramp is five named steps that climb monotonically away from
+   the page. Note `--illustration`: a
+   card inside a card, and in dark the BRIGHTEST plane. In light "up"
+   saturates at pure white, so card, illustration and popover coincide and
+   hierarchy is carried by the ring and the two shadow rungs.
+
+   Every name here is the utility name. `--hairline` is `border-hairline`;
+   `--element-hover` is `bg-element-hover`. One word per pixel.
+   ========================================================================== */
+
+/* `[data-theme="dark"]` as well as `:root`, so a surface can flip to the
+   other theme's tokens by setting the attribute on itself — the session
+   comments popover is dark on a light page and light on a dark one. */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* --- surfaces: page → surface → card → illustration → raised → popover --- */
+  --background: oklch(0.08 0 0);
+  --surface: oklch(0.1 0 0);
+  --card: oklch(0.12 0 0);
+  --illustration: oklch(0.13 0 0);
+  --surface-raised: oklch(0.15 0 0);
+  --popover: oklch(0.17 0 0);
+
+  --foreground: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.8 0 0);
+  --muted-foreground: oklch(0.62 0 0);
+  --text-disabled: oklch(0.4 0 0);
+
+  /* --- the action colour: an inversion, not a hue --- */
+  --primary: oklch(0.97 0 0);
+  --primary-foreground: oklch(0.08 0 0);
+  --primary-hover: oklch(0.9 0 0);
+
+  --secondary: oklch(0.16 0 0);
+
+  /* --- edges: two weights, both alpha so they composite on any step --- */
+  --hairline: oklch(1 0 0 / 6%);
+  --border: oklch(1 0 0 / 8%);
+  --border-strong: oklch(1 0 0 / 16%);
+  /* A segmented control: a recessed track and the raised thumb that slides
+     inside it. The thumb is always a step LIGHTER than the track — which
+     in dark means a lighter grey, and in light means white on grey. */
+  --segment-track: oklch(0.13 0 0);
+  /* The app frame. Panels are the near-black page `background`; the canvas
+     they are set into is a clearly LIGHTER grey, so in dark the panels read
+     as wells cut into the frame (light does the reverse: white panels on a
+     grey frame). Their edge is an opaque rule — an alpha ring over dark
+     greys disappears. Used as a `border`, not a `ring`: a ring paints
+     outside the box, and the rail clips it. */
+  --shell-canvas: oklch(0.17 0 0);
+  --shell-edge: oklch(0.27 0 0);
+  --segment-thumb: oklch(0.26 0 0);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.97 0 0 / 40%);
+
+  /* --- element states: foreground at an alpha, so they invert for free --- */
+  --element-hover: oklch(1 0 0 / 5%);
+  --element-selected: oklch(1 0 0 / 8%);
+  --element-active: oklch(1 0 0 / 11%);
+  --element-highlight: oklch(1 0 0 / 6%);
+  --element-emphasis: oklch(1 0 0 / 16%);
+
+  /* --- status: the first of two places chroma is allowed --- */
+  --success: oklch(0.72 0.16 155);
+  --warning: oklch(0.8 0.15 78);
+  --error: oklch(0.68 0.19 22);
+  --info: oklch(0.7 0.13 232);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  /* --- hues: the second place, for identity --- */
+  --hue-grey: oklch(0.7 0.02 259);
+  --hue-indigo: oklch(0.68 0.18 259);
+  --hue-purple: oklch(0.7 0.18 300);
+  --hue-cyan: oklch(0.76 0.115 196);
+  --hue-green: oklch(0.74 0.145 155);
+  --hue-amber: oklch(0.8 0.14 74);
+  --hue-orange: oklch(0.76 0.16 48);
+  --hue-red: oklch(0.72 0.18 18);
+  --tag-bg-mix: 16%;
+  --tag-border-mix: 28%;
+
+  /* --- charts: achromatic steps; a categorical chart reaches for the hues --- */
+  --chart-1: oklch(0.97 0 0);
+  --chart-2: oklch(0.78 0 0);
+  --chart-3: oklch(0.6 0 0);
+  --chart-4: oklch(0.42 0 0);
+  --chart-5: oklch(0.28 0 0);
+
+  /* --- sidebar --- */
+  --sidebar-accent: oklch(0.15 0 0);
+
+  --glass: oklch(0.1 0 0 / 72%);
+  --scrollbar-thumb: oklch(1 0 0 / 14%);
+
+  /* --- the two shadow rungs, achromatic --- */
+  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.55);
+  --shadow-lg: 0 8px 24px oklch(0 0 0 / 0.65), 0 16px 48px oklch(0 0 0 / 0.6);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* An off-white page with pure-white cards that lift off it. */
+  --background: oklch(0.985 0 0);
+  --surface: oklch(0.975 0 0);
+  --card: oklch(1 0 0);
+  --illustration: oklch(1 0 0);
+  --surface-raised: oklch(0.962 0 0);
+  --popover: oklch(1 0 0);
+
+  --foreground: oklch(0.1 0 0);
+  --secondary-foreground: oklch(0.26 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --text-disabled: oklch(0.72 0 0);
+
+  --primary: oklch(0.1 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --primary-hover: oklch(0.24 0 0);
+
+  --secondary: oklch(0.94 0 0);
+
+  --hairline: oklch(0 0 0 / 7%);
+  --border: oklch(0 0 0 / 9%);
+  --border-strong: oklch(0 0 0 / 18%);
+  --segment-track: oklch(0.955 0 0);
+  --shell-canvas: oklch(0.935 0 0);
+  --shell-edge: oklch(0.85 0 0);
+  --segment-thumb: oklch(1 0 0);
+  --input: oklch(0 0 0 / 9%);
+  --ring: oklch(0.1 0 0 / 40%);
+
+  --element-hover: oklch(0 0 0 / 4%);
+  --element-selected: oklch(0 0 0 / 6%);
+  --element-active: oklch(0 0 0 / 9%);
+  --element-highlight: oklch(0 0 0 / 5%);
+  --element-emphasis: oklch(0 0 0 / 14%);
+
+  --success: oklch(0.55 0.15 152);
+  --warning: oklch(0.62 0.15 70);
+  --error: oklch(0.55 0.22 25);
+  --info: oklch(0.55 0.14 232);
+
+  --hue-grey: oklch(0.5 0.025 262);
+  --hue-indigo: oklch(0.55 0.2 262);
+  --hue-purple: oklch(0.55 0.2 300);
+  --hue-cyan: oklch(0.6 0.12 196);
+  --hue-green: oklch(0.58 0.15 152);
+  --hue-amber: oklch(0.66 0.15 70);
+  --hue-orange: oklch(0.62 0.17 45);
+  --hue-red: oklch(0.58 0.2 16);
+  --tag-bg-mix: 11%;
+  --tag-border-mix: 22%;
+
+  --chart-1: oklch(0.15 0 0);
+  --chart-2: oklch(0.35 0 0);
+  --chart-3: oklch(0.55 0 0);
+  --chart-4: oklch(0.7 0 0);
+  --chart-5: oklch(0.85 0 0);
+
+  --sidebar-accent: oklch(0.93 0 0);
+
+  --glass: oklch(1 0 0 / 72%);
+  --scrollbar-thumb: oklch(0 0 0 / 16%);
+
+  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.11);
+  --shadow-lg: 0 8px 24px oklch(0 0 0 / 0.14), 0 16px 48px oklch(0 0 0 / 0.1);
+}
+
+/* Tokens defined in terms of other tokens. A custom property that holds
+   `var(--x)` resolves where it is DECLARED and is inherited already
+   resolved — so if these lived only in the dark block, an element flipped
+   to `data-theme="light"` inside a dark page would inherit the dark
+   answers (white text on a white popover). Declaring them on every theme
+   scope makes each scope re-resolve them against its own base values. */
+:root,
+[data-theme="dark"],
+[data-theme="light"] {
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --primary-muted: color-mix(in oklch, var(--primary) 8%, transparent);
+  --muted: var(--surface-raised);
+  --accent: var(--secondary);
+  --accent-foreground: var(--foreground);
+  --border-illustration: var(--border);
+  --destructive: var(--error);
+  --success-muted: color-mix(in oklch, var(--success) 14%, transparent);
+  --warning-muted: color-mix(in oklch, var(--warning) 14%, transparent);
+  --error-muted: color-mix(in oklch, var(--error) 14%, transparent);
+  --info-muted: color-mix(in oklch, var(--info) 14%, transparent);
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--hairline);
+  --selection: color-mix(in oklch, var(--foreground) 22%, transparent);
+  --diff-added: var(--success-muted);
+  --diff-added-foreground: var(--success);
+  --diff-removed: var(--error-muted);
+  --diff-removed-foreground: var(--error);
+  --syntax-comment: var(--muted-foreground);
+  --syntax-keyword: var(--hue-purple);
+  --syntax-string: var(--hue-green);
+  --syntax-number: var(--hue-orange);
+  --agent-chip-foreground: var(--foreground);
+  --agent-chip-background: var(--element-selected);
+}
