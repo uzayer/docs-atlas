@@ -5,12 +5,12 @@ import { createPortal } from 'react-dom';
 import { PanelLeftIcon } from 'lucide-react';
 import { useDocsLayout } from 'fumadocs-ui/layouts/docs';
 import { Container } from 'fumadocs-ui/layouts/docs/slots/container';
-import { Breadcrumb } from 'fumadocs-ui/layouts/docs/page/slots/breadcrumb';
 import { SidebarCollapseTrigger, SidebarTrigger } from 'fumadocs-ui/components/sidebar/base';
 import { cn } from '@/lib/cn';
 import { buttonVariants } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { SearchButton } from './search-button';
+import { DocsBreadcrumb } from './docs-breadcrumb';
 
 /**
  * The layout grid, full bleed: the rail pinned to the left edge and the page
@@ -121,7 +121,7 @@ export function DocsHeader(props: React.ComponentProps<'header'>) {
               <span aria-hidden="true" className="mx-1.5 h-4 w-px bg-hairline" />
             </div>
           )}
-          <Breadcrumb className="min-w-0 flex-1 text-xs" includePage />
+          <DocsBreadcrumb className="flex-1" />
           <div ref={context?.setSlot} className="flex shrink-0 items-center gap-1.5" />
         </div>
       </div>

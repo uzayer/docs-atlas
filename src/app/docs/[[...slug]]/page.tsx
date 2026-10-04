@@ -14,6 +14,7 @@ import { gitConfig } from '@/lib/shared';
 import { buttonVariants } from '@/components/ui/button';
 import { PageFooter } from '@/components/shell/page-footer';
 import { TopBarActions } from '@/components/shell/docs-frame';
+import { DocsBreadcrumb } from '@/components/shell/docs-breadcrumb';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -50,12 +51,13 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         },
       }}
       tableOfContentPopover={{ style: 'clerk' }}
-      // From md the breadcrumb and the actions live in the top bar.
-      breadcrumb={{ className: 'text-xs md:hidden' }}
+      // The breadcrumb lives in the top bar (or, below md, above the title).
+      breadcrumb={{ enabled: false }}
       slots={{ footer: PageFooter }}
       className="md:pt-10 xl:pt-12"
     >
       <TopBarActions>{actions}</TopBarActions>
+      <DocsBreadcrumb className="md:hidden" />
       {/* A plain h1: DocsTitle hard-codes its own size, which outranks a utility. */}
       <h1 className="type-title">{page.data.title}</h1>
       <DocsDescription className="mb-0 text-md font-normal text-muted-foreground">
