@@ -5,6 +5,8 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  // Bottom-left sits on top of the sidebar's footer controls.
+  devIndicators: { position: 'bottom-right' },
   async redirects() {
     return [
       {
