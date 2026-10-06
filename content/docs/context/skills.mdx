@@ -14,9 +14,9 @@ Make a skill **global** to use it in every project, or **project** to keep it in
 
 Atlas keeps one canonical copy of each skill in the same place the skills.sh tooling uses: `~/.agents/skills` for global skills and `<project>/.agents/skills` for project skills. There is no separate Atlas store.
 
-From there, Atlas links each skill into the skill directories of the agents you enable it for: Atlas Agent, Claude Code and Codex. A registry agent is not automatically a skill target merely because it speaks ACP.
+From there, Atlas links each skill into the skill directories of the agents you enable it for. The targets are **Atlas** (that's Atlas Agent), **Claude Code** and **Codex**. A registry agent is not automatically a skill target merely because it speaks ACP.
 
-A skill that already lives in one agent's own directory shows up too. Adopt it to move it into the canonical store and share it with the others. Skills that come from Claude Code plugins are listed read-only, since their plugin manages them.
+A skill that already lives in one agent's own directory shows up too, marked **external**. Atlas lists it but leaves it where it is; there's no button to move it into the canonical store. Skills that come from Claude Code plugins are listed read-only, since their plugin manages them.
 
 Atlas installs two skills of its own into `~/.agents/skills`: `remember`, which saves a conversation to [shared memory](/docs/context/memory#save-a-conversation-with-remember), and `atlas-self-configure`, which lets an agent read and safely change your Atlas settings when you ask it to.
 

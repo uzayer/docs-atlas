@@ -18,7 +18,8 @@ The sidebar holds:
 
 - **Dashboard**, **Inbox** and **Members**
 - under **Organization**: **Timeline**, **Projects** and **Chat**
-- under **My Account**: **Usage**, **AI**, **Shared links** and **Account Settings**
+- **Quick chats** and **Recent**: your latest conversations and sessions
+- under **Account**: **My Account**, which opens to **Usage**, **AI**, **Shared links** and **Account Settings**
 
 <Screenshot
   alt="The Atlas web app with the sidebar on the left listing Dashboard, Inbox, Members, then Timeline, Projects and Chat under Organization. The main area shows the inbox with All, Unread and Mentions filters."
@@ -66,23 +67,29 @@ Open a session to read its prompts, responses, thinking, tool calls and checkpoi
 
 **Projects** lists the organization's cloud projects, the repositories Atlas is watching for the organization. Filter to **All**, **Mine** or **Restricted**.
 
-**New project** creates a cloud project from the web: give it a name and a slug. Teammates then connect their checkouts to it from the desktop app.
+**New project** creates a cloud project from the web. It opens a drawer with three steps:
 
-A project's page shows its recent activity and usage, its **Members**, its **Shared links**, and **About**: the **Repository** and **Root commit** the desktop matched it on. A restricted project is visible only to the members named on it.
+1. **New project**: a name and a slug.
+2. **Details**: an optional **Repository URL**, and **Restrict to named members**.
+3. **Review**: check it, then select **Create project**.
+
+Teammates then connect their checkouts to it from the desktop app.
+
+A project's page shows its recent activity and usage, its **Shared threads**, its **Members**, its **Shared links**, and **About**: the **Repository** and **Root commit** the desktop matched it on. A restricted project is visible only to the members named on it.
 
 ## Chat, calls and Spaces
 
 **Chat** is the same [team chat](/docs/team/chat) as the desktop app: channels, direct messages and group DMs.
 
-[Calls](/docs/team/calls) are held in the browser. When you start or join a call from the desktop app, it opens here. [Spaces](/docs/team/spaces) and [shared threads](/docs/team/shared-threads) open in the web app too.
+[Calls](/docs/team/calls) are held in the browser. When you start or join a call from the desktop app, it opens here. [Spaces](/docs/team/spaces) and [shared threads](/docs/team/shared-threads) open in the web app too. Shared threads have no sidebar item: open a project under **Projects** and look under **Shared threads**.
 
 ## Settings
 
-Organization settings are under **Members** in the sidebar, and your own under **My Account**.
+Organization settings are under **Members** in the sidebar, and your own under **Account**, **My Account**.
 
 - **Organization**: the name, logo and URL slug; members and invitations; invite links; leaving or deleting the organization. Admins change these.
 - **Usage**: what the organization has spent, per person. See [AI access & spend](/docs/team/ai-access#see-who-spent-what).
-- **AI**: the default model, which models are on, and the budget. See [AI access & spend](/docs/team/ai-access).
+- **AI**: the default model, which models are on, and the budget, which is read-only and set by your plan. See [AI access & spend](/docs/team/ai-access).
 - **Sharing**: the organization's sharing policy and every public link.
 - **Account**: your profile, sign-in methods, appearance, email notifications, an access token for scripts, and your active sessions. See [Your account](/docs/team/accounts).
 - **Privacy**: prompt capture for admins, and **Share my activity**. With it on, people in your organization see the page you have open and your latest session. With it off, they see only whether you're online and when you were last active.

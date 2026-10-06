@@ -14,14 +14,14 @@ Atlas Agent needs three things:
 
 1. **You're signed in** to your Atlas account. See [Your account](/docs/team/accounts).
 2. **Your organization is synced.** A local organization, including the "Personal" one Atlas creates for you, can't use it. See [Organizations](/docs/team/organizations).
-3. **Your organization has AI access.** An admin grants it and sets the budget. See [AI access & spend](/docs/team/ai-access).
+3. **Your organization has AI access.** Atlas grants it to the organization as a plan, and the plan sets the budget. See [AI access & spend](/docs/team/ai-access).
 
 When one is missing, the composer is disabled and a bar above it says why:
 
 | The bar says | What to do |
 | --- | --- |
 | *Organization* is local, sync it to use Atlas Agent | Select **Turn on sync**. If you're signed out, Atlas asks you to sign in first. |
-| *Organization* doesn't have AI grants | Ask an admin for AI access. **Request** opens the page where access is granted, and **Refresh** checks again. |
+| *Organization* doesn't have AI grants | Ask Atlas for AI access. **Request** opens credits.tryatlas.cc, where you ask for it, and **Refresh** checks again. |
 
 <Screenshot
   src="/screenshots/agents/atlas-agent-local-org-bar.png"
@@ -101,7 +101,12 @@ Admins can also ask for a member's activity: the sessions, checkpoints, lines ad
 
 ### Anything that reaches someone else asks first
 
-Replying to a comment or sending a message reaches another person in your name, so Atlas Agent asks before it does either. The approval card shows the recipient and the full text before you can allow it. You can allow it once, reject it, or, for a comment reply, allow replies for the rest of the session.
+Replying to a comment or sending a message reaches another person in your name, so Atlas Agent asks before it does either. The approval card shows the recipient and the full text before you can allow it.
+
+- For a comment reply, the card offers **Allow**, **Allow for this session** and **Decline**. **Allow for this session** lets later replies through without a card until the session ends.
+- For a chat message, the card offers only **Allow** and **Decline**. Every message asks, because the next one can go to someone else and say something else.
+
+**Allow** is a click. Pressing Enter doesn't send anything, so a keystroke meant for the composer can't approve a message.
 
 This holds in Bypass mode too: a message the agent tries to send without your approval is refused, and nothing is sent.
 
@@ -109,13 +114,13 @@ Resolving a comment and drawing on a Space page are visible to others and easy t
 
 <Screenshot
   src="/screenshots/agents/atlas-agent-outward-approval.png"
-  alt="An approval card above the Atlas Agent composer showing a chat message addressed to the #backend channel, its full text, and Allow once and Reject buttons."
+  alt="An approval card above the Atlas Agent composer showing a chat message addressed to the #backend channel, its full text, and Allow and Decline buttons."
   caption="You see who a message goes to, and every word of it, before it's sent."
 />
 
 ### Every call is logged
 
-Each organization action, including the ones you rejected and the ones that failed, shows in the chat and in the Logs panel. Messages appear under your name, because you approved the exact words.
+Each organization action, including the ones you declined and the ones that failed, shows in the chat and in the Logs panel. Messages appear under your name, because you approved the exact words.
 
 Turn this off with **Settings → General → Let Atlas Agent act in your organization**. A running session stops at its next call.
 

@@ -14,7 +14,7 @@ If Atlas Agent can't run, a bar above its composer says why, and the composer st
 
 **The organization is local.** The bar names your organization and says it is local. The gateway can't bill an organization that only exists on your machine. Select **Turn on sync** on the bar, or switch to a synced organization. Signed out, the button starts sign-in first.
 
-**The organization doesn't have AI grants.** The organization is synced but has no AI access yet. There is no setting you can change to fix this; access has to be granted. Select **Request** to ask for it, then **Refresh** to check again once it's granted.
+**The organization doesn't have AI grants.** The organization is synced but has no AI access yet. There is no setting you can change to fix this; access has to be granted. Select **Request** to open credits.tryatlas.cc and ask Atlas for it, then **Refresh** to check again once it's granted.
 
 <Screenshot
   src="/screenshots/team/ai-access-grant-bar.png"
@@ -26,7 +26,7 @@ Atlas only shows the second bar when the gateway explicitly says there is no gra
 
 ## Who grants AI access
 
-Atlas grants AI access to an organization as a plan: a monthly budget, optionally a daily one, and the models it covers. Access is off until a plan exists. **Request** on the composer bar opens the page where you ask Atlas for one.
+Atlas grants AI access to an organization as a plan: a monthly budget, optionally a daily one, and the models it covers. Access is off until a plan exists. **Request** on the composer bar opens credits.tryatlas.cc, where you ask Atlas for one.
 
 Within the plan, an organization's admins decide how it is used, in the web app under **AI**:
 
@@ -39,22 +39,22 @@ In the desktop app, Atlas Agent's model picker offers only the models your organ
 
 ## Budgets and per-person caps
 
-The organization's budget is shown under **Limits** on the **AI** page, as **Monthly budget** and **Daily budget**. When the organization reaches a cap, Atlas stops accepting new requests until it resets.
+The organization's budget is shown under **Limits** on the **AI** page, as **Monthly budget** and **Daily budget**. Both read **Set by your plan**: nobody in the organization can change them in the web app, admins included. When the organization reaches a cap, Atlas stops accepting new requests until it resets.
 
-A plan can also carry a cap for one member: a ceiling on that person's spend inside the organization's budget. It is a second limit, not a second wallet. Their spend still counts against the organization. A member with a cap sees it on their **Usage** page as **Your monthly cap** or **Your daily cap**.
+A plan can also carry a cap for one member: a ceiling on that person's spend inside the organization's budget. It is a second limit, not a second wallet. Their spend still counts against the organization. Only Atlas staff can set a per-person cap, so an admin who wants one asks Atlas. A member with a cap sees it on their **Usage** page as **Your monthly cap** or **Your daily cap**.
 
 ## See who spent what
 
-The web app's **Usage** page shows what the organization has spent over the last day, 7 days or 30 days. It keeps two figures apart:
+The web app's **Usage** page shows what the organization has spent over **1d**, **7d** or **30d**. It keeps two figures apart:
 
 - **Measured**: spend through the Atlas gateway, billed by Atlas. This is Atlas Agent and Atlas's own AI features.
 - **Estimated**: your recorded sessions priced at list rates. These are agents running on people's own subscriptions and keys, which Atlas never bills.
 
-Below the figures are daily spend, the budget, and a **By member** table with each person's measured spend, estimated spend and session count.
+Beside them are **Sessions** and **Daily spend**. Daily spend is a single number, the average per day over the range, with a small sparkline of the days in the range. There is no daily chart. Below the figures are the budget and a **By member** table with each person's measured spend, estimated spend and session count.
 
-Admins see the whole organization and every member's share. Everyone else sees only their own figures. Per-person spend is there so an admin can decide whether someone needs a cap.
+Admins see the whole organization and every member's share. Everyone else sees only their own figures. Per-person spend is there so an admin can decide whether to ask Atlas for a cap on someone.
 
-The desktop app's [Usage](/docs/context/usage) tab is different: it reports what was recorded on your machine, across every agent.
+The desktop app's [Usage](/docs/context/usage) tab is different: it reports what was recorded on your machine, across every agent, over **7d**, **30d**, **90d**, **All** or a custom range.
 
 ## Your prompts
 

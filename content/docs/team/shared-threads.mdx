@@ -7,10 +7,16 @@ status: in-progress
 
 A shared thread is one piece of work that several people and several agents carry out together, at the same time. You share the changes you are working on, teammates join, and from then on everyone types into the same files and runs agents against them. Each agent turn merges back into the shared state, and overlapping edits become conflicts you resolve together.
 
-The thread view in the [web app](/docs/team/web-app) is live today: you can watch a thread, resolve conflicts, compare and restore versions, comment on lines, and ask a teammate's agent to run a prompt. Sharing a thread from your checkout, typing into it and running agents in it are arriving in the desktop app.
+The thread view in the [web app](/docs/team/web-app) is live today: you can watch a thread, resolve conflicts, compare and restore versions, comment on lines, and ask a teammate's agent to run a prompt. Sharing a thread from your checkout, typing into it, running agents in it and managing who is in it are arriving in the desktop app. The web app can't create a thread, and it has no owner controls.
+
+## Open a thread in the web app
+
+There is no **Shared threads** item in the web app's sidebar. Go to **Projects**, open a project, and find its threads under **Shared threads**. Select one to open it.
+
+The thread view shows **Here now**, the people connected to the thread, beside the Runs in flight, the files changed and any open conflicts.
 
 <Screenshot
-  alt="A shared thread in the web app, with cards for who is here now, runs in flight, files changed with a diff, and an open conflict."
+  alt="A shared thread in the web app, with cards for Here now, Runs in flight, files changed with a diff, and an open conflict."
   caption="A shared thread in the web app."
 />
 
@@ -94,13 +100,16 @@ To ask, use **Ask a teammate's agent** in the web app (or the Remote Runs sectio
 
 On the teammate's side, a Remote Run needs every one of these:
 
-1. Remote Runs enabled for your organization and allowed for the project by an organization admin. Both are off by default.
-2. The teammate turns on **Accept Remote Runs** for the thread, offering the agents on their machine.
-3. The teammate approves the request. The dialog shows who is asking, the thread, the exact prompt, the agent and who pays. It declines itself after 60 seconds. Ticking **Always approve this person in this thread** skips the dialog for that one person, in that one thread, until it closes.
+1. Remote Runs turned on for your organization by Atlas. This is a feature flag, `threads.remote_run`, that only Atlas staff can enable. An organization admin can't turn it on. Ask Atlas if you want it.
+2. Remote Runs allowed for the project by an organization admin. This is off by default.
+3. The teammate turns on **Accept Remote Runs** for the thread, offering the agents on their machine.
+4. The teammate approves the request. The dialog shows who is asking, the thread, the exact prompt, the agent and who pays. It declines itself after 60 seconds. Ticking **Always approve this person in this thread** skips the dialog for that one person, in that one thread, until it closes.
 
 Every request, approval, decline and run is recorded on the thread.
 
 ## Manage and close a thread
+
+This is arriving in the desktop app. The web app has none of these controls.
 
 The thread's owner can approve or decline join requests, turn join approval on or off, change each person's role (participant or viewer), and close or reopen the thread. An organization admin can also close it. Viewers and everyone in a closed thread are read-only.
 
