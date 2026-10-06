@@ -1,45 +1,92 @@
 ---
 title: Quickstart
-description: From opening a folder to your first checkpoint.
+description: From install to your first session on the team timeline.
 ---
 
-Atlas has no setup wizard. You open a folder, and you're working.
+This page takes you from a fresh install to a session your teammates can read. The first half works on your own, with no account. The second half connects you to your team.
 
-## Open a project
+## 1. Install Atlas
 
-Press <Kbd>⌘O</Kbd> or click **Open Folder**, and pick a folder on disk. That folder becomes a [project](/docs/getting-started/concepts#project), and Atlas doesn't ask you to configure anything first: no prompts, no trust dialog.
+Download Atlas for macOS, Windows or Linux and open it. See [Install](/docs/getting-started/install) for the details per platform.
 
-The next time you launch Atlas, that project shows up in the recent-projects list on the welcome screen.
+## 2. Add a project
 
-Atlas doesn't create a `.atlas/` directory up front, either. Each feature (memory, knowledge base, canvases, and the rest) creates its own piece of it the first time you use that feature. The one thing that happens automatically is quiet: Atlas adds `.atlas/` to your project's `.gitignore` if it isn't already there.
+Press <Kbd>⌘⇧N</Kbd> (**Add project…**) or select **Open Folder** on the welcome screen, then pick a folder. That folder becomes a [project](/docs/getting-started/concepts#project) in the sidebar. Atlas asks you to configure nothing first.
 
-## Pick an agent
+You can also add projects from the **+** beside the organisation name in the sidebar, which lists your recent projects. On macOS, `atlas .` from a terminal opens the current folder (see [Install](/docs/getting-started/install)).
 
-Atlas opens on a chat panel with Atlas Agent ready to use. Click the agent icon in the composer to switch to anything else you have installed from the ACP registry.
+Atlas keeps its per-project data in a `.atlas/` directory and adds `.atlas/` to the project's `.gitignore` for you.
 
-You can also press `⌥/` to cycle through them without touching the mouse. Each one is an [agent](/docs/getting-started/concepts#agent) driven the same way, against the same project.
+## 3. Add an agent
 
-Open **Settings → Agents** to install an external agent. The composer also offers several popular registry entries as one-click installs. Both routes create the same registry-backed installation; Atlas does not ship a separate built-in copy of any external agent.
+Press <Kbd>⌘T</Kbd> to open an agent chat. Select the agent icon in the composer to pick an agent.
 
-The connected agent tells Atlas which sign-in methods, models, modes, and other controls it supports. Use the repository or website on its registry card when setup is specific to that agent.
+A fresh install comes with Atlas Agent only, and Atlas Agent needs a synced organisation (step 7). To start right away, install an agent from the [ACP registry](/docs/agents/registry): the agent picker offers popular ones such as Claude Code, Codex, OpenCode and Cursor as one-click installs, and **Settings → Agents** lists the full registry.
 
-## Turn on session capture
+The agent you install tells Atlas how it signs in. Follow its prompt, or the instructions on its registry card.
 
-Select the project name in the title bar, keep **Local**, and select **Enable**. This is the one switch Atlas asks for. It records the project's agent work on this machine and imports your earlier Claude Code sessions. See [Session capture](/docs/source-control/capture).
+Press <Kbd>⌥/</Kbd> to cycle through your installed agents without leaving the keyboard.
 
-## Run a session
+<Screenshot
+  alt="The agent picker open above the chat composer, listing installed agents and one-click installs for popular registry agents."
+  caption="Install a popular agent straight from the picker."
+/>
 
-Send a message. That conversation is a [session](/docs/getting-started/concepts#session), recorded and resumable later from the same panel.
+## 4. Turn on session capture
 
-When the agent edits files and commits, you don't have to do anything to preserve the context behind that commit. With capture on, Atlas links the commit back to the session that produced it.
+Select the project name in the title bar, or press <Kbd>⌘⌥C</Kbd>, to open **Session capture**. Under **Where sessions are stored**, keep **Local** and select **Enable**.
 
-## See the checkpoint
+Local capture records the project's agent work on this machine, with no account and no network. It also brings in the Claude Code sessions you already ran in this folder. See [Session capture](/docs/source-control/capture).
 
-That link is a [checkpoint](/docs/getting-started/concepts#checkpoint). Open the Git panel and select the commit: it shows "Produced by 1 session," and clicking it jumps back into the session in your [timeline](/docs/getting-started/concepts#timeline).
+## 5. Run a session
 
-The timeline header also has a Recent Checkpoints list you can search directly.
+Send the agent a message. That conversation is a [session](/docs/getting-started/concepts#session), recorded as it happens and resumable later from your chat history.
+
+When the agent's changes are committed, by the agent, by you in Atlas, or from a terminal, Atlas links the commit back to the session. You don't do anything extra.
+
+## 6. See the checkpoint
+
+That link is a [checkpoint](/docs/getting-started/concepts#checkpoint). Open Source Control (<Kbd>⌘⇧B</Kbd>), go to **History** and select the commit. It shows **Produced by 1 session**, and selecting the session opens it in the [timeline](/docs/team/timeline).
+
+<Screenshot
+  alt="A commit selected in the Source Control History tab, with a Produced by 1 session row listing the session's title."
+  caption="Every commit shows the sessions that produced it."
+/>
+
+## 7. Sign in and join your organisation
+
+Select **Sign In** from the account control in the title bar. Atlas opens your browser; approve the device there and come back. See [Your account](/docs/team/accounts).
+
+Then get into a synced [organisation](/docs/team/organisations):
+
+- **Start one.** Open the organisation switcher at the top of the sidebar, select **Create organisation…** and choose **Cloud**. Or select **Turn on sync for Personal…** to sync the local organisation Atlas made for you.
+- **Join one.** Accept the invitation a teammate sent you. The organisation then appears in the switcher.
+
+A synced organisation turns on team chat, the shared timeline, Cloud capture and Atlas Agent. If the composer says your organisation doesn't have AI grants, an admin has to give it AI access first. See [AI access & spend](/docs/team/ai-access).
+
+## 8. Make the project Cloud
+
+Open **Session capture** again (<Kbd>⌘⌥C</Kbd>). Beside **Local**, select **Sync** to open **Promote to Cloud**.
+
+- **Create** publishes the project to your organisation under a slug you choose. Leave **Restrict to named members** off to let every member read it.
+- **Connect** joins a project a teammate already published from their copy of the same repository.
+
+Select **Continue**. Atlas shows exactly what it will send, how many sessions, from when, and how many secrets it redacted, before anything leaves your machine. Confirm to finish.
+
+<Screenshot
+  alt="The Promote to Cloud confirmation in the session capture popover, listing the session count, the date range and the number of secrets redacted."
+  caption="You see what will be shared before anything is sent."
+/>
+
+## 9. See it on the team timeline
+
+Select **Timeline** at the top of the sidebar. Your sessions now sit beside your teammates', each with its author. Live sessions are flagged while their agent is still working, and anyone in the organisation can comment on a session, a message, a tool call or a checkpoint.
+
+Your teammates see the same board in their Atlas and in the web app at [app.tryatlas.cc](https://app.tryatlas.cc). See [Timeline](/docs/team/timeline).
 
 ## Next
 
-- [Power user](/docs/product/power-user): shortcuts and `@` mentions for moving faster
+- [Atlas Agent](/docs/agents/atlas-agent): the agent that can read and act in your organisation
+- [Team overview](/docs/team): chat, calls, prompt drafts and Spaces
 - [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once
+- [Power user](/docs/product/power-user): shortcuts and `@` mentions

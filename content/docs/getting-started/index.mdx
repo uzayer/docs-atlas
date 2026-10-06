@@ -1,30 +1,42 @@
 ---
 title: Welcome to Atlas
-description: How it works and how to get started
+description: The shared record of how your team builds software with agents.
 ---
 
-Atlas is source control for coding agents, and the IDE where you manage their context. You open a [project](/docs/getting-started/concepts#project) and run Atlas Agent or install an external agent from the [ACP registry](/docs/agents/registry).
+Atlas is where a team builds software with coding agents, together and on the record. Every agent session your team runs is recorded, linked to the commits it produced, and shared on one timeline. The conversation about that work sits right next to it.
 
-Atlas is the harness around all of them. Every agent uses the same chat surface and project, while the controls and integrations available in a session come from the capabilities that agent advertises. With session capture on, Atlas records the work and can link its commits back to the session that produced them.
+It starts on your own machine. Atlas is a desktop app that runs Claude Code, Codex, Cursor, OpenCode, any other agent in the [ACP registry](/docs/agents/registry), and its own [Atlas Agent](/docs/agents/atlas-agent), all against the same project and through the same chat.
+
+<Screenshot
+  alt="The Atlas window with an agent chat open in the centre, the project rail on the left and the team timeline listing recent sessions."
+  caption="An agent session in Atlas, with the team's recent sessions beside it."
+/>
+
+## Why a shared record
+
+Agents made writing code cheap. Understanding it did not get cheaper: why a change exists, who asked for it, and what the agent was told.
+
+On a team, those answers sit in sessions on everyone's laptops. `git blame` gives you the name of whoever accepted the change, not the prompt behind it. Atlas keeps that prompt, the agent's reasoning and its tool calls, and ties them to the commit.
 
 ## How it works
 
-You open a project, turn on [session capture](/docs/source-control/capture), and run a session. After that:
+1. **Run the agent you want.** Install agents from the registry, or use Atlas Agent once your organisation is synced and has AI access. Every agent works in the same [project](/docs/getting-started/concepts#project).
+2. **Atlas records the session.** With [session capture](/docs/source-control/capture) on, Atlas records every prompt, response, tool call and file change, and redacts secrets on your machine before anything is stored.
+3. **Commits become checkpoints.** Atlas watches your repository and links each commit to the [session](/docs/getting-started/concepts#session) that produced it. That link is a [checkpoint](/docs/getting-started/concepts#checkpoint), and it survives amends and rebases.
+4. **Your team sees the work.** Switch a project's capture to **Cloud** and its sessions join your organisation's [timeline](/docs/team/timeline), where teammates can read them, comment on them and see who is working live.
+5. **The conversation sits beside it.** [Team chat](/docs/team/chat), calls, co-written [prompt drafts](/docs/team/prompt-drafts) and [Spaces](/docs/team/spaces) keep the discussion next to the sessions it is about.
+6. **Atlas Agent knows your organisation.** It can tell you what a teammate is working on, reply to comments on a session, or post a session report to a channel. Anything that reaches another person asks you first.
 
-1. **Run the agent you want.** Use Atlas Agent immediately, or install an agent from the registry and run it against the same codebase.
-2. **Agent commits become checkpoints.** Atlas links a qualifying commit back to the [session](/docs/getting-started/concepts#session) that produced it, keeping prompts, tool calls, and reasoning together. One session can produce several commits, and each gets its own checkpoint.
-3. **Share context across capable agents.** Agents with HTTP MCP support can search and update the same [memory](/docs/context/memory), so they can pick up decisions and failures from earlier sessions.
-4. **You decide what an agent sees.** The [knowledge base](/docs/context/knowledge-base), [skills](/docs/context/skills), and `@` mentions put the right context in front of any agent, without pasting it in.
-5. **The workspace is part of the record.** Atlas is also an editor, terminal, and git client, so the record covers the planning and manual changes around a commit, not just the diff.
-6. **Your timeline is the through-line.** Captured sessions and [checkpoints](/docs/getting-started/concepts#checkpoint), across the projects in your organisation, stay in one queryable record.
+## What you need
 
-## What you need to do
+Atlas itself needs no account. Install it, open a project, and turn on capture to keep a local record on your machine.
 
-[Install Atlas](/docs/getting-started/install), open a project, turn on session capture, and run a session. Capture is one click and needs no account.
+Sign in when you want your team: a synced [organisation](/docs/team/organisations) unlocks the shared timeline, team chat, Cloud capture and Atlas Agent.
 
 <InstallButtons compact />
 
 <Cards>
-  <Card title="Quickstart" href="/docs/getting-started/quickstart" description="Open a project and run your first session." />
+  <Card title="Quickstart" href="/docs/getting-started/quickstart" description="From install to your first session on the team timeline." />
   <Card title="Concepts" href="/docs/getting-started/concepts" description="Every term used across these docs, defined once." />
+  <Card title="Team overview" href="/docs/team" description="What changes when your organisation is synced." />
 </Cards>

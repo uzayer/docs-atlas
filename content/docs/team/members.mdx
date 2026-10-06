@@ -1,40 +1,90 @@
 ---
 title: Members & roles
-description: Invite teammates and manage organisation access.
+description: Invite teammates by email or with an invite link, and decide what each person can do.
 icon: ShieldCheck
 ---
 
-Manage people in a cloud [organisation](/docs/team/organisations) while signed in. Open the organisation switcher and select **Invite & Manage members**.
+Members belong to a synced [organisation](/docs/team/organisations). A local organisation has no members; turn on sync first.
 
-Local organisations cannot have members. Sign in or turn on sync first when Atlas asks you to.
+Open the members manager from **Members** in the rail, or from **Invite & Manage members** in the organisation switcher. In the [web app](/docs/team/web-app), select **Members** in the sidebar.
 
-## Invite a teammate
+The manager has two tabs. **Members** lists everyone who has joined, with their role and when they joined. **Invitations** lists invitations that haven't been accepted yet.
 
-Admins can add one or more email addresses, choose a role, and select **Invite**. Atlas sends each invitation separately, so one failure does not block the rest.
+<Screenshot
+  alt="The members manager in the desktop app. An invite bar at the top holds an email field, a role picker set to Member, and an Invite button. Below are the Members and Invitations tabs and a list of members with their roles and join dates."
+  caption="The members manager, opened from Members in the rail."
+/>
 
-<Callout type="warn">
-  Atlas does not send invitation emails yet. It copies each acceptance link to your clipboard. Send that link to your teammate, and cancel then recreate the invitation if you lose it.
-</Callout>
+## Roles
 
-Use the **Invitations** tab to see or cancel outstanding invites. The **Members** tab shows every joined member, their role, and when they joined.
+Every member has one of four roles. The person who creates the organisation is an Admin.
 
-## Choose a role
+| Role | What it can do today |
+| --- | --- |
+| **Admin** | Everything a member can, plus invite people, change roles, remove members, manage invite links, rename the organisation, choose its AI models, see everyone's usage, set the sharing policy, and delete the organisation. |
+| **Product Owner** | The same access as Member. |
+| **Developer** | The same access as Member. |
+| **Member** | Read the timeline, sync sessions to the cloud projects they can see, comment, and use chat, calls, prompt drafts and Spaces. |
 
-Atlas has four roles: **Admin**, **Product Owner**, **Developer**, and **Member**. The person who creates an organisation is its admin.
+Today, Admin is the only role that changes what someone can do. Product Owner, Developer and Member are labels you can use to describe someone's part in the team.
 
-Only Admin currently changes desktop-app permissions. Admins can invite people, change roles, cancel invites, remove members, see invitations, and delete the organisation server-side. The other three roles can open the organisation and view the roster.
+An admin does not get a key to everybody's conversations. Private channels and direct messages stay readable only by the people in them, admins included.
 
-Change a role from the member row's **⋯** menu. The update is immediate for you; the other person receives it when their client next refreshes its token.
+### The owner
+
+The person who created the organisation is also its **Owner**. The owner:
+
+- can't be removed and can't leave the organisation
+- is the only person who can permanently delete recorded sessions, either one session at a time or all of one member's sessions
+
+Ownership can't be transferred. The web app marks the owner with an **Owner** tag in the members list.
+
+## Invite people by email
+
+Only admins can invite.
+
+1. Open the members manager.
+2. Type one or more email addresses into the invite bar. A comma, or Enter, turns each address into a chip.
+3. Choose a role from the picker beside the addresses.
+4. Select **Invite**.
+
+Atlas emails each person an invitation with a link to accept it. The link expires after 48 hours. Atlas sends invitations one at a time, so a bad address doesn't stop the rest. The desktop app also copies the acceptance links to your clipboard, in case you'd rather send them yourself.
+
+On the **Invitations** tab, select **Copy invite link** to copy an invitation's link again, or **Cancel invite** to withdraw it. In the web app, an admin can also **Resend invite**.
+
+## Share an invite link
+
+An invite link lets several people join without inviting each of them by address. Create one in the web app, in the organisation settings under **Invite links**:
+
+1. Select **New link**.
+2. Choose what people join as under **Joins as**: Member, Developer or Product Owner. A link never makes anybody an admin.
+3. Choose **Uses**: 1, 5, 10, 25 or no limit. Each person who joins uses one.
+4. Choose **Expires after**: 1 hour, 1 day, 7 days, 30 days, or never.
+5. Optionally, list domains under **Only these email domains**, so a forwarded link doesn't work for anybody outside your company.
+6. Select **Create link**. The link is copied to your clipboard.
+
+Anyone with the link opens it in a browser, signs in, and selects **Join &lt;organisation&gt;**. A link that has expired, been revoked or been used up says so, and asks them to get a new one.
+
+To stop a link working, select **Revoke**. People who already joined with it stay.
+
+## Change a role
+
+Admins change a role from the **⋯** menu on a member's row, under **Role**. In the web app it's **Change role…**.
+
+The change takes effect for you at once. The other person picks it up when their app next refreshes its sign-in, within a few minutes.
 
 ## Remove a member
 
-Admins can remove another member from the **⋯** menu. To remove yourself, choose **Leave organisation**.
+Admins remove a member from the **⋯** menu with **Remove from organisation**. Their recorded sessions stay on the timeline, shown as **Former member**. The owner can delete them if they should go too.
 
-<Callout type="warn">
-  An admin must give another person the Admin role before leaving. This prevents an organisation from losing its last administrator.
-</Callout>
+## Leave an organisation
+
+Leave from the web app: open the organisation settings and select **Leave** under **Danger zone**. You lose access until somebody invites you back.
+
+The owner can't leave. In the desktop app, an admin can't leave either until they give someone else the Admin role, so the organisation never loses its last admin.
 
 ## Next
 
 - [Organisations](/docs/team/organisations): manage the organisation itself
-- [Your account](/docs/team/accounts): sign in to Atlas
+- [Timeline](/docs/team/timeline): what members can see
+- [AI access & spend](/docs/team/ai-access): usage per person

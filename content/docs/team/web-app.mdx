@@ -1,9 +1,123 @@
 ---
 title: Web app
-description: Your organisation's timeline, chat and settings in the browser.
+description: Your organisation's inbox, timeline, projects, chat and settings in the browser, plus share links, invite links and device sign-in.
 icon: Globe
 ---
 
-{/* TODO(phase-2): Routes: inbox, dashboard, timeline, projects, threads, chat, settings (members, invite links, AI, usage, privacy, sharing). Public /s share links, /join invite links, /device sign-in approval. */}
+The web app at [app.tryatlas.cc](https://app.tryatlas.cc) shows your synced [organisation](/docs/team/organisations) in a browser. It reads the same record the desktop app writes: every session synced to a cloud project, every comment, every conversation. It doesn't run agents.
 
-The web app at app.tryatlas.cc shows your organisation without the desktop: the inbox, a dashboard, the timeline with every recorded session, chat, calls and Spaces, and the organisation's settings. Share links and invite links open here too.
+Use it to catch up without opening the desktop app, to manage the organisation, or to bring in teammates who don't write code with agents themselves.
+
+## Sign in
+
+Sign in with **Continue with Google** or **Continue with GitHub**, using the same account as the desktop app. You land on your inbox.
+
+If you belong to several organisations, switch between them from the switcher at the top of the sidebar, or press <Kbd>1</Kbd> to <Kbd>9</Kbd>. Press <Kbd>⌘K</Kbd> to jump to anything, and <Kbd>?</Kbd> for every keyboard shortcut.
+
+The sidebar holds:
+
+- **Dashboard**, **Inbox** and **Members**
+- under **Organization**: **Timeline**, **Projects** and **Chat**
+- under **My Account**: **Usage**, **AI**, **Shared links** and **Account Settings**
+
+<Screenshot
+  alt="The Atlas web app with the sidebar on the left listing Dashboard, Inbox, Members, then Timeline, Projects and Chat under Organization. The main area shows the inbox with All, Unread and Mentions filters."
+  caption="The web app's inbox, where you land after signing in."
+/>
+
+## Inbox
+
+The inbox collects what needs you: someone mentioned you in a comment, replied to you, or commented on a session you recorded. Filter it to **All**, **Unread** or **Mentions**, and use **Mark all as read** to clear it. Select a notification to open the session at the comment.
+
+### Email notifications
+
+When you're away, Atlas batches notifications into one email every few minutes. Choose what it sends in **Account Settings**, under **Email notifications**:
+
+- **Mentions** in a channel
+- **Direct messages**, including groups you are in
+- **Missed calls** you were rung for
+- **Comments on sessions**: mentions, replies and comments on your sessions
+
+**Email me** turns all of it off or on at once. **Quiet hours** holds email overnight and sends it in the morning.
+
+## Dashboard
+
+The dashboard is a summary of the organisation over the last 24 hours, 7 days or 30 days:
+
+- usage figures for the range
+- **Activity**: sessions, checkpoints and people across the organisation, updating live
+- **Members**: who is in the organisation and who is online, with a quick way for admins to invite
+- **Recent sessions**: running sessions first, then the rest, newest first
+
+## Timeline
+
+The web timeline is the same board as the desktop [timeline](/docs/team/timeline), across every cloud project you can read. Narrow it with **Project**, **Agent** and **People**.
+
+Search goes deeper here than on the desktop. Press <Kbd>/</Kbd> or type in **Search sessions…** to search titles, prompts, responses, tool calls and checkpoints. While searching, **When** limits results to the past day, week, month or 3 months, and **Kind** limits them to one kind of match.
+
+Open a session to read its prompts, responses, thinking, tool calls and checkpoints, and to read and add comments. From a session you can also share it. The organisation's owner can delete a session from here, which erases it for everyone.
+
+<Screenshot
+  alt="The web app's Timeline with Project, Agent and People filters at the top and a list of sessions from several teammates, one marked as live."
+  caption="The timeline in the web app."
+/>
+
+## Projects
+
+**Projects** lists the organisation's cloud projects, the repositories Atlas is watching for the organisation. Filter to **All**, **Mine** or **Restricted**.
+
+**New project** creates a cloud project from the web: give it a name and a slug. Teammates then connect their checkouts to it from the desktop app.
+
+A project's page shows its recent activity and usage, its **Members**, its **Shared links**, and **About**: the **Repository** and **Root commit** the desktop matched it on. A restricted project is visible only to the members named on it.
+
+## Chat, calls and Spaces
+
+**Chat** is the same [team chat](/docs/team/chat) as the desktop app: channels, direct messages and group DMs.
+
+[Calls](/docs/team/calls) are held in the browser. When you start or join a call from the desktop app, it opens here. [Spaces](/docs/team/spaces) and [shared threads](/docs/team/shared-threads) open in the web app too.
+
+## Settings
+
+Organisation settings are under **Members** in the sidebar, and your own under **My Account**.
+
+- **Organization**: the name, logo and URL slug; members and invitations; invite links; leaving or deleting the organisation. Admins change these.
+- **Usage**: what the organisation has spent, per person. See [AI access & spend](/docs/team/ai-access#see-who-spent-what).
+- **AI**: the default model, which models are on, and the budget. See [AI access & spend](/docs/team/ai-access).
+- **Sharing**: the organisation's sharing policy and every public link.
+- **Account**: your profile, sign-in methods, appearance, email notifications, an access token for scripts, and your active sessions. See [Your account](/docs/team/accounts).
+- **Privacy**: prompt capture for admins, and **Share my activity**. With it on, people in your organisation see the page you have open and your latest session. With it off, they see only whether you're online and when you were last active.
+
+## Share a session publicly
+
+Open a session and select **Share session**. Choose who it is for:
+
+- **Atlas org** copies a link to the session in the web app. Only members of the organisation can open it.
+- **Anyone** creates a public link to a read-only copy of the session.
+
+A public link can carry a password, and you decide whether guests may comment. People who open it see "Shared from &lt;organisation&gt;", and can comment if you allowed it and they give a name. From the share panel you can copy the link or send it as an email, a GitHub or X post, a Markdown link or an embed. Stop sharing at any time; the link closes at once.
+
+Share a whole project the same way with **Share project** on its page.
+
+Admins set the rules in **Sharing**, under **Policy**:
+
+- **Allow public share links**: whether members can publish public links at all.
+- **Require a password**: every new public link needs one.
+- **Allow guest comments**: people without an account can comment on a link whose owner allows it.
+
+**Shared links** lists every public link: admins see the whole organisation's, everyone else the ones they created.
+
+## Join with an invite link
+
+An invite link opens a **Join** page in the web app. Sign in, then select **Join &lt;organisation&gt;**. If the link has expired, been revoked or been used up, the page says so. Admins create invite links; see [Share an invite link](/docs/team/members#share-an-invite-link).
+
+An email invitation works the same way: its link opens the web app, where you accept it.
+
+## Approve a desktop sign-in
+
+When you sign in from the desktop app, it opens the **Connect desktop** page here. Sign in if asked, paste the code from the desktop app into **Device code**, and select **Approve**. Select **Deny** if you didn't start the sign-in. See [Your account](/docs/team/accounts#sign-in-from-the-desktop-app).
+
+## Next
+
+- [Timeline](/docs/team/timeline): the same record in the desktop app
+- [Members & roles](/docs/team/members): invite people
+- [AI access & spend](/docs/team/ai-access): budgets and usage

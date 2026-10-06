@@ -4,6 +4,68 @@ description: A shared canvas attached to a conversation.
 icon: Frame
 ---
 
-{/* TODO(phase-2): Pages, nodes, edges, media, cursors, follow, who can read a Space, agent writes. Disambiguate from the local project canvas, which the module list also labels Spaces. */}
+Every [team chat](/docs/team/chat) conversation has a Space: a canvas of pages that everyone in the conversation edits together, live. Use it to sketch an architecture, plan a release, or lay out a bug's moving parts while you talk about it.
 
-A Space is a page-based canvas that belongs to a conversation. Everyone in the conversation sees the same pages live, with cursors and follow mode, and Atlas Agent can draw diagrams onto a page.
+Atlas Agent can draw on a Space too, so you can ask it to turn a session or a discussion into a diagram the whole conversation can see and edit.
+
+<Callout type="info">
+Not to be confused with the project canvas. The new-tab menu and the command palette list a **Spaces** entry that opens a canvas saved inside the current project (`.atlas/canvas.json`). That board is local to your machine and not shared. This page is about the conversation Space.
+</Callout>
+
+<Screenshot
+  alt="A conversation's Space open as a center tab, with sticky notes and shapes connected by arrows, a pages sidebar on the left, and a teammate's named cursor on the canvas."
+  caption="A Space opens as a tab in the center of the window."
+/>
+
+## Open a Space
+
+1. Open a conversation in team chat.
+2. Click **Spaces** at the right of the tab strip under the conversation header.
+
+The Space opens as a center tab named after the conversation. In the web app it is at `app.tryatlas.cc/space/…`; click **Open in web** in the Space's header to go there.
+
+Only the members of the conversation can open its Space.
+
+## Draw
+
+The toolbar holds the things you can place:
+
+- **Note**: a card with a title and a body
+- **Text**: a free text box
+- **Group frame**: a frame that holds other nodes
+- **Shapes**: rectangle, ellipse, diamond and triangle
+- **Insert image or video**: PNG, JPEG, GIF, WebP, MP4 or WebM. You can also drop or paste images onto the canvas.
+
+Drag from a node's handle to another node to connect them. Undo with <Kbd>⌘Z</Kbd> and redo with <Kbd>⌘⇧Z</Kbd>. Use the dock buttons to move the toolbar to the left or the bottom.
+
+Every change is shared as you make it. If the connection drops, your edits are kept and sent when the Space is back.
+
+## Pages and folders
+
+A Space holds as many pages as you need. Use the pages sidebar to add a **New page** or a **New folder**, rename pages, nest them, and switch between them. The last page of a Space can't be deleted.
+
+## Work with others
+
+Each person on the page shows as an avatar in the header, and their cursor shows on the canvas with their name.
+
+Click a teammate's avatar to follow them: your view moves with theirs. Press <Kbd>Esc</Kbd> to stop.
+
+In the web app you can also start a voice call inside the Space. See [Calls](/docs/team/calls#calls-in-drafts-and-spaces).
+
+## Export
+
+Click **Export canvas** in the Space's header to save the current page as PNG, JPEG, SVG or PDF.
+
+## Let Atlas Agent draw
+
+[Atlas Agent](/docs/agents/atlas-agent) can create a page in a conversation's Space and draw a diagram onto it: notes, text, shapes and groups, connected by edges and laid out for you. Ask in plain words, for example "draw the sync flow from this session as a diagram in the #backend Space".
+
+- Turn on **Let Atlas Agent act in your organisation** in Settings first.
+- You must be a member of the conversation.
+- A write replaces everything on that page, so ask for a new page when you want to keep what is there.
+- Drawing doesn't ask for approval, because it reaches no one and anyone in the conversation can see, change or undo it. Like every organisation action, it is recorded in the Logs panel.
+
+## Next
+
+- [Team chat](/docs/team/chat): the conversations Spaces belong to
+- [Atlas Agent](/docs/agents/atlas-agent): what else it can do in your organisation

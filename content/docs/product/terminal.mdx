@@ -8,6 +8,8 @@ Atlas groups each command and its output into a block, so you can read a termina
 
 Press <Kbd>⌘J</Kbd> to show the terminal panel or <Kbd>⌘⇧T</Kbd> to open a terminal tab. From the [file tree](/docs/product/explorer), choose **Open in Terminal** to start in a specific folder.
 
+<Screenshot alt="A terminal tab showing three command blocks, each with its command, output and exit status, and the input line at the bottom showing the current branch." caption="Command blocks in the terminal." />
+
 ## Work with blocks
 
 Collapse, copy, search, or rerun any block. Finished blocks show their exit status. Click file paths to open them in Atlas or your system file manager, and click URLs to open them in your browser.
@@ -22,7 +24,27 @@ While a command runs, the input sends it stdin. Full-screen programs switch to a
 
 ## Stop or split work
 
-Stop sends an interrupt first, then offers a force stop if the command remains active. Split a terminal tab horizontally or vertically to run independent shells.
+Stop sends an interrupt first, then offers a force stop if the command remains active.
+
+Split a terminal tab into panes to run independent shells side by side. These shortcuts work while the terminal has focus:
+
+| Shortcut | Action |
+| --- | --- |
+| <Kbd>⌘D</Kbd> | Split right |
+| <Kbd>⌘⇧D</Kbd> | Split down |
+| <Kbd>⌘⇧W</Kbd> | Close the focused pane |
+| <Kbd>⌘⌥←</Kbd> <Kbd>⌘⌥→</Kbd> <Kbd>⌘⌥↑</Kbd> <Kbd>⌘⌥↓</Kbd> | Focus the pane in that direction |
+| <KbdGroup><Kbd>⌘⌥[</Kbd> <Kbd>⌘⌥]</Kbd></KbdGroup> | Focus the previous or next pane |
+| <Kbd>⌘⇧Enter</Kbd> | Zoom the focused pane, and press again to restore |
+| <KbdGroup><Kbd>⌘;</Kbd> <Kbd>⌘'</Kbd></KbdGroup> | Previous or next terminal tab |
+| <Kbd>⌘W</Kbd> | Close the terminal tab |
+| <Kbd>⌘F</Kbd> | Find in the terminal |
+
+Rebind any of them in [Settings → Keybindings](/docs/product/settings#keybindings).
+
+## Get notified when a command finishes
+
+Atlas can tell you when a command finishes, with a system banner while you are in another app. A failed command, or one waiting for your input, notifies however long it ran. A successful one notifies only if it ran longer than **Notify on command success after** in [Settings → General](/docs/product/settings#notifications), which is 10 seconds by default.
 
 <Callout type="info">
   Atlas uses zsh shell integration for command blocks. Other shells still work as one continuous terminal stream.
@@ -30,5 +52,5 @@ Stop sends an interrupt first, then offers a force stop if the command remains a
 
 ## Next
 
-- [Chat & Sessions](/docs/product/chat): review the agent's shell activity
+- [Agent chat](/docs/product/chat): review the agent's shell activity
 - [Explorer](/docs/product/explorer): open a terminal in a folder

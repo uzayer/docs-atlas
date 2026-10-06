@@ -1,44 +1,105 @@
 ---
 title: Organisations
-description: Keep projects in a local or cloud organisation.
+description: Local and synced organisations, how a project's sessions reach the team, and managing the organisation itself.
 icon: Building2
 ---
 
-An [organisation](/docs/getting-started/concepts#organisation) owns your projects. Use the switcher at the top of the sidebar to create, select, rename, or delete one.
+An organisation owns your projects. A synced one also owns everything your team shares: members, cloud projects and their timeline, chat, calls, prompt drafts and Spaces. The organisation switcher at the top of the rail creates, switches, renames and deletes them.
 
-## Choose local or cloud
+## Local or synced
 
-Create a **local** organisation when you work on one machine. It stays on that machine and never makes a network call.
+Atlas starts you in a local organisation called **Personal**. It lives on this machine only, needs no account, and never makes a network call.
 
-Create a **cloud** organisation when you need an account-backed organisation with members and roles. It appears on your other signed-in devices. Cloud organisations currently sync the organisation record, not your code, sessions, chats, memory, or timeline.
+A **synced** organisation lives in your Atlas account. It appears on every device you sign in on, and it is what the team features need.
 
-You can turn on sync for a local organisation later. Atlas keeps its name and handle, then links it to your account.
+| | Local | Synced |
+| --- | --- | --- |
+| Needs an account | No | Yes |
+| Members and roles | No | Yes |
+| Cloud projects and the team timeline | No | Yes |
+| Team chat, calls, prompt drafts, Spaces | No | Yes |
+| Atlas Agent | No | Yes, with [AI access](/docs/team/ai-access) |
+| Organisation ID | No | Yes |
 
-## Create and switch organisations
+In a local organisation, **Chat** and **Members** in the rail are disabled, and Atlas Agent's composer says the organisation is local and offers to sync it.
 
-Select **Create organisation…**, choose a name, handle, and type, then create it. Cloud handles must be unique across Atlas; local handles need only be unique on your machine.
+## Create an organisation
 
-Atlas currently hosts cloud organisations in the United States. European Union hosting appears in the picker but is not available yet.
+Open the switcher and select **Create organisation…**.
 
-Select an organisation from the switcher to move into it. Atlas remembers the project you last opened in each organisation.
+1. Enter a **Name**. Atlas suggests a **Handle** from it, using lowercase letters, numbers and hyphens.
+2. Choose a **Type**. **Cloud** is "Synced across your devices and shareable with your team" and needs you to be signed in. **Local** is "Private and offline".
+3. For a cloud organisation, choose a **Region**. Atlas hosts organisations in the United States. European Union appears in the list but is not available yet.
+4. Select **Create organisation**.
 
-Cloud organisations stay locked when you are signed out or not a member. Local organisations never lock.
+A cloud handle must be unique across Atlas, and Atlas checks it as you type. A local handle only needs to be unique on your machine.
 
-## Rename or sync one
+Whoever creates a synced organisation is its **Owner** and an **Admin**. See [Members & roles](/docs/team/members).
 
-Hover a local organisation and select the pencil to rename it. Renaming changes the displayed name, not its handle.
+## Turn on sync for a local organisation
 
-A synced organisation's name is owned by the server, so Atlas does not offer a local rename action for it. Names changed on the web are pulled into the desktop app when the account refreshes.
+Switch to the local organisation, open the switcher, and select **Turn on sync for &lt;name&gt;…** at the bottom. Atlas creates the organisation in your account with the same name and handle. Signed out, the same item starts sign-in first.
 
-For an active local organisation, choose **Turn on sync** to create its cloud record. Atlas does not offer a sync-off switch. Delete the organisation to remove it from your account.
+Once synced, the row reads **&lt;name&gt; is synced**. There is no switch to turn sync off again.
+
+Turning on sync doesn't upload anything by itself. Each project still stores its sessions locally until you put it in the cloud.
+
+## Put a project's sessions in the cloud
+
+Sessions reach the organisation one project at a time. Open the project and press <Kbd>⌘⌥C</Kbd>, or select the project name in the title bar, to open session capture. Under **Where sessions are stored**, **Local** is "This machine only" and **Cloud** is "Shared with your Organisation".
+
+Choosing Cloud offers two ways in:
+
+- **Create** registers a new cloud project in the organisation. Pick a **Slug**, confirm the **Repository** Atlas detected, and optionally **Restrict to named members**. Otherwise every member of the organisation can read it.
+- **Connect** joins a cloud project a teammate already created. Atlas preselects the one that matches your checkout's repository, so several people's sessions merge into one timeline.
+
+A project that has been recording locally shows **Sync** instead. It walks you through the same Create or Connect choice and publishes the history you already have. A cloud project shows **Change**, which moves its sync to a different cloud project and re-sends what was captured.
+
+Before anything leaves your machine, Atlas shows what it is about to send: the number of sessions, their date range, and how many secrets were redacted. Nothing is sent until you confirm.
+
+<Screenshot
+  alt="The session capture popover for a project, with 'Where sessions are stored' set to Cloud and the Create and Connect tabs. The Create tab shows the Organisation, Slug and Repository fields and a 'Restrict to named members' option."
+  caption="Choosing Cloud for a project: create a new cloud project or connect to a teammate's."
+/>
+
+Cloud needs three things: you are signed in, the active organisation is synced, and git is installed. When one is missing, the Cloud option is disabled and says which. A cloud project always syncs to the active organisation.
+
+[Session capture](/docs/source-control/capture) covers capture itself, and the [timeline](/docs/team/timeline#what-syncs-and-what-doesnt) lists what a cloud project sends.
+
+## Find your way around the rail
+
+The top of the rail holds the organisation-wide destinations:
+
+- **Timeline**: every recorded session in the organisation. See [Timeline](/docs/team/timeline).
+- **Chat**: team chat, also <Kbd>⌘⇧C</Kbd>. Disabled until the organisation is synced.
+- **Members**: the members manager. Disabled until the organisation is synced.
+
+## Switch organisations
+
+Select an organisation in the switcher to move into it. Search the list by name or handle, and use the refresh button to pull in organisations you were added to elsewhere. Atlas remembers the project you last opened in each organisation.
+
+A synced organisation is locked, with a padlock, when you are signed out or when your account isn't a member of it. Local organisations never lock.
+
+## Copy the organisation ID
+
+Select **Copy organisation ID** in the switcher to copy the active organisation's server ID. Support may ask for it. A local organisation has no ID until you turn on sync.
+
+## Rename an organisation
+
+Hover a local organisation and select the pencil. Renaming changes the name, not the handle.
+
+A synced organisation's name belongs to the server. An admin renames it in the web app under **Settings**, **Organization**, **Organization name**, and the desktop picks up the new name when your account refreshes.
 
 ## Delete an organisation
 
-Hover an organisation and select the bin. Atlas removes its project records and chat history, but never touches the actual project files on disk.
+Hover an organisation in the switcher and select the bin. Atlas removes its projects and their chats from Atlas, and never touches the project files on disk. You can't delete your last organisation.
 
-You cannot delete your last organisation. Deleting a cloud organisation requires Admin access; without it, Atlas removes only the local copy.
+For a synced organisation, deleting it on the server takes the Admin role. Without it, Atlas removes only this machine's copy, and the organisation can reappear on the next refresh while you are still a member.
+
+An admin can also delete a synced organisation from the web app, under **Danger zone** in the organisation settings. That removes its members, chat, calls and projects for everybody.
 
 ## Next
 
 - [Members & roles](/docs/team/members): invite teammates
-- [Your account](/docs/team/accounts): sign in for cloud organisations
+- [Timeline](/docs/team/timeline): read your team's sessions
+- [Your account](/docs/team/accounts): sign in

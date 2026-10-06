@@ -1,9 +1,78 @@
 ---
 title: Calls
-description: Voice and video calls from any conversation.
+description: Voice calls and video meetings from any conversation.
 icon: Video
 ---
 
-{/* TODO(phase-2): Audio vs video, where the call runs (web app), guest links (/j/{slug}), call activity rows, recordings and transcripts, free members-only voice calls vs paid meetings. Verify comms/components/call-menu.tsx and server ADR-0012/0019. */}
+Every conversation in [team chat](/docs/team/chat) can hold a call. You start it from the conversation's header, and the call itself runs in the [web app](/docs/team/web-app) at app.tryatlas.cc, in your browser.
 
-Start a voice or video call from a conversation's header. Atlas opens the call in the web app, where teammates join and guests can join through a link. Recordings and transcripts come back to the conversation.
+Atlas has two kinds of call:
+
+| | Voice call | Meeting |
+| --- | --- | --- |
+| Audio | Yes | Yes |
+| Video | No | Yes |
+| Who can join | Members of the conversation, up to 20 | Members, plus guests with a link |
+| Recording, transcript, AI call note | No | Yes |
+| Available | Every organisation, free | Organisations whose plan includes meetings |
+
+If your organisation's plan doesn't include meetings, you have voice calls only, and the web app shows just the voice call button.
+
+## Start a voice call
+
+1. Open the conversation in the web app.
+2. Click the phone button in the conversation header.
+
+The call starts at once and a call card appears in the conversation. Other members click **Join** on the card or in the header. A teammate in a DM sees the call ring.
+
+Voice calls are audio only and run browser to browser. If everyone else leaves, you are taken out of the call after five minutes alone.
+
+<Screenshot
+  alt="A conversation in the web app with a live voice call card showing who is in the call, the running time, and a Join button."
+  caption="A live call shows as a card in the conversation."
+/>
+
+## Start a meeting
+
+Meetings add video, guests and recording.
+
+1. Click the phone or video button in the conversation header.
+2. Choose **Start with this conversation** for members only, or **Start with a guest link** to let people outside Atlas join.
+
+When meetings are on, the phone button opens a menu instead: **Start a voice call**, or **Meeting with a guest link**.
+
+### Start from the desktop
+
+The phone and video buttons in a desktop conversation's header start a meeting. Choose **Call channel**, or **Call with guests** for a guest link. Atlas copies the call link to your clipboard and opens the call in your browser.
+
+If the conversation already has a live call, the menu offers **Join ongoing call** and **Copy call link** instead of starting a second one.
+
+On an organisation without meetings, the desktop buttons can't start a call. Start a voice call from the web app.
+
+## Invite guests
+
+A guest link is chosen when the meeting starts and can't be added later. Share the link, which looks like `app.tryatlas.cc/j/…`. A guest who opens it knocks, and a host lets them in from the call. Anyone in the conversation can copy the link from the call card.
+
+## Record a meeting
+
+The host turns recording on and off from inside the call. Everyone in the call, including people who join later, sees that it is being recorded.
+
+After the meeting ends, its card in the conversation fills in:
+
+- **Recordings**: play each recorded track, or save it to disk.
+- **Transcript**: produced after the call. On the desktop, save it as a CSV file from the card.
+- **Call Note**: an AI summary with the outcomes, decisions and action items. The note uses your organisation's [AI access](/docs/team/ai-access); without it, a simpler summary may be used, or the note is marked unavailable until AI access is added.
+
+<Screenshot
+  alt="An ended meeting's card in a desktop conversation, showing the recording tracks with play buttons and a button to save the transcript."
+  caption="An ended meeting keeps its recordings and transcript in the conversation."
+/>
+
+## Calls in drafts and Spaces
+
+You can also start a voice call inside a [prompt draft](/docs/team/prompt-drafts) or a conversation's [Space](/docs/team/spaces), so the people writing or drawing together can talk while they work. Each draft and each Space holds one call at a time. These calls are voice calls, started from the web app.
+
+## Next
+
+- [Team chat](/docs/team/chat): the conversations calls belong to
+- [Web app](/docs/team/web-app): where calls run

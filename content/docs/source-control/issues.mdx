@@ -1,10 +1,32 @@
 ---
 title: Issues
-description: Issues and tasks that dispatch agents, with the team approving the result.
+description: Issues that dispatch agents and keep the sessions and commits that resolved them.
 icon: ListTodo
 status: roadmapped
 ---
 
-{/* TODO(phase-2): Describe the intended loop plainly; no dates. Mention today's nearest things (session references in chat, comments) only if they help. */}
+This page describes what we're building, and what you can already use on the way there.
 
-Issues will carry the agent sessions and commits that resolved them. An issue can dispatch an agent, the agent plans, and the team approves the change before it lands.
+## What issues will do
+
+An issue in Atlas will be the start of a piece of agent work, and the place its history ends up.
+
+- **Dispatch an agent from the issue.** Assign an issue to an agent, and it runs on a cloud machine with the issue and its context in front of it. Nobody has to keep a laptop open.
+- **The agent plans, the team approves.** The agent proposes a plan before it changes anything. Your team reviews the plan, then reviews the change as a pull request. People approve everything that ships.
+- **The issue keeps its record.** The sessions that worked on an issue, and the commits they produced, stay attached to it. Months later, the issue still answers why the code is the way it is.
+
+## What you can use today
+
+The record issues will build on already exists:
+
+- [Session capture](/docs/source-control/capture) records every agent session and links it to the commits it produced, as checkpoints.
+- The [team timeline](/docs/team/timeline) shares those sessions with your organisation, and teammates [comment](/docs/getting-started/concepts#comment) on a session, a message, a tool call or a checkpoint.
+- [Team chat](/docs/team/chat) messages can carry a recorded session or a checkpoint as a card, so a discussion points at the exact work it's about.
+- [Atlas Agent](/docs/agents/atlas-agent) can read your team's recorded sessions and answer their comments.
+
+Today every agent session in Atlas runs on a team member's own computer, and Atlas doesn't open pull requests. Committing and pushing are yours.
+
+## Next
+
+- [Self-healing](/docs/source-control/self-healing): issues opened automatically when something breaks
+- [Roadmap](/docs/community/roadmap): what's shipped, in progress and planned

@@ -6,23 +6,44 @@ icon: FileCode
 
 Open files in tabs at the centre of Atlas. Use the editor to follow an agent's changes and make a correction yourself.
 
+Press <Kbd>⌘P</Kbd> to go to a file by name, or open one from the [explorer](/docs/product/explorer). <Kbd>⌘N</Kbd> opens an untitled editor.
+
 ## Read any file
 
-Atlas loads syntax highlighting when it knows the language. Files without a grammar still open as readable plain text. Markdown opens rendered rather than as source.
+Atlas loads syntax highlighting when it knows the language. Files without a grammar still open as readable plain text.
+
+Markdown opens as source. Use the **Edit** and **Preview** toggle in the tab to switch to the rendered view and back.
+
+## Open more than code
+
+Files that are not text open in a viewer that suits them:
+
+- **PDF**: read, zoom, and annotate with highlights, freehand drawing and notes. Press <Kbd>⌘S</Kbd> to save your annotations. Atlas keeps them in the project's `.atlas/` directory rather than writing them into the PDF, so you can still edit or erase them later.
+- **Jupyter notebooks** (`.ipynb`): markdown cells, code and saved outputs, read-only. Atlas shows the notebook as it was saved and does not run it.
+- **Images, video and audio**: view or play them in a tab.
+- **SVG**: see the rendered image, and copy its source.
+
+For a file Atlas cannot display, choose **Open in Default App** from the explorer.
+
+<Screenshot alt="A PDF open in an Atlas tab with the annotation toolbar showing Select, Highlight, Draw, Note and Erase, and a highlighted passage on the page." caption="Annotating a PDF." />
 
 ## Review git context
 
-Change bars mark lines added, changed, or deleted since `HEAD`. Turn on inline blame in [Settings → General](/docs/product/settings) to see the author, time, and commit summary for the line under your cursor.
+Change bars mark lines added, changed or deleted since `HEAD`. Inline blame shows the author, time and commit summary for the line under your cursor. It is on by default; turn it off with **Inline Git blame** in [Settings → General](/docs/product/settings#general).
 
 ## Work safely with an agent
 
-Atlas reloads an open file when the agent changes it and you have no unsaved edits. If you do have edits, Atlas keeps your buffer intact and offers **Reload** when you are ready to discard them.
+Atlas reloads an open file when the agent changes it and you have no unsaved edits. If you do have edits, Atlas keeps your buffer intact and shows **Disk changed · Reload** for when you are ready to discard them.
 
 Atlas never overwrites unsaved work.
 
+## Work side by side
+
+Press <Kbd>⌘\\</Kbd> to split the editor into another column. See [Power user](/docs/product/power-user#tabs-and-splits) for moving between splits.
+
 ## Change the look
 
-One theme colours the editor and the rest of Atlas together, chosen in [Settings → Appearance](/docs/product/settings). Switching themes keeps your open buffers and undo history. See [Themes](/docs/themes) for what a theme covers and how to write one.
+One theme colours the editor and the rest of Atlas together, chosen in [Settings → Appearance](/docs/product/settings#appearance). Switching themes keeps your open buffers and undo history. See [Themes](/docs/themes) for what a theme covers and how to write one.
 
 ## Next
 

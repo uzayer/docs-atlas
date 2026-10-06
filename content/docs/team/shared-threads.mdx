@@ -2,8 +2,111 @@
 title: Shared threads
 description: Teammates and their agents working on the same changes, live.
 icon: Waypoints
+status: in-progress
 ---
 
-{/* TODO(phase-2): Base commit, runs, conflicts, versions, line comments, Apply, remote runs and their consent gates. Check what the desktop ships at the time of writing (server ADR-0021..0024); the brief says write as shipped. */}
+A shared thread is one piece of work that several people and several agents carry out together, at the same time. You share the changes you are working on, teammates join, and from then on everyone types into the same files and runs agents against them. Each agent turn merges back into the shared state, and overlapping edits become conflicts you resolve together.
 
-A shared thread lets several teammates and their agents work on the same set of changes at once. The cloud holds the current state of every changed file, each agent turn merges back into it, and overlapping edits surface as conflicts you resolve together.
+The thread view in the [web app](/docs/team/web-app) is live today: you can watch a thread, resolve conflicts, compare and restore versions, comment on lines, and ask a teammate's agent to run a prompt. Sharing a thread from your checkout, typing into it and running agents in it are arriving in the desktop app.
+
+<Screenshot
+  alt="A shared thread in the web app, with cards for who is here now, runs in flight, files changed with a diff, and an open conflict."
+  caption="A shared thread in the web app."
+/>
+
+## How it works
+
+A few terms carry the whole feature:
+
+- **Base**: the commit the thread starts from, which is the sharer's checked-out commit when they share. Their uncommitted and unpushed work becomes the thread's first changes.
+- **Current state**: the Base plus every edit people have typed and every agent turn that has merged. Atlas holds this in the cloud. Each participant's machine keeps a copy of it, called a replica, separate from their own checkout.
+- **Run**: one agent turn inside the thread. A Run starts from the current state in a working copy of its own, so it is never disturbed by people typing or by other Runs. When the turn ends, its changes merge back. Several Runs can be in flight at once.
+- **Conflict**: when a Run changed lines that someone else changed after the Run started. Only the overlapping parts are held back; the rest of the Run lands at once.
+- **Version**: a point in the thread you can diff against or restore to. Atlas takes one at every merge and every conflict resolution, and you can mark your own.
+- **Apply**: how work leaves the thread. Its changes are written into your own checkout as uncommitted changes. Committing and pushing stay with you. Atlas never touches a git remote.
+
+Only the files the thread has changed are held in the cloud, never your whole repository.
+
+## Before you start
+
+- The project must be bound to your organisation in the cloud. See [Timeline](/docs/team/timeline).
+- Shared threads are on for every organisation. By default a thread holds up to 8 people and 4 Runs at once.
+- Who can see and join a thread follows from who can see the project.
+
+## Share a thread from the desktop
+
+This is arriving in the desktop app.
+
+1. Open an [agent chat](/docs/product/chat) in the project and click the **Share thread** button (the people icon) in its header.
+2. Click **Share thread…**. Atlas lists exactly which changed files will upload. Files matched by `.gitignore` or `.atlas/shareignore` never sync. Files that look like they hold secrets are blocked unless you tick **Include anyway** for that file.
+3. Share, then click **Copy link** and send the link to your teammates.
+
+The button stays highlighted while the agent chat belongs to a shared thread, with a dot when it is live.
+
+To join, click the same button, paste a link that looks like `app.tryatlas.cc/threads/…` under **Join from a link**, and click **Join**. If the owner requires approval, you wait for them to let you in.
+
+You don't need the Base commit already. If you lack it, a teammate's Atlas sends you just the history you are missing, and only once that teammate agrees to send it. Until then you can watch the thread read-only.
+
+## Work in the thread
+
+Once you have joined, click **Check out replica** to get the thread's files on disk, in a folder of their own beside your checkout.
+
+- **Type together.** Open a thread file in the Atlas editor and everyone's edits and cursors arrive live. Edits made in another editor sync when you save. A badge shows **Up to date**, **Syncing** or **Behind**.
+- **Run an agent.** Click **Run an agent here** to open an agent chat inside the thread. Every prompt you send there is a Run. Runs show as chips with who prompted, which agent ran, the files changed and a status: **Running**, **Merged**, **Ended** or **Interrupted**. On a finished Run, **Continue from here** starts the next prompt with the thread's context up to that point.
+- **See what others did.** Each Run's prompt reaches the agent with a short digest of the other Runs in the thread: their prompts, final answers, changed files, open conflicts and unresolved comments.
+
+Binary files and files over 1 MB sync whole, and the last write wins. If a remote change would overwrite a file of yours, Atlas keeps your copy beside it as `<path>.atlas-mine`.
+
+## Resolve conflicts
+
+Open conflicts list on the thread with the original lines, the current lines and the Run's lines, and who made each. Anyone who can edit the thread can resolve one:
+
+- In the web app: **Keep current**, **Take agent's**, **Keep both**, or edit the result and **Use result**.
+- In the desktop app, the same choices, plus **Ask an agent**, which starts a Run to rewrite the overlapping lines.
+
+Resolving a conflict is itself a change to the thread, and it takes a new version.
+
+## Versions
+
+Under **Files changed**, choose what to diff against: the Base, the last Run, or any version. From there you can restore one file or all of them to that version. Restoring is a new, visible change, not a rewrite of history.
+
+To bookmark the thread as it is now, mark a version and give it a name if you like.
+
+## Comment on lines
+
+Select lines in a changed file to comment on them. Comments thread, can be voted on and resolved, and move with the text as people and agents edit around it. If the lines are removed, the comment is marked **Outdated** and keeps the text it was about.
+
+## Apply the work to your checkout
+
+When the thread is done, click **Apply to my checkout**. Atlas writes the thread's changes into your own repository as uncommitted changes, merged onto whatever commit you are on.
+
+- If you have uncommitted edits to files the thread touched, Apply refuses and lists them. **Stash and apply** stashes just those files first.
+- Open conflicts block Apply until they are resolved.
+- Where your newer commits overlap the thread's changes, you get git conflict markers to resolve as usual.
+
+Then review, commit and push yourself.
+
+## Ask a teammate's agent (Remote Runs)
+
+A Remote Run asks a teammate's desktop to run a prompt in the thread for you. It runs on their machine with their agent, their credentials and their spend. It is how someone in the web app, with no agent of their own, gets work done in a thread.
+
+To ask, use **Ask a teammate's agent** in the web app (or the Remote Runs section on the desktop): pick the teammate and their agent under **Run on**, write the prompt, and send. Its status shows as **Waiting for approval**, **Approved**, **Started**, **Declined** or **Timed out**.
+
+On the teammate's side, a Remote Run needs every one of these:
+
+1. Remote Runs enabled for your organisation and allowed for the project by an organisation admin. Both are off by default.
+2. The teammate turns on **Accept Remote Runs** for the thread, offering the agents on their machine.
+3. The teammate approves the request. The dialog shows who is asking, the thread, the exact prompt, the agent and who pays. It declines itself after 60 seconds. Ticking **Always approve this person in this thread** skips the dialog for that one person, in that one thread, until it closes.
+
+Every request, approval, decline and run is recorded on the thread.
+
+## Manage and close a thread
+
+The thread's owner can approve or decline join requests, turn join approval on or off, change each person's role (participant or viewer), and close or reopen the thread. An organisation admin can also close it. Viewers and everyone in a closed thread are read-only.
+
+A closed thread can be reopened for 30 days. After that its file state is deleted, because Atlas is not where your code is kept. Its sessions and comments stay.
+
+## Next
+
+- [Prompt drafts](/docs/team/prompt-drafts): agree on a prompt before anyone runs it
+- [Timeline](/docs/team/timeline): the recorded sessions behind every Run

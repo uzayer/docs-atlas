@@ -4,23 +4,37 @@ description: See agent usage and spend across your projects.
 icon: Gauge
 ---
 
-Use Usage to see where tokens, messages, sessions, and estimated cost went across the active organisation's projects.
+Use Usage to see where tokens, messages, sessions and estimated cost went across the active organisation's projects. Open **Usage** from the rail.
+
+<Screenshot alt="The Usage tab with the 30-day range selected: totals for tokens, sessions, messages and cache hit rate across the top, a daily chart grouped by agent, and the sessions table below." caption="The Usage tab." />
 
 ## Review your usage
 
-Choose 7, 30, or 90 days, a custom range, or view everything. Atlas shows totals for tokens, messages, sessions, and estimated cost, then lets you group and filter the data by project, agent, or model.
+Choose 7, 30 or 90 days, a custom range, or everything. Atlas shows totals for tokens, messages, sessions and estimated cost.
 
-The dashboard includes a daily series, efficiency and cache metrics, and searchable tables for sessions, projects, agents, and models. Where an agent reports them, token totals include cache reads, cache writes, and reasoning tokens.
+Below the totals:
+
+- a daily chart you can group by **Project**, **Agent** or **Model**, showing **Tokens**, **Cost** or **Messages**
+- filters for one project, agent or model
+- efficiency figures: cache hit rate, output to input ratio, and tokens per session
+- searchable, sortable tables of sessions, projects, agents and models
+
+Where an agent reports them, token totals include cache reads, cache writes and reasoning tokens. Estimated cost uses per-model prices from models.dev, in US dollars.
 
 <Callout type="info">
-  Usage reads Atlas's own captured session record, so it is not limited to a fixed list of agents. An agent contributes token detail only when its ACP implementation reports usage. An unknown or unpriced model still contributes recorded tokens but has no invented fallback cost.
+  Usage reads Atlas's own record of the sessions on this machine, so it is not limited to a fixed list of agents. An agent contributes token detail only when its ACP implementation reports usage. An unknown or unpriced model still contributes recorded tokens but has no invented fallback cost.
 </Callout>
+
+## See your team's usage
+
+This tab covers the sessions you ran on this machine. Your organisation's spend on Atlas Agent, broken down by person and held to budgets, is in the web app. See [AI access & spend](/docs/team/ai-access).
 
 ## Export a report
 
-Export the current view as a PDF, JPEG, or markdown file, or copy the markdown report.
+Export the current view as a PDF report, a JPEG image or a Markdown report, or copy it as Markdown.
 
 ## Next
 
+- [AI access & spend](/docs/team/ai-access): budgets and spend for your organisation
 - [Timeline](/docs/team/timeline): see the work behind each project
 - [Agents](/docs/agents): understand how agent capabilities vary

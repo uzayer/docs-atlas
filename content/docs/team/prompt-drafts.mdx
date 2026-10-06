@@ -4,6 +4,44 @@ description: Write a prompt together before one of you sends it to an agent.
 icon: FilePenLine
 ---
 
-{/* TODO(phase-2): How to create and open a draft (center tab), co-editing, who runs it, voice calls scoped to a draft, parity with the web editor. */}
+A prompt draft is a document attached to a [team chat](/docs/team/chat) conversation that several teammates edit at the same time. Everyone sees the others' cursors and typing live. When the prompt reads right, one person sends it to an agent, and it runs on that person's machine with their agent.
 
-A prompt draft is a document attached to a conversation that several teammates edit at the same time, with live cursors. When it reads right, one person sends it, and it runs on that person's machine with their agent.
+Use a draft when a prompt is worth getting right: a migration plan, a tricky refactor, a release note the whole team should agree on.
+
+<Screenshot
+  alt="A prompt draft open as a center tab, with two teammates' named cursors in the text and their avatars in the top right."
+  caption="Teammates' cursors show live in a draft."
+/>
+
+## Create a draft
+
+1. Open a conversation in team chat.
+2. Click the **Drafts** tab under the conversation header.
+3. Type a name in **Name a new draft…** and press <Kbd>Enter</Kbd>.
+
+The draft opens as a tab in the center of the window, so you get a full-size editor beside your code. Click any draft in the list to open it.
+
+Everyone in the conversation can open and edit the conversation's drafts. In the web app, drafts are under the conversation's **Assets** panel.
+
+## Write together
+
+Type in the draft like any editor. Changes reach everyone within a moment, and each person's cursor is labelled with their name. The avatars in the draft's header show who has it open.
+
+In the web app you can also start a voice call from inside the draft, so you can talk while you write. See [Calls](/docs/team/calls#calls-in-drafts-and-spaces).
+
+## Send it to an agent
+
+A draft runs on one person's machine, with their agent, their credentials and their spend. Nothing runs on the server.
+
+**On the desktop**, open an [agent chat](/docs/product/chat) first, then click **Send to agent** in the draft's header. Atlas puts the draft's text into that chat's composer and switches to it, so you can pick the agent and press <Kbd>Enter</Kbd>. If you have no agent chat open, nothing happens.
+
+**Copy draft** copies the text instead, for pasting anywhere.
+
+**In the web app**, click **Send**. The draft is marked as sent by you and a message linking to it is posted in the conversation. You can attach up to three [session references](/docs/team/chat#session-references) with **Reference a session** before sending.
+
+A sent draft becomes read-only: it is the record of what ran. To keep iterating, open it in the web app and click **Duplicate as new draft**.
+
+## Next
+
+- [Team chat](/docs/team/chat): the conversations drafts belong to
+- [Shared threads](/docs/team/shared-threads): several people and agents working on the same changes live

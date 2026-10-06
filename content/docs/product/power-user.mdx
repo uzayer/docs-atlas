@@ -1,38 +1,103 @@
 ---
 title: Power user
-description: Shortcuts and @ mentions for moving through Atlas without the mouse.
+description: Shortcuts, keymap presets, hint navigation, layouts and the atlas command.
 ---
 
 Atlas is meant to be the whole surface for a session. The faster you move through the rest of the app, the more of the work actually happens inside Atlas instead of around it.
 
 ## Shortcuts
 
-The table shows the macOS labels. On Windows and Linux, <Kbd>Ctrl</Kbd> is the primary modifier in place of <Kbd>⌘</Kbd>; **Settings → Keybindings** shows the bindings active on your device.
+These are Atlas's default shortcuts, with macOS labels. On Windows and Linux, <Kbd>Ctrl</Kbd> takes the place of <Kbd>⌘</Kbd> and <Kbd>Alt</Kbd> the place of <Kbd>⌥</Kbd>. **Settings → Keybindings** shows the bindings active on your device, and lets you change any of them.
+
+### Find your way
 
 | Shortcut | Action |
 | --- | --- |
-| <Kbd>⌘O</Kbd> | Open a project |
 | <Kbd>⌘K</Kbd> | Command palette |
-| <Kbd>⌘P</Kbd> | File picker |
-| <Kbd>⌘⇧F</Kbd> | Search |
-| <Kbd>⌘T</Kbd> | New agent chat |
-| <Kbd>⌥/</Kbd> | Cycle agent |
-| <Kbd>⌘N</Kbd> | New untitled editor |
-| <Kbd>⌘⇧T</Kbd> | New terminal tab |
-| <Kbd>⌘J</Kbd> | Toggle terminal |
-| <Kbd>⌥J</Kbd> | Open knowledge base |
-| <Kbd>⌘⌥J</Kbd> | Toggle chat sidebar |
-| <KbdGroup><Kbd>⌘B</Kbd> <Kbd>⌘⇧B</Kbd></KbdGroup> | Toggle left / right panel |
-| <Kbd>⌘⌥B</Kbd> | Toggle bottom panel |
-| <KbdGroup><Kbd>⌘1</Kbd>–<Kbd>⌘9</Kbd></KbdGroup> | Jump to tab by index (<Kbd>⌘9</Kbd> = last tab) |
-| <Kbd>⌘W</Kbd> | Close tab |
-| <KbdGroup><Kbd>⌘⇧[</Kbd> <Kbd>⌘⇧]</Kbd></KbdGroup> | Cycle tabs |
-| <Kbd>⌘\\</Kbd> | New split column |
-| <KbdGroup><Kbd>⌥;</Kbd> <Kbd>⌥'</Kbd></KbdGroup> | Focus adjacent split |
-| <Kbd>⌥W</Kbd> | Close focused split |
-| <Kbd>⌥Z</Kbd> | Zen mode |
+| <Kbd>⌘P</Kbd> | Go to file |
+| <Kbd>⌘⇧F</Kbd> | Search the project |
+| <Kbd>⌘⌥N</Kbd> | Open a module in a new tab |
+| <Kbd>⌘⌥L</Kbd> | Switch layout |
+| <Kbd>⌘⌥Space</Kbd> | Hint navigation |
+| <Kbd>⌘⇧N</Kbd> | Add a project |
+| <Kbd>⌘⌥C</Kbd> | Session capture |
 | <Kbd>⌘,</Kbd> | Settings |
+
+### Panels
+
+| Shortcut | Action |
+| --- | --- |
+| <Kbd>⌘⇧.</Kbd> | Show or hide the project rail |
+| <Kbd>⌘B</Kbd> | Left panel (the file tree) |
+| <Kbd>⌘⇧B</Kbd> | Right panel (source control) |
+| <Kbd>⌘⇧C</Kbd> | Team chat |
+| <Kbd>⌘J</Kbd> | Terminal panel |
+| <Kbd>⌘⌥J</Kbd> | Agent sidebar |
+| <Kbd>⌘⌥T</Kbd> | Tab bar |
+| <Kbd>⌥J</Kbd> | Knowledge base |
+| <Kbd>⌥Z</Kbd> | Zen mode |
+
+### Tabs and splits
+
+| Shortcut | Action |
+| --- | --- |
+| <Kbd>⌘T</Kbd> | New agent chat |
+| <Kbd>⌘⇧T</Kbd> | New terminal tab |
+| <Kbd>⌘N</Kbd> | New untitled editor |
+| <Kbd>⌘W</Kbd> | Close tab |
+| <KbdGroup><Kbd>⌘⇧[</Kbd> <Kbd>⌘⇧]</Kbd></KbdGroup> | Previous / next tab |
+| <KbdGroup><Kbd>⌘1</Kbd>–<Kbd>⌘9</Kbd></KbdGroup> | Jump to tab by position (<Kbd>⌘9</Kbd> is the last tab) |
+| <Kbd>⌘\\</Kbd> | Split right, up to three columns |
+| <KbdGroup><Kbd>⌥;</Kbd> <Kbd>⌥'</Kbd></KbdGroup> | Focus the split to the left / right |
+| <Kbd>⌥W</Kbd> | Close the focused split |
+
+### Agent chat
+
+| Shortcut | Action |
+| --- | --- |
+| <Kbd>⌥/</Kbd> | Cycle the coding agent |
+| <Kbd>⇧Tab</Kbd> | Cycle the permission mode |
+| <Kbd>⌘F</Kbd> | Find in chat |
+
+### View
+
+| Shortcut | Action |
+| --- | --- |
 | <KbdGroup><Kbd>⌘=</Kbd> <Kbd>⌘-</Kbd> <Kbd>⌘0</Kbd></KbdGroup> | Zoom in / out / reset |
+
+The terminal and the knowledge base have their own shortcuts while they have focus. See [Terminal](/docs/product/terminal#stop-or-split-work) and [Knowledge base](/docs/context/knowledge-base#write-a-note).
+
+## Use another editor's keys
+
+If your hands already know another editor, start from its keys. In **Settings → Keybindings**, set **Keys from** to **VS Code**, **Cursor**, **Zed** or **JetBrains**. Atlas also asks the first time it starts.
+
+A preset only changes commands that editor has a well-known key for, such as <Kbd>⌘⇧P</Kbd> for the command palette under VS Code. Everything else keeps Atlas's default.
+
+Your choices live in a profile, which you can copy as JSON and share. See [Settings → Keybindings](/docs/product/settings#keybindings).
+
+## Click without the mouse
+
+Press <Kbd>⌘⌥Space</Kbd> and Atlas puts a short label on every button, tab and field you can see. Type a label to click that element. <Kbd>Backspace</Kbd> removes a typed letter and <Kbd>Esc</Kbd> cancels.
+
+<Screenshot alt="Atlas with hint navigation active: small keycap labels of one or two letters over the rail items, tabs, and composer controls." caption="Hint navigation." />
+
+## Rearrange the window
+
+Press <Kbd>⌘⌥L</Kbd> to apply a layout: **Focus** (just the agent), **Develop** (files, editor and agent), **Research** (knowledge, agent and the web side by side), **Terminal** (agent next to a terminal, with the file tree), **Review** (agent with the review panel) or **Usage**.
+
+Press <Kbd>⌥Z</Kbd> for zen mode: the knowledge base, an agent chat and a browser in three columns, with the side panels hidden. Press it again to return to the layout you had.
+
+## Open a folder from your terminal
+
+The `atlas` command opens a folder as a project, the way `code .` does for VS Code:
+
+```bash
+atlas .            # open the current folder
+atlas ./some-dir   # open another folder
+atlas --version    # print the Atlas version
+```
+
+Atlas installs it at `~/.local/bin/atlas` on macOS and Linux and refreshes it on every launch. If your shell cannot find it, add `~/.local/bin` to your `PATH`. You can reinstall it from **Atlas CLI** in Settings → General.
 
 ## `@` mentions
 
@@ -47,8 +112,18 @@ Type `@` in any composer to pull something into context without leaving the keyb
 - **branch**: a git branch
 - **past message** / **past session**: anything earlier in this session, or an earlier one
 
+In a project shared with your organisation through [cloud capture](/docs/source-control/capture), you can also mention:
+
+- **member**: a teammate
+- **conversation**: a team chat channel or direct message
+- **recorded session**: a session on the team [timeline](/docs/team/timeline)
+- **comment**: a comment on a recorded session
+
+These are sent as links rather than copied in, so an agent with access to your organisation, such as [Atlas Agent](/docs/agents/atlas-agent), can look them up.
+
 Type `~` instead of `@` to open the same picker scoped to just the knowledge base, the same shortcut the notes editor uses.
 
 ## Next
 
+- [Settings](/docs/product/settings): change shortcuts and everything else
 - [Concepts](/docs/getting-started/concepts): every term used across these docs, defined once

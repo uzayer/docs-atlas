@@ -4,27 +4,129 @@ description: Configure Atlas for the way you work.
 icon: Settings
 ---
 
-Press <Kbd>⌘,</Kbd> to open Settings in a tab.
+Press <Kbd>⌘,</Kbd> to open Settings in a tab. The sections are General, Appearance, Icons, Layouts, API Keys, Skills, Agents, Local Models, Updates, Keybindings and About.
 
-## Set the essentials
+Atlas saves your settings to `~/.config/atlas/config.toml`, a commented file you can also edit by hand. If an edit breaks the file, Atlas keeps using the last valid settings and offers **Open config** or **Recreate defaults**.
 
-**General** controls sending behaviour, `.atlas` gitignore setup, hidden files, inline blame, Atlas logs, privacy-preserving usage data, follow-up suggestions, the Atlas CLI, and model pricing.
+<Screenshot alt="The Settings tab on the General section, with the section list on the left and the Interface zoom, App icon, Enter to send and Keep awake rows on the right." caption="Settings → General." />
 
-Use **Appearance** for the one theme that colours all of Atlas, **Icons** for file and folder icons, and **Layouts** for saved panel arrangements. Press <Kbd>⌘⌥L</Kbd> to switch layouts anywhere. See [Themes](/docs/themes) for both theme tracks.
+## General
 
-## Add integrations
+General holds most of Atlas's preferences. They are grouped here by what they affect.
 
-Use **API Keys** for bring-your-own-key features such as commit-message drafting and optional memory summarisation, and for external agents that request a recognised provider credential. Atlas writes the environment variable to the shell profile you choose and reads it back from your environment; it does not keep a separate key database. Atlas Agent uses your Atlas account instead.
+### Interface
 
-Use **Skills** to manage skills and packs, **Agents** to manage the agent registry, and **Local Models** to download embedding models for code indexing and memory retrieval.
+- **Interface zoom** scales the whole interface, text, icons and spacing together. Press <Kbd>⌘=</Kbd>, <Kbd>⌘-</Kbd> and <Kbd>⌘0</Kbd> anywhere, or use the interface scale button at the bottom of the rail, which also offers **Compact**, **Default**, **Large** and **Larger**.
+- **App icon** (macOS) changes the icon in the Dock, Finder and Launchpad.
+- **Enter to send**: <Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> adds a line. Turn it off to make <Kbd>Enter</Kbd> add a line; <Kbd>⌘Enter</Kbd> always sends.
+- **Keep awake while an agent is working** stops your computer from sleeping during a turn. The display can still turn off. It is not available on Windows.
 
-Changing the embedding model rebuilds the index after Atlas asks for confirmation.
+### Notifications
 
-## Finish the setup
+Atlas notifies you when something needs you or finishes, and stays quiet about anything you are already looking at. The master **Notifications** switch turns everything off except sign-in problems, so an agent is never silently stopped.
 
-Use **Updates** to choose automatic updates or check manually. Use **Keybindings** for the full shortcut reference. **About** shows version information.
+- **Notify on agent finish after** keeps quick turns quiet. Failures and requests for you always notify.
+- **Notify on command success after** does the same for [terminal](/docs/product/terminal) commands. Failures always notify.
+
+Below those, notifications come in four groups: **Needs you**, **Outcomes**, **Warnings** and **Team** (messages from people in your organisation). Each group has its own **System notification** and **Sound** switches, and each kind of notification in it can be turned off on its own.
+
+**Banner actions on permission requests**, under Needs you, puts **Allow once** and **Deny** on the system banner, so you can answer an agent without switching to Atlas.
+
+### Files and git
+
+- **Auto-add .atlas to .gitignore** keeps Atlas's per-project data out of version control. On by default.
+- **Show hidden files** shows dotfiles in the [explorer](/docs/product/explorer). On by default.
+- **Inline Git blame** shows who last changed the line under your cursor in the [editor](/docs/product/editor). On by default.
+- **Auto-fetch from remote** runs `git fetch` when a project opens, when Atlas regains focus, and every few minutes, so you can see what the remote has. It never pulls, merges or touches your files.
+- **Enable Atlas Logs** records Atlas's own events in the Logs tab, which helps when you report a problem.
+
+### Privacy and feedback
+
+- **Share usage data** sends privacy-preserving usage data to help improve Atlas: app launches, which agents and tools you use, how many files a turn touched, token counts and crashes. It never includes your prompts, code, file paths or keys. It is on by default; turn it off to stop sending.
+- **Link usage data to my account** attributes that data to your Atlas account while you are signed in. Turn it off to stay anonymous when signed in.
+- **Send feedback** opens a panel for reporting a bug or requesting a feature, with an optional screenshot.
+
+### Agents
+
+- **Next-step suggestions** has the agent offer two or three follow-ups as chips after each turn. They come from the agent's own session, with no extra key.
+- **Switching agents in a chat** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Agent chat](/docs/product/chat#choose-and-switch-agents).
+- **Save to memory before switching agents** sends `/remember` to the agent you are leaving first. See [Memory](/docs/context/memory#keep-memory-across-agent-switches).
+- **Mirror CLAUDE.md and .claude/rules into AGENTS.md** keeps your instructions in sync for agents that read `AGENTS.md`. See [Memory](/docs/context/memory#mirror-your-instructions-into-agentsmd).
+
+### Atlas Agent powers
+
+Two switches decide how far [Atlas Agent](/docs/agents/atlas-agent) can reach beyond your code. Both are on by default, and every action shows in the chat and in the Logs tab.
+
+- **Let Atlas Agent navigate the app**: it can open files at a line, switch tabs and panels, fill in a chat message, and type a command into a terminal for you to run. It never switches projects, sends a message for you, or presses Enter.
+- **Let Atlas Agent act in your organisation**: in a project bound to the cloud, it can read your organisation's recorded sessions, comments, members and conversations, and act there as you. Anything that reaches another person asks you first.
+
+### Tools
+
+- **Atlas CLI** adds an `atlas` command to your shell. Type `atlas .` in a terminal to open the current folder as a project. Atlas installs it at `~/.local/bin/atlas` and refreshes it on every launch. It is not available on Windows.
+- **Model pricing** fetches per-model prices from models.dev, used for cost estimates and shown in the model picker. Atlas refreshes them on launch.
+
+## Appearance
+
+Choose the one theme that colours all of Atlas, and whether it follows your system or stays **Dark** or **Light**. You can also convert a shadcn, Zed or VS Code theme here. See [Themes](/docs/themes) and [Importing a theme](/docs/themes/importing).
+
+## Icons
+
+Choose the icon theme for files and folders in the explorer and tabs. See [Icon themes](/docs/themes/icon-themes).
+
+## Layouts
+
+Apply a ready-made arrangement of panels and tabs: **Focus**, **Develop**, **Research**, **Terminal**, **Review** or **Usage**. Press <Kbd>⌘⌥L</Kbd> anywhere to switch layouts without opening Settings.
+
+## API Keys
+
+Add your own provider keys. Atlas uses them for a few features:
+
+- chatting with a recorded session from the [timeline](/docs/team/timeline)
+- the **Provider** option for memory's handoff summary and extraction (see [Memory](/docs/context/memory#choose-how-the-handoff-is-summarised))
+- external agents that read a provider's key from the environment
+
+Each key is an `export` line in the shell profile you choose, and Atlas reads it back from your environment. Atlas keeps no separate copy of your keys. A key set somewhere Atlas can read but not edit appears read-only.
+
+Atlas Agent does not use these keys; it runs on your Atlas account. See [AI access & spend](/docs/team/ai-access).
+
+## Skills
+
+Manage skills and packs. See [Skills](/docs/context/skills).
+
+## Agents
+
+Browse the ACP registry, install and remove agents, and update the ones you have. See [ACP registry](/docs/agents/registry).
+
+## Local Models
+
+Download the embedding models that run on your machine for code indexing and memory search. Changing the model rebuilds the index after Atlas asks for confirmation.
+
+## Updates
+
+- **Automatic updates** checks for a new version in the background. On macOS and Windows it also downloads it; on Linux, update through your package manager or the release page.
+- **Sync the Atlas Agent's plugin catalogue** lets Atlas Agent fetch OpenAI's curated plugin catalogue when it starts. It is off by default, because it is a network request on every launch.
+- **Check for updates** checks now, whatever the automatic setting.
+
+## Keybindings
+
+Search every shortcut and rebind one by recording a new key combination. Your bindings are saved to `~/.config/atlas/keybindings.json`, which **Open keybindings.json** opens for hand editing.
+
+Bindings belong to a **profile**. Create, duplicate, rename, reset or delete profiles from the bar at the top; the built-in Default profile is locked, so duplicate it to make changes.
+
+**Keys from** sets which editor's shortcuts a profile starts from: Atlas, **VS Code**, **Cursor**, **Zed** or **JetBrains**. A preset only changes the commands that editor has a well-known key for. Everything else keeps Atlas's shortcut. Atlas asks which one you want the first time it starts.
+
+To share a profile, choose **Copy as JSON** and send it. A teammate imports it with **Import a profile**.
+
+<Screenshot alt="Settings → Keybindings with the profile bar at the top showing the Keys from menu open on VS Code, Cursor, Zed and JetBrains, and the searchable shortcut table below." caption="Keybinding profiles and presets." />
+
+See [Power user](/docs/product/power-user) for the default shortcuts.
+
+## About
+
+Shows the version of Atlas you are running.
 
 ## Next
 
+- [Power user](/docs/product/power-user): move through Atlas from the keyboard
 - [Skills](/docs/context/skills): install reusable instructions
 - [ACP registry](/docs/agents/registry): manage coding agents

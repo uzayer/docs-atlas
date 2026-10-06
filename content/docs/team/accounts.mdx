@@ -1,34 +1,67 @@
 ---
 title: Your account
-description: Sign in to use cloud organisations.
+description: Sign in with Google or GitHub to use Atlas Agent and work with your team.
 icon: UserRound
 ---
 
-You can use Atlas without an account. Chat, the editor, memory, and the timeline all work locally. Sign in when you want to join or create cloud [organisations](/docs/team/organisations).
+You can use Atlas without an account. The editor, terminal, git, ACP agents such as Claude Code, memory, local session capture and your own timeline all work signed out, in a local organisation.
 
-## Sign in from Atlas
+## What signing in unlocks
 
-Select the account control in the title bar. Atlas opens an approval page in your browser and shows an eight-character code.
+Sign in when you want any of these:
 
-1. Enter the code on the approval page.
-2. Select **Approve**.
-3. Return to Atlas when the dialog closes.
+- a synced [organisation](/docs/team/organisations) with [members](/docs/team/members)
+- [Atlas Agent](/docs/agents/atlas-agent), which also needs [AI access](/docs/team/ai-access) for the organisation
+- cloud projects, so your sessions reach the [team timeline](/docs/team/timeline) and you see your teammates'
+- comments on sessions
+- [team chat](/docs/team/chat), [calls](/docs/team/calls), [prompt drafts](/docs/team/prompt-drafts) and [Spaces](/docs/team/spaces)
+- the [web app](/docs/team/web-app) at app.tryatlas.cc
 
-The code confirms that you are approving the session on this device. If the browser does not open, copy the approval URL and code from the dialog. Expired or denied codes offer **Try again**.
+## Choose a sign-in provider
+
+Atlas accounts sign in with **Google** or **GitHub**. There is no Atlas password to create or reset.
+
+You can connect both providers to the same account. In the web app, open **Account Settings** and use **Sign-in methods**. Your email follows the provider you signed up with.
+
+## Sign in from the desktop app
+
+The desktop app signs in through your browser with a one-time device code.
+
+1. Select the account control in the title bar, then **Sign In**.
+2. Atlas shows **Connect your Atlas account** with an eight-character code, and opens the approval page in your browser.
+3. If the browser asks, sign in to Atlas with Google or GitHub.
+4. Paste the code into **Device code** (the dialog has **Copy code**), then select **Approve**.
+5. Back in Atlas, the dialog says **Connected.** Select **Close**.
+
+The code proves that the approval in the browser belongs to this device. If the browser doesn't open, the dialog shows the approval address so you can open it yourself. A code that expires or is denied offers **Try again**.
+
+<Screenshot
+  alt="The Connect your Atlas account dialog in the desktop app, showing an eight-character device code, a Copy code button, and the line 'Waiting for you to approve in the browser…'."
+  caption="Approve the code in your browser to finish signing in."
+/>
 
 ## Stay signed in safely
 
 Atlas stores the credential on your machine and keeps you signed in across restarts. The interface receives your identity and organisation list, but never your session or access token.
 
-Atlas caches your profile photo locally, so it remains available offline. An outage or rate limit does not sign you out. Only a rejected or expired server session does.
+Atlas caches your profile photo locally, so it stays available offline. An outage or a rate limit does not sign you out. Only a rejected or expired server session does.
+
+## Manage your devices
+
+In the web app, **Account Settings** lists your **Active sessions**: every browser and desktop signed in to your account. Sign one out from there, or sign out every other device at once.
+
+The same page has an **Access token** section with a short-lived personal token for scripts. The desktop app never needs it.
 
 ## Sign out
 
-Select **Sign Out** from the account menu. Atlas immediately clears the credential, identity, and cached photo on this device, then requests server-side revocation in the background.
+Select **Sign Out** from the account menu. Atlas immediately clears the credential, identity and cached photo on this device, then asks the server to end the session in the background.
 
-Signing out does not delete your local organisations or remove you from cloud organisations. Sign in again to open cloud organisations.
+If that request can't reach Atlas, the app tells you the server session may stay active until it expires. Sign that device out from **Active sessions** in the web app if it matters.
+
+Signing out does not delete your local organisations or remove you from synced ones. Synced organisations lock until you sign in again.
 
 ## Next
 
-- [Organisations](/docs/team/organisations): create or switch an organisation
-- [Members & roles](/docs/team/members): invite teammates
+- [Organisations](/docs/team/organisations): create a synced organisation or sync a local one
+- [Members & roles](/docs/team/members): invite your team
+- [Web app](/docs/team/web-app): your organisation in the browser

@@ -4,35 +4,94 @@ description: Start agent work, steer it, and keep the record.
 icon: MessageSquare
 ---
 
-Open a chat to work with one [agent](/docs/getting-started/concepts#agent). Atlas records the conversation as a [session](/docs/getting-started/concepts#session), including its file reads, commands, and edits.
+Open an agent chat to work with one [agent](/docs/getting-started/concepts#agent). Atlas records the conversation as a [session](/docs/getting-started/concepts#session), including its file reads, commands and edits.
+
+This page is about chatting with an agent. To message your teammates, see [Team chat](/docs/team/chat).
+
+<Screenshot alt="An agent chat tab: the transcript with a finished turn and its summary of changed files, and the composer below showing the agent, mode and model controls." caption="An agent chat." />
 
 ## Start or resume a session
 
-Press <Kbd>⌘T</Kbd> for a new chat. Open the agent sidebar with <Kbd>⌘⌥J</Kbd>, or use the chat header, to search past sessions.
+Press <Kbd>⌘T</Kbd> for a new agent chat, or choose **Agents** in the rail. Open the agent sidebar with <Kbd>⌘⌥J</Kbd> to search and reopen the sessions of the projects you are working in, or to archive or delete one.
 
-When you reopen one, Atlas paints the transcript from disk while the agent reconnects. A session belongs to one agent. Switching agents either changes an empty chat, saves and resets a chat with history, or opens a fresh tab when the current turn is still running.
+When you reopen a session, Atlas paints the transcript from disk while the agent reconnects.
+
+Atlas Agent needs an organisation that is synced to your account and has AI access. If the composer says so instead of letting you type, see [AI access & spend](/docs/team/ai-access).
+
+## Bring in sessions from your agents
+
+The **All history** button at the top of the agent sidebar lists every session you have run in Atlas, archived ones included. Choose **Import** there to pull in sessions an agent kept on its own, such as ones you ran in a terminal.
+
+Atlas asks each installed agent for its session list. An agent that cannot list its sessions still appears, greyed out, with the reason.
+
+## Choose and switch agents
+
+Choose the agent from the composer, or press <Kbd>⌥/</Kbd> to cycle through them. A session belongs to one agent, so what happens when you switch in a chat that already has a conversation depends on **Switching agents in a chat** in [Settings → General](/docs/product/settings#general):
+
+- **Start over** switches in place with a clean chat. This is the default.
+- **New tab** keeps the conversation on screen and opens the new agent beside it.
+- **Hand off** switches in place and attaches the conversation to your next message, so the new agent picks up where the last one stopped.
+
+Every conversation stays in your history either way. Turn on **Save to memory before switching agents** to have the agent you are leaving save what it learned to [shared memory](/docs/context/memory) first.
 
 ## Give the agent direction
 
-Use the composer to choose the agent. Atlas also shows the permission mode, model, reasoning effort, and other controls that the connected agent advertises. <Kbd>Enter</Kbd> sends, <Kbd>Shift+Enter</Kbd> adds a line, and <Kbd>⌘Enter</Kbd> always sends.
+The composer shows the controls the connected agent advertises, such as the permission mode, model and reasoning effort. Press <Kbd>⇧Tab</Kbd> to cycle the permission mode.
 
-Type `@` to add files, folders, symbols, notes, pack components, repositories, projects, papers, branches, or previous messages as context. Atlas shows larger references below your message so you can see what the agent receives.
+<Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> adds a line. <Kbd>⌘Enter</Kbd> always sends. To make <Kbd>Enter</Kbd> add a line instead, turn off **Enter to send** in Settings → General.
 
-Type `/` to run an agent command. Atlas passes most commands through unchanged, while a few open Atlas features.
+### Add context
+
+Type `@` to mention context: files, folders, symbols, knowledge notes, pack components, repositories, other projects, branches, and earlier messages or sessions. In a project shared with your organisation through cloud capture, you can also mention teammates, team conversations, recorded sessions and comments. Atlas shows larger references below your message so you can see what the agent receives.
+
+The **+** button in the composer adds context too:
+
+- **Add files**, or **Add files or photos** when the agent accepts images
+- **Attach media**, including **Take a screenshot** of a region or the whole desktop
+- **Add from GitHub** to clone a repository for reference
+- **Attach a session** to bring in an earlier session
+- **Reference project** to point at another project
+
+### Run a command
+
+Type `/` to run one of the agent's own commands or [skills](/docs/context/skills). The list is what the agent advertises, and Atlas sends the command through unchanged. The one command Atlas adds is `/login`, which opens the agent's sign-in.
 
 ## Steer a running turn
 
 Messages you write while an agent works join a queue. Edit or remove them before they run. Plans appear above the composer, and permission requests show the agent's own choices.
 
-Stop is always available. For a transient provider failure, Atlas shows the retry countdown and reason.
+When Atlas Agent needs an answer to continue, it asks you in the chat and waits.
+
+Stop is always available. For a transient provider failure, Atlas shows the retry countdown and the reason.
 
 ## Review the result
 
-Every turn ends with a summary of recorded time and changed files. Token use appears when the agent reports it. Open the diff, jump to a file, reveal it in your file manager, or ask Atlas to draft a commit message for your confirmation.
+Every turn ends with a summary of how long it worked and the files it read or changed, with lines added and removed. Choose **Show changes** to open the turn's diff, or **Save** to keep the conversation as a [knowledge base](/docs/context/knowledge-base) note.
 
-Search long sessions with <Kbd>⌘F</Kbd>. The Bash and Plans panels collect commands and plans without expanding the transcript.
+The usage pill in the composer shows how full the agent's context window is, along with tokens and cost when the agent reports them.
+
+With **Next-step suggestions** on in Settings → General, the agent offers two or three follow-ups as chips after each turn. Click one to send it.
+
+## Work with messages
+
+Hover a message for its actions:
+
+- **Retry** your latest prompt to replace its response
+- **Edit and send as new message** to rework a prompt
+- **Pin** a prompt or response, then find it again from the pinned messages menu in the chat header. Pins are kept on your machine.
+
+Search long sessions with <Kbd>⌘F</Kbd>. The header's **More** menu filters the transcript to your messages or the agent's, and opens the **Bash calls** and **Plans** panels, which collect commands and plans without expanding the transcript. When the agent supports it, **Branch from here** in the same menu copies the session into a new tab so you can try another direction.
+
+## See your team's comments
+
+When a session is shared with your organisation through [cloud capture](/docs/source-control/capture), teammates can comment on it from the [timeline](/docs/team/timeline). Their comments appear on the matching messages in your agent chat as they arrive.
+
+Open **Comments** in the chat header to see every thread on the session, reply, or add a comment of your own.
+
+<Screenshot alt="An agent chat with the comments panel open on the right, showing a teammate's comment thread anchored to one of the agent's responses." caption="Teammates' comments in an agent chat." />
 
 ## Next
 
 - [Git & Diff](/docs/source-control/git): review and commit the change
 - [Agents](/docs/agents): choose and install an agent
+- [Team chat](/docs/team/chat): talk to your teammates

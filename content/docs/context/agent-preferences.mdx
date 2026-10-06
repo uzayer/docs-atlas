@@ -1,27 +1,24 @@
 ---
-title: Agent preferences
-description: Review and edit the working rules Atlas finds in your files.
+title: Policy
+description: Review and edit the agent preferences your agents already work from.
 icon: SlidersHorizontal
 ---
 
-Atlas finds the instructions you already gave agents and puts them in one readable list. Use Agent preferences to check what your agents are working from and edit a rule at its source.
+Atlas finds the preferences you have already given your agents and puts them in one readable table, which the app calls **Policy**. Use it to check what your agents are working from, and to fix a rule at its source.
+
+Open **Memory** from the rail and choose the **Policy** tab. The first time, Atlas asks to download a small embedding model; it runs on your machine and makes no model call to a provider.
+
+<Screenshot alt="The Memory panel's Policy tab: a table of rules with Policy, Value, Source and Match columns, and filter controls above it." caption="The Policy tab." />
 
 ## See what Atlas found
 
-Atlas searches existing memory and instruction files for twelve kinds of preference. Each result shows the exact text from the source file, not a summary. Edit it here and Atlas updates that same span in the original file.
+Atlas reads your `CLAUDE.md`, `AGENTS.md` and Claude memory files and looks for twelve kinds of preference. Each row shows the exact text from the source file, not a summary, along with the file it came from and how closely it matched.
+
+Edit a value in place and press <Kbd>Enter</Kbd> to save, or <Kbd>Esc</Kbd> to revert. Atlas rewrites that same span in the original file.
 
 <Callout type="info">
   This is a focused view, not a replacement for your files. Rules outside these categories still apply even when they do not appear here.
 </Callout>
-
-## Set the strength
-
-Atlas classifies your wording as either:
-
-- **Strong** for a requirement such as “must,” “never,” or “always.”
-- **Soft** for guidance an agent should weigh.
-
-Use firmer language in the source when a suggestion should become a rule.
 
 ## Browse the categories
 
@@ -40,9 +37,33 @@ Use firmer language in the source when a suggestion should become a rule.
 | Dependencies & files | Rules for adding either |
 | Formatting & linting | Formatter and linter expectations |
 
-Each row names its source file and the agent memory it came from. Atlas keeps codebase behaviours separate, and it does not turn a one-off chat message into a standing rule.
+Alongside these preferences, Atlas lists **codebase** rules: behaviours your agents were told to follow in their feedback memories. A one-off chat message never becomes a standing rule.
+
+## Check the strength
+
+Atlas classifies your wording as either:
+
+- **Strong** for a requirement such as "must," "never," or "always."
+- **Soft** for guidance an agent should weigh.
+
+Use firmer language in the source when a suggestion should become a rule.
+
+## Filter the table
+
+The controls above the table narrow it down:
+
+- **All**, **Preferences** or **Codebase**, by where the rule came from
+- **Any match**, **Semantic** or **Keyword**, by how Atlas matched it
+- **Any**, **Soft** or **Strong**, by strength
+- a text filter over the rows
+
+Choose **Re-scan preferences** to read your files again after you change them outside Atlas.
+
+## Send a rule to an agent
+
+Hover a row and choose **Send to agent chat** to add that rule to the composer of your open agent chat, so you can remind an agent of it mid-session.
 
 ## Next
 
-- [Memory](/docs/context/memory): see what Atlas indexes
+- [Memory](/docs/context/memory): see what else Atlas records for your agents
 - [Skills](/docs/context/skills): add reusable instructions deliberately

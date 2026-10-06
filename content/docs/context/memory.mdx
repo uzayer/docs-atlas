@@ -1,51 +1,109 @@
 ---
 title: Memory
-description: Let capable agents pull project context from one shared record.
+description: One record of decisions, facts and dead ends that every agent in a repository can read.
 icon: BrainCircuit
 ---
 
-Shared memory keeps durable context from agent work in the project. It records decisions, facts, failures, architecture notes, plans, file changes, and session activity so another session can find them later.
+Shared memory is what lets a second agent pick up where the first one stopped. When Claude Code settles a decision, Codex can find it in the next session. When an approach fails, the next agent can see that before it tries again.
 
-## Turn on sharing
+Memory belongs to a repository on your machine. Every worktree and subdirectory of one repository shares one record, and outside git the record belongs to the folder the agent started in. It lives in the project's `.atlas/memory/` directory, so it is not synced to your teammates.
 
-Open **Memory** and turn on sharing for the project. The switch controls both reads and writes: when it is off, Atlas does not offer the memory server, searches return nothing, and agents cannot add entries.
+## How agents get memory
 
-Atlas does not prepend memory to every prompt. Instead, it offers an MCP memory server to Atlas Agent and to external agents that advertise HTTP MCP support. The server asks an agent to:
+Atlas never adds memory to your prompt. The text you type reaches the agent exactly as you wrote it.
 
-- load a briefing when a session starts
-- check what other sessions changed when it resumes
+Instead, Atlas runs a memory tool server on your machine and hands it to every session that can use it: Atlas Agent, and any external agent that advertises HTTP MCP support. The server's instructions ask the agent to:
+
+- read a briefing when a session starts
+- check what other sessions recorded when it resumes
 - search before asking you to repeat project history or retrying an old approach
 - remember or forget durable context as the work changes
 
-The agent decides whether to call those tools. An ACP agent without HTTP MCP support receives no shared memory, and an agent that never calls the tools gets no automatic injection.
+The agent decides when to call those tools. An agent without HTTP MCP support gets no shared memory, and an agent that never calls the tools gets nothing pushed to it.
 
-## Build the record
+## What memory holds
 
-Atlas records session lifecycle and extracts durable entries from captured work. The durable kinds are **decision**, **fact**, **failure**, and **architecture**. It also keeps the active plan, recently changed files, and the tail of the previous session for briefings.
+Memory keeps six kinds of entry:
 
-The same search can reach indexed project documents, instruction files, knowledge notes, and imported agent memory. Embeddings run on your machine.
+| Kind | What it is |
+| --- | --- |
+| **Plan** | The agent's current plan. A newer plan replaces it. |
+| **File changed** | One line per edited path, describing what changed. |
+| **Decision** | A choice that was made, and why. |
+| **Fact** | A durable fact or convention about the project. |
+| **Failure** | A dead end, kept so the next agent does not repeat it. |
+| **Architecture** | How part of the system fits together. |
 
-## Carry durable preferences further
+Plans and file changes describe the current stretch of work. Decisions, facts, failures and architecture notes are durable: they accumulate and are what agents search.
 
-Atlas promotes a fact to cross-project memory only when the same high-confidence content appears in at least two distinct repositories. Cross-project results fill gaps when local retrieval is sparse; they do not outrank stronger local matches.
+Entries arrive three ways:
+
+- **Atlas records them** as it watches a session: plans, file changes and the session's start and end.
+- **Atlas extracts them** from finished turns. Extraction is a model call through the Atlas gateway when you are signed in, or through your own provider key when you choose one in the memory settings. Without either, Atlas skips extraction.
+- **Agents write them** with the memory tools, on their own or when you ask.
+
+A briefing also carries the tail of the most recent other session in the repository, whichever agent ran it, and the useful parts of your existing `CLAUDE.md`, `AGENTS.md` and Claude memory files.
+
+## Save a conversation with /remember
+
+Type `/remember` in the [composer](/docs/product/chat) to have the agent save the decisions, facts, dead ends and architecture from the current conversation. Add a focus after it, such as `/remember the retry rule`, to narrow what it records.
+
+`/remember` is a skill Atlas installs into `~/.agents/skills`, so it appears for every agent that reads [skills](/docs/context/skills) from there.
+
+## Keep memory across agent switches
+
+When you switch agents in a chat that already has a conversation, two settings in [Settings → General](/docs/product/settings) decide what carries over:
+
+- **Switching agents in a chat**: choose **Hand off** to attach the conversation to your next message, so the new agent continues where the last one stopped.
+- **Save to memory before switching agents**: Atlas sends `/remember` to the agent you are leaving and waits for it to finish before switching. This costs one turn, and you can skip the wait from the notice.
+
+<Screenshot alt="The Memory panel's header with the Shared pill switched on and the handoff summariser popover open, showing the Raw and Provider options." caption="The Shared pill and the handoff summariser." />
+
+## Choose how the handoff is summarised
+
+The handoff is the previous session's tail, as served in the next agent's briefing. Open the sliders button beside **Shared** in the Memory panel to choose how it is prepared:
+
+- **Raw** sends the last turns verbatim. There is no model call and no delay. This is the default.
+- **Provider** condenses the tail with a model from one of your [API keys](/docs/product/settings#api-keys). If the call fails or takes longer than a few seconds, Atlas falls back to the raw tail.
+
+The same choice decides which model extracts durable entries for the project.
+
+## Mirror your instructions into AGENTS.md
+
+Some agents read `AGENTS.md` and ignore `CLAUDE.md`. Turn on **Mirror CLAUDE.md and .claude/rules into AGENTS.md** in Settings → General, and Atlas keeps a marked block in the project's `AGENTS.md` with the contents of `CLAUDE.md` and every `.claude/rules` file, rewritten as they change.
+
+Your own text outside the block is never touched. Turning the setting off removes the block. Hooks and permission lists are not instructions, so they are not copied.
+
+## Turn sharing off for a project
+
+Sharing is on for every project by default. Open **Memory** from the rail and click **Shared** to switch it off for the current project.
+
+The switch controls everything: with it off, sessions are not offered the memory tool server, Atlas records nothing, and extraction does not run.
+
+## Carry durable facts across repositories
+
+Atlas promotes a fact to your cross-project memory in `~/.atlas/memory` only when the same high-confidence content appears in at least two repositories. Cross-project results fill gaps when a repository's own memory is thin. They never outrank a stronger local match.
 
 ## Inspect or correct memory
 
-Open the Memory panel when you want to see what Atlas knows:
+Open **Memory** from the rail. The panel has three tabs:
 
-- **Graph** visualises the semantic index built from project documents.
-- **[Agent preferences](/docs/context/agent-preferences)** shows editable rules Atlas found in your files.
-- **Timeline** places indexed context, sessions, and commits on branch lanes over time.
-- **Shared** shows the cross-agent event log, plans, and durable memory entries with their provenance and confidence.
+- **Graph** maps the semantic index Atlas builds from your instruction files, agent memory files and knowledge notes. Search it in plain language, switch between a tree and a force layout, or play it back over time. The first visit downloads a small embedding model.
+- **[Policy](/docs/context/agent-preferences)** lists the standing rules Atlas found in your instruction and memory files.
+- **Shared** shows the record itself: the event log, captured plans, and the memory entries with their source, agent and confidence. Filter by agent or kind.
 
-Edit an incorrect durable entry or forget it from the Shared view. Atlas keeps the change in the event log rather than silently rewriting history.
+Edit an entry to correct it, or forget it to delete it along with the events that produced it. From the Shared tab you can also import your existing Claude memory, or clear the project's shared memory entirely.
+
+<Screenshot alt="The Memory panel's Shared tab listing memory entries, with columns for when each was updated, its kind, source, agent, confidence and text." caption="The Shared tab." />
 
 ## Keep the code index current
 
-Atlas separately indexes your codebase so memory search stays grounded in the repository. Its status appears in the [composer](/docs/product/chat), where you can rebuild it. Choose the embedding model in [Settings → Local Models](/docs/product/settings); changing it rebuilds the index after Atlas asks for confirmation.
+Atlas separately indexes your codebase so memory search stays grounded in the repository. When you chat with Atlas Agent, the composer shows how many files are indexed; click it to rebuild the index.
+
+Embeddings are computed on your machine. Choose the model in [Settings → Local Models](/docs/product/settings#local-models). Changing it rebuilds the index after Atlas asks for confirmation.
 
 ## Next
 
-- [Agent preferences](/docs/context/agent-preferences): edit standing rules
-- [Timeline](/docs/team/timeline): follow sessions into commits
+- [Policy](/docs/context/agent-preferences): review the rules your agents work from
 - [Knowledge base](/docs/context/knowledge-base): write deliberate project notes
+- [Skills](/docs/context/skills): give agents reusable instructions

@@ -4,6 +4,127 @@ description: Channels and direct messages for your organisation, with agent sess
 icon: MessagesSquare
 ---
 
-{/* TODO(phase-2): Channels (public/private), DMs, group DMs, replies, reactions, pins, attachments and the files tab, search, @mentions, session/checkpoint reference cards, notifications for DMs and mentions, incoming webhooks. Needs a synced org. Verify against src/features/comms and server apps/chat. */}
+Team chat is your organisation's messaging, inside Atlas: channels, direct messages and group DMs. It is where you talk to teammates, and where a recorded agent session can be dropped into the conversation so everyone opens the same record.
 
-Team chat is your organisation's messaging: channels, direct messages and group DMs, inside Atlas. A message can carry a reference to a recorded session or checkpoint, which opens it on the timeline. Open chat from the rail, or press <Kbd>⌘⇧C</Kbd>.
+Team chat is not the same as [agent chat](/docs/product/chat). Agent chat is you talking to an agent in a project. Team chat is people talking to people across the organisation, and it lives in the right-hand panel next to Source Control.
+
+<Screenshot
+  alt="The team chat panel open beside the editor, showing the home view with a Channels section and a Direct messages section."
+  caption="Team chat opens in the right-hand panel."
+/>
+
+## Open team chat
+
+Press <Kbd>⌘⇧C</Kbd>, or click **Chat** in the project rail. <Kbd>⌘⇧B</Kbd> gives the panel back to Source Control.
+
+Chat needs a [synced organisation](/docs/team/organisations). In a local-only organisation the **Chat** button tells you to sync the organisation first, because there is no server to talk to.
+
+The same conversations are in the [web app](/docs/team/web-app) at app.tryatlas.cc, and messages arrive live in both.
+
+## Find your way around
+
+The home view lists every channel you are in, then your direct messages, then the rest of your teammates. Type in **Jump to a channel or person…** to filter all three.
+
+Click a channel or a person to open the conversation as a tab at the top of the panel. You can keep several open, for example a channel you are watching and a DM you are answering. Click the back arrow to return to the home view.
+
+Public channels you haven't joined are under **Discover** at the bottom of the home view. Expand it and click **Join**.
+
+## Channels
+
+Click **+** beside **Channels**, type a name, and choose whether it is **Private**.
+
+- **Public** channels are visible to everyone in the organisation. Anyone can be invited, and a new member sees the full history.
+- **Private** channels are visible only to their members. An organisation admin cannot read a private channel they are not in.
+
+Members can rename a channel: hover its name in the conversation header and click it.
+
+## Direct messages and group DMs
+
+Click **+** beside **Direct messages** and pick one person for a DM, or several for a group DM. Clicking a teammate on the home view opens your DM with them, creating it if needed.
+
+A group DM's membership is fixed. To add someone, start a new group with everyone in it.
+
+## Write messages
+
+The composer takes Markdown. Its toolbar has bold, italic, strikethrough, code, links and lists, plus an emoji picker.
+
+- Click the paperclip to attach files, up to 10 per message. You can also drop or paste them into the composer.
+- Click **@** or type `@` to mention a teammate. A mention notifies them.
+- A message holds up to 16 KB of text.
+
+Hover a message for its actions:
+
+- **React** with an emoji.
+- **Reply** to quote the message in your next one. Replies stay in the main conversation; there are no separate thread panes.
+- **More** to copy the text, **Pin for everyone**, or edit and delete. Only the author can edit a message. The author or an organisation admin can delete it.
+
+<Screenshot
+  alt="A channel conversation with a message hovered, showing the React, Reply and More actions, and a reply quoting an earlier message."
+  caption="Hover a message to react, reply, or pin it."
+/>
+
+## Pins and files
+
+Pins are shared: anything one person pins, everyone sees. When a conversation has pins, a pin count appears in its header. Click it to search the pinned messages and jump to one.
+
+Under the conversation header, the **Files** tab gathers the images, video, audio and documents shared in the conversation. Click an image or video to open it full size.
+
+## Session references
+
+A message can carry a reference to a recorded agent session, or to one [checkpoint](/docs/getting-started/concepts#checkpoint) inside it. It shows as a card with the session's title, agent and changes. Click the card to open that session on the [timeline](/docs/team/timeline), even if a teammate ran it on their machine.
+
+<Screenshot
+  alt="A message in a channel with a session reference card below it, showing the session title, agent, model and a checkpoint line with insertions and deletions."
+  caption="A session reference opens the recorded session on the timeline."
+/>
+
+There are two ways to add one:
+
+- **In the web app**, click **Reference a session** in the composer, find the session, and pick the session or one of its checkpoints. A message carries up to three.
+- **From Atlas Agent**, ask it to post about a session, for example "send a summary of this session to #releases". Atlas Agent asks you before it sends anything. This needs [Let Atlas Agent act in your organisation](/docs/agents/atlas-agent) turned on.
+
+References only work for projects visible to the whole organisation. A restricted project's sessions can't be referenced.
+
+## Search
+
+On the desktop, the search box on the home view finds channels and people. To search the text of messages, use **Search messages** in a conversation's header in the web app.
+
+## Notifications
+
+Atlas sends a desktop notification when someone sends you a DM or group DM message, and when someone mentions you in a channel (including `@channel` and `@here`). Click the notification to open the conversation. Turn either kind off under **Notifications** in Settings.
+
+## Post from CI and other tools
+
+An incoming webhook gives a channel a secret URL that outside systems can post to. Use one to have CI report a failed build, a deploy script announce a release, or a monitor raise an alert in the channel where the team will see it.
+
+Webhook messages show live, count as unread, can mention people, appear in search, and are marked as coming from an integration rather than a person.
+
+To create one:
+
+1. Open the channel in the [web app](/docs/team/web-app).
+2. Open the conversation menu (**⋯**) and choose **Integrations**.
+3. Name the webhook, for example "Deploys", and create it.
+4. Copy the URL. It is shown only now and when you regenerate it, so store it as a secret in your CI.
+
+Post JSON with a `content` field (a `text` field also works, so most Slack and Discord integrations work by changing the URL):
+
+```bash
+curl -X POST "$ATLAS_WEBHOOK_URL" \
+  -H "Content-Type: application/json" \
+  -d '{"content": "Build #482 failed on main", "username": "CI"}'
+```
+
+To attach files, send `multipart/form-data`, up to 10 files and 25 MB in total.
+
+Organisation admins and the person who created the channel manage its webhooks: rename them, give them a picture, regenerate the URL, disable them without deleting, or delete them. Webhooks work in channels only, not in DMs.
+
+<Screenshot
+  alt="The Integrations dialog for a channel, listing one webhook named Deploys with its picture, an enabled toggle, and buttons to regenerate or delete it."
+  caption="Manage a channel's webhooks under Integrations in the web app."
+/>
+
+## Next
+
+- [Calls](/docs/team/calls): talk instead of type
+- [Prompt drafts](/docs/team/prompt-drafts): write a prompt together in a conversation
+- [Spaces](/docs/team/spaces): the shared canvas attached to every conversation

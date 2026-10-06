@@ -1,33 +1,151 @@
 ---
 title: Timeline
-description: Trace agent work from a session to the commit it produced.
+description: Every agent session your team records, on one board, linked to the commits it produced.
 icon: Timeline
 ---
 
-Use the timeline to answer a simple question: which agent session produced this commit? Atlas keeps sessions and [checkpoints](/docs/getting-started/concepts#checkpoint) together for each project.
+The timeline is your organisation's record of agent work. It shows every session you recorded on this machine and every session your teammates synced to the organisation's cloud projects, including the ones running right now. Each session keeps its prompts, responses, tool calls and the [checkpoints](/docs/getting-started/concepts#checkpoint) that tie it to commits, and anyone on the team can comment on any step.
 
-The timeline shows projects with [session capture](/docs/source-control/capture) turned on. Open it from **Timeline** in the sidebar. It spans every project in the active [organisation](/docs/team/organisations).
+Open it from **Timeline** at the top of the rail. It covers every project in the active [organisation](/docs/team/organisations), so you don't need a project open. The [web app](/docs/team/web-app) has the same timeline in the browser.
+
+<Screenshot
+  alt="The Timeline tab in the desktop app. The left list groups sessions under Today and Yesterday; each row has a title, a project name and a teammate's avatar, and one row has a pulsing green dot. The right side shows a table of sessions with Project, Model, Tokens and Active columns."
+  caption="The timeline board: sessions grouped by day, with live sessions marked."
+/>
+
+## Get sessions onto the timeline
+
+The timeline shows projects with [session capture](/docs/source-control/capture) turned on.
+
+- A project stored **Local** shows only your own sessions, and only on this machine.
+- A project stored **Cloud** sends its sessions to the organisation. They appear on your teammates' timelines, and theirs appear on yours.
+
+To share a project's history, see [Put a project's sessions in the cloud](/docs/team/organisations#put-a-projects-sessions-in-the-cloud).
+
+## Read the board
+
+The list on the left groups sessions by **Day**, **Week** or **Month**; switch with the control beside the **Timeline** heading. **Jump to Today** brings you back to the top.
+
+Each row shows the session's title (the first line of its first prompt), its project, and the avatar of the person who ran it. A check before the project name means the session is shared with the organisation. A laptop means it is on this machine only.
+
+The dot on each row says what state the session is in:
+
+- **Pulsing green**: live. The session has been written to within the last minute and a half.
+- **Amber**: needs attention. Capture hit a problem recording it; hover the row for the reason.
+- **Plain**: finished, or imported from an earlier Claude Code transcript.
+
+The board refreshes on its own: every 15 seconds for the whole organisation, and in real time for cloud projects bound on this machine. Your local sessions show even with no connection.
+
+The list holds the newest 500 sessions. Filter by project to see a project's full history.
+
+## Filter and search
+
+Select **Filter sessions** in the header to narrow the board by **Project**, **Agent**, **Model** or **Branch**. Each option shows how many sessions it matches, and a badge on the filter button counts the filters that are on. **Clear all** removes them.
+
+Type in **Search sessions…** to search the board. It matches session titles, project names, agents, models and branches. To search inside prompts, responses, tool calls and checkpoints, use the timeline in the web app.
 
 ## Follow a commit back to its work
 
-Open a commit from [Source Control](/docs/source-control/git) to see the sessions that contributed to it. Open a session in the timeline to see the commits it produced.
+Select **Recent checkpoints** in the header for a list of recent commits linked to a session, across your projects. Search it by commit, then select one to open the session at that checkpoint.
 
-Atlas stores this record locally in the project's Atlas directory. It works offline and never requires a network connection.
+You can also start from a commit in [Source Control](/docs/source-control/git), which shows the sessions that contributed to it.
 
-## Let Atlas link the work
+## Read a session
+
+Select a session to open it. The header shows how long it was active, its tokens, an estimated cost and the token mix. Below that is the transcript, in order:
+
+- **Prompt** and **Response** for each turn, and **Thinking** where the agent recorded it
+- tool calls, folded into groups; select **Show tool calls** to see each call, then a call to see its **Arguments** and **Result**
+- **Checkpoint** rows, one per commit the session produced, with the commit subject and lines added and removed
+
+If a commit was later rewritten or squashed away, its checkpoint says **Commit no longer reachable**. The session record is kept.
+
+Use **Filters** at the bottom of the session to show only some kinds of entry, or only failed tool calls, and **Search this session…** to find text in it. **Maximise session** hides the list so the session fills the tab.
+
+## Comment on a session
+
+Comments work on any session in a cloud project, yours or a teammate's. A local session has no one to discuss it with, so it shows no comment controls.
+
+Comment on the whole session with **Comment on this Session** in its header, or on one step: a prompt, a response, a thinking block, a tool call or a checkpoint. Each step's row has its own comment control.
+
+<Screenshot
+  alt="A session transcript in the timeline with a comment thread open on a tool call. The thread shows two comments, one with an @mention, and Reply and Resolve actions."
+  caption="A comment anchored to the tool call it is about."
+/>
+
+In a thread you can:
+
+- mention a teammate with **@**, which notifies them
+- **Reply**, **Resolve** a thread, or **Reopen** it
+- delete your own comment
+- **Reference in agent chat**, to bring the comment into a conversation with your agent
+
+Select **Comments** at the bottom of a session to open the comments panel. It lists every thread in the session; search them, sort **Newest first** or **Oldest first**, filter by person, and turn on **Show resolved**. Selecting a thread jumps to the step it is on.
+
+Comments reach people outside the timeline too:
+
+- When your own live chat is in a cloud project, its header shows a comments badge, and teammates' comments appear next to the messages they are about.
+- Mentions, replies and comments on your sessions land in your inbox in the web app, and by email if you have email notifications on.
+
+## Ask about a session
+
+Select **Ask about this session** to chat with a recorded session. Answers come from what the session actually recorded. Starter questions include "What changed in this session?" and "Review this session like a PR".
+
+You choose which checkpoints the chat reads, or keep **Full timeline**. Session chat uses your own API key: add one in **Settings**, **API Keys**. The session is read from your machine, and the question goes to the provider you choose.
+
+## Export and share a session
+
+While a session is open, select **Export session** to save it as Markdown or JSON.
+
+Select the session's name in the breadcrumb (**Sessions /** …) to copy it. A shared session copies as a link a teammate can open in the web app. A local session copies its ID.
+
+To share a session with someone outside the organisation, create a public share link in the web app. See [Share a session publicly](/docs/team/web-app#share-a-session-publicly).
+
+## Ask Atlas Agent what someone is working on
+
+[Atlas Agent](/docs/agents/atlas-agent) reads the same record. In a cloud project, ask it things like:
+
+- "What is Sam working on?"
+- "Which sessions are live right now?"
+- "What did the team do on the billing project this week?"
+- "Summarise the open comments on yesterday's parser session."
+
+It lists the matching sessions, flags the live ones, and can open one and read it. By default it looks back 14 days.
+
+Admins can also ask for one member's recorded activity: their sessions, checkpoints, lines added and removed, and tokens. This counts only work recorded in Atlas, so it is not a measure of anyone's performance.
+
+Atlas Agent can also reply to and resolve comments. Anything that reaches another person, such as posting a reply or sending a message, asks you first. This needs **Let Atlas Agent act in your organisation**, which is on by default in [Settings](/docs/product/settings).
+
+## How sessions link to commits
 
 Atlas watches repository history without installing git hooks, changing git configuration, or writing refs. It can therefore connect work committed from Atlas, another editor, or a terminal.
 
 For existing files, Atlas links a session when the commit includes a path the agent touched. For new files, the committed content must match the agent's output. This keeps normal follow-up edits linked while avoiding credit for files you replaced yourself.
 
-Once Atlas settles a touched path, it stops using that touch to nominate future commits. Merge commits do not create checkpoints, and a purely human commit stays unlinked.
+Once Atlas settles a touched path, it stops using that touch to nominate future commits. Merge commits do not create checkpoints, and a purely human commit stays unlinked. A link survives an amend or a rebase; when a squash makes it ambiguous, Atlas drops the link rather than guess.
 
-## Keep sessions without commits
+Atlas records a session even when it never produces a commit. Folders without git still keep sessions, but can't produce checkpoints.
 
-Atlas records a session even when it never produces a commit. Git is optional: non-repository folders still keep sessions, but cannot produce checkpoints.
+## What syncs and what doesn't
+
+A project stored Local sends nothing. A project stored Cloud sends this, for every session recorded in it:
+
+- **Session details**: its title, agent, model, token totals and start time.
+- **Messages**: the full text of every prompt and response. Thinking is sent as a short preview only.
+- **Tool calls**: each call's name, status, the paths it touched, and its full arguments and results. That includes command output and file contents the agent read or wrote.
+- **Checkpoints**: commit SHA, branch, the git author's name and email, the files touched and line counts.
+- **The project**: its name, slug, the repository's root commit and its origin URL.
+
+These never leave your machine through the timeline: your source tree, git history, diffs, [shared memory](/docs/context/memory) and the [knowledge base](/docs/context/knowledge-base).
+
+**Redaction happens on your machine.** Atlas scrubs secrets such as API keys, tokens, credentialed URLs and `KEY=value` pairs before a session is stored locally, so what syncs is the already-redacted record. The server does not redact anything further. Before you publish a project's history, Atlas tells you how many secrets were redacted.
+
+**Who can read it.** Everyone in the organisation, admins included, can read every session in a cloud project that isn't restricted. A restricted project is readable only by the members named on it. A public share link extends one session or project to anyone who has the link. When someone leaves, their sessions stay and show as **Former member**.
+
+Only the organisation's [owner](/docs/team/members#the-owner) can delete recorded sessions. A deleted session is erased for everyone, and a desktop that still has it won't upload it again.
 
 ## Next
 
 - [Session capture](/docs/source-control/capture): turn recording on for a project
-- [Memory](/docs/context/memory): carry context into the next session
-- [Git & Diff](/docs/source-control/git): review and create commits
+- [Organisations](/docs/team/organisations): put a project in the cloud
+- [Web app](/docs/team/web-app): the timeline in a browser, with full-text search and share links

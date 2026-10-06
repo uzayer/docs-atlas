@@ -5,54 +5,113 @@ description: The terms you'll see across Atlas, and what they mean.
 
 Every term used across these docs is defined once, here. Other pages link back to this page rather than redefining a term inline.
 
-## Project
+## The record
 
-A folder Atlas works in, plus the `.atlas/` directory it creates alongside your code. Opening a folder is the only setup Atlas asks for, no config file, no wizard. Everything else, [organisations](#organisation), [agents](#agent), [shared memory](#shared-memory), attaches to a project rather than existing on its own. See [Quickstart](/docs/getting-started/quickstart).
+### Project
 
-## Organisation
+A folder you opened in Atlas. Almost everything is scoped to a project: the editor state, the file index, the git watcher, the knowledge base and the [capture](#session-capture) store. Atlas keeps its per-project data in the folder's `.atlas/` directory, which it adds to `.gitignore`.
 
-An online account container owning projects, with members and roles. Every project belongs to exactly one organisation, and Atlas creates a local "Personal" one for you automatically, so you never have to create one yourself. See [Organisations](/docs/team/organisations) for cloud versus local, and [Members & roles](/docs/team/members) for invites.
+Each project belongs to one [organisation](#organisation). See [Quickstart](/docs/getting-started/quickstart).
 
-## Agent
+### Workspace
 
-A coding agent Atlas drives: either Atlas Agent, which runs in process, or an external agent installed from the [ACP registry](/docs/agents/registry). External agents advertise their capabilities when they connect, so models, modes, authentication, session restoration, images, terminals, and memory access can vary by agent.
+The organisation's shared copy of a project's record: its recorded sessions, checkpoints and comments. A project gets one when you switch its capture to [Cloud](#session-capture), and the app labels it a Project in your organisation.
 
-## Session
+Teammates who open their own checkout of the same repository can **Connect** to it, so everyone's sessions land in one place. A project binds to at most one workspace.
 
-One agent conversation, recorded and resumable: every message, tool call, and file change, kept as it happens. A session isn't the same as a [checkpoint](#checkpoint); one session can produce several commits, and each gets its own checkpoint.
+### Session
 
-## Session capture
+One agent conversation: every prompt, response, tool call and file change, kept as it happens. A session is resumable later from your chat history.
 
-The per-project switch that records sessions. It's off until you turn it on, and local capture keeps every record on your machine with no account and no network call. Without it, sessions still run, but nothing reaches the [timeline](#timeline). See [Session capture](/docs/source-control/capture).
+A session isn't a [checkpoint](#checkpoint). One session can produce several commits, and each gets its own checkpoint. Once captured, a session is also called a recorded session.
 
-## Checkpoint
+### Turn
 
-The link between a session and the commit containing its work. It's what a commit doesn't tell you on its own: which session produced it, what the agent was asked, and the reasoning behind the change. Checkpoints survive rebases and amends, and orphan rather than guess when a squash makes the link genuinely ambiguous.
+One prompt and the agent's answer to it, including every tool call the agent makes along the way. A session is a sequence of turns. Usage figures count messages, which are the individual user and agent rows within a turn.
 
-## Timeline
+### Session capture
 
-The record of your sessions and the checkpoints they produced, across every project in the active [organisation](#organisation). It's how you get back to the reasoning behind a change without reading a raw transcript: select a checkpoint and chat with it directly.
+The per-project switch that records sessions. It's off until you turn it on, and it has two modes:
 
-## Shared memory
+- **Local** keeps the record in the project's `.atlas/` directory on this machine, with no account and no network.
+- **Cloud** keeps the same local record and also syncs it to your organisation's [workspace](#workspace), where your team can see it.
 
-An on-device record of plans, decisions, facts, file changes, and failures from work in the project. Atlas Agent and external agents that advertise HTTP MCP support can pull from it through Atlas's memory tools. It is not the same thing as the [knowledge base](#knowledge-base), which is what you write down on purpose.
+Either way, Atlas redacts secrets on your machine before it stores anything. See [Session capture](/docs/source-control/capture).
 
-## Agent preferences
+### Checkpoint
 
-A rule or preference Atlas distils from your instruction files and memory, and surfaces for editing. It's a readable, editable view of what an agent has already picked up, not a separate rule system you maintain by hand. See [Agent preferences](/docs/context/agent-preferences).
+The link between a session and a commit containing its work. It records what a commit can't tell you on its own: which session produced it, what the agent was asked, and the reasoning behind the change.
 
-## Skill
+Atlas finds checkpoints by watching your repository, with no git hooks. They survive amends and rebases, and orphan rather than guess when a squash makes the link ambiguous.
 
-A `SKILL.md` file scoped globally or per project. Atlas keeps a canonical copy and can project it into Atlas Agent, Claude Code, and Codex, whose skill locations it knows. Type `/` in the composer to invoke a skill the connected agent advertises.
+### Timeline
 
-## Pack
+The board of recorded sessions and the checkpoints they produced. For a Local project, it's your own work. For a Cloud project, it merges in your teammates' sessions, with authors, live presence and [comments](#comment). Open it from **Timeline** in the sidebar. See [Timeline](/docs/team/timeline).
 
-An installable bundle of skills, commands, hooks, subagents, rules, and scripts. Typically a GitHub repo, discovered through the skills.sh index and installed in one step rather than assembled by hand.
+### Comment
 
-## Knowledge base
+A note a teammate leaves on a recorded session, anchored to the whole session or to one message, tool call or checkpoint. Comments are threaded, can mention people, and can be resolved.
 
-Markdown notes in `.atlas/knowledge/`. The deliberate counterpart to [shared memory](#shared-memory): memory is what Atlas infers on its own, a knowledge base entry is what you decided was worth writing down.
+## Your team
 
-## Mention
+### Organisation
 
-`@` anything: files, folders, symbols, branches, notes, papers, sessions, and more. A file resolves to a path the agent reads on demand rather than a paste, so mentioning a large file doesn't occupy the context window for the rest of the session.
+The group a project belongs to, with members and roles. Atlas creates a local "Personal" organisation for you, so you can work without an account.
+
+A **synced** organisation lives in your Atlas account. It's what turns on the shared timeline, Cloud capture, team chat and [Atlas Agent](#atlas-agent). See [Organisations](/docs/team/organisations) and [Members & roles](/docs/team/members).
+
+### Team chat
+
+Your organisation's messaging: channels, direct messages and group DMs, each called a conversation. Messages can carry a recorded session or a checkpoint as a card that opens it on the timeline. See [Team chat](/docs/team/chat).
+
+### Prompt draft
+
+A prompt that several teammates write together, live, inside a conversation. When it reads right, one person sends it to their own agent. See [Prompt drafts](/docs/team/prompt-drafts).
+
+### Space
+
+A shared, page-based canvas that belongs to a conversation. Everyone in the conversation sees the same pages live, and Atlas Agent can draw diagrams onto them. See [Spaces](/docs/team/spaces).
+
+A Space is not the project canvas, the local board saved in a project's `.atlas/` directory.
+
+### Shared thread
+
+One piece of work that several teammates and their agents carry out together, live. It holds the current state of the files the work changed, and each person's agent conversation inside it is an ordinary session. See [Shared threads](/docs/team/shared-threads).
+
+## Agents
+
+### Agent
+
+A coding agent Atlas drives: either [Atlas Agent](#atlas-agent) or an agent installed from the [ACP registry](/docs/agents/registry). Agents advertise their capabilities when they connect, so models, modes, sign-in, session restoration, images, terminals and memory access can vary by agent.
+
+### Atlas Agent
+
+The agent built into Atlas. It runs through the Atlas gateway on your Atlas account, billed to your organisation, so it needs a synced organisation with AI access. In a Cloud project it can also read and act in your organisation. See [Atlas Agent](/docs/agents/atlas-agent).
+
+### Shared memory
+
+A record of plans, decisions, facts, file changes and failures from work in a repository, shared by every agent you run there. Agents that support Atlas's memory tools pull from it and write to it.
+
+Shared memory lives on your machine and is not synced to your team. It's not the [knowledge base](#knowledge-base) either, which is what you write down on purpose. See [Memory](/docs/context/memory).
+
+### Policy (agent preferences)
+
+A rule or preference Atlas distils from your instruction files and memory, and surfaces for editing on the Memory panel's **Policy** tab. It's a readable view of what agents have already picked up, not a separate rule system. See [Policy](/docs/context/agent-preferences).
+
+### Skill
+
+A `SKILL.md` file scoped globally or per project. Atlas keeps a canonical copy in `~/.agents/skills` and can project it into Atlas Agent, Claude Code and Codex. Type `/` in the composer to use a skill the connected agent advertises. See [Skills](/docs/context/skills).
+
+### Pack
+
+An installable bundle of skills, commands, hooks, subagents, rules and scripts. Usually a GitHub repository, found through the skills.sh index and installed in one step.
+
+### Knowledge base
+
+Markdown notes in `.atlas/knowledge/`. The deliberate counterpart to [shared memory](#shared-memory): memory is what agents record as they work, a knowledge base note is what you decided was worth writing down. See [Knowledge base](/docs/context/knowledge-base).
+
+### Mention
+
+Type `@` in the composer to point the agent at something: a file, folder, symbol, branch, note, earlier message or past session. In a synced organisation you can also mention a member, a conversation, a recorded session or a comment.
+
+A file resolves to a path the agent reads on demand rather than a paste, so mentioning a large file doesn't fill the context window for the rest of the session.

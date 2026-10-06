@@ -1,10 +1,43 @@
 ---
 title: Self-healing
-description: When software breaks, Atlas finds the session that caused it and opens the fix.
+description: When software breaks, Atlas finds the session behind the change and starts the fix with that context.
 icon: Wrench
 status: roadmapped
 ---
 
-{/* TODO(phase-2): Explain the loop and what already exists underneath it (checkpoints, the shared timeline, comments). No dates. */}
+A nightly job fails. The log points at a line, and `git blame` points at a teammate's commit from three weeks ago. But an agent wrote that line, in a session where it made an assumption and said so in a reply nobody reread.
 
-Every change in Atlas has a source: the session and the prompt that produced it. Self-healing closes the loop. When something breaks, Atlas finds that session, opens an issue with its context, and an agent proposes a fix as a pull request for the team to approve.
+Every change recorded in Atlas has a source: the session and the prompt that produced it. Self-healing uses that source to close the loop from an incident to a fix your team approves.
+
+## The loop
+
+1. **Something breaks.** A monitor fires or a CI run goes red, and Atlas is told.
+2. **Atlas walks back to the session.** From the failing line to the commit is what `git blame` already does. From the commit to the agent session, and the turn where the decision was made, is what Atlas adds.
+3. **Atlas opens an issue.** The [issue](/docs/source-control/issues) carries the failure, the commit, a link to the session and the turn that caused it.
+4. **A fix agent starts with that context.** It sees what the original agent was asked and what it assumed, not just the line that threw. That matters on long sessions: if the session made the same assumption in three files, the fix can cover all three.
+5. **Your team approves the fix.** The agent proposes a pull request, and a person approves it. That step doesn't go away.
+6. **Atlas remembers the pattern.** Over many closed loops, a team could see that one kind of request keeps producing one kind of bug, and be warned while writing the next prompt like it. This is the furthest-out step, and the least defined.
+
+The walk-back is about the instruction, not the person. What's useful is what the agent was asked and what it decided.
+
+## What exists today
+
+Most of what the walk-back needs is already recorded:
+
+- **Checkpoints.** [Session capture](/docs/source-control/capture) links each commit to the session that produced it, and keeps that link through amends and rebases. When a link is ambiguous, Atlas orphans it rather than guess, so a link you follow is one you can trust.
+- **The shared record.** In a Cloud project, every session's prompts, replies and tool calls reach the [team timeline](/docs/team/timeline), with secrets redacted on the developer's machine before anything is stored.
+- **Asking a session questions.** Open a recorded session on the timeline and ask it what it did and why, using one of your own provider keys. Answers come from its record.
+- **Atlas Agent.** [Atlas Agent](/docs/agents/atlas-agent) can read your team's recorded sessions, so you can ask it to find the session behind a change and start the fix with that in front of you.
+- **Comments.** Teammates can comment on the exact message, tool call or checkpoint that went wrong.
+
+## What isn't built yet
+
+- Atlas doesn't react to monitors or CI on its own.
+- You find a session from the timeline, from Source Control's history for your own commits, or by asking Atlas Agent. Going from a stack trace straight to the session isn't built.
+- Issues, and dispatching a fix agent to a cloud machine, aren't built. Every agent session runs on a team member's own computer.
+- Atlas doesn't open pull requests or push to a remote. Committing and pushing are yours.
+
+## Next
+
+- [Issues](/docs/source-control/issues): issues that dispatch agents
+- [Roadmap](/docs/community/roadmap): what's shipped, in progress and planned

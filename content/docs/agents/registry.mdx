@@ -24,6 +24,12 @@ For `npx` agents, Atlas manages its own Node.js runtime and keeps each agent in 
 
 Installed agents appear after Atlas Agent in the switcher, sorted by name.
 
+## Update an agent
+
+When the registry publishes a newer version of an installed agent, **Settings → Agents** offers an update, and a chat using that agent shows the new version and an **Update** button above the composer. The update waits for any reply in progress to finish, then installs. Your conversation continues on the new version with your next message.
+
+Atlas Agent has no registry update. It's updated with Atlas itself.
+
 ## Remove an agent
 
 Select **Remove** and confirm. Atlas stops any live connection, removes the agent from the switcher, and deletes its managed package cache. Existing chats stay in history, and you can install the agent again later.
@@ -44,5 +50,6 @@ Registry agents work in the open [project](/docs/getting-started/concepts#projec
 
 ## Next
 
-- [Agents](/docs/agents): understand Atlas Agent and ACP capabilities
+- [Agents](/docs/agents): how agents and their capabilities work in Atlas
+- [Atlas Agent](/docs/agents/atlas-agent): the agent built into Atlas
 - [Concepts](/docs/getting-started/concepts): learn Atlas terminology

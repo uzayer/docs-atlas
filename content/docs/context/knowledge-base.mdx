@@ -1,23 +1,55 @@
 ---
 title: Knowledge base
-description: Write project notes that agents can use.
+description: Write project notes that you and your agents can use.
 icon: BookOpen
 ---
 
-Use the knowledge base for facts and decisions you want to write down deliberately. Atlas stores these markdown notes in your project's directory and indexes them alongside [memory](/docs/context/memory).
+Use the knowledge base for facts and decisions you want to write down deliberately. Notes are Markdown files, and Atlas indexes them alongside [memory](/docs/context/memory) so agents can find them.
+
+Open **Knowledge** from the rail, or press <Kbd>⌥J</Kbd>. It needs an open project.
+
+<Screenshot alt="The knowledge base open in a tab: the notes sidebar on the left, a note with a cover and icon in the block editor, and the inspector showing the note's properties on the right." caption="A note in the knowledge base." />
 
 ## Write a note
 
-Open the knowledge base from the left panel. The block editor gives you headings, lists, an outline, properties, icons, and covers. Press <Kbd>⌘S</Kbd> to save.
+The block editor works like a document, not a code editor:
 
-Use the sidebar to move through notes. Press <Kbd>⌘'</Kbd> to inspect the current note and <Kbd>⌘;</Kbd> to show or hide the sidebar. Notes can link to each other and show their backlinks.
+- type `/` for the block menu: headings, lists, callouts, toggles and code blocks
+- type `~` to link another note; each note lists the notes that link to it
+- type `@` to mention a file, a folder or other project context
+- add an icon, a cover and properties such as status, owner and tags
+
+Press <Kbd>⌘S</Kbd> to save, <Kbd>⌘;</Kbd> to show or hide the notes sidebar, and <Kbd>⌘'</Kbd> to open the inspector for the current note.
+
+## Find your way around
+
+Press <Kbd>⌘F</Kbd> to jump to a note by title. Choose **Open graph view** in the sidebar to see how your notes link to each other.
+
+To bring in notes you already have, choose **Import notes / folder** in the sidebar. Atlas copies Markdown files and folders, such as an Obsidian vault, and keeps their folder structure.
 
 ## Give a note to an agent
 
-Type `@` in the [composer](/docs/product/chat) and select a note. Atlas appends its contents as a visible context block, so you know exactly what the agent received.
+Type `@` in the [composer](/docs/product/chat) and select a note. Atlas attaches its contents as a visible context block, so you know exactly what the agent received.
 
-Atlas also indexes notes, so relevant information can surface without an explicit mention.
+Agents that use [shared memory](/docs/context/memory) can also find relevant notes on their own when they search.
+
+Going the other way, the **Save** button at the end of an agent's turn saves that conversation to the knowledge base as a note.
+
+## Export your notes
+
+Open the export menu at the bottom of a note to save a copy outside Atlas:
+
+- **Export note as .md** or **as .html** for the current note
+- **Export project as .md** or **as .html** for every note in the project
+- **Export server** to build a single program that serves your notes as a website on your machine. When you run it, it opens your browser at the notes. Building it needs Rust's `cargo` on your `PATH`, and the first build takes about a minute.
+
+## Where notes live
+
+Notes are stored in the project's `.atlas/knowledge/` directory. Atlas adds `.atlas/` to the project's `.gitignore` by default, so your notes stay on your machine and are not shared with your team.
+
+Team documentation that lives in git and that agents and people both work from is on the roadmap as the [Handbook](/docs/context/handbook).
 
 ## Next
 
 - [Memory](/docs/context/memory): carry useful context between sessions
+- [Handbook](/docs/context/handbook): the planned home for team documentation

@@ -1,24 +1,56 @@
 ---
 title: Git & Diff
-description: Review agent changes and decide what to commit.
+description: Review agent changes, commit them, and see which sessions produced each commit.
 icon: GitBranch
 ---
 
-Agents create diffs. Use the right panel (<Kbd>⌘⇧B</Kbd>) to read them, stage the parts you want, and make the commit.
+Agents create diffs. Use the right panel (<Kbd>⌘⇧B</Kbd>) to read them, stage the parts you want, and make the commit. Its tabs are **Source Control**, **Commit** (the git graph) and **GitHub**.
 
 ## Work in Source Control
 
-Fetch, pull, push, or publish from the toolbar. Use the branch switcher to find, create, delete, check out, or merge a branch.
+Fetch, pull, push, or publish a new branch from the toolbar. The Pull and Push buttons show how many commits you're behind and ahead. Use the branch switcher to find, create, delete, check out, or merge a branch.
 
-In **Changes**, review each modified file, stage or discard files and hunks, then write the commit summary, description, and optional co-authors. Select **Amend** to update the previous commit.
+In **Changes**, review each modified file, stage or discard files and hunks, then write the commit summary, description, and optional co-authors. **Revert all** discards every unstaged change, after you confirm.
+
+To change the previous commit instead of making a new one, tick **Amend last commit**. Leave the summary empty to keep the original message.
 
 Resolve conflicts from the same view by taking ours or theirs, opening the file, or marking a completed resolution.
 
+<Screenshot
+  alt="The Source Control tab's Changes view with staged files, a commit summary field, and the Amend last commit checkbox beside the Commit button."
+  caption="Stage, write the message, and commit, or amend the last commit."
+/>
+
+## Fetch in the background
+
+With **Settings → General → Auto-fetch from remote** on, Atlas runs `git fetch` for the open project when it opens, when Atlas regains focus, and every few minutes. The Pull badge then shows what the remote has.
+
+Auto-fetch only updates remote-tracking branches. It never pulls, merges, or touches your files. It's on by default.
+
 ## Read history and stashes
 
-In **History**, select a commit to copy its SHA, revert it, cherry-pick it, tag it, undo it into staging, or reset to it. Open linked sessions in the [timeline](/docs/team/timeline) to see the work behind a commit.
+In **History**, select a commit to copy its SHA, revert it, cherry-pick it, tag it, undo it into staging, or reset to it.
+
+When session capture is on, a commit an agent worked on shows **Produced by N sessions**, listing each session by title. Select one to open it in the [timeline](/docs/team/timeline) and read the prompts, reasoning and tool calls behind the commit. See [Session capture](/docs/source-control/capture#how-commits-become-checkpoints) for how Atlas makes that link.
 
 Use **Stashes** to save the working tree and restore it later.
+
+<Screenshot
+  alt="A commit selected in the History tab, with a Produced by 2 sessions row listing two session titles beneath the commit details."
+  caption="Every commit links to the sessions that produced it."
+/>
+
+## See the git graph
+
+The **Commit** tab draws the repository's history across every branch as a graph. It refreshes when commits, checkouts and fetches happen, including ones made in a terminal. Expand it to the full window for a long history.
+
+You can also open it from the command palette (<Kbd>⌘K</Kbd>) with **Show Git Graph**.
+
+## Clone reference repositories
+
+The **GitHub** tab lets you search public GitHub repositories and clone them into the project's `.atlas/repos/` directory as reference material for you and your agents. Because they live under `.atlas/`, they stay out of your own repository.
+
+Clones are shallow and track one branch. Switch a clone to another remote branch, fetch its latest commit, open it on GitHub, or delete it from the same list.
 
 ## Read a diff
 
@@ -30,5 +62,6 @@ Atlas identifies common git failures, including authentication, protected branch
 
 ## Next
 
-- [Chat & Sessions](/docs/product/chat): return to the agent work
+- [Session capture](/docs/source-control/capture): how commits become checkpoints
 - [Timeline](/docs/team/timeline): trace a commit back to its session
+- [Chat & Sessions](/docs/product/chat): return to the agent work

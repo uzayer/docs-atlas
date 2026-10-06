@@ -12,7 +12,13 @@ Manage both in **Settings → Skills**.
 
 Make a skill **global** to use it in every project, or **project** to keep it in one. Enable each skill only for the supported targets that should receive it.
 
-Atlas keeps one canonical copy and links it into the skill directories it knows for Atlas Agent, Claude Code, and Codex. A registry agent is not automatically a skill target merely because it speaks ACP. You can also adopt an existing skill from one of those agents into Atlas and project it to the others.
+Atlas keeps one canonical copy of each skill in the same place the skills.sh tooling uses: `~/.agents/skills` for global skills and `<project>/.agents/skills` for project skills. There is no separate Atlas store.
+
+From there, Atlas links each skill into the skill directories of the agents you enable it for: Atlas Agent, Claude Code and Codex. A registry agent is not automatically a skill target merely because it speaks ACP.
+
+A skill that already lives in one agent's own directory shows up too. Adopt it to move it into the canonical store and share it with the others. Skills that come from Claude Code plugins are listed read-only, since their plugin manages them.
+
+Atlas installs two skills of its own into `~/.agents/skills`: `remember`, which saves a conversation to [shared memory](/docs/context/memory#save-a-conversation-with-remember), and `atlas-self-configure`, which lets an agent read and safely change your Atlas settings when you ask it to.
 
 ## Install a pack
 
@@ -22,7 +28,9 @@ Skills become invokable instructions. Commands, agents, and rules from the pack 
 
 ## Invoke a skill
 
-Type `/` in the [composer](/docs/product/chat) and choose a skill the current agent advertises. If an agent does not expose skills or commands through ACP, Atlas does not invent a compatible invocation path for it.
+Type `/` in the [composer](/docs/product/chat) and choose a skill. The list is exactly what the current agent advertises, so a skill appears once the agent has found it in its directory. The list can be empty for the first few seconds of a session.
+
+If an agent does not expose skills or commands through ACP, Atlas does not invent a way to invoke them.
 
 <Callout type="info">
   A passthrough command runs only when it starts the message. Atlas sends it as ordinary text when it appears mid-sentence.
@@ -30,5 +38,5 @@ Type `/` in the [composer](/docs/product/chat) and choose a skill the current ag
 
 ## Next
 
-- [Agent preferences](/docs/context/agent-preferences): edit standing rules
-- [Chat & Sessions](/docs/product/chat): work with an agent
+- [Policy](/docs/context/agent-preferences): edit standing rules
+- [Agent chat](/docs/product/chat): work with an agent

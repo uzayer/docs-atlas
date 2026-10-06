@@ -1,44 +1,80 @@
 ---
 title: Agents
-description: Run Atlas Agent or install an ACP agent from the official registry.
+description: Run Atlas Agent, or any agent from the ACP registry, in the same chat.
 icon: Bot
 ---
 
-Atlas has one native agent and can run supported coding agents published in the official [Agent Client Protocol registry](/docs/agents/registry). You choose the agent in the composer; Atlas supplies the project and renders the conversation through the same interface.
+Atlas runs its own agent, Atlas Agent, and any coding agent published in the official [Agent Client Protocol registry](/docs/agents/registry): Claude Code, Codex, Cursor, OpenCode and more. You pick the agent in the composer. Atlas supplies the project and renders every agent's conversation through the same interface.
 
-## Start with Atlas Agent
+Whichever agent you run, [session capture](/docs/source-control/capture) records the work the same way, so all of it reaches the timeline and links to commits.
 
-Atlas Agent is available on every installation and runs in the Atlas process. It uses your Atlas account and the model access attached to your active organisation, so it does not need a provider key from **Settings → API Keys**.
+## Atlas Agent
 
-Atlas Agent can read and edit files, search the project, run commands, use [skills](/docs/context/skills), and search [shared memory](/docs/context/memory). Choose its model, mode, and reasoning effort from the controls it exposes in the composer.
+[Atlas Agent](/docs/agents/atlas-agent) is built into Atlas and needs no install. It runs through the Atlas gateway on your Atlas account and is billed to your organisation, so it needs no provider key. In exchange, it needs a signed-in, synced organisation with AI access. Until then the composer explains what's missing and offers the next step.
+
+It reads and edits files, searches the project, runs commands, uses [skills](/docs/context/skills) and [shared memory](/docs/context/memory), and asks you a question mid-turn when a request is ambiguous. It can also navigate the Atlas window for you and, in a Cloud project, read and act in your organisation.
+
+### Permission modes
+
+Choose one of four modes in the composer, or press <Kbd>⇧Tab</Kbd> to cycle through them:
+
+| Mode | What Atlas Agent may do |
+| --- | --- |
+| **Ask** | Asks before edits and commands. The default. |
+| **Accept edits** | Edits files in the project without asking. Asks before anything that reaches outside it. |
+| **Plan** | Read-only. It reads and plans, with no edits and no commands that change anything. |
+| **Bypass** | Runs everything without asking, with full access to your machine. |
+
+In every mode except Bypass, commands run in a sandbox that can write only inside the project and has no network access unless you approve it.
+
+### Model
+
+Pick a model from the list in the composer. The list comes from the Atlas gateway and shows the models your organisation has access to. Atlas Agent offers no reasoning-effort control.
+
+### Limits
+
+Atlas Agent takes text prompts only. It does not accept images yet.
 
 ## Install an ACP agent
 
-Open **Settings → Agents** to browse the registry. Atlas does not ship a separate built-in copy of Claude Code, Codex, Cursor, OpenCode, Kilo Code, or any other external agent. Installing one from the registry is the source of truth for whether it appears in the agent switcher.
+Open **Settings → Agents** to browse the registry, or install a popular agent with one click from the agent picker in the composer. Both routes create the same installation. Atlas does not ship a built-in copy of Claude Code, Codex, Cursor, OpenCode, Kilo Code or any other external agent.
 
-The composer also offers a short list of popular registry agents as one-click installs. These are shortcuts into the same registry, not a different class of integration.
-
-See [ACP registry](/docs/agents/registry) for installation, platform support, updates, and removal.
+When a newer version of an installed agent is available, an **Update** button appears above the composer of a chat using it. See [ACP registry](/docs/agents/registry) for installing, updating and removing agents.
 
 ## Expect capabilities to vary
 
 ACP lets an agent advertise what it supports. Atlas shows only the controls and actions the connected agent provides, including:
 
-- authentication methods
-- models, modes, and configuration controls
-- commands and permission requests
-- session listing, loading, and forking
+- sign-in methods
+- models, modes and configuration controls
+- slash commands and permission requests
+- session listing, loading and forking
 - images and embedded terminals
 
-An entry shown in Atlas's registry catalogue means Atlas can install and start it. It does not promise that every agent implements every optional ACP capability. Use the repository or website on its registry card for account setup and agent-specific behaviour.
+An entry in the registry means Atlas can install and start it, not that it implements every optional ACP capability. Use the repository or website on its registry card for account setup and agent-specific behaviour.
+
+## Switch agents in a chat
+
+Pick another agent from the composer at any point. What happens to a chat that already has a conversation depends on **Settings → General → Switching agents in a chat**:
+
+- **Start over** switches in place with a clean chat. This is the default.
+- **New tab** keeps the conversation on screen and opens the new agent beside it.
+- **Hand off** switches in place and attaches the conversation to your next message, so the new agent picks up where the last one stopped.
+
+Every conversation stays in your history either way. Turn on **Save to memory before switching agents** to have the agent you're leaving save its decisions and findings to shared memory first, when it offers `/remember`.
+
+## Bring in earlier sessions
+
+Agents that support session listing can bring their past sessions into Atlas. Open your chat history and select **Import sessions**.
 
 ## Keep the record in Atlas
 
-Every agent runs against the open [project](/docs/getting-started/concepts#project). Atlas keeps its chats in session history, and [session capture](/docs/source-control/capture) adds the work to the timeline and links qualifying commits to checkpoints.
+Every agent runs against the open [project](/docs/getting-started/concepts#project). Atlas keeps its chats in your history, and [session capture](/docs/source-control/capture) adds the work to the timeline and links commits to checkpoints.
 
-Shared memory is capability-based. When memory sharing is on, Atlas offers its memory tools to agents that advertise HTTP MCP support. The agent decides when to call those tools; agents without that capability do not receive memory automatically.
+Shared memory depends on capability. When memory sharing is on, Atlas offers its memory tools to Atlas Agent and to agents that advertise HTTP MCP support. The agent decides when to call them; agents without that capability don't receive memory.
 
 ## Next
 
-- [ACP registry](/docs/agents/registry): install or remove an agent
-- [Concepts](/docs/getting-started/concepts): learn Atlas terminology
+- [Atlas Agent](/docs/agents/atlas-agent): what it can do in your app and your organisation
+- [ACP registry](/docs/agents/registry): install, update or remove an agent
+- [Concepts](/docs/getting-started/concepts): Atlas terminology
