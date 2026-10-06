@@ -4,55 +4,55 @@ description: Why Atlas Agent asks for sync or AI access, who grants it, and how 
 icon: Wallet
 ---
 
-[Atlas Agent](/docs/agents/atlas-agent) runs through the Atlas gateway, and every request it makes is billed to an organisation. So it needs two things: a synced [organisation](/docs/team/organisations) to bill, and AI access for that organisation.
+[Atlas Agent](/docs/agents/atlas-agent) runs through the Atlas gateway, and every request it makes is billed to an organization. So it needs two things: a synced [organization](/docs/team/organizations) to bill, and AI access for that organization.
 
-Other agents don't. Claude Code, Codex and any other ACP agent run on your own subscription or keys, and work the same in a local organisation.
+Other agents don't. Claude Code, Codex and any other ACP agent run on your own subscription or keys, and work the same in a local organization.
 
 ## When the composer says Atlas Agent can't run
 
 If Atlas Agent can't run, a bar above its composer says why, and the composer stays disabled until it's resolved.
 
-**The organisation is local.** The bar names your organisation and says it is local. The gateway can't bill an organisation that only exists on your machine. Select **Turn on sync** on the bar, or switch to a synced organisation. Signed out, the button starts sign-in first.
+**The organization is local.** The bar names your organization and says it is local. The gateway can't bill an organization that only exists on your machine. Select **Turn on sync** on the bar, or switch to a synced organization. Signed out, the button starts sign-in first.
 
-**The organisation doesn't have AI grants.** The organisation is synced but has no AI access yet. There is no setting you can change to fix this; access has to be granted. Select **Request** to ask for it, then **Refresh** to check again once it's granted.
+**The organization doesn't have AI grants.** The organization is synced but has no AI access yet. There is no setting you can change to fix this; access has to be granted. Select **Request** to ask for it, then **Refresh** to check again once it's granted.
 
 <Screenshot
   src="/screenshots/team/ai-access-grant-bar.png"
   alt="The Atlas Agent composer with a bar above it reading 'Acme doesn't have AI grants', with Refresh and Request buttons and a dismiss control. The message box below is disabled."
-  caption="The bar Atlas Agent shows when the organisation has no AI access."
+  caption="The bar Atlas Agent shows when the organization has no AI access."
 />
 
 Atlas only shows the second bar when the gateway explicitly says there is no grant. If it simply can't reach the gateway, for example offline, it doesn't tell you to ask anyone for access.
 
 ## Who grants AI access
 
-Atlas grants AI access to an organisation as a plan: a monthly budget, optionally a daily one, and the models it covers. Access is off until a plan exists. **Request** on the composer bar opens the page where you ask Atlas for one.
+Atlas grants AI access to an organization as a plan: a monthly budget, optionally a daily one, and the models it covers. Access is off until a plan exists. **Request** on the composer bar opens the page where you ask Atlas for one.
 
-Within the plan, an organisation's admins decide how it is used, in the web app under **AI**:
+Within the plan, an organization's admins decide how it is used, in the web app under **AI**:
 
 - **Default model**: where a new session starts when it doesn't name one. **Atlas's recommendation** follows Atlas's pick as it changes; or choose a specific model.
-- **Models**: turn individual models off for the organisation. A model that's off is refused by the gateway, not just hidden. Admins can narrow what the plan allows, never widen it.
+- **Models**: turn individual models off for the organization. A model that's off is refused by the gateway, not just hidden. Admins can narrow what the plan allows, never widen it.
 
-Everyone in the organisation can read this page. Only admins can change it.
+Everyone in the organization can read this page. Only admins can change it.
 
-In the desktop app, Atlas Agent's model picker offers only the models your organisation's access allows.
+In the desktop app, Atlas Agent's model picker offers only the models your organization's access allows.
 
 ## Budgets and per-person caps
 
-The organisation's budget is shown under **Limits** on the **AI** page, as **Monthly budget** and **Daily budget**. When the organisation reaches a cap, Atlas stops accepting new requests until it resets.
+The organization's budget is shown under **Limits** on the **AI** page, as **Monthly budget** and **Daily budget**. When the organization reaches a cap, Atlas stops accepting new requests until it resets.
 
-A plan can also carry a cap for one member: a ceiling on that person's spend inside the organisation's budget. It is a second limit, not a second wallet. Their spend still counts against the organisation. A member with a cap sees it on their **Usage** page as **Your monthly cap** or **Your daily cap**.
+A plan can also carry a cap for one member: a ceiling on that person's spend inside the organization's budget. It is a second limit, not a second wallet. Their spend still counts against the organization. A member with a cap sees it on their **Usage** page as **Your monthly cap** or **Your daily cap**.
 
 ## See who spent what
 
-The web app's **Usage** page shows what the organisation has spent over the last day, 7 days or 30 days. It keeps two figures apart:
+The web app's **Usage** page shows what the organization has spent over the last day, 7 days or 30 days. It keeps two figures apart:
 
 - **Measured**: spend through the Atlas gateway, billed by Atlas. This is Atlas Agent and Atlas's own AI features.
 - **Estimated**: your recorded sessions priced at list rates. These are agents running on people's own subscriptions and keys, which Atlas never bills.
 
 Below the figures are daily spend, the budget, and a **By member** table with each person's measured spend, estimated spend and session count.
 
-Admins see the whole organisation and every member's share. Everyone else sees only their own figures. Per-person spend is there so an admin can decide whether someone needs a cap.
+Admins see the whole organization and every member's share. Everyone else sees only their own figures. Per-person spend is there so an admin can decide whether someone needs a cap.
 
 The desktop app's [Usage](/docs/context/usage) tab is different: it reports what was recorded on your machine, across every agent.
 
@@ -60,10 +60,10 @@ The desktop app's [Usage](/docs/context/usage) tab is different: it reports what
 
 Atlas's billing records count tokens and cost. They don't store what you asked.
 
-For troubleshooting, an organisation admin can open a **prompt capture** window in the web app under **Privacy**. For a few hours, up to a day, the gateway keeps the prompts and replies of the organisation's requests so Atlas support can investigate a problem. Each window is turned on separately for the **Coding surface** (what your desktop agent sends) and **Atlas features**. It stops by itself, never applies to past requests, and the captured prompts are deleted after a retention period. Nobody at Atlas can turn capture on for you.
+For troubleshooting, an organization admin can open a **prompt capture** window in the web app under **Privacy**. For a few hours, up to a day, the gateway keeps the prompts and replies of the organization's requests so Atlas support can investigate a problem. Each window is turned on separately for the **Coding surface** (what your desktop agent sends) and **Atlas features**. It stops by itself, never applies to past requests, and the captured prompts are deleted after a retention period. Nobody at Atlas can turn capture on for you.
 
 ## Next
 
-- [Organisations](/docs/team/organisations): sync an organisation
+- [Organizations](/docs/team/organizations): sync an organization
 - [Members & roles](/docs/team/members): who counts as an admin
 - [Atlas Agent](/docs/agents/atlas-agent): what the agent can do once it has access

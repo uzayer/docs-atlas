@@ -9,7 +9,7 @@ import {
 /**
  * A tooltip.
  *
- * Inverted: the foreground ink as the fill and the page colour as the text —
+ * Inverted: the foreground ink as the fill and the page color as the text —
  * a dark chip with white text on the light theme, a light chip with black
  * text on the dark one — so a label never blends into the surface it
  * floats over.
@@ -82,7 +82,7 @@ function TooltipContent({
             // A keycap inside a tooltip drops its own border — the tooltip
             // already has one, and two hairlines 2px apart read as a smudge.
             "has-data-[slot=kbd]:pr-1 **:data-[slot=kbd]:border-transparent",
-            // …and takes the inverted ink, so it is not a card-coloured
+            // …and takes the inverted ink, so it is not a card-colored
             // chip sitting on the inverted fill.
             "**:data-[slot=kbd]:bg-background/15 **:data-[slot=kbd]:text-background/75",
             "data-open:animate-scale-in data-closed:animate-scale-out",

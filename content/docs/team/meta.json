@@ -4,7 +4,7 @@
   "pages": [
     "index",
     "accounts",
-    "organisations",
+    "organizations",
     "members",
     "timeline",
     "chat",

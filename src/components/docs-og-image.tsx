@@ -12,7 +12,7 @@ interface DocsOgImageProps {
  * on standards' dark theme.
  *
  * next/og renders this to a PNG with Satori, which reads neither CSS variables
- * nor oklch(), so the standards greys are written out as hex. Each is the
+ * nor oklch(), so the standards grays are written out as hex. Each is the
  * exact sRGB of its token (achromatic OKLCH converts as L³ through the sRGB
  * transfer curve):
  */
@@ -25,8 +25,8 @@ const tokens = {
   rule: '#262626', //        a dashed section rule, at the edge's weight
 };
 
-/** The Atlas mark's own colour (src/app/icon.svg). Identity, so it keeps its hue. */
-const markColour = '#FFFFE2';
+/** The Atlas mark's own color (src/app/icon.svg). Identity, so it keeps its hue. */
+const markColor = '#FFFFE2';
 
 export function DocsOgImage({ description, icon, site, title }: DocsOgImageProps) {
   return (
@@ -70,7 +70,7 @@ export function DocsOgImage({ description, icon, site, title }: DocsOgImageProps
         <div
           style={{
             alignItems: 'center',
-            color: markColour,
+            color: markColor,
             display: 'flex',
             flexDirection: 'row',
             gap: '18px',

@@ -35,7 +35,7 @@ const buttonVariants = cva(
     "font-medium",
     // Named properties, not `transition-all`: the press scale needs a
     // transition, and animating everything would drag border-color and
-    // colour along with it and make the glyph shimmer.
+    // color along with it and make the glyph shimmer.
     "duration-fast transition-[background-color,transform] ease-out-strong",
     "active:scale-[0.99]",
     "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
@@ -99,7 +99,7 @@ function Button({
    * Base UI warns — loudly, at runtime — when a button-role component renders
    * as something other than a real <button> while `nativeButton` is still
    * true, because that silently drops form submission and native keyboard
-   * behaviour. A link-styled button is common enough (`render={<Link/>}`,
+   * behavior. A link-styled button is common enough (`render={<Link/>}`,
    * `render={<a/>}`) that making every call site remember the prop guarantees
    * someone forgets. Infer it from what is actually being rendered, and let
    * an explicit value win.

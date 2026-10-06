@@ -10,7 +10,7 @@ import { cn } from '@/lib/cn';
  * mermaid is loaded on demand rather than imported at the top level, so it
  * stays out of the bundle of every page that has no diagram on it. The chart
  * is re-rendered when the site theme changes, because mermaid bakes its
- * colours into the SVG it returns rather than reading them from CSS.
+ * colors into the SVG it returns rather than reading them from CSS.
  *
  * A chart that fails to parse falls back to its own source. A diagram is
  * never the only copy of what a page says, so a broken one should show what
@@ -18,15 +18,15 @@ import { cn } from '@/lib/cn';
  */
 /**
  * The site's palette, read from the standards roles (themes.css), in a form
- * mermaid can do colour arithmetic on.
+ * mermaid can do color arithmetic on.
  *
- * Standards writes these as `oklch(...)`, which mermaid's colour library does
+ * Standards writes these as `oklch(...)`, which mermaid's color library does
  * not parse, and the browser keeps oklch when it serialises a computed
- * colour. So each one is painted into a single canvas pixel and read back as
+ * color. So each one is painted into a single canvas pixel and read back as
  * sRGB bytes. Everything read here is achromatic, so the diagram carries no
  * hue in either theme.
  */
-function siteColours() {
+function siteColors() {
   const root = getComputedStyle(document.documentElement);
   const canvas = document.createElement('canvas');
   canvas.width = 1;
@@ -65,12 +65,12 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
+    let canceled = false;
 
     async function render() {
       try {
         const mermaid = (await import('mermaid')).default;
-        const site = siteColours();
+        const site = siteColors();
         mermaid.initialize({
           startOnLoad: false,
           securityLevel: 'strict',
@@ -113,7 +113,7 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
           flowchart: { htmlLabels: true, curve: 'basis', wrappingWidth: 400 },
         });
         const { svg: rendered } = await mermaid.render(id, chart.trim());
-        if (!cancelled) {
+        if (!canceled) {
           setSvg(rendered);
           setFailed(false);
         }
@@ -121,7 +121,7 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
         // The fallback below is quiet on the page, so say something here:
         // otherwise a mistyped chart ships as a code block and nobody notices.
         console.error('[Mermaid] chart failed to render', error);
-        if (!cancelled) {
+        if (!canceled) {
           setSvg(null);
           setFailed(true);
         }
@@ -130,7 +130,7 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
 
     void render();
     return () => {
-      cancelled = true;
+      canceled = true;
     };
   }, [chart, id, resolvedTheme]);
 

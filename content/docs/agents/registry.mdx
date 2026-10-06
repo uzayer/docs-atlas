@@ -1,19 +1,19 @@
 ---
 title: ACP registry
-description: Install and manage agents from the official ACP catalogue.
+description: Install and manage agents from the official ACP catalog.
 icon: Search
 ---
 
-Open **Settings → Agents** to browse the official [Agent Client Protocol](https://agentclientprotocol.com) registry. The registry is the catalogue for external agents in Atlas; there is no separate list of built-in external agents.
+Open **Settings → Agents** to browse the official [Agent Client Protocol](https://agentclientprotocol.com) registry. The registry is the catalog for external agents in Atlas; there is no separate list of built-in external agents.
 
 ## Find an agent
 
-Search by name, ID, or description. Filter the catalogue to **All**, **Installed**, or **Not Installed**. Atlas refreshes stale data itself, but **Refresh** fetches the latest catalogue whenever you need it.
+Search by name, ID, or description. Filter the catalog to **All**, **Installed**, or **Not Installed**. Atlas refreshes stale data itself, but **Refresh** fetches the latest catalog whenever you need it.
 
 Atlas currently runs registry entries that publish an `npx` package or a binary for your platform. A binary-only entry stays visible but cannot be installed when the registry has no build for your operating system and architecture.
 
 <Callout type="info">
-  The ACP registry also accepts `uvx`-only entries. Atlas does not run that distribution type yet, so those entries do not appear in its catalogue.
+  The ACP registry also accepts `uvx`-only entries. Atlas does not run that distribution type yet, so those entries do not appear in its catalog.
 </Callout>
 
 ## Install an agent
@@ -42,7 +42,7 @@ Atlas Agent is not a registry card because it runs in process and cannot be remo
 
 ## Work offline
 
-Atlas opens its last good cached catalogue first and refreshes stale data in the background. A failed refresh keeps the cached list. You can browse that list offline, but a package that has not been downloaded still needs a network connection on first use.
+Atlas opens its last good cached catalog first and refreshes stale data in the background. A failed refresh keeps the cached list. You can browse that list offline, but a package that has not been downloaded still needs a network connection on first use.
 
 ## Use the agent
 

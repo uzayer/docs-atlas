@@ -29,7 +29,7 @@ import { cn } from '@/lib/cn';
  * `z-modal` layer, hairline dividers, an input at the reading size and an
  * Esc keycap instead of an outlined button.
  *
- * Search behaviour (the fetch client, the debounce, keyboard navigation,
+ * Search behavior (the fetch client, the debounce, keyboard navigation,
  * result rendering) is Fumadocs', untouched. Props match
  * DefaultSearchDialogProps, minus the deprecated `type: 'static'`, so it
  * drops into RootProvider's `search.SearchDialog`.

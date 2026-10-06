@@ -19,34 +19,34 @@ Atlas today is single-player. You run agents against your own checkout, your [me
 
 The ambition is teammates and agents working from the same live context, not merely the same repo. The reasoning behind a change is available to the next person who touches it, whoever they are, and an agent picking up work inherits what the last agent and the last human both knew.
 
-It splits into two halves. Getting each developer's sessions into the organisation is team capture, below, and it is nearly done. Reading them back as a shared record is the team timeline, further down, and it has not started in the client.
+It splits into two halves. Getting each developer's sessions into the organization is team capture, below, and it is nearly done. Reading them back as a shared record is the team timeline, further down, and it has not started in the client.
 
 ## Team capture
 
 **Not shipped: built in the client, switched off by one flag.**
 
-Session capture ships today in Local mode (see [Session capture](/docs/source-control/capture)). Everything needed to send a project's sessions to its organisation is also in the app:
+Session capture ships today in Local mode (see [Session capture](/docs/source-control/capture)). Everything needed to send a project's sessions to its organization is also in the app:
 
-- **Create as Cloud.** Register the project with the active organisation under a slug. Slug availability is checked as you type.
+- **Create as Cloud.** Register the project with the active organization under a slug. Slug availability is checked as you type.
 - **Connect.** Join a project a teammate already registered. Atlas pre-selects the match by root commit and origin URL, and refuses to guess when several projects share a root commit (repositories made from one template do).
 - **Promote.** Move a Local project to Cloud and bring its history. There is no separate backfill path: local rows join the same queue as new ones.
-- **Disclosure with real numbers.** Importing history and promoting both stop on a confirmation showing session count, date range, and secrets redacted. Nothing is sent until you confirm, and cancelling leaves the project exactly as it was.
+- **Disclosure with real numbers.** Importing history and promoting both stop on a confirmation showing session count, date range, and secrets redacted. Nothing is sent until you confirm, and canceling leaves the project exactly as it was.
 - **An offline-first queue.** Capture never waits for the network. Rows queue as pending and drain when they can. A blob uploads before the row that references it, so a teammate never opens a message whose body is missing. A `403` stops the drain as "no longer authorized" and local capture carries on.
 - **No local paths on the wire.** Records carry the server-assigned project id, never the folder path.
 
-Cloud follows the active organisation only, and it needs you signed in to a cloud (or synced) organisation.
+Cloud follows the active organization only, and it needs you signed in to a cloud (or synced) organization.
 
 What remains is `CLOUD_CAPTURE_ENABLED` in the capture popover, which is still `false`. Until it flips, Cloud and Connect render disabled with "Cloud capture isn't available yet", no project can enter Cloud mode, and **zero bytes leave your machine**. The ingest service now answers its read routes (they return `401` unauthenticated, not the `405` the flag's comment describes), so the flag is the last client step.
 
 ## A team timeline
 
-**Not built.** The [timeline](/docs/source-control/timeline) is organisation-scoped (it spans every project in the active organisation) but single-user: it reads only this machine's local stores.
+**Not built.** The [timeline](/docs/source-control/timeline) is organization-scoped (it spans every project in the active organization) but single-user: it reads only this machine's local stores.
 
 Three things make that concrete:
 
-- **There is no inbound path.** Team capture sends sessions to the organisation. Nothing in the app reads a teammate's sessions back.
+- **There is no inbound path.** Team capture sends sessions to the organization. Nothing in the app reads a teammate's sessions back.
 - **Authorship is the server's job.** A record carries no author field, because a client can claim anything. The ingest service stamps who sent it. Nothing in the app displays that yet.
-- **Git identity is not account identity.** Commits carry an author name and email, and Atlas records them for display only. They're self-asserted, so they are never mapped to an organisation member.
+- **Git identity is not account identity.** Commits carry an author name and email, and Atlas records them for display only. They're self-asserted, so they are never mapped to an organization member.
 
 A shared timeline would mean seeing which sessions produced which commits across everyone working in a repository, not just your own.
 
@@ -54,7 +54,7 @@ A shared timeline would mean seeing which sessions produced which commits across
 
 **Built, but not a priority, and possibly moving.**
 
-Spaces is the canvas: a per-project board for laying work out visually. It exists in the app and works. It is not where most of the effort is going, and it may move from project scope to organisation scope, which would change where a board lives and who can reach it.
+Spaces is the canvas: a per-project board for laying work out visually. It exists in the app and works. It is not where most of the effort is going, and it may move from project scope to organization scope, which would change where a board lives and who can reach it.
 
 Because that scope question is open, it isn't documented in Product. Treat it as present but unsettled rather than planned.
 
@@ -74,16 +74,16 @@ Beyond that, the native agent is where capabilities that depend on running in-pr
 
 ## Smaller things not built yet
 
-Each of these is a control or behaviour you may actually encounter, so they're written down rather than left to be discovered.
+Each of these is a control or behavior you may actually encounter, so they're written down rather than left to be discovered.
 
-- **European hosting for organisations.** The region selector in the create-organisation form shows European Union, greyed out. Only United States is hosted. It's shown rather than hidden so the choice is visibly coming rather than absent.
-- **Invitation emails.** Inviting someone to an organisation does not send them an email. The accept link is copied to your clipboard and you pass it on yourself. See [members and invitations](/docs/organisation/members).
+- **European hosting for organizations.** The region selector in the create-organization form shows European Union, grayed out. Only United States is hosted. It's shown rather than hidden so the choice is visibly coming rather than absent.
+- **Invitation emails.** Inviting someone to an organization does not send them an email. The accept link is copied to your clipboard and you pass it on yourself. See [members and invitations](/docs/organization/members).
 - **Usage reporting for every agent.** [Usage](/docs/context/usage) reads Atlas's captured session record for every agent. Token detail appears when the agent reports it, and an unknown or unpriced model contributes no estimated cost.
 - **The block terminal on shells other than zsh.** Command blocks depend on shell integration Atlas installs for zsh. Other shells run fine but present as a single plain stream. See [Terminal](/docs/product/terminal).
 
 ## What is built
 
-If you've read this far, the useful counterweight is that everything else in these docs describes shipped behaviour:
+If you've read this far, the useful counterweight is that everything else in these docs describes shipped behavior:
 
 <Cards>
   <Card title="Product" href="/docs/product/chat" description="Every surface in the app as it works today." />

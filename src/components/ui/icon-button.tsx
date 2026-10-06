@@ -12,8 +12,8 @@ import type { IconSize } from "@/components/ui/icon"
  *
  * `label` is required and becomes the accessible name. This is the whole
  * reason the component exists as a separate export: an icon-only `<Button>`
- * has no text node, so nothing stops it shipping unlabelled, and a toolbar of
- * unlabelled glyphs is unusable with a screen reader. Making the prop
+ * has no text node, so nothing stops it shipping unlabeled, and a toolbar of
+ * unlabeled glyphs is unusable with a screen reader. Making the prop
  * required moves that from a review comment to a type error.
  *
  * The glyph sits one step below the square, so a 28px button carries a 16px

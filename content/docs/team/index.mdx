@@ -1,6 +1,6 @@
 ---
 title: Team overview
-description: What changes when your organisation is synced. A shared record of agent work, and the conversation next to it.
+description: What changes when your organization is synced. A shared record of agent work, and the conversation next to it.
 icon: Users
 ---
 
@@ -10,17 +10,17 @@ That is what multiplayer means in Atlas: every agent session your team runs is r
 
 ## How the pieces fit
 
-**Organisation.** Everything shared belongs to an [organisation](/docs/team/organisations). A local organisation lives on one machine. A synced organisation lives in your Atlas account, has [members and roles](/docs/team/members), and is what every team feature below needs.
+**Organization.** Everything shared belongs to an [organization](/docs/team/organizations). A local organization lives on one machine. A synced organization lives in your Atlas account, has [members and roles](/docs/team/members), and is what every team feature below needs.
 
-**Cloud projects.** Each project you open can store its sessions locally or in the cloud. A cloud project belongs to the organisation, and every teammate who connects their own checkout of the same repository adds their sessions to it. Your source code never syncs, only the record of agent work.
+**Cloud projects.** Each project you open can store its sessions locally or in the cloud. A cloud project belongs to the organization, and every teammate who connects their own checkout of the same repository adds their sessions to it. Your source code never syncs, only the record of agent work.
 
-**Timeline.** The [timeline](/docs/team/timeline) is the board of every recorded session in the organisation: yours, your teammates', and the ones running right now. Each session shows its prompts, responses, tool calls and the checkpoints that tie it to commits. Teammates comment on any step.
+**Timeline.** The [timeline](/docs/team/timeline) is the board of every recorded session in the organization: yours, your teammates', and the ones running right now. Each session shows its prompts, responses, tool calls and the checkpoints that tie it to commits. Teammates comment on any step.
 
 **The conversation.** Next to the work sit [team chat](/docs/team/chat), [calls](/docs/team/calls), co-written [prompt drafts](/docs/team/prompt-drafts), [Spaces](/docs/team/spaces) and [shared threads](/docs/team/shared-threads). A chat message can carry a reference to a session or checkpoint, so a discussion links straight back to the record.
 
-**Atlas Agent in the organisation.** [Atlas Agent](/docs/agents/atlas-agent) can read the organisation's recorded sessions, comments, members and conversations, and act there as you. Ask it "what is Priya working on?" and it answers from the timeline. Anything that reaches another person asks you first.
+**Atlas Agent in the organization.** [Atlas Agent](/docs/agents/atlas-agent) can read the organization's recorded sessions, comments, members and conversations, and act there as you. Ask it "what is Priya working on?" and it answers from the timeline. Anything that reaches another person asks you first.
 
-**The web app.** The [web app](/docs/team/web-app) at app.tryatlas.cc shows the same organisation in a browser: inbox, dashboard, timeline, projects, chat and settings. Teammates who don't run the desktop app can still read and comment.
+**The web app.** The [web app](/docs/team/web-app) at app.tryatlas.cc shows the same organization in a browser: inbox, dashboard, timeline, projects, chat and settings. Teammates who don't run the desktop app can still read and comment.
 
 <Screenshot
   src="/screenshots/team/overview-timeline-light.png"
@@ -31,7 +31,7 @@ That is what multiplayer means in Atlas: every agent session your team runs is r
 
 ## What stays on your machine
 
-A local organisation, and any project whose sessions are stored Local, never send anything to Atlas. Even in a synced organisation, these stay local:
+A local organization, and any project whose sessions are stored Local, never send anything to Atlas. Even in a synced organization, these stay local:
 
 - your source tree and git history
 - [shared memory](/docs/context/memory) and the [knowledge base](/docs/context/knowledge-base)
@@ -42,17 +42,17 @@ The [timeline page](/docs/team/timeline#what-syncs-and-what-doesnt) lists exactl
 ## Get your team set up
 
 1. **Sign in.** Select the account control in the title bar and connect your [Atlas account](/docs/team/accounts) with Google or GitHub.
-2. **Create a synced organisation.** Open the organisation switcher at the top of the rail, select **Create organisation…** and choose **Cloud**. If you already work in a local organisation, select **Turn on sync for &lt;name&gt;…** instead.
+2. **Create a synced organization.** Open the organization switcher at the top of the rail, select **Create organization…** and choose **Cloud**. If you already work in a local organization, select **Turn on sync for &lt;name&gt;…** instead.
 3. **Invite your team.** Select **Members** in the rail and invite people by email, or create a multi-use invite link in the web app. See [Members & roles](/docs/team/members).
 4. **Put a project in the cloud.** Open the project, press <Kbd>⌘⌥C</Kbd> (or select the project name in the title bar), choose **Cloud** and create the cloud project. Teammates open their own checkout of the same repository and choose **Connect**. See [Session capture](/docs/source-control/capture).
 5. **Open the timeline.** Select **Timeline** in the rail. Your sessions and your teammates' appear as they are recorded.
-6. **Turn on Atlas Agent.** Atlas Agent needs AI access for the organisation. If the composer says it doesn't have AI grants, see [AI access & spend](/docs/team/ai-access).
+6. **Turn on Atlas Agent.** Atlas Agent needs AI access for the organization. If the composer says it doesn't have AI grants, see [AI access & spend](/docs/team/ai-access).
 
 ## Next
 
 <Cards>
   <Card title="Timeline" href="/docs/team/timeline" description="Read, filter and comment on your team's agent sessions." />
-  <Card title="Organisations" href="/docs/team/organisations" description="Local and synced organisations, and how projects join the cloud." />
+  <Card title="Organizations" href="/docs/team/organizations" description="Local and synced organizations, and how projects join the cloud." />
   <Card title="Members & roles" href="/docs/team/members" description="Invite teammates and decide what they can do." />
   <Card title="Team chat" href="/docs/team/chat" description="Channels and direct messages next to the work." />
 </Cards>

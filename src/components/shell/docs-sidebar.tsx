@@ -35,7 +35,7 @@ import { isUnshipped, type StatusTreeItem } from '@/lib/status';
 /**
  * The docs rail, drawn as the Atlas app shell draws its sidebar.
  *
- * Fumadocs still owns everything that is behaviour: the page tree, which row
+ * Fumadocs still owns everything that is behavior: the page tree, which row
  * is active, folders opening for the active page, collapsing on desktop with
  * a hover peek, the drawer below md, scrolling the active row into view. This
  * file only decides what those parts look like, through the `sidebar` slot.
@@ -147,7 +147,7 @@ function FolderContent({
   );
 }
 
-/** A `---Section---` in meta.json: a labelled group, with air above it. */
+/** A `---Section---` in meta.json: a labeled group, with air above it. */
 function Separator({ className, ...props }: React.ComponentProps<typeof SidebarSeparator>) {
   return (
     <SidebarSeparator

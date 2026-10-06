@@ -40,12 +40,12 @@ In shadcn, `:root` is the light theme and `.dark` is the dark one, so they becom
 Atlas accepts `oklch()` as well as hex, `rgb()`, and `hsl()`, so a tweakcn export usually pastes straight across.
 
 <Callout type="warn">
-  Older shadcn themes write bare HSL channels, as in `--background: 0 0% 100%`. Atlas needs a complete colour, so wrap those: `background = "hsl(0 0% 100%)"`.
+  Older shadcn themes write bare HSL channels, as in `--background: 0 0% 100%`. Atlas needs a complete color, so wrap those: `background = "hsl(0 0% 100%)"`.
 </Callout>
 
 ## Fill in the rest of the required set
 
-All 45 base tokens must be present in each variant you ship. A shadcn theme normally covers the colours, `radius`, the charts, and the sidebar family. It often does not cover the rest.
+All 45 base tokens must be present in each variant you ship. A shadcn theme normally covers the colors, `radius`, the charts, and the sidebar family. It often does not cover the rest.
 
 Copy these from any built-in Atlas theme if your source has no opinion, giving a light variant a lighter shadow ramp than the dark values below:
 
@@ -64,23 +64,23 @@ shadow-xl = "0 12px 36px rgba(0, 0, 0, 0.82)"
 shadow-2xl = "0 16px 48px rgba(0, 0, 0, 0.9)"
 ```
 
-Drop anything your source emits that is not one of the 45. Atlas rejects a base token it does not recognise, and a generator's extra variables are the usual reason a converted file will not load.
+Drop anything your source emits that is not one of the 45. Atlas rejects a base token it does not recognize, and a generator's extra variables are the usual reason a converted file will not load.
 
 ## What the conversion gives you
 
-Everything the base tokens reach, which is most of the window: the app background, panels, the rail, tabs, cards and popovers, borders, the focus ring, the signature colour, the editor background and default text, selections, charts, the radius scale, the fonts, and the elevation.
+Everything the base tokens reach, which is most of the window: the app background, panels, the rail, tabs, cards and popovers, borders, the focus ring, the signature color, the editor background and default text, selections, charts, the radius scale, the fonts, and the elevation.
 
 That is a complete, working theme. It will load and it will look like your palette.
 
-Two shadcn tokens carry more weight in Atlas than they do in a web app, so give them a second look. `chart-1` through `chart-5` are five series that have to stay tellable apart, since two that differ only slightly render as one line. And `ring` is a real accent, used for the focus ring and the matching-bracket outline, so a `ring` set to a grey leaves the editor without one.
+Two shadcn tokens carry more weight in Atlas than they do in a web app, so give them a second look. `chart-1` through `chart-5` are five series that have to stay tellable apart, since two that differ only slightly render as one line. And `ring` is a real accent, used for the focus ring and the matching-bracket outline, so a `ring` set to a gray leaves the editor without one.
 
 ## What a shadcn theme cannot say
 
-A shadcn token set describes an interface. Atlas keeps its names exactly, so the 45 you converted sit inside the larger set Atlas colours from, and everything outside them is worked out rather than asked for.
+A shadcn token set describes an interface. Atlas keeps its names exactly, so the 45 you converted sit inside the larger set Atlas colors from, and everything outside them is worked out rather than asked for.
 
 <Mermaid chart={`
 flowchart LR
-    subgraph A["what Atlas colours"]
+    subgraph A["what Atlas colors"]
         direction LR
         B["the 45 you converted<br/>chrome, panels, editor<br/>background, charts"]
         R["syntax, terminal, diff,<br/>status, search<br/>derived, not written"]
@@ -90,11 +90,11 @@ flowchart LR
 
 It has no vocabulary for the things a code tool needs:
 
-- **Syntax highlighting.** No keyword, string, type, or comment colour.
-- **Terminal ANSI colours.** No red, green, yellow, blue, magenta, or cyan.
-- **Diff tints.** No addition or removal colour.
-- **Status hues.** No success, warning, or informational colour beyond `destructive`.
-- **Search highlights.** No match colour.
+- **Syntax highlighting.** No keyword, string, type, or comment color.
+- **Terminal ANSI colors.** No red, green, yellow, blue, magenta, or cyan.
+- **Diff tints.** No addition or removal color.
+- **Status hues.** No success, warning, or informational color beyond `destructive`.
+- **Search highlights.** No match color.
 
 Atlas will derive all of them rather than leave them unstyled, but with nothing to derive from it falls back to its own defaults, and those will not match your theme.
 
@@ -112,7 +112,7 @@ purple = "#c4a7e7"
 pink = "#ebbcba"
 ```
 
-This is the single step that turns a converted interface theme into an Atlas theme. The names are hues rather than slots, and everything downstream trusts them, so file each colour under the name it actually is.
+This is the single step that turns a converted interface theme into an Atlas theme. The names are hues rather than slots, and everything downstream trusts them, so file each color under the name it actually is.
 
 See the [token reference](/docs/themes/tokens) for what each hue feeds. After the palette, the keys worth adding by hand are the fifteen syntax roles and the ten editor keys. No built-in theme sets a terminal, status, search, or agent key at all, because a good palette already gets those right.
 

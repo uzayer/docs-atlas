@@ -20,8 +20,8 @@ export function PageFooter({ className, ...props }: React.ComponentProps<'nav'>)
   const pathname = usePathname();
 
   const { previous, next } = useMemo(() => {
-    const normalise = (url: string) => url.replace(/\/$/, '');
-    const index = items.findIndex((item) => normalise(item.url) === normalise(pathname));
+    const normalize = (url: string) => url.replace(/\/$/, '');
+    const index = items.findIndex((item) => normalize(item.url) === normalize(pathname));
     if (index === -1) return {};
     return { previous: items[index - 1], next: items[index + 1] };
   }, [items, pathname]);

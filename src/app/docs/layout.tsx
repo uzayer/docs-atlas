@@ -8,7 +8,7 @@ import { DocsSidebar } from '@/components/shell/docs-sidebar';
 
 /**
  * Fumadocs' docs layout with the Atlas shell in its slots: the frame, the
- * header below md, and the rail. Behaviour (tree, collapse, drawer, search,
+ * header below md, and the rail. Behavior (tree, collapse, drawer, search,
  * TOC) stays Fumadocs'; see src/components/shell/.
  */
 export default function Layout({ children }: LayoutProps<'/docs'>) {

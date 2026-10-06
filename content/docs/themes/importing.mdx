@@ -13,7 +13,7 @@ An import is a one-time conversion. What you get is an ordinary Atlas theme file
 | Source | Verdict in the panel | Why |
 |---|---|---|
 | shadcn, tweakcn | **Nothing lost** | Atlas's base tokens *are* shadcn's tokens, so the chrome crosses verbatim |
-| Zed | **Near-lossless** | Atlas's theme keys were modelled on Zed's roles |
+| Zed | **Near-lossless** | Atlas's theme keys were modeled on Zed's roles |
 | VS Code | **Lossy** | a workbench theme and an app theme are different things |
 
 The format is detected from the content, so you paste and press **Convert** without saying which one it is.
@@ -22,7 +22,7 @@ The format is detected from the content, so you paste and press **Convert** with
 
 Three sources, as tabs at the top of the panel.
 
-**Paste.** A shadcn registry item, a `globals.css`, a Zed theme family, or a VS Code colour theme, straight into the box.
+**Paste.** A shadcn registry item, a `globals.css`, a Zed theme family, or a VS Code color theme, straight into the box.
 
 **URL.** Fetched once over `http` or `https`, with a ten-second limit and a 4 MB cap. The file is converted and then forgotten.
 
@@ -65,13 +65,13 @@ Or a pasted **`globals.css`**, with `:root` and `.dark` blocks. `@theme inline` 
 
 A Zed theme file is a family, and each member becomes its own Atlas theme. Rosé Pine, Moon, and Dawn arrive as three siblings rather than as variants of one design, which is how the built-in themes already treat them.
 
-**What crosses.** 44 style keys map onto Atlas theme keys, and all 16 `terminal.ansi.*` colours transfer exactly. `players[0].cursor` becomes the editor and terminal caret, and `players[0].selection` fills the selection colours. Zed's `syntax` map collapses onto Atlas's 15 syntax roles, which is most of what near-lossless means for a code theme.
+**What crosses.** 44 style keys map onto Atlas theme keys, and all 16 `terminal.ansi.*` colors transfer exactly. `players[0].cursor` becomes the editor and terminal caret, and `players[0].selection` fills the selection colors. Zed's `syntax` map collapses onto Atlas's 15 syntax roles, which is most of what near-lossless means for a code theme.
 
 Six Atlas keys have no Zed source at all: the raised-surface highlight, the two brand fill states, the matching-bracket outline, and the agent chip pair. All six derive.
 
 Where the names differ, it is because Zed's roles do not map one-to-one. Zed's `border` and `border.variant` become the shadcn `border` token and `border.subtle`, since a key in Atlas may not be both a value and a prefix. Zed's four status backgrounds have nowhere to go, because Atlas works the tinted fill out from the status foreground rather than asking for it.
 
-**Font styles do not cross.** An Atlas theme key carries a colour and nothing else, so a Zed scope with `font_style` is imported with its colour and no italics. The report counts those under **font styles**, with the scopes named, rather than writing a field the loader would reject.
+**Font styles do not cross.** An Atlas theme key carries a color and nothing else, so a Zed scope with `font_style` is imported with its color and no italics. The report counts those under **font styles**, with the scopes named, rather than writing a field the loader would reject.
 
 **What is derived.** Sixteen of the 45 base tokens. Zed has no shadcn layer, but 29 of the 45 still come from a Zed style role, so the ones Atlas genuinely invents are the three foregrounds with no source, `radius`, the three font stacks, `tracking-normal`, `spacing`, and the seven shadows.
 
@@ -87,13 +87,13 @@ flowchart LR
 
 If the chrome looks off after an import, check the mapped ones first: `primary` (from `text.accent`), `accent` (from `element.hover`, since shadcn's `accent` is a hover surface), and `card` (from `elevated_surface.background`).
 
-**What is dropped**, by category: icon roles, the `players[1..]` collaboration colours, editor furniture Atlas does not draw (wrap guides, invisibles, subheaders, the read and write highlight pair), app chrome that follows the panel tokens, the status backgrounds Atlas derives, the version-control states Atlas has no colour for (`conflict`, `renamed`, `ignored`, `hidden`, `unreachable`), `hint` and `predictive`, the ghost-element overlay ladder, Zed's dim ANSI ramp, and whichever `syntax` scopes are finer than Atlas's 15 roles.
+**What is dropped**, by category: icon roles, the `players[1..]` collaboration colors, editor furniture Atlas does not draw (wrap guides, invisibles, subheaders, the read and write highlight pair), app chrome that follows the panel tokens, the status backgrounds Atlas derives, the version-control states Atlas has no color for (`conflict`, `renamed`, `ignored`, `hidden`, `unreachable`), `hint` and `predictive`, the ghost-element overlay ladder, Zed's dim ANSI ramp, and whichever `syntax` scopes are finer than Atlas's 15 roles.
 
 ## VS Code
 
 A converted VS Code theme is a starting point, not a copy. Expect to finish it by hand.
 
-Only seven of Atlas's 73 theme keys have no workbench or TextMate equivalent at all. What decides the result is how much the source theme actually states: a theme that says little about `tokenColors` leaves most of the syntax family derived, and every workbench key Atlas has no home for is counted and categorised. The panel shows you exactly which part before anything is written.
+Only seven of Atlas's 73 theme keys have no workbench or TextMate equivalent at all. What decides the result is how much the source theme actually states: a theme that says little about `tokenColors` leaves most of the syntax family derived, and every workbench key Atlas has no home for is counted and categorized. The panel shows you exactly which part before anything is written.
 
 **Includes.** `include` is resolved relative to the file on disk, up to eight hops, with cycles caught. The included file is the base and the including file overrides it, and `tokenColors` are concatenated so that the includer's rules come last. A pasted theme cannot resolve an include, and the report names the file it could not read. The JSON-with-comments dialect that VS Code themes are actually written in is read as written.
 
@@ -111,7 +111,7 @@ Everything else is counted by category, each with the reason it had nowhere to g
 
 `tokenColors` is a list of rules carrying grammar *selectors*, not roles. A selector matches a scope when it is a dotted prefix of it, so `string` matches `string.quoted.double.ts`. VS Code then resolves a token by taking the longest matching selector, with a later rule winning a tie. A descendant selector such as `meta.tag entity.name` is a context rule, so only its rightmost element is considered.
 
-That vocabulary describes a grammar, not a role. A theme is free to colour `string.quoted.double.ts` differently from `string.quoted.single.js`, and many do. Atlas has 15 syntax roles and no grammar inside the theme, so there is no rule that turns one into the other exactly.
+That vocabulary describes a grammar, not a role. A theme is free to color `string.quoted.double.ts` differently from `string.quoted.single.js`, and many do. Atlas has 15 syntax roles and no grammar inside the theme, so there is no rule that turns one into the other exactly.
 
 The importer inverts VS Code's resolution instead. For each Atlas key it holds representative scopes and asks which rule VS Code would apply to each, first match winning:
 
@@ -133,9 +133,9 @@ The importer inverts VS Code's resolution instead. For each Atlas key it holds r
 | `syntax.tag` | `entity.name.tag` |
 | `syntax.attribute` | `entity.other.attribute-name`, `meta.preprocessor`, `keyword.control.directive` |
 
-Use that table when a converted theme looks wrong in one place. A `syntax.type` that came out grey usually means the source theme said nothing about `entity.name.type` and everything about a grammar-specific scope below it.
+Use that table when a converted theme looks wrong in one place. A `syntax.type` that came out gray usually means the source theme said nothing about `entity.name.type` and everything about a grammar-specific scope below it.
 
-`fontStyle: italic` on a matched rule does not survive: an Atlas theme key is a colour, so the scope is imported with its colour and no italics, and the report counts it under **font styles**. `markup.*` and grammar-specific scopes have no Atlas role and are counted as dropped.
+`fontStyle: italic` on a matched rule does not survive: an Atlas theme key is a color, so the scope is imported with its color and no italics, and the report counts it under **font styles**. `markup.*` and grammar-specific scopes have no Atlas role and are counted as dropped.
 
 ### Semantic tokens
 
@@ -164,7 +164,7 @@ Under the counts:
 - **What was dropped** expands into one row per category, with a count and the reason. "22 workbench chrome" with "widgets and surfaces Atlas does not have" is an honest summary; a bare "ignored: 87" is not.
 - **Mapped keys** and **Derived keys** expand into the full lists, each row a swatch, the fully qualified target such as `dark.base.background`, and where the value came from.
 
-A high derived count is normal and not a problem. For a Zed theme it starts at about 22: the 16 base tokens with no Zed source, plus the six theme keys that have none either. What to look at is the derived list itself: those are the colours Atlas guessed, and they are the ones worth overriding by hand afterwards.
+A high derived count is normal and not a problem. For a Zed theme it starts at about 22: the 16 base tokens with no Zed source, plus the six theme keys that have none either. What to look at is the derived list itself: those are the colors Atlas guessed, and they are the ones worth overriding by hand afterwards.
 
 ## Where the imported theme lands
 
@@ -201,7 +201,7 @@ The base tokens cross verbatim, one block per appearance, because shadcn's names
 Everything above the base tokens is dropped: the palette, and every theme key covering the editor, terminal, syntax, diffs, and the agent chip. shadcn has no vocabulary for any of them. The report gives the count and breaks it down by family, and notes when only one variant exists, since shadcn consumers usually expect both.
 
 <Callout type="info">
-  Exporting is for taking your colours to a shadcn project. To move a theme between two Atlas installs, copy the `.toml` instead. That loses nothing.
+  Exporting is for taking your colors to a shadcn project. To move a theme between two Atlas installs, copy the `.toml` instead. That loses nothing.
 </Callout>
 
 ## Next

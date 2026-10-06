@@ -25,8 +25,8 @@ import { DocsBreadcrumb } from './docs-breadcrumb';
  *   │      │ └────────────┴───────────────────┴─┴──────┴────────────┘ │
  *   └──────────────────────────────────────────────────────────────────┘
  *
- * The text and its TOC are one group centred in the panel, rather than the
- * text centred and the TOC pushed to the far edge.
+ * The text and its TOC are one group centerd in the panel, rather than the
+ * text centerd and the TOC pushed to the far edge.
  *
  * Fumadocs places the header, rail, page and TOC as siblings in named grid
  * areas, so nothing wraps "the page" to give it a background. The panel is

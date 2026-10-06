@@ -8,7 +8,7 @@ A theme is one TOML file. Put it in `~/.config/atlas/themes/` and Atlas picks it
 
 ## Start from a complete file
 
-This is a whole theme. It sets the required base tokens and nothing else, so every other colour in Atlas is derived from these. The values are the ones the built-in Rosé Pine theme uses, so it renders correctly as written. Change the metadata at the top, then replace the colours with yours.
+This is a whole theme. It sets the required base tokens and nothing else, so every other color in Atlas is derived from these. The values are the ones the built-in Rosé Pine theme uses, so it renders correctly as written. Change the metadata at the top, then replace the colors with yours.
 
 ```toml title="~/.config/atlas/themes/my-theme.toml"
 schema = 1
@@ -79,11 +79,11 @@ There are three levels, and each exists only to take over from the one below it.
 
 The required set, 45 of them. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
 
-Every colour in Atlas can be reached from these alone. Start here, and stop here if the result already looks right.
+Every color in Atlas can be reached from these alone. Start here, and stop here if the result already looks right.
 
-### A palette, when the derived colours are dull
+### A palette, when the derived colors are dull
 
-Eight named hues. Atlas derives syntax highlighting, terminal ANSI colours, diff tints, status colours, and search highlights from them:
+Eight named hues. Atlas derives syntax highlighting, terminal ANSI colors, diff tints, status colors, and search highlights from them:
 
 ```toml
 [dark.palette]
@@ -107,7 +107,7 @@ Set some of the eight and leave the others out if you prefer. Each is looked up 
 
 ### Theme keys, for the surfaces you care about
 
-73 named roles. Set one when you want a specific colour rather than a derived one:
+73 named roles. Set one when you want a specific color rather than a derived one:
 
 ```toml
 [dark.keys]
@@ -133,9 +133,9 @@ green = "#31748f"
   A key may be a value or a prefix, never both. Writing `terminal.ansi.red` and `terminal` in the same variant is an error and the file will not load. Set the leaf you mean.
 </Callout>
 
-An explicit key is the final colour. Where Atlas would have applied a transparency or a tint while deriving that key, it does not do so to a value you wrote yourself, so include the alpha you want.
+An explicit key is the final color. Where Atlas would have applied a transparency or a tint while deriving that key, it does not do so to a value you wrote yourself, so include the alpha you want.
 
-### A theme key is a colour, and only a colour
+### A theme key is a color, and only a color
 
 The value may be written bare or as a one-field table, and the two mean the same thing:
 
@@ -179,7 +179,7 @@ The two variants are independent. Give the light one its own shadow values rathe
 
 Shipping a light variant is worth doing. Atlas's Light and System modes are available on every platform, and a theme without one falls back to its dark variant when the operating system uses a light appearance.
 
-## Write colours Atlas accepts
+## Write colors Atlas accepts
 
 Hex (3, 4, 6, or 8 digits), `rgb()`, `rgba()`, `hsl()`, `hsla()`, and `oklch()`. An 8-digit hex or an alpha channel is the way to set a translucent overlay.
 
@@ -189,9 +189,9 @@ Hex (3, 4, 6, or 8 digits), `rgb()`, `rgba()`, `hsl()`, `hsla()`, and `oklch()`.
 "status.info.foreground" = "oklch(0.72 0.12 250)"
 ```
 
-CSS colour names such as `red` are not accepted, and neither is anything Atlas cannot resolve to a value on its own, including `var()` and `color-mix()`.
+CSS color names such as `red` are not accepted, and neither is anything Atlas cannot resolve to a value on its own, including `var()` and `color-mix()`.
 
-The non-colour base tokens are ordinary CSS values: `radius` is a length, the `font-*` tokens are font stacks, and the `shadow-*` tokens are `box-shadow` values.
+The non-color base tokens are ordinary CSS values: `radius` is a length, the `font-*` tokens are font stacks, and the `shadow-*` tokens are `box-shadow` values.
 
 ## Turn on editor autocomplete
 
@@ -217,11 +217,11 @@ The schema ships in the [Atlas repository](https://github.com/pacifio/atlas) at 
 
 Every later edit repaints as you save. Atlas watches the folder, rereads the file, and reapplies the theme you are wearing, so there is no restart, no reinstall, and no switching away and back.
 
-Keep a terminal, a diff, and a file open in the editor while you work. Those three surfaces use most of the palette between them, and they are where a derived colour that does not suit your theme shows up first.
+Keep a terminal, a diff, and a file open in the editor while you work. Those three surfaces use most of the palette between them, and they are where a derived color that does not suit your theme shows up first.
 
 ## What happens when something is wrong
 
-**A file that does not parse is skipped.** Atlas loads every other theme, so the picker keeps working and the app keeps its current colours. The picker names the file and the reason above the grid, so a theme that never appeared tells you why.
+**A file that does not parse is skipped.** Atlas loads every other theme, so the picker keeps working and the app keeps its current colors. The picker names the file and the reason above the grid, so a theme that never appeared tells you why.
 
 These are the errors that stop a file loading:
 
@@ -230,7 +230,7 @@ These are the errors that stop a file loading:
 - neither `[dark]` nor `[light]` is present
 - a required base token is missing from a variant
 - a base token or palette name Atlas does not know
-- a value that is not one of the accepted colour formats
+- a value that is not one of the accepted color formats
 - a key used as both a value and a prefix
 - a key that sets `font_style`
 
@@ -240,7 +240,7 @@ These are the errors that stop a file loading:
 
 The file is the whole thing. Send the `.toml`, and whoever receives it drops it in `~/.config/atlas/themes/`.
 
-Set `author` and `license` before you publish, and if your colours come from an existing theme, credit it there. Every built-in theme in Atlas carries the licence of the palette it is based on.
+Set `author` and `license` before you publish, and if your colors come from an existing theme, credit it there. Every built-in theme in Atlas carries the license of the palette it is based on.
 
 ## Next
 

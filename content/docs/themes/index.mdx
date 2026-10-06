@@ -1,10 +1,10 @@
 ---
 title: Themes
-description: One theme file colours the whole of Atlas.
+description: One theme file colors the whole of Atlas.
 icon: Palette
 ---
 
-A theme in Atlas is a single file that colours the entire app: the chrome, the code editor, the terminal, diffs, and syntax highlighting. There is no separate editor theme to keep in sync, and no third setting for the terminal.
+A theme in Atlas is a single file that colors the entire app: the chrome, the code editor, the terminal, diffs, and syntax highlighting. There is no separate editor theme to keep in sync, and no third setting for the terminal.
 
 ## Pick a theme
 
@@ -18,7 +18,7 @@ Atlas ships 15 themes, among them Rosé Pine, the three Catppuccin flavours, Tok
 
 A theme file carries a dark variant, a light variant, or both. Each card in the picker says which it has.
 
-When the variant you asked for is missing, Atlas uses the theme's other one. That is the defined behaviour of the format, not a failure: picking Light with a dark-only theme applied is not an error state, it just leaves the colours where they were.
+When the variant you asked for is missing, Atlas uses the theme's other one. That is the defined behavior of the format, not a failure: picking Light with a dark-only theme applied is not an error state, it just leaves the colors where they were.
 
 <Callout type="info">
   Thirteen of the 15 built-in themes ship both variants. Monokai and Vesper are dark-only, so choosing Light with either of them still uses its dark variant.
@@ -33,14 +33,14 @@ If the theme you want is written for somewhere else, **Import** in the same pane
 Atlas watches that folder. Save an edit to the theme you already have applied and the app repaints, with no restart and no reinstall.
 
 <Callout type="info">
-  A file that fails to parse is skipped rather than taken as a failure of the whole catalogue. The other themes, built-in ones included, keep working, and the picker names the file it could not read and why.
+  A file that fails to parse is skipped rather than taken as a failure of the whole catalog. The other themes, built-in ones included, keep working, and the picker names the file it could not read and why.
 </Callout>
 
-## Colours you leave out are derived
+## Colors you leave out are derived
 
 A theme file has three levels, and only the first is required:
 
-- **Base tokens**: the shadcn/ui colour set, plus radius, fonts, and shadows. 45 of them, all required.
+- **Base tokens**: the shadcn/ui color set, plus radius, fonts, and shadows. 45 of them, all required.
 - **Palette**: eight named hues (red, orange, yellow, green, cyan, blue, purple, pink). Optional.
 - **Theme keys**: 73 Atlas roles such as `syntax.keyword`, `terminal.ansi.red`, and `element.hover`. Optional.
 
@@ -55,15 +55,15 @@ flowchart LR
     end
 `} />
 
-Every theme key Atlas needs but your file does not set is worked out from the palette, then from the base tokens, then from an Atlas default. Nothing is left at a previous theme's colour, and nothing renders unstyled.
+Every theme key Atlas needs but your file does not set is worked out from the palette, then from the base tokens, then from an Atlas default. Nothing is left at a previous theme's color, and nothing renders unstyled.
 
-That means a file with nothing but the base tokens is a complete, working theme. Set a palette on top of it and the syntax, terminal, diff, and status colours follow your hues. Set individual theme keys only where you want a specific result.
+That means a file with nothing but the base tokens is a complete, working theme. Set a palette on top of it and the syntax, terminal, diff, and status colors follow your hues. Set individual theme keys only where you want a specific result.
 
-A small number of colours are not on that list at all. A status badge's tinted fill is its status foreground at 12%, so Atlas works it out rather than asking, and a theme steers it through the foreground key instead. See [what a theme cannot set](/docs/themes/tokens#what-a-theme-cannot-set).
+A small number of colors are not on that list at all. A status badge's tinted fill is its status foreground at 12%, so Atlas works it out rather than asking, and a theme steers it through the foreground key instead. See [what a theme cannot set](/docs/themes/tokens#what-a-theme-cannot-set).
 
 ## What one theme covers
 
-The active theme drives Atlas chrome, panels and tabs, the code editor and its syntax highlighting, the terminal, diff and review views, status colours and the agent chip, charts, graphs, and the scrollbars.
+The active theme drives Atlas chrome, panels and tabs, the code editor and its syntax highlighting, the terminal, diff and review views, status colors and the agent chip, charts, graphs, and the scrollbars.
 
 Two surfaces stay outside it:
 
@@ -76,9 +76,9 @@ File and folder icons are their own track, chosen in Settings → **Icons**. See
 
 Two things work differently from most editors.
 
-Atlas has **one theme rather than two**. Elsewhere you pick a UI theme and a separate editor colour scheme, and a mismatch between them is yours to fix. In Atlas a single file covers both, so the editor and the window around it cannot drift apart.
+Atlas has **one theme rather than two**. Elsewhere you pick a UI theme and a separate editor color scheme, and a mismatch between them is yours to fix. In Atlas a single file covers both, so the editor and the window around it cannot drift apart.
 
-Atlas **derives what you omit**. A theme that only names its base colours is finished, not half-finished. You add palette entries and theme keys to take control of a surface, not to stop it being wrong.
+Atlas **derives what you omit**. A theme that only names its base colors is finished, not half-finished. You add palette entries and theme keys to take control of a surface, not to stop it being wrong.
 
 ## Next
 

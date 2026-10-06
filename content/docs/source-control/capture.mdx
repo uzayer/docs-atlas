@@ -14,9 +14,9 @@ Under **Where sessions are stored**, choose one:
 
 | | Local | Cloud |
 | --- | --- | --- |
-| Where the record lives | The project's `.atlas/` directory on this machine | The same local record, also synced to your organisation |
-| Who can see it | You | Every member of your organisation, or only the members you name |
-| What it needs | Nothing: no account, no network | Git, a signed-in account and a synced organisation |
+| Where the record lives | The project's `.atlas/` directory on this machine | The same local record, also synced to your organization |
+| Who can see it | You | Every member of your organization, or only the members you name |
+| What it needs | Nothing: no account, no network | Git, a signed-in account and a synced organization |
 | Checkpoints and the timeline | Yes | Yes, merged with your teammates' sessions |
 
 Local is a complete mode, not a trial of Cloud. You can keep a project Local forever, and switch it to Cloud later without losing anything.
@@ -37,15 +37,15 @@ Once capture is on, a green dot pulses beside the project name. Hover it for a o
 
 ## Share a project with your team
 
-There are three ways to get a project's sessions onto your organisation's timeline. Each one shows you exactly what will be sent, and asks you to confirm, before anything leaves your machine. Cancelling at that step changes nothing.
+There are three ways to get a project's sessions onto your organization's timeline. Each one shows you exactly what will be sent, and asks you to confirm, before anything leaves your machine. Canceling at that step changes nothing.
 
-Cloud always uses the organisation you have open. To share into a different one, switch organisations first.
+Cloud always uses the organization you have open. To share into a different one, switch organizations first.
 
 ### Create a Cloud project
 
 For a project that has no capture yet, open **Session capture**, select **Cloud**, and fill in:
 
-- **Slug**: the project's name in your organisation. Atlas checks it's free as you type.
+- **Slug**: the project's name in your organization. Atlas checks it's free as you type.
 - **Repository**: prefilled from the repository's `origin`. This is how teammates' copies find the project later. You can clear it.
 - **Restrict to named members**: off by default, which lets every member read it. You can change this later.
 
@@ -53,19 +53,19 @@ Select **Continue**. Atlas lists the sessions it found on disk, their date range
 
 ### Connect to a teammate's project
 
-If a teammate has already shared this repository, open **Session capture** and select the **Connect** tab instead. Atlas lists your organisation's projects and preselects the one that matches your checkout's first commit and `origin`.
+If a teammate has already shared this repository, open **Session capture** and select the **Connect** tab instead. Atlas lists your organization's projects and preselects the one that matches your checkout's first commit and `origin`.
 
 When several projects match, as happens with repositories made from the same template, Atlas selects none and lets you choose. The server checks your pick against the repository again before it connects, so a wrong guess can't mix someone else's sessions into a shared timeline.
 
 ### Promote a Local project
 
-For a project that's already capturing locally, select **Sync** beside **Local** to open **Promote to Cloud**. Use **Create** to publish it under a new slug, or **Connect** to attach its history to a project your organisation already has.
+For a project that's already capturing locally, select **Sync** beside **Local** to open **Promote to Cloud**. Use **Create** to publish it under a new slug, or **Connect** to attach its history to a project your organization already has.
 
 Select **Continue** to see what will be published: the number of sessions, their date range, and how many secrets were redacted before storage. Select **Promote to Cloud** (or **Connect and sync**) to send it.
 
 ### Move a project's sync
 
-To sync a Cloud project somewhere else, select **Change** beside **Cloud** and pick another project in your organisation. Atlas sends this project's sessions to the new one. The old project keeps its copy, and its comments stay there.
+To sync a Cloud project somewhere else, select **Change** beside **Cloud** and pick another project in your organization. Atlas sends this project's sessions to the new one. The old project keeps its copy, and its comments stay there.
 
 ### When Cloud is unavailable
 
@@ -73,9 +73,9 @@ Cloud options stay on screen but disabled, with the reason on hover:
 
 | Reason | What to do |
 | --- | --- |
-| Install git to share with an Organisation | Install git, then reopen the panel. |
-| Sign in to share with an Organisation | [Sign in](/docs/team/accounts). |
-| *Organisation* is local-only, sync it to use Cloud | Turn on sync for the organisation from the organisation switcher. See [Organisations](/docs/team/organisations). |
+| Install git to share with an Organization | Install git, then reopen the panel. |
+| Sign in to share with an Organization | [Sign in](/docs/team/accounts). |
+| *Organization* is local-only, sync it to use Cloud | Turn on sync for the organization from the organization switcher. See [Organizations](/docs/team/organizations). |
 
 ## How syncing works
 
@@ -147,7 +147,7 @@ Select a commit in Source Control's **History** to see **Produced by N sessions*
 
 A folder doesn't need to be a git repository. Sessions are recorded either way, but they can't link to commits.
 
-In a folder without git, the capture panel offers **Initialise git**. It runs `git init` so future commits can become checkpoints.
+In a folder without git, the capture panel offers **Initialize git**. It runs `git init` so future commits can become checkpoints.
 
 ## Pause and resume
 

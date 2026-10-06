@@ -4,9 +4,9 @@ description: Every agent session your team records, on one board, linked to the 
 icon: Timeline
 ---
 
-The timeline is your organisation's record of agent work. It shows every session you recorded on this machine and every session your teammates synced to the organisation's cloud projects, including the ones running right now. Each session keeps its prompts, responses, tool calls and the [checkpoints](/docs/getting-started/concepts#checkpoint) that tie it to commits, and anyone on the team can comment on any step.
+The timeline is your organization's record of agent work. It shows every session you recorded on this machine and every session your teammates synced to the organization's cloud projects, including the ones running right now. Each session keeps its prompts, responses, tool calls and the [checkpoints](/docs/getting-started/concepts#checkpoint) that tie it to commits, and anyone on the team can comment on any step.
 
-Open it from **Timeline** at the top of the rail. It covers every project in the active [organisation](/docs/team/organisations), so you don't need a project open. The [web app](/docs/team/web-app) has the same timeline in the browser.
+Open it from **Timeline** at the top of the rail. It covers every project in the active [organization](/docs/team/organizations), so you don't need a project open. The [web app](/docs/team/web-app) has the same timeline in the browser.
 
 <Screenshot
   src="/screenshots/team/timeline-board-light.png"
@@ -20,15 +20,15 @@ Open it from **Timeline** at the top of the rail. It covers every project in the
 The timeline shows projects with [session capture](/docs/source-control/capture) turned on.
 
 - A project stored **Local** shows only your own sessions, and only on this machine.
-- A project stored **Cloud** sends its sessions to the organisation. They appear on your teammates' timelines, and theirs appear on yours.
+- A project stored **Cloud** sends its sessions to the organization. They appear on your teammates' timelines, and theirs appear on yours.
 
-To share a project's history, see [Put a project's sessions in the cloud](/docs/team/organisations#put-a-projects-sessions-in-the-cloud).
+To share a project's history, see [Put a project's sessions in the cloud](/docs/team/organizations#put-a-projects-sessions-in-the-cloud).
 
 ## Read the board
 
 The list on the left groups sessions by **Day**, **Week** or **Month**; switch with the control beside the **Timeline** heading. **Jump to Today** brings you back to the top.
 
-Each row shows the session's title (the first line of its first prompt), its project, and the avatar of the person who ran it. A check before the project name means the session is shared with the organisation. A laptop means it is on this machine only.
+Each row shows the session's title (the first line of its first prompt), its project, and the avatar of the person who ran it. A check before the project name means the session is shared with the organization. A laptop means it is on this machine only.
 
 The dot on each row says what state the session is in:
 
@@ -36,7 +36,7 @@ The dot on each row says what state the session is in:
 - **Amber**: needs attention. Capture hit a problem recording it; hover the row for the reason.
 - **Plain**: finished, or imported from an earlier Claude Code transcript.
 
-The board refreshes on its own: every 15 seconds for the whole organisation, and in real time for cloud projects bound on this machine. Your local sessions show even with no connection.
+The board refreshes on its own: every 15 seconds for the whole organization, and in real time for cloud projects bound on this machine. Your local sessions show even with no connection.
 
 The list holds the newest 500 sessions. Filter by project to see a project's full history.
 
@@ -62,7 +62,7 @@ Select a session to open it. The header shows how long it was active, its tokens
 
 If a commit was later rewritten or squashed away, its checkpoint says **Commit no longer reachable**. The session record is kept.
 
-Use **Filters** at the bottom of the session to show only some kinds of entry, or only failed tool calls, and **Search this session…** to find text in it. **Maximise session** hides the list so the session fills the tab.
+Use **Filters** at the bottom of the session to show only some kinds of entry, or only failed tool calls, and **Search this session…** to find text in it. **Maximize session** hides the list so the session fills the tab.
 
 ## Comment on a session
 
@@ -102,7 +102,7 @@ While a session is open, select **Export session** to save it as Markdown or JSO
 
 Select the session's name in the breadcrumb (**Sessions /** …) to copy it. A shared session copies as a link a teammate can open in the web app. A local session copies its ID.
 
-To share a session with someone outside the organisation, create a public share link in the web app. See [Share a session publicly](/docs/team/web-app#share-a-session-publicly).
+To share a session with someone outside the organization, create a public share link in the web app. See [Share a session publicly](/docs/team/web-app#share-a-session-publicly).
 
 ## Ask Atlas Agent what someone is working on
 
@@ -111,13 +111,13 @@ To share a session with someone outside the organisation, create a public share 
 - "What is Sam working on?"
 - "Which sessions are live right now?"
 - "What did the team do on the billing project this week?"
-- "Summarise the open comments on yesterday's parser session."
+- "Summarize the open comments on yesterday's parser session."
 
 It lists the matching sessions, flags the live ones, and can open one and read it. By default it looks back 14 days.
 
 Admins can also ask for one member's recorded activity: their sessions, checkpoints, lines added and removed, and tokens. This counts only work recorded in Atlas, so it is not a measure of anyone's performance.
 
-Atlas Agent can also reply to and resolve comments. Anything that reaches another person, such as posting a reply or sending a message, asks you first. This needs **Let Atlas Agent act in your organisation**, which is on by default in [Settings](/docs/product/settings).
+Atlas Agent can also reply to and resolve comments. Anything that reaches another person, such as posting a reply or sending a message, asks you first. This needs **Let Atlas Agent act in your organization**, which is on by default in [Settings](/docs/product/settings).
 
 ## How sessions link to commits
 
@@ -143,12 +143,12 @@ These never leave your machine through the timeline: your source tree, git histo
 
 **Redaction happens on your machine.** Atlas scrubs secrets such as API keys, tokens, credentialed URLs and `KEY=value` pairs before a session is stored locally, so what syncs is the already-redacted record. The server does not redact anything further. Before you publish a project's history, Atlas tells you how many secrets were redacted.
 
-**Who can read it.** Everyone in the organisation, admins included, can read every session in a cloud project that isn't restricted. A restricted project is readable only by the members named on it. A public share link extends one session or project to anyone who has the link. When someone leaves, their sessions stay and show as **Former member**.
+**Who can read it.** Everyone in the organization, admins included, can read every session in a cloud project that isn't restricted. A restricted project is readable only by the members named on it. A public share link extends one session or project to anyone who has the link. When someone leaves, their sessions stay and show as **Former member**.
 
-Only the organisation's [owner](/docs/team/members#the-owner) can delete recorded sessions. A deleted session is erased for everyone, and a desktop that still has it won't upload it again.
+Only the organization's [owner](/docs/team/members#the-owner) can delete recorded sessions. A deleted session is erased for everyone, and a desktop that still has it won't upload it again.
 
 ## Next
 
 - [Session capture](/docs/source-control/capture): turn recording on for a project
-- [Organisations](/docs/team/organisations): put a project in the cloud
+- [Organizations](/docs/team/organizations): put a project in the cloud
 - [Web app](/docs/team/web-app): the timeline in a browser, with full-text search and share links

@@ -64,6 +64,11 @@ const config = {
         destination: '/docs/product/:page',
         permanent: true,
       },
+      {
+        source: '/docs/community/beta-programme',
+        destination: '/docs/community/beta-program',
+        permanent: true,
+      },
     ];
   },
 };

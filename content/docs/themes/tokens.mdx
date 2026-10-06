@@ -22,7 +22,7 @@ flowchart LR
     B -->|"no base source"| D["Atlas default"]
 `} />
 
-A key that derives its colour is often transformed on the way: given a transparency, or mixed toward the background or the foreground. Those transforms apply only while deriving. A value you write in `keys` is used exactly as written.
+A key that derives its color is often transformed on the way: given a transparency, or mixed toward the background or the foreground. Those transforms apply only while deriving. A value you write in `keys` is used exactly as written.
 
 ## Start here
 
@@ -42,10 +42,10 @@ flowchart LR
 So the realistic shape of a theme is:
 
 1. **The 45 base tokens.** Required, and on their own they are a complete theme.
-2. **The eight palette hues.** Eight lines that fix syntax, terminal, diff, status, and search colours at once.
-3. **About thirty-five theme keys**, listed under [the working set](#the-working-set) below. These are the surfaces where a theme's own judgement genuinely differs from its base tokens: the syntax roles, the editor's own chrome, two borders, two panel surfaces, and the diff tints.
+2. **The eight palette hues.** Eight lines that fix syntax, terminal, diff, status, and search colors at once.
+3. **About thirty-five theme keys**, listed under [the working set](#the-working-set) below. These are the surfaces where a theme's own judgment genuinely differs from its base tokens: the syntax roles, the editor's own chrome, two borders, two panel surfaces, and the diff tints.
 
-Everything below that is the long tail. Reach into it when a derived colour is not the one you wanted, not as a checklist.
+Everything below that is the long tail. Reach into it when a derived color is not the one you wanted, not as a checklist.
 
 ## Base tokens
 
@@ -53,22 +53,22 @@ All 45 are required in every variant. Leave one out and the file will not load. 
 
 ### Surfaces and text
 
-| Token | Colours |
+| Token | Colors |
 |---|---|
 | `background`, `foreground` | the app background and default text |
 | `card`, `card-foreground` | elevated panels |
 | `popover`, `popover-foreground` | menus, popovers, and overlay panels |
-| `primary`, `primary-foreground` | the signature colour: selection tints, the brand fill and its hover state |
+| `primary`, `primary-foreground` | the signature color: selection tints, the brand fill and its hover state |
 | `secondary`, `secondary-foreground` | secondary surfaces and their text |
 | `muted`, `muted-foreground` | muted surfaces, dimmed text, comments, line numbers, ANSI bright black |
 | `accent`, `accent-foreground` | the shadcn hover surface, and the matching-bracket fill |
-| `destructive`, `destructive-foreground` | destructive actions, and the fallback for the error colour |
+| `destructive`, `destructive-foreground` | destructive actions, and the fallback for the error color |
 | `border` | separators and control borders, and the source for the strong border |
 | `input` | input borders |
 | `ring` | the keyboard focus ring, and the matching-bracket outline |
 | `chart-1` … `chart-5` | chart series. Five series, so keep them tellable apart: two that differ only slightly render as one line |
 | `sidebar`, `sidebar-foreground` | panel and rail backgrounds, and their text |
-| `sidebar-primary`, `sidebar-primary-foreground` | the signature colour inside a panel |
+| `sidebar-primary`, `sidebar-primary-foreground` | the signature color inside a panel |
 | `sidebar-accent`, `sidebar-accent-foreground` | a panel's hover surface |
 | `sidebar-border` | low-emphasis separators |
 | `sidebar-ring` | focus inside a panel |
@@ -93,7 +93,7 @@ All 45 are required in every variant. Leave one out and the file will not load. 
 
 ## Palette
 
-Eight optional hues. Each one is the first source for a group of theme keys, so setting the palette is the cheapest way to make syntax, terminal, diff, status, and search colours belong to your theme.
+Eight optional hues. Each one is the first source for a group of theme keys, so setting the palette is the cheapest way to make syntax, terminal, diff, status, and search colors belong to your theme.
 
 | Hue | Feeds |
 |---|---|
@@ -112,13 +112,13 @@ The names are hues, and everything downstream trusts them. A `green` holding you
 
 ## The working set
 
-These are the keys to reach for first, and very nearly the set the built-in themes use: 34 of the 36 below appear in at least one built-in, the exceptions being the two diff text colours. The **Falls back to** column is what Atlas uses when you do not set the key.
+These are the keys to reach for first, and very nearly the set the built-in themes use: 34 of the 36 below appear in at least one built-in, the exceptions being the two diff text colors. The **Falls back to** column is what Atlas uses when you do not set the key.
 
 ### Syntax
 
-Fifteen roles. They colour code everywhere it appears: the editor, diffs, chat, and rendered markdown. This is where a theme's personality lives, and it is the one family worth setting by hand even when the palette is already right.
+Fifteen roles. They color code everywhere it appears: the editor, diffs, chat, and rendered markdown. This is where a theme's personality lives, and it is the one family worth setting by hand even when the palette is already right.
 
-| Key | Colours | Falls back to |
+| Key | Colors | Falls back to |
 |---|---|---|
 | `syntax.comment` | comments and prose quotes | base `muted-foreground` |
 | `syntax.keyword` | keywords and control flow | palette `purple` |
@@ -140,7 +140,7 @@ Fifteen roles. They colour code everywhere it appears: the editor, diffs, chat, 
 
 Ten keys. Worth setting when the editor surface is meant to differ from the app around it, which is common: Rosé Pine's editor background is a shade off its app background, and that difference is the whole reason this family exists.
 
-| Key | Colours | Falls back to |
+| Key | Colors | Falls back to |
 |---|---|---|
 | `editor.background` | the code editor background | base `background` |
 | `editor.foreground` | default code text | base `foreground` |
@@ -155,7 +155,7 @@ Ten keys. Worth setting when the editor surface is meant to differ from the app 
 
 ### Borders and panel surfaces
 
-| Key | Colours | Falls back to |
+| Key | Colors | Falls back to |
 |---|---|---|
 | `border.subtle` | low-emphasis separator | base `sidebar-border` |
 | `border.strong` | high-emphasis border, including a focused control's | base `border` |
@@ -163,12 +163,12 @@ Ten keys. Worth setting when the editor surface is meant to differ from the app 
 | `panel.input.background` | an input inside a panel | base `background` |
 
 <Callout type="info">
-  `border.strong` comes from `border`, not from `ring`. The focus ring is a brand colour in most themes, and the strongest border is a grey one. A focused control's border is `border.strong` rather than a key of its own.
+  `border.strong` comes from `border`, not from `ring`. The focus ring is a brand color in most themes, and the strongest border is a gray one. A focused control's border is `border.strong` rather than a key of its own.
 </Callout>
 
 ### Diffs
 
-| Key | Colours | Falls back to |
+| Key | Colors | Falls back to |
 |---|---|---|
 | `diff.added.background` | an added line or hunk | palette `green` at 13% |
 | `diff.added.emphasis` | the changed words inside an added line | palette `green` at 34% |
@@ -178,17 +178,17 @@ Ten keys. Worth setting when the editor surface is meant to differ from the app 
 | `diff.removed.text` | removed text, and the `-N` line count | palette `red` |
 | `diff.context.background` | unchanged context | base `background` |
 
-One fill serves both diff renderers, so a colour you set here applies to the inline view and the side-by-side view alike.
+One fill serves both diff renderers, so a color you set here applies to the inline view and the side-by-side view alike.
 
 ## The rest of the key set
 
-The other 37 keys. Every one of them derives correctly from a good palette and a good set of base tokens, which is why no built-in theme sets any of them. Set one when a derived colour is specifically not what you wanted.
+The other 37 keys. Every one of them derives correctly from a good palette and a good set of base tokens, which is why no built-in theme sets any of them. Set one when a derived color is specifically not what you wanted.
 
 ### Terminal
 
 All nineteen. The bright ramp is the theme's hue pulled 15% toward the foreground, which reads as brighter in both appearances. Terminal authors who care about the exact ANSI ramp will want to set these; nobody else needs to.
 
-| Key | Colours | Falls back to |
+| Key | Colors | Falls back to |
 |---|---|---|
 | `terminal.background` | the terminal background | base `background` |
 | `terminal.foreground` | default terminal text | base `foreground` |
@@ -214,7 +214,7 @@ All nineteen. The bright ramp is the theme's hue pulled 15% toward the foregroun
 
 Four foregrounds. The tinted fill behind each one is not a key. See [what a theme cannot set](#what-a-theme-cannot-set).
 
-| Key | Colours | Falls back to |
+| Key | Colors | Falls back to |
 |---|---|---|
 | `status.success.foreground` | success text and icons, and the live-capture indicator | palette `green` |
 | `status.warning.foreground` | warning text and icons | palette `yellow` |
@@ -223,7 +223,7 @@ Four foregrounds. The tinted fill behind each one is not a key. See [what a them
 
 ### Interactive states and overlays
 
-| Key | Colours | Falls back to |
+| Key | Colors | Falls back to |
 |---|---|---|
 | `element.hover` | hover overlay on an element | base `foreground` at 4% |
 | `element.selected` | selected overlay | base `foreground` at 6% |
@@ -237,7 +237,7 @@ These derive from the theme's own foreground, so they invert correctly between a
 
 ### Text, search, scrollbars, and the agent chip
 
-| Key | Colours | Falls back to |
+| Key | Colors | Falls back to |
 |---|---|---|
 | `text.disabled` | disabled and unavailable text | base `muted-foreground`, 20% toward the background |
 | `search.match.background` | a search match in the document | palette `yellow` at 22% |
@@ -248,23 +248,23 @@ These derive from the theme's own foreground, so they invert correctly between a
 | `agent.chip.background` | agent identity chip fill | base `foreground` at 6% |
 
 <Callout type="info">
-  There is one agent chip, not one per vendor. Atlas discovers the agents you have installed at runtime, so a theme cannot enumerate them, and no agent gets a colour the others do not. This neutral pair is what a monochrome theme sets to flatten the chip entirely.
+  There is one agent chip, not one per vendor. Atlas discovers the agents you have installed at runtime, so a theme cannot enumerate them, and no agent gets a color the others do not. This neutral pair is what a monochrome theme sets to flatten the chip entirely.
 </Callout>
 
 ## What a theme cannot set
 
-Six colours reach the app as `--atlas-*` custom properties but are not theme keys. Each is a pure function of a key that is, so writing one in a theme file is an unknown-key warning rather than an override.
+Six colors reach the app as `--atlas-*` custom properties but are not theme keys. Each is a pure function of a key that is, so writing one in a theme file is an unknown-key warning rather than an override.
 
 | Variable | Derived from | How |
 |---|---|---|
-| `status.success.background` | `status.success.foreground` | that colour at 12% |
-| `status.warning.background` | `status.warning.foreground` | that colour at 12% |
-| `status.error.background` | `status.error.foreground` | that colour at 12% |
-| `status.info.background` | `status.info.foreground` | that colour at 12% |
+| `status.success.background` | `status.success.foreground` | that color at 12% |
+| `status.warning.background` | `status.warning.foreground` | that color at 12% |
+| `status.error.background` | `status.error.foreground` | that color at 12% |
+| `status.info.background` | `status.info.foreground` | that color at 12% |
 | `element.emphasis` | base `foreground` | at 16%: the strongest neutral overlay, such as a chat mention addressed to you |
 | `terminal.selection` | base `primary` | at 30% |
 
-The reason is that none of them is a judgement call. A status badge's fill is its status foreground at 12%, and an author who wants a different green wants a different green, not two greens that have to be kept in step. Change the key and the derived colour follows.
+The reason is that none of them is a judgment call. A status badge's fill is its status foreground at 12%, and an author who wants a different green wants a different green, not two greens that have to be kept in step. Change the key and the derived color follows.
 
 ## Where these end up
 

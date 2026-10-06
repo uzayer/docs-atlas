@@ -11,11 +11,11 @@ Every term used across these docs is defined once, here. Other pages link back t
 
 A folder you opened in Atlas. Almost everything is scoped to a project: the editor state, the file index, the git watcher, the knowledge base and the [capture](#session-capture) store. Atlas keeps its per-project data in the folder's `.atlas/` directory, which it adds to `.gitignore`.
 
-Each project belongs to one [organisation](#organisation). See [Quickstart](/docs/getting-started/quickstart).
+Each project belongs to one [organization](#organization). See [Quickstart](/docs/getting-started/quickstart).
 
 ### Workspace
 
-The organisation's shared copy of a project's record: its recorded sessions, checkpoints and comments. A project gets one when you switch its capture to [Cloud](#session-capture), and the app labels it a Project in your organisation.
+The organization's shared copy of a project's record: its recorded sessions, checkpoints and comments. A project gets one when you switch its capture to [Cloud](#session-capture), and the app labels it a Project in your organization.
 
 Teammates who open their own checkout of the same repository can **Connect** to it, so everyone's sessions land in one place. A project binds to at most one workspace.
 
@@ -34,7 +34,7 @@ One prompt and the agent's answer to it, including every tool call the agent mak
 The per-project switch that records sessions. It's off until you turn it on, and it has two modes:
 
 - **Local** keeps the record in the project's `.atlas/` directory on this machine, with no account and no network.
-- **Cloud** keeps the same local record and also syncs it to your organisation's [workspace](#workspace), where your team can see it.
+- **Cloud** keeps the same local record and also syncs it to your organization's [workspace](#workspace), where your team can see it.
 
 Either way, Atlas redacts secrets on your machine before it stores anything. See [Session capture](/docs/source-control/capture).
 
@@ -54,15 +54,15 @@ A note a teammate leaves on a recorded session, anchored to the whole session or
 
 ## Your team
 
-### Organisation
+### Organization
 
-The group a project belongs to, with members and roles. Atlas creates a local "Personal" organisation for you, so you can work without an account.
+The group a project belongs to, with members and roles. Atlas creates a local "Personal" organization for you, so you can work without an account.
 
-A **synced** organisation lives in your Atlas account. It's what turns on the shared timeline, Cloud capture, team chat and [Atlas Agent](#atlas-agent). See [Organisations](/docs/team/organisations) and [Members & roles](/docs/team/members).
+A **synced** organization lives in your Atlas account. It's what turns on the shared timeline, Cloud capture, team chat and [Atlas Agent](#atlas-agent). See [Organizations](/docs/team/organizations) and [Members & roles](/docs/team/members).
 
 ### Team chat
 
-Your organisation's messaging: channels, direct messages and group DMs, each called a conversation. Messages can carry a recorded session or a checkpoint as a card that opens it on the timeline. See [Team chat](/docs/team/chat).
+Your organization's messaging: channels, direct messages and group DMs, each called a conversation. Messages can carry a recorded session or a checkpoint as a card that opens it on the timeline. See [Team chat](/docs/team/chat).
 
 ### Prompt draft
 
@@ -86,7 +86,7 @@ A coding agent Atlas drives: either [Atlas Agent](#atlas-agent) or an agent inst
 
 ### Atlas Agent
 
-The agent built into Atlas. It runs through the Atlas gateway on your Atlas account, billed to your organisation, so it needs a synced organisation with AI access. In a Cloud project it can also read and act in your organisation. See [Atlas Agent](/docs/agents/atlas-agent).
+The agent built into Atlas. It runs through the Atlas gateway on your Atlas account, billed to your organization, so it needs a synced organization with AI access. In a Cloud project it can also read and act in your organization. See [Atlas Agent](/docs/agents/atlas-agent).
 
 ### Shared memory
 
@@ -112,6 +112,6 @@ Markdown notes in `.atlas/knowledge/`. The deliberate counterpart to [shared mem
 
 ### Mention
 
-Type `@` in the composer to point the agent at something: a file, folder, symbol, branch, note, earlier message or past session. In a synced organisation you can also mention a member, a conversation, a recorded session or a comment.
+Type `@` in the composer to point the agent at something: a file, folder, symbol, branch, note, earlier message or past session. In a synced organization you can also mention a member, a conversation, a recorded session or a comment.
 
 A file resolves to a path the agent reads on demand rather than a paste, so mentioning a large file doesn't fill the context window for the rest of the session.

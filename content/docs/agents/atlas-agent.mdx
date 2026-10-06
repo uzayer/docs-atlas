@@ -1,27 +1,27 @@
 ---
 title: Atlas Agent
-description: Atlas's built-in agent, which works in your project, your app and your organisation.
+description: Atlas's built-in agent, which works in your project, your app and your organization.
 icon: Atlas
 ---
 
-Atlas Agent is the agent built into Atlas. It ships with the app, so there's nothing to install, and it runs through the Atlas gateway on your Atlas account. Usage is billed to your organisation, and no provider key ever sits on your machine.
+Atlas Agent is the agent built into Atlas. It ships with the app, so there's nothing to install, and it runs through the Atlas gateway on your Atlas account. Usage is billed to your organization, and no provider key ever sits on your machine.
 
-Like any agent, it reads and edits your code and runs commands. Because it runs inside Atlas, it can also move around the Atlas window for you and, in a Cloud project, read and act in your organisation: find out what a teammate is working on, answer comments on a session, or post a session report to a channel.
+Like any agent, it reads and edits your code and runs commands. Because it runs inside Atlas, it can also move around the Atlas window for you and, in a Cloud project, read and act in your organization: find out what a teammate is working on, answer comments on a session, or post a session report to a channel.
 
 ## What it needs
 
 Atlas Agent needs three things:
 
 1. **You're signed in** to your Atlas account. See [Your account](/docs/team/accounts).
-2. **Your organisation is synced.** A local organisation, including the "Personal" one Atlas creates for you, can't use it. See [Organisations](/docs/team/organisations).
-3. **Your organisation has AI access.** An admin grants it and sets the budget. See [AI access & spend](/docs/team/ai-access).
+2. **Your organization is synced.** A local organization, including the "Personal" one Atlas creates for you, can't use it. See [Organizations](/docs/team/organizations).
+3. **Your organization has AI access.** An admin grants it and sets the budget. See [AI access & spend](/docs/team/ai-access).
 
 When one is missing, the composer is disabled and a bar above it says why:
 
 | The bar says | What to do |
 | --- | --- |
-| *Organisation* is local, sync it to use Atlas Agent | Select **Turn on sync**. If you're signed out, Atlas asks you to sign in first. |
-| *Organisation* doesn't have AI grants | Ask an admin for AI access. **Request** opens the page where access is granted, and **Refresh** checks again. |
+| *Organization* is local, sync it to use Atlas Agent | Select **Turn on sync**. If you're signed out, Atlas asks you to sign in first. |
+| *Organization* doesn't have AI grants | Ask an admin for AI access. **Request** opens the page where access is granted, and **Refresh** checks again. |
 
 <Screenshot
   src="/screenshots/agents/atlas-agent-local-org-bar.png"
@@ -31,7 +31,7 @@ When one is missing, the composer is disabled and a bar above it says why:
 
 ## Start a session
 
-Press <Kbd>⌘T</Kbd> for a new agent chat and pick **Atlas Agent** in the composer. Choose a model from the list, which comes from the gateway and shows the models your organisation can use, and a permission mode.
+Press <Kbd>⌘T</Kbd> for a new agent chat and pick **Atlas Agent** in the composer. Choose a model from the list, which comes from the gateway and shows the models your organization can use, and a permission mode.
 
 ## Work in your project
 
@@ -39,7 +39,7 @@ Atlas Agent reads, searches and edits files, and runs commands in the project. I
 
 - **[Skills](/docs/context/skills).** Your skills appear as slash commands. Type `/` to see them.
 - **[Shared memory](/docs/context/memory).** It reads the project's memory at the start of a session and records decisions, facts and failures as it learns them, so the next agent doesn't start from zero.
-- **Built-in commands.** `/compact` summarises the conversation to free up context, `/diff` and `/review` show and review your uncommitted changes, `/goal` sets an objective it keeps in view, `/init` writes or improves `AGENTS.md`, `/status` shows the model and working directory, and `/undo` rewinds the conversation to before your last message.
+- **Built-in commands.** `/compact` summarizes the conversation to free up context, `/diff` and `/review` show and review your uncommitted changes, `/goal` sets an objective it keeps in view, `/init` writes or improves `AGENTS.md`, `/status` shows the model and working directory, and `/undo` rewinds the conversation to before your last message.
 
 ### Permission modes
 
@@ -72,14 +72,14 @@ It never switches projects, sends a message for you or presses Enter in a termin
 
 Turn this off with **Settings → General → Let Atlas Agent navigate the app**.
 
-## Act in your organisation
+## Act in your organization
 
-In a project whose [capture](/docs/source-control/capture) is **Cloud**, Atlas Agent can read your organisation and act there as you. It works in the organisation that project belongs to, even if the window is showing a different one.
+In a project whose [capture](/docs/source-control/capture) is **Cloud**, Atlas Agent can read your organization and act there as you. It works in the organization that project belongs to, even if the window is showing a different one.
 
 It can read:
 
-- **The roster.** Who's in the organisation, and their roles.
-- **Recorded sessions.** Everyone's sessions in this project, or another project in the organisation you name, newest first. It can filter them by person, by date or by keyword, flags the ones still live, and can read any session's prompts, replies and tool calls in full.
+- **The roster.** Who's in the organization, and their roles.
+- **Recorded sessions.** Everyone's sessions in this project, or another project in the organization you name, newest first. It can filter them by person, by date or by keyword, flags the ones still live, and can read any session's prompts, replies and tool calls in full.
 - **Comments.** The comment threads on a recorded session.
 - **Conversations and your inbox.** Your channels and DMs, and what's waiting in your inbox.
 
@@ -94,7 +94,7 @@ Admins can also ask for a member's activity: the sessions, checkpoints, lines ad
 ### Things to ask
 
 - "What is Sam working on right now?"
-- "Summarise what the team's agents did on the billing service this week."
+- "Summarize what the team's agents did on the billing service this week."
 - "Find the open comments on my last session and answer them."
 - "Write a session report for this session and post it to #backend."
 - "Draw the sign-up flow from this session on a new page in the #design Space."
@@ -115,15 +115,15 @@ Resolving a comment and drawing on a Space page are visible to others and easy t
 
 ### Every call is logged
 
-Each organisation action, including the ones you rejected and the ones that failed, shows in the chat and in the Logs panel. Messages appear under your name, because you approved the exact words.
+Each organization action, including the ones you rejected and the ones that failed, shows in the chat and in the Logs panel. Messages appear under your name, because you approved the exact words.
 
-Turn this off with **Settings → General → Let Atlas Agent act in your organisation**. A running session stops at its next call.
+Turn this off with **Settings → General → Let Atlas Agent act in your organization**. A running session stops at its next call.
 
 ## Limits
 
 - Prompts are text only. Atlas Agent does not accept images yet.
 - There is no reasoning-effort control.
-- Organisation tools need a Cloud project and act only in the organisation that project belongs to.
+- Organization tools need a Cloud project and act only in the organization that project belongs to.
 - Searches by person or date look at recent sessions, the last 14 days unless you name a period.
 - Member activity is for admins only.
 
