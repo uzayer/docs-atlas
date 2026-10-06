@@ -1,9 +1,84 @@
 ---
 title: Contributing
-description: Atlas is open source. Here is how to build it and send a change.
+description: Atlas is open source. Where help goes furthest, how to build it, and how a change gets merged.
 icon: GitPullRequest
 ---
 
-{/* TODO(phase-2): Summarise the repo's CONTRIBUTING.md: prerequisites (Bun, Rust), bun run dev vs dev:app (dev profile isolates data), version branches, the gates. Link rather than copy. */}
+Atlas is developed in the open at [github.com/pacifio/atlas](https://github.com/pacifio/atlas). Anyone can send a change; beta testers who write code also get the Atlas Contributors chat to ask questions in.
 
-Atlas is developed in the open at [github.com/pacifio/atlas](https://github.com/pacifio/atlas). You can build it from source, run the frontend in a browser against a mock backend, and open a pull request against the current version branch.
+The repository's [CONTRIBUTING.md](https://github.com/pacifio/atlas/blob/main/CONTRIBUTING.md) is the full guide. This page is the short version.
+
+## Where help goes furthest
+
+Start with the labelled issues:
+
+- [`good first issue`](https://github.com/pacifio/atlas/labels/good%20first%20issue): small, well-scoped changes, mostly in the interface.
+- [`help wanted`](https://github.com/pacifio/atlas/labels/help%20wanted): harder problems we'd welcome help on.
+
+Issues also carry an `area:` label, so you can filter to the part of the app you know. Areas where outside help has gone furthest so far:
+
+- **Linux and Windows.** Atlas runs on both, and the team works mostly on macOS. Testing and fixes there are always welcome: [`platform: linux`](https://github.com/pacifio/atlas/labels/platform%3A%20linux), [`platform: windows`](https://github.com/pacifio/atlas/labels/platform%3A%20windows).
+- **The workspace interface**: navigation, tabs and discoverability ([`area: workspace ui`](https://github.com/pacifio/atlas/labels/area%3A%20workspace%20ui)).
+- **Agents and chat** ([`area: agents & chat`](https://github.com/pacifio/atlas/labels/area%3A%20agents%20%26%20chat)).
+- **The editor and the built-in browser** ([`area: editor`](https://github.com/pacifio/atlas/labels/area%3A%20editor), [`area: browser`](https://github.com/pacifio/atlas/labels/area%3A%20browser)).
+- **Themes.** A new theme needs no Rust at all; see [Authoring themes](/docs/themes/authoring).
+
+The larger items on the [roadmap](/docs/community/roadmap) are being designed by the core team. If one of them interests you, talk to us before writing code.
+
+## Before you build
+
+- **Bug fixes and docs:** go ahead and open a pull request.
+- **New features:** open an issue first, or raise it in `#feature-requests` on [Discord](https://discord.gg/GmnFggaPfP). Most features cross the React interface, a Tauri command and a Rust crate, so agreeing the approach first saves a rewrite.
+- **Design changes:** share the proposal in the issue before implementing it.
+- **New dependencies** need discussion first.
+
+## Set up
+
+You need [Bun](https://bun.sh/) and [Rust](https://rustup.rs/) (rustup installs the pinned version on first use), plus Xcode Command Line Tools on macOS. No API keys, `.env` file or account are needed to build.
+
+```bash
+git clone git@github.com:<you>/atlas.git
+cd atlas
+bun install
+bun run dev:app
+```
+
+`bun run dev:app` runs **Atlas Dev**, a separate profile with its own data, so it never touches an installed Atlas. For interface work, `bun run dev` runs the frontend in your browser against a fake backend, with no Rust at all.
+
+CONTRIBUTING.md covers the rest: the two run modes in detail, the browser mock's scenarios, and the test commands.
+
+## Branches
+
+Atlas uses **version branches**. Work collects on a branch named for the next release, and merging that branch into `main` is the release. So `main` always equals what has shipped.
+
+- Fork the repository, and branch from the **current version branch**, not `main`. It is the highest-numbered branch in the [branch list](https://github.com/pacifio/atlas/branches), such as `0.4.0`.
+- Name your branch `<you>/<short-slug>`, with the issue number first if there is one: `alex/42-fix-sidebar-collapse`.
+- Open the pull request against that same version branch.
+- Target `main` only for a change that doesn't need to wait for a release, such as a docs fix or a one-line hotfix.
+
+## Before you open the pull request
+
+```bash
+bun run lint
+bun run format:check
+bun run typecheck
+bun run test
+bun run ci:local    # what CI would run for your branch
+```
+
+Run the app and use your change in a window. Tests cover logic, not whether it works on screen.
+
+The pull request template asks **What?**, **Why?** and **How?**, and has a short checklist: the right target branch, a test for new behaviour (a failing-then-passing test for a bug fix), and that you ran it.
+
+## Review
+
+- Leave **Allow edits from maintainers** checked. We often push small fixes to your branch rather than send them back to you.
+- Review happens on GitHub, in the pull request. Questions you'd rather talk through can go to the Atlas Contributors chat or `#dev` on Discord.
+- An issue is closed when its fix merges into the version branch, not when the release reaches `main`. Before starting on an issue that looks unclaimed, check the version branch's open pull requests.
+- Merged contributions ship in the next release, and contributors are credited there. {/* TODO(founders): confirm how contributors are credited (release notes, changelog, or both). */}
+
+{/* TODO(founders): decide whether to state a review turnaround expectation. None is promised here. */}
+
+## Code of conduct
+
+Taking part is covered by the [Code of Conduct](https://github.com/pacifio/atlas/blob/main/.github/CODE_OF_CONDUCT.md).
