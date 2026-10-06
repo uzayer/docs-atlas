@@ -1,10 +1,4 @@
 {
   "title": "Context",
-  "pages": [
-    "memory",
-    "agent-preferences",
-    "knowledge-base",
-    "skills",
-    "usage"
-  ]
+  "pages": ["memory", "knowledge-base", "skills", "agent-preferences", "usage", "handbook"]
 }

@@ -1,0 +1,10 @@
+---
+title: Self-healing
+description: When software breaks, Atlas finds the session that caused it and opens the fix.
+icon: Wrench
+status: roadmapped
+---
+
+{/* TODO(phase-2): Explain the loop and what already exists underneath it (checkpoints, the shared timeline, comments). No dates. */}
+
+Every change in Atlas has a source: the session and the prompt that produced it. Self-healing closes the loop. When something breaks, Atlas finds that session, opens an issue with its context, and an agent proposes a fix as a pull request for the team to approve.

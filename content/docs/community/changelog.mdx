@@ -1,0 +1,78 @@
+---
+title: Changelog
+description: What changed in each Atlas release, at the level of features.
+icon: ScrollText
+---
+
+{/* TODO(phase-2): Seeded from git history between tags; tighten the wording and add links as feature pages land. Add each new release at the top. */}
+
+Each release lists what you'll notice, not every commit. The full history is on [GitHub](https://github.com/pacifio/atlas/releases).
+
+## 0.4.0
+
+**Unreleased.** In development on the `0.4.0` branch.
+
+- **Notifications.** One pipeline for everything Atlas tells you, with native banners on macOS, Windows and Linux and an in-app center. You hear when an agent finishes a turn, asks a question or needs permission (with **Allow once** and **Deny** on the banner), when a teammate messages or mentions you, and when a long terminal command finishes. Every kind has its own switch in **Settings → General**.
+- **Keymap presets.** Start from VS Code, Cursor, Zed or JetBrains bindings, picked on first run, and import or export your keybindings as a profile.
+- **Switching agents keeps the conversation.** Choose whether switching agents in a chat starts over, opens a new tab, or hands the conversation off. `/remember` saves what matters to memory first.
+- **AGENTS.md mirroring.** Atlas can mirror `CLAUDE.md` and `.claude/rules` into a marked block of `AGENTS.md`, so every agent reads the same instructions.
+- **Git auto-fetch** keeps the open project's remote state current in the background.
+- **Keep awake** while an agent is working.
+- **Interface scale** presets in a popover at the bottom of the rail.
+- A read-only viewer for Jupyter notebooks.
+- Cheaper Inference joins the providers you can bring your own key for.
+
+## 0.3.4
+
+**September 27, 2026.** "Teams Early".
+
+- **The team timeline goes to the cloud.** Projects in Cloud mode sync their recorded sessions to the organisation, and the timeline shows your teammates' sessions next to yours, live, with presence. Existing synced projects can be added.
+- **Comments** anchored to a session, a message, a tool call or a checkpoint, threaded and resolvable, on the timeline and inside the agent chat.
+- **Atlas Agent acts in your organisation.** It reads the roster, conversations, comments and recorded sessions, replies and resolves comments, posts session reports, and draws diagrams on a Space. Anything it sends asks you first, and every call is logged. Admins can ask it for a member's recorded activity.
+- **Atlas Agent steers the app.** It can open a file at a line, open diffs and settings, switch tabs, run commands and type into a terminal.
+- **Clarifying questions.** Atlas Agent can stop mid-turn to ask you something.
+- **Linux.** Packages for Debian, Fedora, openSUSE and Arch, plus an AppImage and a tarball.
+- **macOS** gets a Liquid Glass app icon, in dark or light.
+- Mention members, conversations and recorded sessions from the composer. Drop files anywhere on a conversation, and open sent images full size.
+- OrcaRouter joins the bring-your-own-key providers.
+
+## 0.3.3
+
+**September 19, 2026.** "Windows patches".
+
+- **One theme format,** with light variants for the built-in themes, live previews, and import from shadcn, Zed and VS Code themes. The editor, terminal, charts, graphs and canvas all follow the theme.
+- **Icon themes** in the file tree, tabs and file palette, from VS Code's icon-theme format.
+- **Usage** redone as a dashboard of tokens, cost, messages and sessions by project, agent and model.
+- **Windows auto-update.**
+- Edit a sent message as a new one, and a "Worked for" fold on each turn.
+
+## 0.3.2
+
+**September 16, 2026.** "Multiplatform build".
+
+- The first Windows build.
+- Atlas Agent fetches its model list from the Atlas gateway, so new models appear without an update.
+- Copy and retry actions under your messages.
+- Fixes for Gemini and GLM models in Atlas Agent, and a faster, steadier agent chat.
+
+## 0.3.1
+
+**September 6, 2026.** "Comms alpha".
+
+- **Team chat:** channels, direct messages, reactions, pins and attachments for your organisation.
+- **Voice and video calls,** started from a conversation and held in the web app.
+- **Prompt drafts** that teammates write together, live.
+- **Spaces:** a realtime canvas attached to a conversation.
+- **Atlas Agent** now signs in with your Atlas account and bills to your organisation through the Atlas gateway. Slash commands such as `/undo`, `/review` and `/compact` arrive with it.
+- Preferences move into a self-documenting `~/.config/atlas/config.toml`.
+- Catppuccin and One Dark themes, and the Empero provider.
+
+## 0.3.0
+
+**August 25, 2026.** "ACP + Timeline".
+
+- **Agents over ACP.** Atlas runs every external agent through the Agent Client Protocol, and the registry is how you add one. Atlas keeps each chat's history itself, so you can resume or import sessions from any agent that supports it.
+- **Slash commands** pass through to the agent you're talking to.
+- Per-agent mode preferences are remembered.
+- Tokyo Night theme.
+- The Research panel, the standalone model chat and the Pomodoro timer are gone.

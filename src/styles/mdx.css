@@ -93,3 +93,21 @@
   color: var(--shiki-light);
   font-style: var(--shiki-light-font-style);
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Screenshots with a light and a dark shot (screenshot.tsx). Both render;
+   the theme hides one. Keyed off `data-theme`, as every theme rule here is,
+   because a component may not carry a `dark:` variant.
+   ────────────────────────────────────────────────────────────────────────── */
+
+[data-slot="screenshot"] [data-variant="dark"] {
+  display: none;
+}
+
+[data-theme="dark"] [data-slot="screenshot"] [data-variant="dark"] {
+  display: block;
+}
+
+[data-theme="dark"] [data-slot="screenshot"] [data-variant="light"] {
+  display: none;
+}

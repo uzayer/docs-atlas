@@ -1,5 +1,5 @@
 {
   "title": "Agents",
   "icon": "Bot",
-  "pages": ["index", "registry"]
+  "pages": ["index", "atlas-agent", "registry"]
 }

@@ -1,5 +1,5 @@
 {
-  "title": "Getting Started",
+  "title": "Get Started",
   "defaultOpen": true,
-  "pages": ["index", "quickstart", "concepts", "power-user"]
+  "pages": ["index", "install", "quickstart", "concepts"]
 }

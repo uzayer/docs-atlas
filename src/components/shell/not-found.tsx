@@ -37,7 +37,7 @@ export function NotFoundContent({ className }: { className?: string }) {
           href="/docs/getting-started"
           className={buttonVariants({ variant: enabled ? 'secondary' : 'default', size: 'lg' })}
         >
-          Go to Getting Started
+          Go to Get Started
         </Link>
       </div>
     </div>

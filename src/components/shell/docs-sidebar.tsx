@@ -20,6 +20,8 @@ import { createPageTreeRenderer } from 'fumadocs-ui/components/sidebar/page-tree
 import { createLinkItemRenderer } from 'fumadocs-ui/components/sidebar/link-item';
 import { useDocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { SidebarProps } from 'fumadocs-ui/layouts/docs/slots/sidebar';
+import { usePathname } from 'fumadocs-core/framework';
+import type { Item as PageTreeItem } from 'fumadocs-core/page-tree';
 import { cn } from '@/lib/cn';
 import { SPRING_PILL } from '@/lib/motion';
 import { buttonVariants } from '@/components/ui/button';
@@ -27,6 +29,8 @@ import { Icon } from '@/components/ui/icon';
 import { ScrollFade } from '@/components/ui/scroll-fade';
 import { SearchButton } from './search-button';
 import { SidebarControls } from './sidebar-controls';
+import { StatusBadge } from '@/components/status';
+import { isUnshipped, type StatusTreeItem } from '@/lib/status';
 
 /**
  * The docs rail, drawn as the Atlas app shell draws its sidebar.
@@ -40,7 +44,7 @@ import { SidebarControls } from './sidebar-controls';
  *   │ ◆ Atlas          ⊟  │  the brand row sits on the canvas, above
  *   │ ┌─ panel ─────────┐ │  the curved panel the navigation lives in
  *   │ │ ⌕ Search docs ⌘K│ │
- *   │ │ Getting Started │ │
+ *   │ │ Get Started     │ │
  *   │ │ ▌Overview       │ │  one active pill that slides between rows
  *   │ │ ├ Concepts      │ │  children hang off a rail with L-connectors
  *   │ │ ─────────────── │ │
@@ -62,6 +66,35 @@ function Item({ className, children, ...props }: React.ComponentProps<typeof Sid
       {props.active && <Pill />}
       <span className="relative min-w-0 flex-1">{children}</span>
     </SidebarItem>
+  );
+}
+
+/** Fumadocs' own active test: the same URL, ignoring a trailing slash. */
+function isActive(url: string, pathname: string) {
+  const trim = (path: string) => (path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path);
+  return trim(url) === trim(pathname);
+}
+
+/**
+ * A page row, as the tree renderer's default draws it, plus the page's
+ * `status` (copied onto the tree by `statusPlugin`). A page that is not in
+ * Atlas yet gets its chip, and a roadmapped one drops its title to the
+ * disabled ink, so the shipped rows stay the ones the eye lands on.
+ */
+function TreeItem({ item }: { item: PageTreeItem & StatusTreeItem }) {
+  const pathname = usePathname();
+  const status = isUnshipped(item.status) ? item.status : undefined;
+  return (
+    <Item
+      href={item.url}
+      external={item.external}
+      active={isActive(item.url, pathname)}
+      icon={item.icon}
+      className={cn(status === 'roadmapped' && 'text-disabled')}
+    >
+      {item.name}
+      {status && <StatusBadge status={status} size="sm" className="ms-1.5 align-middle" />}
+    </Item>
   );
 }
 
@@ -183,7 +216,7 @@ function PanelBody({ components }: Pick<SidebarProps, 'components'>) {
             </div>
           )}
           <div className="flex flex-col gap-px">
-            <PageTree {...components} />
+            <PageTree {...components} Item={components?.Item ?? TreeItem} />
           </div>
         </LayoutGroup>
         </MotionConfig>

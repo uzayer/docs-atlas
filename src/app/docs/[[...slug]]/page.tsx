@@ -15,6 +15,8 @@ import { buttonVariants } from '@/components/ui/button';
 import { PageFooter } from '@/components/shell/page-footer';
 import { TopBarActions } from '@/components/shell/docs-frame';
 import { DocsBreadcrumb } from '@/components/shell/docs-breadcrumb';
+import { StatusBadge, StatusCallout } from '@/components/status';
+import { isUnshipped } from '@/lib/status';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -23,6 +25,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
 
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
+  const status = isUnshipped(page.data.status) ? page.data.status : undefined;
 
   const githubUrl = `https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`;
   const actions = (
@@ -59,13 +62,17 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
       <TopBarActions>{actions}</TopBarActions>
       <DocsBreadcrumb className="md:hidden" />
       {/* A plain h1: DocsTitle hard-codes its own size, which outranks a utility. */}
-      <h1 className="type-title">{page.data.title}</h1>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <h1 className="type-title">{page.data.title}</h1>
+        {status ? <StatusBadge status={status} /> : null}
+      </div>
       <DocsDescription className="mb-0 text-md font-normal text-muted-foreground">
         {page.data.description}
       </DocsDescription>
       <div className="flex flex-row items-center gap-1.5 md:hidden">{actions}</div>
       <hr className="rule-dashed my-2" />
       <DocsBody>
+        {status ? <StatusCallout status={status} /> : null}
         <MDX
           components={getMDXComponents({
             // this allows you to link to other pages with relative file paths

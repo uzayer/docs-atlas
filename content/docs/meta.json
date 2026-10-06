@@ -1,21 +1,20 @@
 {
   "pages": [
-    "community",
-    "---Getting Started---",
+    "---Get Started---",
     "...getting-started",
+    "---Team---",
+    "...team",
+    "---Agents---",
+    "...agents",
     "---Source Control---",
-    "source-control/capture",
-    "source-control/timeline",
-    "source-control/git",
+    "...source-control",
     "---Context---",
     "...context",
     "---Product---",
     "...product",
     "---Themes---",
     "...themes",
-    "---Identity & Access---",
-    "...organisation",
-    "---Agents---",
-    "...agents"
+    "---Community---",
+    "...community"
   ]
 }

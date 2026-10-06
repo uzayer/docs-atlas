@@ -11,11 +11,14 @@ import {
 import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
 import { defineDocs } from 'fumadocs-mdx/macro';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
+import { z } from 'zod';
+import { PAGE_STATUSES, ROADMAP_URL, STATUS_NOTICE, isUnshipped, statusPlugin } from './status';
 
 const docs = defineDocs({
   dir: 'content/docs',
   docs: {
-    schema: pageSchema,
+    // `status` marks a page whose feature is not in Atlas yet; see ./status.ts.
+    schema: pageSchema.extend({ status: z.enum(PAGE_STATUSES).optional() }),
     postprocess: {
       includeProcessedMarkdown: true,
     },
@@ -29,6 +32,7 @@ const docs = defineDocs({
 export const source = loader({
   baseUrl: docsRoute,
   source: docs.toFumadocsSource(),
+  plugins: [statusPlugin()],
   icon(icon) {
     const agentIcons = {
       ClaudeCode: ClaudeCodeIcon,
@@ -66,9 +70,15 @@ export function getPageMarkdownUrl(page: (typeof source)['$inferPage']) {
 }
 
 export async function getLLMText(page: (typeof source)['$inferPage']) {
-  const processed = await page.data.getText('processed');
+  // MDX comments ({/* TODO(phase-2): … */} notes to writers) are for the
+  // source only; the processed text keeps them verbatim.
+  const processed = (await page.data.getText('processed')).replace(/\{\/\*[\s\S]*?\*\/\}\n*/g, '');
+  // The HTML page says so in a callout the markdown never sees; say it here.
+  const status = isUnshipped(page.data.status)
+    ? `> ${STATUS_NOTICE[page.data.status]} Follow progress on the roadmap: ${ROADMAP_URL}\n\n`
+    : '';
 
   return `# ${page.data.title} (${page.url})
 
-${processed}`;
+${status}${processed}`;
 }

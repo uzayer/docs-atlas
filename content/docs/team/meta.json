@@ -1,0 +1,19 @@
+{
+  "title": "Team",
+  "icon": "Users",
+  "pages": [
+    "index",
+    "accounts",
+    "organisations",
+    "members",
+    "timeline",
+    "chat",
+    "calls",
+    "prompt-drafts",
+    "spaces",
+    "shared-threads",
+    "ai-access",
+    "web-app",
+    "mobile"
+  ]
+}

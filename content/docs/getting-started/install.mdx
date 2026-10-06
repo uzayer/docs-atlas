@@ -1,0 +1,106 @@
+---
+title: Install
+description: Download Atlas for macOS, Windows or Linux, and keep it up to date.
+---
+
+Atlas is a desktop app. Pick the file for your machine, install it the way you install anything else on that platform, and open it.
+
+<InstallButtons />
+
+## Requirements
+
+| Platform | Runs on                                   | Download                                              |
+| -------- | ----------------------------------------- | ----------------------------------------------------- |
+| macOS    | macOS 11 or later, Apple silicon or Intel | `.dmg`, signed and notarized                          |
+| Windows  | Windows 10 or later, x64                  | `.msi`                                                |
+| Linux    | x86-64, with WebKitGTK 4.1                | `.deb`, `.rpm`, Arch package, AppImage, `.tar.gz` |
+
+Atlas itself needs no account. You sign in later, when you want [Atlas Agent](/docs/agents/atlas-agent) or your [team](/docs/team).
+
+## macOS
+
+1. Download the `.dmg` for your Mac: **Apple silicon** for M-series chips, **Intel** for older Macs. If you're not sure, open the Apple menu, choose **About This Mac**, and look at **Chip**.
+2. Open the `.dmg` and drag **Atlas** into **Applications**.
+3. Open Atlas from Applications.
+
+On launch, Atlas puts a small `atlas` command in `~/.local/bin`. With that folder on your `PATH`, run this from any project to open it in Atlas:
+
+```bash
+atlas .
+```
+
+If the command goes missing, reinstall it from **Settings → General**.
+
+## Windows
+
+1. Download the `.msi`.
+2. Run it. Windows asks for permission before it installs.
+
+Atlas draws its window with Microsoft Edge WebView2. The installer fetches it if your machine doesn't have it already.
+
+The `atlas` command is not available on Windows yet. Open projects from the welcome screen instead.
+
+## Linux
+
+Atlas ships x86-64 packages. Each one installs the commands `atl` and `tryatlas` (not `atlas`, a name other tools already use).
+
+<CodeBlockTabs defaultValue="deb">
+  <CodeBlockTabsList>
+    <CodeBlockTabsTrigger value="deb">Debian, Ubuntu</CodeBlockTabsTrigger>
+    <CodeBlockTabsTrigger value="rpm">Fedora</CodeBlockTabsTrigger>
+    <CodeBlockTabsTrigger value="suse">openSUSE</CodeBlockTabsTrigger>
+    <CodeBlockTabsTrigger value="arch">Arch</CodeBlockTabsTrigger>
+  </CodeBlockTabsList>
+  <CodeBlockTab value="deb">
+    ```bash
+    sudo apt install ./tryatlas_*_amd64.deb
+    ```
+  </CodeBlockTab>
+  <CodeBlockTab value="rpm">
+    ```bash
+    sudo dnf install ./tryatlas-*.x86_64.rpm
+    ```
+  </CodeBlockTab>
+  <CodeBlockTab value="suse">
+    ```bash
+    sudo zypper install ./tryatlas-*.x86_64.rpm
+    ```
+  </CodeBlockTab>
+  <CodeBlockTab value="arch">
+    ```bash
+    sudo pacman -U ./tryatlas-bin-*-x86_64.pkg.tar.zst
+    ```
+  </CodeBlockTab>
+</CodeBlockTabs>
+
+The package manager pulls in what Atlas needs, including WebKitGTK 4.1 and bubblewrap.
+
+For any other distribution, use the AppImage or the tarball:
+
+```bash
+# AppImage: make it executable and run it
+chmod +x tryatlas_*_amd64.AppImage
+./tryatlas_*_amd64.AppImage
+
+# Tarball: unpack it and run the installer
+tar -xzf atlas-*-linux-x86_64.tar.gz
+cd atlas-*-linux-x86_64
+./install.sh
+```
+
+Run as your own user, `install.sh` installs into `~/.local`. Run it with `sudo` to install into `/usr/local`. `uninstall.sh` in the same folder removes it.
+
+## Updates
+
+On macOS and Windows, Atlas checks for a new version in the background and downloads it. When it's ready, Atlas asks you to restart to finish updating. On macOS it verifies the update's Apple signature before installing it.
+
+On Linux, Atlas checks for a new version and tells you, but doesn't install it. Update through your package manager, or download the new package from the [releases page](https://github.com/pacifio/atlas/releases).
+
+To stop checking, turn off **Automatic updates** in **Settings → Updates**.
+
+## Next
+
+<Cards>
+  <Card title="Quickstart" href="/docs/getting-started/quickstart" description="Open a project, choose an agent, and record your first session." />
+  <Card title="Your account" href="/docs/team/accounts" description="Sign in to use Atlas Agent and work with your team." />
+</Cards>

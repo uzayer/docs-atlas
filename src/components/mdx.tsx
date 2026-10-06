@@ -13,6 +13,11 @@ import {
 } from '@/components/mdx/code-block';
 import { Heading } from '@/components/mdx/heading';
 import { Image, Table } from '@/components/mdx/prose';
+import { InstallButtons } from '@/components/mdx/install-buttons';
+import { RoadmapItem, RoadmapList } from '@/components/mdx/roadmap';
+import { Screenshot } from '@/components/mdx/screenshot';
+import { Video } from '@/components/mdx/video';
+import { StatusBadge } from '@/components/status';
 
 /**
  * Fumadocs' defaults, with every visible piece swapped for a standards
@@ -41,6 +46,12 @@ export function getMDXComponents(components?: MDXComponents) {
     Kbd,
     KbdGroup,
     Mermaid,
+    InstallButtons,
+    RoadmapItem,
+    RoadmapList,
+    Screenshot,
+    StatusBadge,
+    Video,
     ...components,
   } satisfies MDXComponents;
 }

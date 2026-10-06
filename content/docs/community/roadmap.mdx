@@ -1,0 +1,96 @@
+---
+title: Roadmap
+description: What Atlas does today, what we're building now, and where it's going.
+icon: Map
+---
+
+Agents made writing code cheap. Understanding it did not get cheaper: why a change exists, who asked for it, and what the agent was told. On a team, those answers sit on everyone's laptops.
+
+Atlas puts them in one place. Every agent session your team runs is recorded, linked to the commits it produced, and shared with the team, with the conversation about that work next to it.
+
+That record is the first half of what we're building. The second half closes the loop. When software breaks, Atlas finds the session and the prompt behind the change, opens an issue with that context, and an agent proposes the fix as a pull request your team approves. Over time it learns which prompts lead to which bugs. We call that the agentic software factory.
+
+This page tracks how far along it is. There are no dates here, because we don't commit to them. Pages for work that hasn't shipped carry a **Roadmapped** or **In progress** badge, so you can always tell what's real.
+
+## Shipped
+
+In Atlas today. The version is the release it first appeared in.
+
+<RoadmapList status="shipped">
+  <RoadmapItem title="Bring any coding agent" href="/docs/agents">
+    Claude Code, Codex, Cursor, OpenCode and any agent in the ACP registry, side by side with Atlas Agent, in one chat surface.
+  </RoadmapItem>
+  <RoadmapItem title="Session capture and checkpoints" href="/docs/source-control/capture">
+    Every agent session recorded with its prompts, tool calls and edits, and every commit linked back to the session that produced it.
+  </RoadmapItem>
+  <RoadmapItem title="Team timeline" href="/docs/team/timeline" meta="0.3.4">
+    Your team's sessions on one shared board, with comments, live presence, search and share links.
+  </RoadmapItem>
+  <RoadmapItem title="Atlas Agent in your organisation" href="/docs/agents/atlas-agent" meta="0.3.4">
+    Ask what a teammate is working on, have it reply to comments, post a session report, or draw on a Space. Anything it sends asks you first.
+  </RoadmapItem>
+  <RoadmapItem title="Team chat" href="/docs/team/chat" meta="0.3.1">
+    Channels and direct messages, with recorded sessions and checkpoints one click away.
+  </RoadmapItem>
+  <RoadmapItem title="Voice and video calls" href="/docs/team/calls" meta="0.3.1">
+    Start a call from any conversation; recordings and transcripts come back to it.
+  </RoadmapItem>
+  <RoadmapItem title="Prompt drafts" href="/docs/team/prompt-drafts" meta="0.3.1">
+    Write a prompt together, live, before one of you sends it to an agent.
+  </RoadmapItem>
+  <RoadmapItem title="Spaces" href="/docs/team/spaces" meta="0.3.1">
+    A shared canvas attached to a conversation.
+  </RoadmapItem>
+  <RoadmapItem title="Shared threads" href="/docs/team/shared-threads">
+    Teammates and their agents working on the same changes at once, with conflicts resolved together.
+  </RoadmapItem>
+  <RoadmapItem title="AI gateway, budgets and per-person spend" href="/docs/team/ai-access">
+    Atlas Agent bills to your organisation. Admins grant access and set budgets, and spend is attributed to each person.
+  </RoadmapItem>
+  <RoadmapItem title="Usage dashboard" href="/docs/context/usage">
+    Tokens, cost, messages and sessions by project, agent and model.
+  </RoadmapItem>
+  <RoadmapItem title="Shared memory across agents" href="/docs/context/memory">
+    Decisions, facts and failures from past sessions, available to every agent you run in a repository.
+  </RoadmapItem>
+  <RoadmapItem title="Linux" href="/docs/getting-started/install" meta="0.3.4">
+    Packages for Debian, Fedora, openSUSE and Arch, plus an AppImage and a tarball.
+  </RoadmapItem>
+</RoadmapList>
+
+## In progress
+
+Being built now, and not in a release yet.
+
+<RoadmapList status="in-progress">
+  <RoadmapItem title="Atlas 0.4.0" href="/docs/community/changelog">
+    Native notifications on every platform, keymap presets, switching agents without losing the conversation, and `/remember`.
+  </RoadmapItem>
+  <RoadmapItem title="Mobile app" href="/docs/team/mobile">
+    Your organisation on iOS and Android: chat, the timeline, your inbox and the dashboard.
+  </RoadmapItem>
+  <RoadmapItem title="Sessions from your own terminal">
+    Agent sessions you start outside Atlas, picked up and recorded while they run.
+  </RoadmapItem>
+</RoadmapList>
+
+## Roadmapped
+
+Planned, and not started in the app.
+
+<RoadmapList status="roadmapped">
+  <RoadmapItem title="Issues and cloud agents" href="/docs/source-control/issues">
+    Issues that dispatch an agent. The agent plans, the team approves, and the issue keeps the sessions and commits that resolved it.
+  </RoadmapItem>
+  <RoadmapItem title="Self-healing" href="/docs/source-control/self-healing">
+    When something breaks, Atlas finds the session behind it, opens an issue with that context, and proposes the fix as a pull request.
+  </RoadmapItem>
+  <RoadmapItem title="Handbook" href="/docs/context/handbook">
+    Your organisation's documentation in one place, ready for every agent to read and work from.
+  </RoadmapItem>
+  <RoadmapItem title="Pick up work on any device">
+    Sessions, notes and workspace state that follow you to the next machine.
+  </RoadmapItem>
+</RoadmapList>
+
+Want something that isn't here? Tell us on [Discord](https://discord.gg/GmnFggaPfP) or open an issue on [GitHub](https://github.com/pacifio/atlas/issues).
