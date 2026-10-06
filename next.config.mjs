@@ -65,6 +65,11 @@ const config = {
         permanent: true,
       },
       {
+        source: '/docs/team/organisations',
+        destination: '/docs/team/organizations',
+        permanent: true,
+      },
+      {
         source: '/docs/community/beta-programme',
         destination: '/docs/community/beta-program',
         permanent: true,
