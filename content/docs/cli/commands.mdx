@@ -1,0 +1,146 @@
+---
+title: Command reference
+description: Every atlas-cli command and flag.
+icon: ListTree
+---
+
+Run `atlas-cli` on its own for the overview, and add `--help` to any command for its usage and flags. `atlas-cli --version` prints the version.
+
+On a terminal, commands draw their own screens. Piped or run from a script, they print plain text, and anything that would ask a question takes a flag instead.
+
+Commands that act on a project use the folder you're in, or the nearest parent folder that `atlas-cli init` set up.
+
+## Account
+
+| Command | What it does |
+| --- | --- |
+| `atlas-cli login` | Sign in with your Atlas account. Shows a code and opens your browser to approve it. |
+| `atlas-cli logout` | Sign out and delete the sign-in file on this machine. |
+| `atlas-cli whoami` | Show who you're signed in as, your organizations, the active one, and where the sign-in file is. |
+| `atlas-cli org list` | List the organizations you belong to, with your role in each. |
+| `atlas-cli org use <org-id>` | Make an organization the active one on this machine. `none` clears it. |
+| `atlas-cli org create <name>` | Create an organization. |
+
+| Flag | Command | What it does |
+| --- | --- | --- |
+| `--no-browser` | `login` | Print the address and code instead of opening a browser. |
+| `--refresh` | `whoami` | Fetch your profile and organizations from Atlas first. |
+| `--slug <handle>` | `org create` | The organization's handle. By default it's made from the name. |
+
+The sign-in file is the only secret the CLI keeps, readable only by you. The desktop app uses the same file.
+
+## Set up
+
+| Command | What it does |
+| --- | --- |
+| `atlas-cli init` | Bind this folder to an organization and a cloud project, hook your agents, and choose background sync and memory search. See [Set up a project](/docs/cli#set-up-a-project). |
+| `atlas-cli settings` | Change the project's capture, shared memory, agents, background sync and search model on one screen. Piped, it prints the current settings. |
+| `atlas-cli status` | Show your account, the project's binding, capture and memory, recorded sessions, linked commits, sync and each agent's hooks. |
+
+Flags for `atlas-cli init`:
+
+| Flag | What it does |
+| --- | --- |
+| `--org <id>` | Use this organization and skip the step. |
+| `--project <id>` | Connect to this cloud project and skip matching. |
+| `--create` | Create a new cloud project for this folder. |
+| `--slug <handle>` | The new project's handle. By default, the folder name. |
+| `--name <name>` | The new project's name. By default, the folder name. |
+| `--visibility org\|restricted` | Who can read a new project: everyone in the organization (the default), or only the members you name. |
+| `--local` | Record on this machine only. Nothing is synced and no sign-in is needed. |
+| `--agents <ids>` | Hook these agents, comma-separated (see [Agents](/docs/cli/agents#supported-agents)), and skip the step. |
+| `--all-agents` | Hook every agent found on this machine, and skip the step. |
+| `--sync on\|off` | Turn background sync on or off, and skip the step. |
+| `--yes` | Don't ask for confirmation, for example before binding a folder again. |
+
+In a script, flags answer the questions. When several projects match the repository, or none does, `init` stops and asks for `--project <id>` or `--create`.
+
+Run `init` in a subfolder of a repository to record that folder as its own project. Its shared memory stays with the whole repository.
+
+## Agents
+
+| Command | What it does |
+| --- | --- |
+| `atlas-cli agents add <id>…` | Write the Atlas hook and memory server into each agent's config in this project, and the git `post-commit` hook. |
+| `atlas-cli agents remove <id>…` | Take the Atlas hook and memory server back out. Removes the git hook when no agent is left. |
+| `atlas-cli agents list` | Show every supported agent, whether it's on your `PATH`, and its hook and memory state here. |
+| `atlas-cli agents sessions` | List the sessions the hooks have seen in this project, with the command that resumes each. |
+
+| Flag | Command | What it does |
+| --- | --- | --- |
+| `--all` | `add` | Every agent found on this machine. |
+| `--all` | `remove` | Every agent with an Atlas entry in this project. |
+| `--force` | `add` | Rewrite every Atlas entry, even ones that look current. |
+| `--no-memory` | `add` | Install the capture hook only, without the memory server. |
+
+## Capture and sync
+
+| Command | What it does |
+| --- | --- |
+| `atlas-cli capture enable` | Turn session capture on for this project. |
+| `atlas-cli capture disable` | Pause capture. What was already recorded still syncs. |
+| `atlas-cli capture sync` | Send what's waiting to the cloud project now. |
+| `atlas-cli capture retry` | Queue failed events again, then sync. |
+| `atlas-cli capture link` | Link recorded sessions to any new commits, and follow rewritten history. |
+| `atlas-cli sync` | Show whether background sync is on. |
+| `atlas-cli sync on` | Start the background listener for this project and keep it running. Agents' hooks restart it after a reboot. |
+| `atlas-cli sync off` | Stop the listener. Each hook then syncs its own event. |
+| `atlas-cli serve` | Run the listener in the foreground, with a live feed of hook events. <Kbd>Ctrl C</Kbd> stops it. |
+
+| Flag | Command | What it does |
+| --- | --- | --- |
+| `--daemon` | `serve` | Start the listener in the background. |
+| `--stop` | `serve` | Stop a background listener. Use `atlas-cli sync off` to also keep hooks from restarting it. |
+
+See [How syncing works](/docs/cli#how-syncing-works).
+
+## Memory
+
+| Command | What it does |
+| --- | --- |
+| `atlas-cli memory browse` | Browse shared memory by kind, search it, and read an entry's history. |
+| `atlas-cli memory list` | Print memories, one per line: ID, kind, state and text. |
+| `atlas-cli memory index` | Download the search model if it's missing, embed every memory, and index the project's documents. |
+| `atlas-cli memory enable` | Turn shared memory on for this project. |
+| `atlas-cli memory disable` | Turn shared memory off for this project. |
+| `atlas-cli memory export <dir>` | Write durable memories to a folder as Markdown: `MEMORY.md`, plus a file each for decisions, facts, failures and architecture. |
+| `atlas-cli memory import <path>` | Read memories from such files, as candidates agents see as unconfirmed. |
+| `atlas-cli memory verify` | Check that the memory record's history hasn't been edited outside Atlas. |
+
+| Flag | Command | What it does |
+| --- | --- | --- |
+| `--kind <kind>` | `memory list` | Only one kind: `plan`, `file_changed`, `decision`, `fact`, `failure`, `architecture` or `preference`. |
+| `--search <text>` | `memory list` | Search instead of listing. |
+| `--all` | `memory list` | Include candidates, as the desktop app's memory panel does. |
+| `--no-download` | `memory index` | Don't download the model. Without it, memory is indexed for word search only. |
+
+## Maintenance
+
+| Command | What it does |
+| --- | --- |
+| `atlas-cli update` | Replace `atlas-cli` with the latest release, after checking its checksum. A background listener restarts on the new version. |
+| `atlas-cli uninstall` | Remove Atlas's hooks and memory entries from every project, stop the listeners, and delete the CLI's own state and the binary. |
+
+| Flag | Command | What it does |
+| --- | --- | --- |
+| `--check` | `update` | Only say whether a newer release exists. |
+| `--version <tag>` | `update` | Install this release instead of the latest, such as `v0.5.1`. |
+| `--yes` | `uninstall` | Don't ask for confirmation. |
+| `--keep-binary` | `uninstall` | Clean up the projects and the CLI's state, but keep the binary. |
+
+`uninstall` leaves each project's `.atlas/` folder and your sign-in in place, because the desktop app uses them.
+
+## Where things live
+
+| Path | What it holds |
+| --- | --- |
+| `.atlas/` | The project's record, in the same format the desktop app writes: sessions, memory and the project binding. It ignores itself in git. |
+| `~/.local/state/atlas-cli/` | The CLI's own files per project: hook state, the hooks log and the listener's details. |
+| `~/Library/Application Support/dev.atlas.ide/` | On macOS, the sign-in file and the memory search model, shared with the desktop app. On Linux, the sign-in file is in `~/.config/dev.atlas.ide/` and the model in `~/.local/share/dev.atlas.ide/`. |
+
+Agents call two more commands themselves, `atlas-cli hooks` and `atlas-cli mcp-bridge`. They're hidden from the overview, and you never need to run them.
+
+## Next
+
+- [Atlas CLI](/docs/cli): set up a project and see your sessions on the timeline
+- [Agents](/docs/cli/agents): every supported agent, and what each needs the first time
