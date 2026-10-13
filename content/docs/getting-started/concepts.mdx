@@ -42,7 +42,7 @@ Either way, Atlas redacts secrets on your machine before it stores anything. See
 
 The link between a session and a commit containing its work. It records what a commit can't tell you on its own: which session produced it, what the agent was asked, and the reasoning behind the change.
 
-Atlas finds checkpoints by watching your repository, with no git hooks. They survive amends and rebases, and orphan rather than guess when a squash makes the link ambiguous.
+The desktop app finds checkpoints by watching your repository, with no git hooks (the [Atlas CLI](/docs/cli#commits-and-checkpoints) uses a `post-commit` hook). They survive amends and rebases, and orphan rather than guess when a squash makes the link ambiguous.
 
 ### Timeline
 

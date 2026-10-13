@@ -73,6 +73,8 @@ Agents that support session listing can bring their past sessions into Atlas. Op
 
 Every agent runs against the open [project](/docs/getting-started/concepts#project). Atlas keeps its chats in your history, and [session capture](/docs/source-control/capture) adds the work to the timeline and links commits to checkpoints.
 
+To keep running an agent in its own terminal interface instead, the [Atlas CLI](/docs/cli) records it through the agent's hooks.
+
 Shared memory depends on capability. When memory sharing is on, Atlas offers its memory tools to Atlas Agent and to agents that advertise HTTP MCP support. The agent decides when to call them; agents without that capability don't receive memory.
 
 ## Next

@@ -5,6 +5,8 @@ description: Download Atlas for macOS, Windows or Linux, and keep it up to date.
 
 Atlas is a desktop app. Pick the file for your machine, install it the way you install anything else on that platform, and open it.
 
+Working in a terminal, or on a server? Install the [Atlas CLI](#atlas-cli) instead, or alongside it.
+
 <InstallButtons />
 
 ## Requirements
@@ -98,9 +100,22 @@ On Linux, Atlas checks for a new version and tells you, but doesn't install it. 
 
 To stop checking, turn off **Automatic updates** in **Settings → Updates**.
 
+## Atlas CLI
+
+The [Atlas CLI](/docs/cli) records the agents you run in a terminal and gives them shared memory, without the desktop app. It runs on macOS and Linux, on x86-64 and arm64, but not on Windows.
+
+```bash
+curl -fsSL https://github.com/tryatlas/cli/releases/latest/download/install.sh | sh
+```
+
+The script checks the download's checksum and puts `atlas-cli` in `~/.local/bin`. `atlas-cli update` keeps it current. See [Install the CLI](/docs/cli#install) for pinning a version or choosing the folder.
+
+The CLI and the app share your sign-in and each project's `.atlas/` folder, so you can use either, or both.
+
 ## Next
 
 <Cards>
   <Card title="Quickstart" href="/docs/getting-started/quickstart" description="Open a project, choose an agent, and record your first session." />
   <Card title="Your account" href="/docs/team/accounts" description="Sign in to use Atlas Agent and work with your team." />
+  <Card title="Atlas CLI" href="/docs/cli" description="Capture the agents you run in your terminal, without the app." />
 </Cards>

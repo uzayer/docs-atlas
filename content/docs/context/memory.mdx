@@ -23,6 +23,8 @@ Instead, Atlas runs a memory tool server on your machine and hands it to every s
 
 The agent decides when to call those tools. An agent without HTTP MCP support gets no shared memory, and an agent that never calls the tools gets nothing pushed to it.
 
+Agents you run in a terminal can share the same record through the [Atlas CLI](/docs/cli#shared-memory-from-the-terminal), which adds the memory server to each agent's own config.
+
 ## What memory holds
 
 Memory keeps six kinds of entry:
@@ -109,3 +111,4 @@ Embeddings are computed on your machine. Choose the model in [Settings → Local
 - [Policy](/docs/context/agent-preferences): review the rules your agents work from
 - [Knowledge base](/docs/context/knowledge-base): write deliberate project notes
 - [Skills](/docs/context/skills): give agents reusable instructions
+- [Atlas CLI](/docs/cli#shared-memory-from-the-terminal): shared memory for agents in your terminal

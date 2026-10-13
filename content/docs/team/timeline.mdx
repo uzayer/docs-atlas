@@ -19,7 +19,7 @@ Open it from **Timeline** at the top of the rail. It covers every project in the
 
 ## Get sessions onto the timeline
 
-The timeline shows projects with [session capture](/docs/source-control/capture) turned on.
+The timeline shows projects with [session capture](/docs/source-control/capture) turned on, whether in the desktop app or with the [Atlas CLI](/docs/cli) from a terminal.
 
 - A project stored **Local** shows only your own sessions, and only on this machine.
 - A project stored **Cloud** sends its sessions to the organization. They appear on your teammates' timelines, and theirs appear on yours.
@@ -129,7 +129,7 @@ Atlas Agent can also reply to and resolve comments. Anything that reaches anothe
 
 ## How sessions link to commits
 
-Atlas watches repository history without installing git hooks, changing git configuration, or writing refs. It can therefore connect work committed from Atlas, another editor, or a terminal.
+The desktop app watches repository history without installing git hooks, changing git configuration, or writing refs. It can therefore connect work committed from Atlas, another editor, or a terminal. The [Atlas CLI](/docs/cli#commits-and-checkpoints) installs a git `post-commit` hook instead, and links by the same rules.
 
 For existing files, Atlas links a session when the commit includes a path the agent touched. For new files, the committed content must match the agent's output. This keeps normal follow-up edits linked while avoiding credit for files you replaced yourself.
 
@@ -160,3 +160,4 @@ Only the organization's [owner](/docs/team/members#the-owner) can delete recorde
 - [Session capture](/docs/source-control/capture): turn recording on for a project
 - [Organizations](/docs/team/organizations): put a project in the cloud
 - [Web app](/docs/team/web-app): the timeline in a browser, with full-text search and share links
+- [Atlas CLI](/docs/cli): put sessions from your terminal on the timeline

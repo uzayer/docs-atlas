@@ -99,6 +99,8 @@ When you turn on capture, Atlas imports the Claude Code transcripts already on d
 
 Atlas keeps checking while the project is open, so a Claude Code session you run in a terminal outside Atlas is brought in too. Transcripts it has already imported, and duplicates of sessions recorded in the app, are skipped.
 
+To record terminal sessions as they run, from Claude Code and seven other agents, with or without the app open, use the [Atlas CLI](/docs/cli).
+
 Imported sessions never get checkpoints. The linking rule below needs to know which files existed before the agent wrote them, and that can't be recovered from an old transcript. Rather than guess, Atlas leaves imported sessions unlinked.
 
 ## How commits become checkpoints
@@ -109,7 +111,9 @@ A checkpoint is the part of one session whose work landed in one commit. A sessi
 
 ### Atlas watches, it doesn't intercept
 
-Atlas installs no git hooks, changes no git configuration and writes nothing to your repository. It watches the repository's refs and examines each new commit, so a commit made from Atlas, another editor or a terminal links the same way.
+The desktop app installs no git hooks, changes no git configuration and writes nothing to your repository. It watches the repository's refs and examines each new commit, so a commit made from Atlas, another editor or a terminal links the same way.
+
+The [Atlas CLI](/docs/cli) has no window to watch from, so it installs a git `post-commit` hook instead, and keeps any hook you already had. See [Commits and checkpoints](/docs/cli#commits-and-checkpoints).
 
 When you open a project, Atlas also examines the commits made while it was closed. Work you committed with Atlas shut still finds its session.
 
@@ -179,3 +183,4 @@ The dot turns amber when capture is degraded and red when it has stopped. Open t
 
 - [Timeline](/docs/team/timeline): read and discuss recorded sessions
 - [Git & Diff](/docs/source-control/git): review and commit agent changes
+- [Atlas CLI](/docs/cli): capture agents you run in a terminal, without the app
