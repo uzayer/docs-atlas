@@ -4,24 +4,65 @@ description: Configure Atlas for the way you work.
 icon: Settings
 ---
 
-Press <Kbd>⌘,</Kbd> to open Settings in a tab. The sections are General, Appearance, Icons, Layouts, API Keys, Skills, Agents, Local Models, Updates, Keybindings and About.
+Press <Kbd>⌘,</Kbd> to open Settings in a tab. The sidebar has two groups. **Preferences** holds how Atlas behaves: General, Appearance, Icons, Chat, Memory, Notifications, Source Control, Keybindings, Privacy and Updates. **Library** holds what you install and manage: Agents, Skills, API Keys, Local Models and Layouts. About sits at the bottom.
 
-Atlas saves your settings to `~/.config/atlas/config.toml`, a commented file you can also edit by hand. If an edit breaks the file, Atlas keeps using the last valid settings and offers **Open config** or **Recreate defaults**.
+Atlas saves your preferences to `~/.config/atlas/config.toml`, a commented file you can also edit by hand. [Configuration file](/docs/product/configuration) lists every key. If an edit breaks the file, Atlas keeps using the last valid settings and offers **Open config.toml** or **Recreate defaults** at the top of General.
 
-<Screenshot src="/screenshots/product/settings-general.png" alt="The Settings tab on the General section, with the section list on the left and the Interface zoom, App icon, Enter to send and Keep awake rows on the right." caption="Settings → General." />
+{/* TODO(phase-2): retake settings-general.png for the redesigned Settings (sidebar search, grouped rows). */}
+
+## Find a setting
+
+Press <Kbd>/</Kbd> while Settings is open, or click the search box at the top of the sidebar, and type part of a setting's name or what it does. Pick a result to jump to its page; the row flashes so you can see it.
+
+## Change and reset
+
+Every switch and menu saves as soon as you change it. There is no Save button.
+
+When a setting differs from its default, a small reset arrow appears next to its name. Click it to put that one setting back. **Restore defaults**, at the top right of a page, resets everything on that page at once, and first lists exactly which settings it will change.
+
+A setting that does not apply right now is greyed out. Hover it to see why, for example when notifications are off.
 
 ## General
 
-General holds most of Atlas's preferences. They are grouped here by what they affect.
-
-### Interface
-
 - **Interface zoom** scales the whole interface, text, icons and spacing together. Press <Kbd>⌘=</Kbd>, <Kbd>⌘-</Kbd> and <Kbd>⌘0</Kbd> anywhere, or use the interface scale button at the bottom of the rail, which also offers **Compact**, **Default**, **Large** and **Larger**.
 - **App icon** (macOS) changes the icon in the Dock, Finder and Launchpad.
-- **Enter to send**: <Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> adds a line. Turn it off to make <Kbd>Enter</Kbd> add a line; <Kbd>⌘Enter</Kbd> always sends.
 - **Keep awake while an agent is working** stops your computer from sleeping during a turn. The display can still turn off. It is not available on Windows.
+- **Add .atlas to .gitignore** keeps Atlas's per-project data out of version control. On by default.
+- **Show hidden files** shows dotfiles in the [explorer](/docs/product/explorer). On by default.
+- **Send feedback** opens a panel for reporting a bug or requesting a feature, with an optional screenshot.
 
-### Notifications
+## Appearance and Icons
+
+Choose the one theme that colors all of Atlas, and whether it follows your system or stays **Dark** or **Light**. You can also convert a shadcn, Zed or VS Code theme here. See [Themes](/docs/themes) and [Importing a theme](/docs/themes/importing).
+
+Icons sets the icon theme for files and folders in the explorer and tabs. See [Icon themes](/docs/themes/icon-themes).
+
+## Chat
+
+- **Enter to send**: <Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> adds a line. Turn it off to make <Kbd>Enter</Kbd> add a line; <Kbd>⌘Enter</Kbd> always sends.
+- **Next-step suggestions** has the agent offer two or three follow-ups as chips after each turn. They come from the agent's own session, with no extra key.
+- **Switching agents in a chat** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Agent chat](/docs/product/chat#choose-and-switch-agents).
+- **Save to memory before switching agents** sends `/remember` to the agent you are leaving first. See [Memory](/docs/context/memory#keep-memory-across-agent-switches).
+- **Favorite models** shows how many models you starred in the composer's model picker, and clears them.
+- **Model pricing** fetches per-model prices from models.dev, used for cost estimates and shown in the model picker. Atlas refreshes them on launch.
+
+### Atlas Agent permissions
+
+Three switches decide how far [Atlas Agent](/docs/agents/atlas-agent) can reach beyond your code. All are on by default, and every action shows in the chat and in the Logs tab.
+
+- **Let Atlas Agent navigate the app**: it can open files at a line, switch tabs and panels, fill in a chat message, and type a command into a terminal for you to run. It never switches projects, sends a message for you, or presses Enter.
+- **Let Atlas Agent act in your organization**: in a project bound to the cloud, it can read your organization's recorded sessions, comments, members and conversations, and act there as you. Anything that reaches another person asks you first.
+- **Let agents search code with Atlas**: agents get Atlas's code search, which respects `.gitignore` and never reads secret files such as `.env`. Turn it off and they use their own tools instead.
+
+## Memory
+
+- **Atlas is the only memory in Atlas sessions** turns off each agent's own memory, so every agent reads and writes the one shared memory.
+- **Nightly memory review** proposes changes to shared memory once a day. Nothing changes until you accept it in Memory › Review.
+- **Mirror memory as an Agent Memory Repo** keeps a read-only local git copy of each project's memory, outside the project. **Open folder** shows it.
+- **Mirror CLAUDE.md and .claude/rules into AGENTS.md** keeps your instructions in sync for agents that read `AGENTS.md`. See [Memory](/docs/context/memory#mirror-your-instructions-into-agentsmd).
+- **Embedding model** shows the on-device model memory search uses. **Manage** opens Local Models.
+
+## Notifications
 
 Atlas notifies you when something needs you or finishes, and stays quiet about anything you are already looking at. The master **Notifications** switch turns everything off except sign-in problems, so an agent is never silently stopped.
 
@@ -32,82 +73,10 @@ Below those, notifications come in four groups: **Needs you**, **Outcomes**, **W
 
 **Banner actions on permission requests**, under Needs you, puts **Allow once** and **Deny** on the system banner, so you can answer an agent without switching to Atlas.
 
-### Files and git
+## Source Control
 
-- **Auto-add .atlas to .gitignore** keeps Atlas's per-project data out of version control. On by default.
-- **Show hidden files** shows dotfiles in the [explorer](/docs/product/explorer). On by default.
 - **Inline Git blame** shows who last changed the line under your cursor in the [editor](/docs/product/editor). On by default.
 - **Auto-fetch from remote** runs `git fetch` when a project opens, when Atlas regains focus, and every few minutes, so you can see what the remote has. It never pulls, merges or touches your files.
-- **Enable Atlas Logs** records Atlas's own events in the Logs tab, which helps when you report a problem.
-
-### Privacy and feedback
-
-- **Share usage data** sends privacy-preserving usage data to help improve Atlas: app launches, which agents and tools you use, how many files a turn touched, token counts and crashes. It never includes your prompts, code, file paths or keys. It is on by default; turn it off to stop sending.
-- **Link usage data to my account** attributes that data to your Atlas account while you are signed in. Turn it off to stay anonymous when signed in.
-- **Send feedback** opens a panel for reporting a bug or requesting a feature, with an optional screenshot.
-
-### Agents
-
-- **Next-step suggestions** has the agent offer two or three follow-ups as chips after each turn. They come from the agent's own session, with no extra key.
-- **Switching agents in a chat** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Agent chat](/docs/product/chat#choose-and-switch-agents).
-- **Save to memory before switching agents** sends `/remember` to the agent you are leaving first. See [Memory](/docs/context/memory#keep-memory-across-agent-switches).
-- **Mirror CLAUDE.md and .claude/rules into AGENTS.md** keeps your instructions in sync for agents that read `AGENTS.md`. See [Memory](/docs/context/memory#mirror-your-instructions-into-agentsmd).
-
-### Atlas Agent powers
-
-Two switches decide how far [Atlas Agent](/docs/agents/atlas-agent) can reach beyond your code. Both are on by default, and every action shows in the chat and in the Logs tab.
-
-- **Let Atlas Agent navigate the app**: it can open files at a line, switch tabs and panels, fill in a chat message, and type a command into a terminal for you to run. It never switches projects, sends a message for you, or presses Enter.
-- **Let Atlas Agent act in your organization**: in a project bound to the cloud, it can read your organization's recorded sessions, comments, members and conversations, and act there as you. Anything that reaches another person asks you first.
-
-### Tools
-
-- **Atlas CLI** adds an `atlas` command to your shell. Type `atlas .` in a terminal to open the current folder as a project. Atlas installs it at `~/.local/bin/atlas` and refreshes it on every launch. It is not available on Windows.
-- **Model pricing** fetches per-model prices from models.dev, used for cost estimates and shown in the model picker. Atlas refreshes them on launch.
-
-## Appearance
-
-Choose the one theme that colors all of Atlas, and whether it follows your system or stays **Dark** or **Light**. You can also convert a shadcn, Zed or VS Code theme here. See [Themes](/docs/themes) and [Importing a theme](/docs/themes/importing).
-
-## Icons
-
-Choose the icon theme for files and folders in the explorer and tabs. See [Icon themes](/docs/themes/icon-themes).
-
-## Layouts
-
-Apply a ready-made arrangement of panels and tabs: **Focus**, **Develop**, **Research**, **Terminal**, **Review** or **Usage**. Press <Kbd>⌘⌥L</Kbd> anywhere to switch layouts without opening Settings.
-
-## API Keys
-
-Add your own provider keys. Atlas uses them for a few features:
-
-- chatting with a recorded session from the [timeline](/docs/team/timeline)
-- the **Provider** option for memory's handoff summary and extraction (see [Memory](/docs/context/memory#choose-how-the-handoff-is-summarized))
-- external agents that read a provider's key from the environment
-
-Each key is an `export` line in the shell profile you choose, and Atlas reads it back from your environment. Atlas keeps no separate copy of your keys. A key set somewhere Atlas can read but not edit appears read-only.
-
-Atlas Agent does not use these keys; it runs on your Atlas account. See [AI access & spend](/docs/team/ai-access).
-
-## Skills
-
-Manage skills and packs. See [Skills](/docs/context/skills).
-
-## Agents
-
-Browse the ACP registry, install and remove agents, and update the ones you have. See [ACP registry](/docs/agents/registry).
-
-<Video youtube="BNfkFyrH86I" title="Bringing your coding agents to Atlas" />
-
-## Local Models
-
-Download the embedding models that run on your machine for code indexing and memory search. Changing the model rebuilds the index after Atlas asks for confirmation.
-
-## Updates
-
-- **Automatic updates** checks for a new version in the background. On macOS and Windows it also downloads it; on Linux, update through your package manager or the release page.
-- **Sync the Atlas Agent's plugin catalog** lets Atlas Agent fetch OpenAI's curated plugin catalog when it starts. It is off by default, because it is a network request on every launch.
-- **Check for updates** checks now, whatever the automatic setting.
 
 ## Keybindings
 
@@ -123,12 +92,59 @@ To share a profile, choose **Copy as JSON** and send it. A teammate imports it w
 
 See [Power user](/docs/product/power-user) for the default shortcuts.
 
+## Privacy
+
+- **Share usage data** sends privacy-preserving usage data to help improve Atlas: app launches, which agents and tools you use, how many files a turn touched, token counts and crashes. It never includes your prompts, code, file paths or keys. It is on by default; turn it off to stop sending.
+- **Link usage data to my account** attributes that data to your Atlas account while you are signed in. Turn it off to stay anonymous when signed in.
+- **Atlas logs** records Atlas's own events in the Logs tab, which helps when you report a problem.
+
+**Settings file** shows where `config.toml` lives, whether it loaded cleanly, and any keys in it Atlas does not recognize, such as a typo. **Open** opens it in your editor. **Recreate** replaces it with a fresh, fully commented file and keeps your old one beside it as a backup.
+
+## Updates
+
+- **Automatic updates** checks for a new version in the background. On macOS and Windows it also downloads it; on Linux, update through your package manager or the release page.
+- **Check for updates** checks now, whatever the automatic setting.
+- **Keep Atlas Agent's plugin catalog up to date** lets Atlas Agent fetch OpenAI's curated plugin catalog when it starts. It is off by default, because it is a network request on every launch.
+
+## Library
+
+### Agents
+
+Browse the ACP registry, install and remove agents, and update the ones you have. A number next to Agents in the sidebar counts installed agents with an update waiting. See [ACP registry](/docs/agents/registry).
+
+<Video youtube="BNfkFyrH86I" title="Bringing your coding agents to Atlas" />
+
+### Skills
+
+Manage skills and packs. See [Skills](/docs/context/skills).
+
+### API Keys
+
+Add your own provider keys. Atlas uses them for a few features:
+
+- chatting with a recorded session from the [timeline](/docs/team/timeline)
+- the **Provider** option for memory's handoff summary and extraction (see [Memory](/docs/context/memory#choose-how-the-handoff-is-summarized))
+- external agents that read a provider's key from the environment
+
+Each key is an `export` line in the shell profile you choose, and Atlas reads it back from your environment. Atlas keeps no separate copy of your keys. A key set somewhere Atlas can read but not edit appears read-only.
+
+Atlas Agent does not use these keys; it runs on your Atlas account. See [AI access & spend](/docs/team/ai-access).
+
+### Local Models
+
+Download the embedding models that run on your machine for code indexing and memory search. Changing the model rebuilds the index after Atlas asks for confirmation.
+
+### Layouts
+
+Apply a ready-made arrangement of panels and tabs: **Focus**, **Develop**, **Research**, **Terminal**, **Review** or **Usage**. Press <Kbd>⌘⌥L</Kbd> anywhere to switch layouts without opening Settings. **Show tab bar** hides or shows the strip of tabs above each column.
+
 ## About
 
 Shows the version of Atlas you are running.
 
 ## Next
 
+- [Configuration file](/docs/product/configuration): every key in `config.toml`
 - [Power user](/docs/product/power-user): move through Atlas from the keyboard
 - [Skills](/docs/context/skills): install reusable instructions
 - [ACP registry](/docs/agents/registry): manage coding agents
