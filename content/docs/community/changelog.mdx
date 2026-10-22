@@ -20,6 +20,7 @@ Each release lists what you'll notice, not every commit. The full history is on 
 - **New syntax colours.** The Atlas theme's code colours now come from Pierre, the palette T3 Code uses, replacing the old neon ones. Pierre's colours are also what any theme without syntax colours of its own falls back to.
 - **A theme can be two colours.** No base token is required any more: `background`, `foreground` and `primary` are seeds, and every other token is derived from them. A file with a background and an accent is a complete theme. Colours are now mixed in OKLab, so derived colours shift slightly in every theme. Imports pin what they derive, and export to shadcn writes the full set.
 - **Theme editor.** **Create theme**, **Duplicate** and **Edit** in Settings → Appearance open an editor that floats over the app, which is the live preview. Start from a background and an accent, or switch to **Advanced** for every colour by role. Saving writes only the colours you set.
+- **Colour themes from Open VSX.** The theme import dialog can now search Open VSX and convert a VS Code colour theme extension directly, every theme it carries at once, with its author and licence.
 - **Notifications** have a copy button for the message, always shown on errors, and a close button on hover.
 - **Diff colours** show their two colours in the picker.
 

@@ -24,6 +24,8 @@ The format is detected from the content, so you paste and press **Convert** with
 
 Three sources, as tabs at the top of the panel.
 
+**Open VSX.** Search [open-vsx.org](https://open-vsx.org) for a VS Code colour theme and press **Convert** on a result. Only extensions that actually carry a colour theme are listed. Atlas downloads the extension once, previews every theme inside it (GitHub's has ten, Catppuccin's four), each under its own name with the publisher and licence Open VSX lists, and keeps nothing but the ones you add. An `include` between the extension's files is followed. A TextMate (`.tmTheme`) theme inside an extension is skipped, and the preview says which.
+
 **Paste.** A shadcn registry item, a `globals.css`, a Zed theme family, or a VS Code color theme, straight into the box.
 
 **URL.** Fetched once over `http` or `https`, with a ten-second limit and a 4 MB cap. The file is converted and then forgotten.
