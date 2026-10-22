@@ -40,7 +40,7 @@ interface Setting {
   platforms?: string[];
   applies?: string;
   setIn?: string;
-  project?: true;
+  project?: true | 'tighten';
   default: string | null;
 }
 
@@ -117,7 +117,8 @@ function notes(setting: Setting): string {
   const parts: string[] = [];
   if (setting.platforms) parts.push(`${setting.platforms.map((p) => PLATFORM_NAMES[p] ?? p).join(' and ')} only.`);
   if (setting.applies) parts.push(`Applies ${setting.applies}.`);
-  if (setting.project) parts.push('A project can override it.');
+  if (setting.project === 'tighten') parts.push('A project can turn it off, never on.');
+  else if (setting.project) parts.push('A project can override it.');
   return parts.join(' ');
 }
 
@@ -153,7 +154,9 @@ const projectSection = `## Per-project settings
 
 A project can override a few keys in its own \`.atlas/config.toml\`. The file holds only the keys that project changes, and it sits in the directory Atlas keeps out of git, so the overrides are yours, not your team's. Delete a line to go back to the value for all projects. Any other key in that file is ignored.
 
-${projectKeys.map((setting) => `- \`${setting.key}\`: ${cell(setting.title)}`).join('\n')}
+${projectKeys.map((setting) => `- \`${setting.key}\`: ${cell(setting.title)}${setting.project === 'tighten' ? ' (off only)' : ''}`).join('\n')}
+
+A repository can commit its own \`.atlas/config.toml\`, so a project can only turn **off** the settings marked off only: it can never switch on an agent permission or a background job you turned off for all projects. Atlas ignores such a line and Settings tells you.
 
 In Settings, the pages with these keys open with **Applying settings for All projects**. Pick a project there to change its values; see [Settings](/docs/product/settings#per-project-settings).`;
 
