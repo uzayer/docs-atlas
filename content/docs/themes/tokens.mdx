@@ -41,7 +41,7 @@ flowchart LR
 
 So the realistic shape of a theme is:
 
-1. **The 42 base tokens.** Required, and on their own they are a complete theme.
+1. **The 42 required base tokens.** On their own they are a complete theme.
 2. **The eight palette hues.** Eight lines that fix syntax, terminal, diff, status, and search colors at once.
 3. **About thirty-five theme keys**, listed under [the working set](#the-working-set) below. These are the surfaces where a theme's own judgment genuinely differs from its base tokens: the syntax roles, the editor's own chrome, two borders, two panel surfaces, and the diff tints.
 
@@ -49,7 +49,7 @@ Everything below that is the long tail. Reach into it when a derived color is no
 
 ## Base tokens
 
-All 42 are required in every variant. There are no font tokens: fonts are a setting (Settings → Appearance → Typography), so a theme never changes them. Leave one out and the file will not load. The names are shadcn/ui's, unchanged.
+All 42 below are required in every variant, written in the variant or in the shared top-level `[base]` table. Leave one out and the file will not load. The three font stacks are optional. The names are shadcn/ui's, unchanged.
 
 ### Surfaces and text
 
@@ -73,11 +73,14 @@ All 42 are required in every variant. There are no font tokens: fonts are a sett
 | `sidebar-border` | low-emphasis separators |
 | `sidebar-ring` | focus inside a panel |
 
-### Radius, spacing, and elevation
+### Radius, type, and elevation
 
 | Token | Notes |
 |---|---|
 | `radius` | the whole radius scale derives from it: controls at `radius − 4`, cards at `radius − 2`, popovers at `radius`, dialogs at `radius + 4`. Use a pixel value. The built-in themes all use `8px`. |
+| `font-sans` | optional: the interface font, for anyone whose interface font setting is on its default |
+| `font-mono` | optional: the editor, terminal, and code font, likewise behind the code font setting |
+| `font-serif` | optional; Atlas has no serif surface |
 | `tracking-normal` | required by the shadcn set; Atlas does not currently read it |
 | `spacing` | Atlas's density is built on the default `0.25rem`, which every built-in theme uses |
 | `shadow-sm` | the raised elevation |

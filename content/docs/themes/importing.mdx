@@ -49,7 +49,9 @@ A **registry item**, which is what tweakcn exports and what a URL on a shadcn si
 
 Or a pasted **`globals.css`**, with `:root` and `.dark` blocks. `@theme inline` and `@layer base { :root { … } }` are read too.
 
-**What crosses.** Every shadcn token name lands on the Atlas base token of the same name, per variant, with `cssVars.theme` or `@theme` sitting behind both. Values keep the notation you wrote them in, so an oklch theme stays oklch. The tweakcn extras land where Atlas has a home for them: `radius`, `tracking-normal` (also read from `--letter-spacing`), and the composed `shadow-2xs` through `shadow-2xl` ramp. Font stacks do not cross. Fonts are an Atlas setting rather than part of a theme, so the report lists them under **fonts** and you pick them in Settings → Appearance → Typography instead.
+**What crosses.** Every shadcn token name lands on the Atlas base token of the same name, per variant, with `cssVars.theme` or `@theme` sitting behind both. Values keep the notation you wrote them in, so an oklch theme stays oklch. The tweakcn extras land where Atlas has a home for them: `font-sans`, `font-serif`, `font-mono`, `radius`, `tracking-normal` (also read from `--letter-spacing`), and the composed `shadow-2xs` through `shadow-2xl` ramp. A font both variants share is written once, in the theme's top-level `[base]` table.
+
+tweakcn themes usually name Google Fonts, such as Montserrat, that are not installed on your computer. Atlas does not download them. The font picker in Settings → Appearance says **From theme: Montserrat** with a warning until you install it, and Atlas's default font shows meanwhile. Your own font settings always win over a theme's.
 
 **What is dropped.** The shadow ingredients (`--shadow-color`, `-opacity`, `-blur`, `-spread`, `-offset-x`, `-offset-y`), because Atlas takes the composed ramp rather than the recipe. Also a registry item's raw `css` block, and any CSS rule that is not `:root`, `.dark`, or `@theme`. An `@theme inline` entry of the form `--color-x: var(--x)` is a re-export rather than a value, and is skipped silently.
 
@@ -196,7 +198,7 @@ The same panel has an **Export** tab. Pick any theme, built-in or your own, and 
 }
 ```
 
-The base tokens cross verbatim, one block per appearance, because shadcn's names are Atlas's names. `radius`, `tracking-normal`, and `spacing` are appearance-independent, so they are hoisted into `cssVars.theme` and written once. A theme whose two variants disagree about the radius loses that disagreement, since shadcn cannot express it.
+The base tokens cross verbatim, one block per appearance, because shadcn's names are Atlas's names. `radius`, the font stacks, `tracking-normal`, and `spacing` are appearance-independent, so they are hoisted into `cssVars.theme` and written once. A theme whose two variants disagree about the radius loses that disagreement, since shadcn cannot express it.
 
 Everything above the base tokens is dropped: the palette, and every theme key covering the editor, terminal, syntax, diffs, and the agent chip. shadcn has no vocabulary for any of them. The report gives the count and breaks it down by family, and notes when only one variant exists, since shadcn consumers usually expect both.
 

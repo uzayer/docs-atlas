@@ -60,7 +60,7 @@ Everything about how Atlas looks is on one page.
 
 ### Typography
 
-Four fonts, each with a live sample of where it shows. Themes never set fonts, so changing theme leaves these alone.
+Four fonts, each with a live sample of where it shows.
 
 - **Interface font** is everything outside code and the terminal. The default is your system font.
 - **Composer font** is the font you type prompts in. It follows the interface font until you pick one.
@@ -68,6 +68,8 @@ Four fonts, each with a live sample of where it shows. Themes never set fonts, s
 - **Terminal font** follows the code font until you pick one, with the terminal's font size beside it.
 
 Each picker lists the fonts installed on your computer, every one drawn in its own face, and searches as you type. The code and terminal pickers list every font but refuse one that is not monospaced, and say so. **Custom font list…** takes a fallback list such as `Berkeley Mono, SF Mono`, and **Get more fonts** opens Google Fonts; a font you install there appears the next time you open a picker. A saved font that is no longer installed shows a warning on its picker, and Atlas falls back to the default. Interface zoom scales every font size along with everything else.
+
+A theme can name fonts too, as tweakcn themes do. A font you picked always wins. Where you left the interface or code font on its default, the theme's font is used instead, and the picker's default reads **From theme:** and the font's name, with a warning if it is not installed.
 
 ## Chat
 

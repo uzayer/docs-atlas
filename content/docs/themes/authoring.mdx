@@ -74,7 +74,7 @@ There are three levels, and each exists only to take over from the one below it.
 
 ### Base tokens, always
 
-The required set, 42 of them. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
+The required set, 42 of them, plus three optional font stacks. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
 
 Every color in Atlas can be reached from these alone. Start here, and stop here if the result already looks right.
 
@@ -188,7 +188,15 @@ Hex (3, 4, 6, or 8 digits), `rgb()`, `rgba()`, `hsl()`, `hsla()`, and `oklch()`.
 
 CSS color names such as `red` are not accepted, and neither is anything Atlas cannot resolve to a value on its own, including `var()` and `color-mix()`.
 
-The non-color base tokens are ordinary CSS values: `radius` is a length, `tracking-normal` and `spacing` are lengths too, and the `shadow-*` tokens are `box-shadow` values. There is no font token: fonts are a setting, so a theme cannot change them.
+The non-color base tokens are ordinary CSS values: `radius`, `tracking-normal` and `spacing` are lengths, the `font-*` tokens are font stacks, and the `shadow-*` tokens are `box-shadow` values.
+
+The three font tokens are the only optional base tokens. Leave them out and your theme uses Atlas's fonts. Set them and they apply to anyone whose font settings are on their defaults; a font someone picked in Settings always wins. Tokens both variants share can go in a top-level `[base]` table instead of being written twice:
+
+```toml
+[base]
+font-sans = "Inter, sans-serif"
+radius = "6px"
+```
 
 ## Turn on editor autocomplete
 
@@ -230,7 +238,6 @@ These are the errors that stop a file loading:
 - a value that is not one of the accepted color formats
 - a key used as both a value and a prefix
 - a key that sets `font_style`
-- a `font-sans`, `font-serif` or `font-mono` base token (fonts are a setting, not part of a theme)
 
 **An unknown theme key is a warning, not an error.** The theme still loads and the key is kept, and its card in the picker carries a badge with the count. That is deliberate: the key set changes between versions, and a file written against a newer Atlas should still work on an older one rather than failing outright over a key that version has never heard of. The same rule is what lets a key be retired without breaking the themes that set it.
 

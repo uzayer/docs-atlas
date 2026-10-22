@@ -42,7 +42,7 @@ Atlas watches that folder. Save an edit to the theme you already have applied an
 
 A theme file has three levels, and only the first is required:
 
-- **Base tokens**: the shadcn/ui color set, plus radius, spacing, and shadows. 42 of them, all required.
+- **Base tokens**: the shadcn/ui token set: colors, radius, spacing, shadows, and fonts. 42 are required; the three font stacks are optional.
 - **Palette**: eight named hues (red, orange, yellow, green, cyan, blue, purple, pink). Optional.
 - **Theme keys**: 73 Atlas roles such as `syntax.keyword`, `terminal.ansi.red`, and `element.hover`. Optional.
 
@@ -72,7 +72,7 @@ Two surfaces stay outside it:
 - **PDF page content.** The viewer's chrome follows the theme, but the page itself renders as the document was authored.
 - **The Browser tab.** It shows real web pages in a native webview, and those pages carry their own styling.
 
-Fonts are not part of a theme, so changing theme never changes them. Pick them in Settings → Appearance → **Typography**; see [Settings](/docs/product/settings#appearance).
+A theme may also name fonts, as shadcn themes do. Your own font settings come first: a theme's font applies only where you left the font on its default, and the picker then says **From theme**. See [Settings](/docs/product/settings#typography).
 
 File and folder icons are their own track, chosen in Settings → Appearance → **File icons**. See [icon themes](/docs/themes/icon-themes).
 
