@@ -22,6 +22,14 @@ When a setting differs from its default, a small reset arrow appears next to its
 
 A setting that does not apply right now is greyed out. Hover it to see why, for example when notifications are off.
 
+## Per-project settings
+
+A few settings can be different in one project: the three Atlas Agent permissions, **Auto-fetch from remote**, **Inline Git blame**, **Nightly memory review** and **Mirror memory as an Agent Memory Repo**. The pages that hold them (Chat, Memory and Source Control) open with **Applying settings for All projects**.
+
+Pick a project there to change its values instead. Each of those rows then shows a layers icon: highlighted when the project sets the value itself, dim when it inherits the value for all projects. The reset arrow next to an overridden setting removes the override. Settings that apply to every project are greyed out until you switch back to **All projects**.
+
+A project's overrides are saved in its `.atlas/config.toml`, which Atlas keeps out of git, so they are yours alone. See [Configuration file](/docs/product/configuration#per-project-settings).
+
 ## General
 
 - **Interface zoom** scales the whole interface, text, icons and spacing together. Press <Kbd>⌘=</Kbd>, <Kbd>⌘-</Kbd> and <Kbd>⌘0</Kbd> anywhere, or use the interface scale button at the bottom of the rail, which also offers **Compact**, **Default**, **Large** and **Larger**.

@@ -29,7 +29,7 @@ interface Page {
 interface Setting {
   key: string;
   type: string;
-  status: 'live' | 'elsewhere' | 'file-only' | 'internal' | 'legacy';
+  status: 'live' | 'elsewhere' | 'file-only' | 'internal';
   page: string;
   section: string;
   title: string;
@@ -40,6 +40,7 @@ interface Setting {
   platforms?: string[];
   applies?: string;
   setIn?: string;
+  project?: true;
   default: string | null;
 }
 
@@ -116,6 +117,7 @@ function notes(setting: Setting): string {
   const parts: string[] = [];
   if (setting.platforms) parts.push(`${setting.platforms.map((p) => PLATFORM_NAMES[p] ?? p).join(' and ')} only.`);
   if (setting.applies) parts.push(`Applies ${setting.applies}.`);
+  if (setting.project) parts.push('A project can override it.');
   return parts.join(' ');
 }
 
@@ -139,12 +141,21 @@ for (const page of registry.pages) {
   sections.push(`## ${page.title}\n\n${page.description}\n\n${table(rows, page)}`);
 }
 
-const managed = registry.settings.filter((setting) => setting.status === 'internal' || setting.status === 'legacy');
+const managed = registry.settings.filter((setting) => setting.status === 'internal');
 const managedSection = `## Keys Atlas manages
 
-Atlas writes these itself. You can read them, but there is nothing to change by hand. The legacy keys no longer do anything and are safe to delete.
+Atlas writes these itself. You can read them, but there is nothing to change by hand.
 
-${managed.map((setting) => `- \`${setting.key}\`${setting.status === 'legacy' ? ' (legacy)' : ''}: ${cell(setting.summary)}`).join('\n')}`;
+${managed.map((setting) => `- \`${setting.key}\`: ${cell(setting.summary)}`).join('\n')}`;
+
+const projectKeys = registry.settings.filter((setting) => setting.project);
+const projectSection = `## Per-project settings
+
+A project can override a few keys in its own \`.atlas/config.toml\`. The file holds only the keys that project changes, and it sits in the directory Atlas keeps out of git, so the overrides are yours, not your team's. Delete a line to go back to the value for all projects. Any other key in that file is ignored.
+
+${projectKeys.map((setting) => `- \`${setting.key}\`: ${cell(setting.title)}`).join('\n')}
+
+In Settings, the pages with these keys open with **Applying settings for All projects**. Pick a project there to change its values; see [Settings](/docs/product/settings#per-project-settings).`;
 
 const page = `---
 title: Configuration file
@@ -157,6 +168,8 @@ icon: FileCog
 ${INTRO}
 
 ${sections.join('\n\n')}
+
+${projectSection}
 
 ${managedSection}
 
