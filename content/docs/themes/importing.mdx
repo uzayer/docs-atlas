@@ -168,7 +168,7 @@ Under the counts:
 - **What was dropped** expands into one row per category, with a count and the reason. "22 workbench chrome" with "widgets and surfaces Atlas does not have" is an honest summary; a bare "ignored: 87" is not.
 - **Mapped keys** and **Derived keys** expand into the full lists, each row a swatch, the fully qualified target such as `dark.base.background`, and where the value came from. A derived base token names the rule that produced it, such as "background, mixed 0.16 toward foreground".
 
-A high derived count is normal and not a problem. For a Zed theme it starts at about 19: the 13 base tokens with no Zed source, plus the six theme keys that have none either. What to look at is the derived list itself: those are the colors Atlas guessed, and they are the ones worth overriding by hand afterwards.
+A high derived count is normal and not a problem. For a Zed theme it is about 21 per variant: the 13 base tokens with no Zed source, plus the eight palette hues, which Atlas reads off the theme's own terminal, syntax and status colors. What to look at is the derived list itself: those are the colors Atlas guessed, and they are the ones worth overriding by hand afterwards.
 
 ## Where the imported theme lands
 
