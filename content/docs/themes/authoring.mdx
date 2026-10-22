@@ -51,9 +51,6 @@ sidebar-accent-foreground = "#e0def4"
 sidebar-border = "#1b1721"
 sidebar-ring = "#eb6f92"
 radius = "8px"
-font-sans = "-apple-system, \"SF Pro Text\", system-ui, sans-serif"
-font-serif = "ui-serif, Georgia, Cambria, \"Times New Roman\", serif"
-font-mono = "\"SF Mono\", \"Geist Mono\", \"JetBrains Mono\", monospace"
 tracking-normal = "0em"
 spacing = "0.25rem"
 shadow-2xs = "0 1px 2px rgba(0, 0, 0, 0.35)"
@@ -77,7 +74,7 @@ There are three levels, and each exists only to take over from the one below it.
 
 ### Base tokens, always
 
-The required set, 45 of them. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
+The required set, 42 of them. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
 
 Every color in Atlas can be reached from these alone. Start here, and stop here if the result already looks right.
 
@@ -191,7 +188,7 @@ Hex (3, 4, 6, or 8 digits), `rgb()`, `rgba()`, `hsl()`, `hsla()`, and `oklch()`.
 
 CSS color names such as `red` are not accepted, and neither is anything Atlas cannot resolve to a value on its own, including `var()` and `color-mix()`.
 
-The non-color base tokens are ordinary CSS values: `radius` is a length, the `font-*` tokens are font stacks, and the `shadow-*` tokens are `box-shadow` values.
+The non-color base tokens are ordinary CSS values: `radius` is a length, `tracking-normal` and `spacing` are lengths too, and the `shadow-*` tokens are `box-shadow` values. There is no font token: fonts are a setting, so a theme cannot change them.
 
 ## Turn on editor autocomplete
 
@@ -212,8 +209,8 @@ The schema ships in the [Atlas repository](https://github.com/pacifio/atlas) at 
 ## Iterate while Atlas is running
 
 1. Save the file in `~/.config/atlas/themes/`.
-2. Open Settings → **Appearance**. The theme is already in the list, marked **Local**.
-3. Click it.
+2. Open Settings → **Appearance**. The theme is already in the grid.
+3. Click its card to wear it in both appearances, or one of its orbs to wear it in just that one.
 
 Every later edit repaints as you save. Atlas watches the folder, rereads the file, and reapplies the theme you are wearing, so there is no restart, no reinstall, and no switching away and back.
 
@@ -233,6 +230,7 @@ These are the errors that stop a file loading:
 - a value that is not one of the accepted color formats
 - a key used as both a value and a prefix
 - a key that sets `font_style`
+- a `font-sans`, `font-serif` or `font-mono` base token (fonts are a setting, not part of a theme)
 
 **An unknown theme key is a warning, not an error.** The theme still loads and the key is kept, and its card in the picker carries a badge with the count. That is deliberate: the key set changes between versions, and a file written against a newer Atlas should still work on an older one rather than failing outright over a key that version has never heard of. The same rule is what lets a key be retired without breaking the themes that set it.
 

@@ -4,13 +4,13 @@ description: File and folder icons, in VS Code's icon theme format.
 icon: Shapes
 ---
 
-An icon theme decides which icon each file and folder gets. It is a separate track from the color theme, with its own picker: press <Kbd>⌘,</Kbd> and choose **Icons**.
+An icon theme decides which icon each file and folder gets. It is a separate track from the color theme: press <Kbd>⌘,</Kbd>, choose **Appearance**, and find **File icons** below the themes.
 
 Atlas uses VS Code's `iconThemes` contribution format, unchanged. An icon theme published for VS Code installs here as it is, with no conversion step and no Atlas-specific format to learn.
 
 ## Pick one
 
-The picker opens on a preview strip and a grid of what is installed. Every card names the theme, its author, and its license.
+**File icons** is a grid of what is installed. Every card previews a row of the theme's icons and names the theme, its author, and its license.
 
 Three kinds of entry:
 
@@ -35,7 +35,7 @@ Rows that do not stand for a real path, such as a knowledge page or a chat, keep
 
 ## Install from Open VSX
 
-Open VSX is the one remote source Atlas has for icons, at the bottom of the **Icons** page. Type a query, press Enter, and pick a result.
+Open VSX is the one remote source Atlas has for icons. Click **Add icon theme** beside the grid, type a query, press Enter, and pick a result.
 
 Search results are filtered on each candidate's own manifest, so a theme appears only if it actually declares `contributes.iconThemes`. Color themes do not clutter the list.
 

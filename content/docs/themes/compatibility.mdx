@@ -45,14 +45,11 @@ Atlas accepts `oklch()` as well as hex, `rgb()`, and `hsl()`, so a tweakcn expor
 
 ## Fill in the rest of the required set
 
-All 45 base tokens must be present in each variant you ship. A shadcn theme normally covers the colors, `radius`, the charts, and the sidebar family. It often does not cover the rest.
+All 42 base tokens must be present in each variant you ship. A shadcn theme normally covers the colors, `radius`, the charts, and the sidebar family. It often does not cover the rest.
 
 Copy these from any built-in Atlas theme if your source has no opinion, giving a light variant a lighter shadow ramp than the dark values below:
 
 ```toml
-font-sans = "-apple-system, \"SF Pro Text\", system-ui, sans-serif"
-font-serif = "ui-serif, Georgia, Cambria, \"Times New Roman\", serif"
-font-mono = "\"SF Mono\", \"Geist Mono\", \"JetBrains Mono\", monospace"
 tracking-normal = "0em"
 spacing = "0.25rem"
 shadow-2xs = "0 1px 2px rgba(0, 0, 0, 0.35)"
@@ -64,11 +61,11 @@ shadow-xl = "0 12px 36px rgba(0, 0, 0, 0.82)"
 shadow-2xl = "0 16px 48px rgba(0, 0, 0, 0.9)"
 ```
 
-Drop anything your source emits that is not one of the 45. Atlas rejects a base token it does not recognize, and a generator's extra variables are the usual reason a converted file will not load.
+Drop anything your source emits that is not one of the 42. Atlas rejects a base token it does not recognize, and a generator's extra variables are the usual reason a converted file will not load. That includes shadcn's `font-sans`, `font-serif` and `font-mono`: fonts are an Atlas setting, not part of a theme, so a theme that sets one is refused with a message saying so.
 
 ## What the conversion gives you
 
-Everything the base tokens reach, which is most of the window: the app background, panels, the rail, tabs, cards and popovers, borders, the focus ring, the signature color, the editor background and default text, selections, charts, the radius scale, the fonts, and the elevation.
+Everything the base tokens reach, which is most of the window: the app background, panels, the rail, tabs, cards and popovers, borders, the focus ring, the signature color, the editor background and default text, selections, charts, the radius scale, and the elevation.
 
 That is a complete, working theme. It will load and it will look like your palette.
 
@@ -76,13 +73,13 @@ Two shadcn tokens carry more weight in Atlas than they do in a web app, so give 
 
 ## What a shadcn theme cannot say
 
-A shadcn token set describes an interface. Atlas keeps its names exactly, so the 45 you converted sit inside the larger set Atlas colors from, and everything outside them is worked out rather than asked for.
+A shadcn token set describes an interface. Atlas keeps its names exactly, so the 42 you converted sit inside the larger set Atlas colors from, and everything outside them is worked out rather than asked for.
 
 <Mermaid chart={`
 flowchart LR
     subgraph A["what Atlas colors"]
         direction LR
-        B["the 45 you converted<br/>chrome, panels, editor<br/>background, charts"]
+        B["the 42 you converted<br/>chrome, panels, editor<br/>background, charts"]
         R["syntax, terminal, diff,<br/>status, search<br/>derived, not written"]
         B ~~~ R
     end
