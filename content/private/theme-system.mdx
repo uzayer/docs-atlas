@@ -5,7 +5,7 @@ description: Internal. The 2026-09-17 audit of Atlas theming, the decisions take
 
 **Internal planning page.** Read this page before touching theming. It is the specification each implementation PR works from.
 
-- **Decision record:** ADR-0009 (`atlas/docs/adr/0009-one-theme-format-shadcn-base-with-derived-keys.md`)
+- **Decision record:** ADR-0009 (`atlas/docs/adr/0009-one-theme-format-shadcn-base-with-derived-keys.md`), amended by ADR-0022 (`atlas/docs/adr/0022-a-theme-is-two-colours-and-everything-else-is-derived.md`): no base token is required any more, and a missing one is derived from the seeds `background`, `foreground` and `primary` by the `[[base]]` rules in `keys.toml`.
 - **Vocabulary:** the "Theming" section of `atlas/CONTEXT.md`. Use its terms exactly: *theme*, *variant*, *base tokens*, *palette*, *theme keys*, *theme override*, *theme import*, *icon theme*.
 
 ## Audit (2026-09-17, branch `0.3.3`)
@@ -101,7 +101,7 @@ These are the answers from the grilling session with the maintainer.
 | # | Decision |
 |---|---|
 | 1 | Full community ecosystem. Themes are a public contract, versioned with `schema = 1`. |
-| 2 | Three levels per variant: **base tokens** (shadcn names, required) → **palette** (optional) → **theme keys** (optional). |
+| 2 | Three levels per variant: **base tokens** (shadcn names, required) → **palette** (optional) → **theme keys** (optional). *Superseded by ADR-0022: every base token is optional and derives from the seeds.* |
 | 3 | "Applied everywhere" means everything: CodeMirror, xterm, diffs, chat code, graphs, charts, canvas, mermaid, PDF chrome and launch background. Documented exceptions: PDF page content and the native Browser webview. |
 | 4 | Icon themes are a separate track that uses VS Code's `iconThemes` format verbatim. |
 | 5 | Public docs go in `content/docs/themes/`; this page stays in `content/private`. |

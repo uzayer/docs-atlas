@@ -32,6 +32,8 @@ Put a `.toml` theme file in `~/.config/atlas/themes/`. It appears in the grid ne
 
 If the theme you want is written for somewhere else, **Import theme**, beside the grid, converts a shadcn, Zed, or VS Code theme into one of these files. See [importing a theme](/docs/themes/importing).
 
+To make one, **Create theme** opens a theme editor that floats over the app, starting from the background and accent of the theme on screen. **Duplicate** on any card starts from a copy of that theme, and **Edit** changes one of your own. See [the theme editor](/docs/themes/authoring#build-one-in-the-theme-editor).
+
 Atlas watches that folder. Save an edit to the theme you already have applied and the app repaints, with no restart and no reinstall.
 
 <Callout type="info">
@@ -40,26 +42,26 @@ Atlas watches that folder. Save an edit to the theme you already have applied an
 
 ## Colors you leave out are derived
 
-A theme file has three levels, and only the first is required:
+A theme file has three levels, and every one of them is optional:
 
-- **Base tokens**: the shadcn/ui token set: colors, radius, spacing, shadows, and fonts. 42 are required; the three font stacks are optional.
+- **Base tokens**: the shadcn/ui token set: colors, radius, spacing, shadows, and fonts. Three of them, `background`, `foreground` and `primary`, are the seeds, and every other base token is derived from them.
 - **Palette**: eight named hues (red, orange, yellow, green, cyan, blue, purple, pink). Optional.
 - **Theme keys**: 73 Atlas roles such as `syntax.keyword`, `terminal.ansi.red`, and `element.hover`. Optional.
 
-Each level contains the one before it. A file that stops at the first is finished, and every level you add takes back a surface Atlas was working out for you.
+Each level contains the one before it. A file that sets only two seeds, a background and an accent, is finished, and every token or level you add takes back a surface Atlas was working out for you.
 
 <Mermaid chart={`
 flowchart LR
     subgraph K["plus theme keys: up to 73, exact control"]
         subgraph P["plus palette: 8 hues"]
-            B["base tokens: 42, required"]
+            B["base tokens: 3 seeds, 42 in all"]
         end
     end
 `} />
 
 Every theme key Atlas needs but your file does not set is worked out from the palette, then from the base tokens, then from an Atlas default. Nothing is left at a previous theme's color, and nothing renders unstyled.
 
-That means a file with nothing but the base tokens is a complete, working theme. Set a palette on top of it and the syntax, terminal, diff, and status colors follow your hues. Set individual theme keys only where you want a specific result.
+That means a file with nothing but two seeds is a complete, working theme. Set a palette on top of it and the syntax, terminal, diff, and status colors follow your hues. Set individual theme keys only where you want a specific result.
 
 A small number of colors are not on that list at all. A status badge's tinted fill is its status foreground at 12%, so Atlas works it out rather than asking, and a theme steers it through the foreground key instead. See [what a theme cannot set](/docs/themes/tokens#what-a-theme-cannot-set).
 
@@ -82,7 +84,7 @@ Two things work differently from most editors.
 
 Atlas has **one theme rather than two** for each appearance. Elsewhere you pick a UI theme and a separate editor color scheme, and a mismatch between them is yours to fix. In Atlas a single file covers both, so the editor and the window around it cannot drift apart.
 
-Atlas **derives what you omit**. A theme that only names its base colors is finished, not half-finished. You add palette entries and theme keys to take control of a surface, not to stop it being wrong.
+Atlas **derives what you omit**. A theme that only names a background and an accent is finished, not half-finished. You add palette entries and theme keys to take control of a surface, not to stop it being wrong.
 
 ## Next
 

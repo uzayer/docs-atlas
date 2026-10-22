@@ -4,7 +4,7 @@ description: What a theme actually needs to set, then every token and key in ful
 icon: Table
 ---
 
-A theme has three levels: **base tokens** (required), a **palette** (optional), and **theme keys** (optional).
+A theme has three levels: **base tokens**, a **palette**, and **theme keys**. All three are optional. Three base tokens, `background`, `foreground` and `primary`, are the **seeds** every other base token is derived from.
 
 Every theme key resolves in the same order:
 
@@ -41,7 +41,7 @@ flowchart LR
 
 So the realistic shape of a theme is:
 
-1. **The 42 required base tokens.** On their own they are a complete theme.
+1. **The three seeds**, plus any base token whose derived value is not the one you want. The seeds on their own are a complete theme.
 2. **The eight palette hues.** Eight lines that fix syntax, terminal, diff, status, and search colors at once.
 3. **About thirty-five theme keys**, listed under [the working set](#the-working-set) below. These are the surfaces where a theme's own judgment genuinely differs from its base tokens: the syntax roles, the editor's own chrome, two borders, two panel surfaces, and the diff tints.
 
@@ -49,7 +49,7 @@ Everything below that is the long tail. Reach into it when a derived color is no
 
 ## Base tokens
 
-All 42 below are required in every variant, written in the variant or in the shared top-level `[base]` table. Leave one out and the file will not load. The three font stacks are optional. The names are shadcn/ui's, unchanged.
+All 42 below are optional, and so are the three font stacks. Write one in the variant or in the shared top-level `[base]` table; leave it out and Atlas derives it, as [described below](#how-a-base-token-you-leave-out-is-derived). The names are shadcn/ui's, unchanged.
 
 ### Surfaces and text
 
@@ -81,15 +81,43 @@ All 42 below are required in every variant, written in the variant or in the sha
 | `font-sans` | optional: the interface font, for anyone whose interface font setting is on its default |
 | `font-mono` | optional: the editor, terminal, and code font, likewise behind the code font setting |
 | `font-serif` | optional; Atlas has no serif surface |
-| `tracking-normal` | required by the shadcn set; Atlas does not currently read it |
+| `tracking-normal` | part of the shadcn set; Atlas does not currently read it |
 | `spacing` | Atlas's density is built on the default `0.25rem`, which every built-in theme uses |
 | `shadow-sm` | the raised elevation |
 | `shadow-xl`, `shadow-2xl` | `shadow-2xl` is the menu and popover elevation; a dialog stacks `shadow-xl` beneath it |
-| `shadow-2xs`, `shadow-xs`, `shadow-md`, `shadow-lg` | required by the shadcn set; Atlas renders three elevations and does not use these four |
+| `shadow-2xs`, `shadow-xs`, `shadow-md`, `shadow-lg` | part of the shadcn set; Atlas renders three elevations and does not use these four |
 
 <Callout type="info">
   Give a light variant its own shadow values. Dark shadows copied across read as heavy halos on a pale background.
 </Callout>
+
+### How a base token you leave out is derived
+
+Each base token has one rule. Mixes are done in OKLab, so a mix toward the foreground changes lightness evenly and keeps the hue.
+
+| Token | Left out, it is |
+|---|---|
+| `background` | black in a dark variant, white in a light one |
+| `foreground` | white in a dark variant, black in a light one |
+| `primary` | `foreground`, so a theme with no accent is monochrome |
+| `card`, `secondary`, `muted` | `background`, 5% toward `foreground` |
+| `popover` | `background`, 12% toward `foreground` |
+| `border` | `background`, 16% toward `foreground` |
+| `sidebar-border` | `background`, 8% toward `foreground` |
+| `input` | `border` |
+| `secondary-foreground` | `foreground`, 28% toward `background` |
+| `muted-foreground` | `foreground`, 32% toward `background` |
+| `card-foreground`, `popover-foreground`, `accent-foreground` | `foreground` |
+| `primary-foreground`, `destructive-foreground` | whichever of `foreground` and `background` reads better on the fill |
+| `accent` | `muted` |
+| `ring`, `chart-1` | `primary` |
+| `destructive` | palette `red`, then an Atlas red |
+| `chart-2` … `chart-5` | palette `green`, `yellow`, `purple` and `cyan`, then an Atlas default for each |
+| the rest of the sidebar family | the matching token without the prefix: `sidebar` is `background`, `sidebar-primary` is `primary`, and so on |
+| `radius`, `tracking-normal`, `spacing`, the shadows | Atlas's defaults: `8px`, `0em`, `0.25rem`, and a shadow ramp for each appearance |
+| `font-sans`, `font-serif`, `font-mono` | Atlas's own fonts |
+
+A token you write is never changed. Built-in themes and imported themes pin their base tokens, so they do not move when a rule improves; a theme that leaves tokens out picks up any improvement with the next Atlas.
 
 ## Palette
 

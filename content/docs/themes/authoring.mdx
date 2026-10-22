@@ -4,11 +4,31 @@ description: Write a theme file, iterate on it live, and share it.
 icon: Paintbrush
 ---
 
-A theme is one TOML file. Put it in `~/.config/atlas/themes/` and Atlas picks it up.
+A theme is one TOML file. Put it in `~/.config/atlas/themes/` and Atlas picks it up. To build one without writing the file by hand, use the [theme editor](#build-one-in-the-theme-editor) in Settings.
 
-## Start from a complete file
+## Start from two colors
 
-This is a whole theme. It sets the required base tokens and nothing else, so every other color in Atlas is derived from these. The values are the ones the built-in Rosé Pine theme uses, so it renders correctly as written. Change the metadata at the top, then replace the colors with yours.
+This is a whole theme:
+
+```toml title="~/.config/atlas/themes/my-theme.toml"
+schema = 1
+id = "my-theme"
+name = "My Theme"
+author = "Your Name"
+license = "MIT"
+
+[dark.base]
+background = "#101418"
+primary = "#7aa2f7"
+```
+
+`background`, `foreground` and `primary` are the **seeds**. Every other base token is derived from them: surfaces and borders are the background mixed toward the foreground, text on a fill is whichever of your foreground and background reads better on it, and so on. Leave out `foreground` and it is white in a dark variant and black in a light one. Leave out `primary` and the theme is monochrome, using the foreground as its accent.
+
+Nothing here is required beyond the header and one variant. The [token reference](/docs/themes/tokens#how-a-base-token-you-leave-out-is-derived) lists the rule behind each derived token.
+
+## Pin what you care about
+
+Any base token you write is used exactly as written, and nothing is derived over it. This file pins all 42, with the values the built-in Rosé Pine theme uses. Change the metadata at the top, then replace or delete the colors as you like.
 
 ```toml title="~/.config/atlas/themes/my-theme.toml"
 schema = 1
@@ -72,11 +92,11 @@ All five fields at the top are required, and so is at least one of `[dark]` and 
 
 There are three levels, and each exists only to take over from the one below it.
 
-### Base tokens, always
+### Base tokens, starting from the seeds
 
-The required set, 42 of them, plus three optional font stacks. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
+42 tokens plus three font stacks, all optional. They are the shadcn/ui token names exactly, so they describe surfaces and text rather than particular features: `background`, `card`, `popover`, `primary`, `muted`, `border`, `ring`, and the rest.
 
-Every color in Atlas can be reached from these alone. Start here, and stop here if the result already looks right.
+Every color in Atlas can be reached from the three seeds alone. Start there, and pin another base token only where the derived one is not what you want.
 
 ### A palette, when the derived colors are dull
 
@@ -94,7 +114,7 @@ purple = "#c4a7e7"
 pink = "#ebbcba"
 ```
 
-This is the highest-value eight lines in a theme file. Without a palette, a key such as `syntax.string` has no hue to come from and falls back to an Atlas default that has nothing to do with your theme.
+This is the highest-value eight lines in a theme file. Without a palette, a key such as `syntax.string` has no hue to come from and falls back to an Atlas default that has nothing to do with your theme. For the syntax roles that default is Pierre's colors.
 
 Set some of the eight and leave the others out if you prefer. Each is looked up on its own.
 
@@ -159,7 +179,7 @@ The error names the key, so a file that picked the field up from a Zed or VS Cod
 background = "#faf4ed"
 foreground = "#575279"
 primary = "#907aa9"
-# and the rest of the required set
+# anything else you want to pin
 
 [light.palette]
 red = "#b4637a"
@@ -172,7 +192,7 @@ purple = "#907aa9"
 pink = "#d7827e"
 ```
 
-The two variants are independent. Give the light one its own shadow values rather than copying the dark ones across, or its surfaces will carry heavy dark halos on a pale background. Tint a light ramp from the theme's own foreground at a much lower alpha.
+The two variants are independent. If you set the shadows, give the light one its own values rather than copying the dark ones across, or its surfaces will carry heavy dark halos on a pale background. Tint a light ramp from the theme's own foreground at a much lower alpha. Left out, each variant gets Atlas's ramp for its appearance.
 
 Shipping a light variant is worth doing. Atlas's Light and System modes are available on every platform, and a theme without one falls back to its dark variant when the operating system uses a light appearance.
 
@@ -190,7 +210,7 @@ CSS color names such as `red` are not accepted, and neither is anything Atlas ca
 
 The non-color base tokens are ordinary CSS values: `radius`, `tracking-normal` and `spacing` are lengths, the `font-*` tokens are font stacks, and the `shadow-*` tokens are `box-shadow` values.
 
-The three font tokens are the only optional base tokens. Leave them out and your theme uses Atlas's fonts. Set them and they apply to anyone whose font settings are on their defaults; a font someone picked in Settings always wins. Tokens both variants share can go in a top-level `[base]` table instead of being written twice:
+The three font tokens have no derivation rule. Leave them out and your theme uses Atlas's fonts. Set them and they apply to anyone whose font settings are on their defaults; a font someone picked in Settings always wins. Tokens both variants share can go in a top-level `[base]` table instead of being written twice:
 
 ```toml
 [base]
@@ -214,6 +234,24 @@ The schema is stricter than the loader on purpose. Atlas keeps an unknown key wi
 
 The schema ships in the [Atlas repository](https://github.com/pacifio/atlas) at `crates/atlas-theme/schema/theme-v1.json`.
 
+## Build one in the theme editor
+
+Settings → **Appearance** → **Themes** has a theme editor, so you can make a theme by picking colors instead of writing TOML. Three buttons open it:
+
+- **Create theme**, beside **Import theme**, starts from the background and accent of the theme on screen, in the appearance on screen only. Everything else is derived.
+- **Duplicate**, on every card, copies every value that theme writes, in both variants.
+- **Edit**, on a theme of your own, changes it in place. A built-in theme has no Edit; duplicate it instead.
+
+The editor floats over the whole app, and the app is the preview: every change repaints the window as you make it. Drag the panel by its header to uncover what you are judging, or minimise it. It stays open when you close Settings, so you can check the editor, the sidebar and the terminal in the new colors. Close it without saving and Atlas goes back to the theme you had.
+
+**Light** and **Dark** switch which variant you are editing. A variant the theme does not have yet is added when you set its first color.
+
+The simple view has two colors, **Background** and **Accent**, and derives the rest. If some colors are set by hand, as they are in a duplicated built-in, the editor says how many won't follow these two and offers **Let them follow**, which unpins them.
+
+Turn on **Advanced** to see every color slot, grouped by role: Foundation, Surfaces, Text on fills, Sidebar, Status and charts, Palette and Syntax, with a filter. A slot you have not set shows its derived value, dimmed. A slot you have set has a reset button that clears it so it derives again. Radius, spacing and shadows are not in the editor; set those in the file.
+
+Saving writes only the values you set, to `~/.config/atlas/themes/`, under an id made from the name. A name already taken by another theme, built-in or yours, is refused. Everything you left alone keeps being derived, so it improves as Atlas's rules do. A new theme becomes your theme for each appearance it has. A duplicate keeps the original's `author` and `license`; a created theme leaves both empty, so fill them in before you share the file.
+
 ## Iterate while Atlas is running
 
 1. Save the file in `~/.config/atlas/themes/`.
@@ -233,7 +271,6 @@ These are the errors that stop a file loading:
 - `schema` is anything other than `1`
 - `id` or `name` is empty
 - neither `[dark]` nor `[light]` is present
-- a required base token is missing from a variant
 - a base token or palette name Atlas does not know
 - a value that is not one of the accepted color formats
 - a key used as both a value and a prefix

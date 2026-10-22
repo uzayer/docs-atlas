@@ -18,6 +18,8 @@ An import is a one-time conversion. What you get is an ordinary Atlas theme file
 
 The format is detected from the content, so you paste and press **Convert** without saying which one it is.
 
+**Base tokens the source does not supply are filled in and pinned.** Atlas derives them with the same rules any theme that leaves a token out goes through (see [the token reference](/docs/themes/tokens#how-a-base-token-you-leave-out-is-derived)), then writes them into the file. The theme you previewed is the theme you keep, even if a rule changes in a later Atlas.
+
 ## Give Atlas the theme
 
 Three sources, as tabs at the top of the panel.
@@ -58,7 +60,7 @@ tweakcn themes usually name Google Fonts, such as Montserrat, that are not insta
 **What is kept but ignored.** `spacing`. Spacing and the type scale belong to the app, so the value stays in your file rather than being lost on a round trip, and the report warns that nothing honours it.
 
 <Callout type="info">
-  A shadcn token set describes application chrome and stops there. It has no vocabulary for an editor, a terminal, syntax, or a diff, so every one of those keys falls back to Atlas's own default for the appearance. Adding a [palette](/docs/themes/compatibility#what-a-shadcn-theme-cannot-say) is the step that fixes all of them at once.
+  A shadcn token set describes application chrome and stops there. It has no vocabulary for an editor, a terminal, syntax, or a diff, so every one of those keys falls back to Atlas's own default for the appearance (for syntax, Pierre's colors). Adding a [palette](/docs/themes/compatibility#what-a-shadcn-theme-cannot-say) is the step that fixes all of them at once.
 </Callout>
 
 **Which variant is which.** `cssVars.light` and `cssVars.dark` are trusted as written. In pasted CSS, `:root` is the light variant when there is a `.dark` block to be the other half. A dark-only paste is judged by the lightness of its `background` and filed as dark, and the report says so.
@@ -164,7 +166,7 @@ Under the counts:
 - **Summary lines** say what the format cannot carry. This is the part to read.
 - **Warnings** are things that are wrong rather than merely absent: a `spacing` value Atlas will not honour, or an `include` that could not be resolved.
 - **What was dropped** expands into one row per category, with a count and the reason. "22 workbench chrome" with "widgets and surfaces Atlas does not have" is an honest summary; a bare "ignored: 87" is not.
-- **Mapped keys** and **Derived keys** expand into the full lists, each row a swatch, the fully qualified target such as `dark.base.background`, and where the value came from.
+- **Mapped keys** and **Derived keys** expand into the full lists, each row a swatch, the fully qualified target such as `dark.base.background`, and where the value came from. A derived base token names the rule that produced it, such as "background, mixed 0.16 toward foreground".
 
 A high derived count is normal and not a problem. For a Zed theme it starts at about 19: the 13 base tokens with no Zed source, plus the six theme keys that have none either. What to look at is the derived list itself: those are the colors Atlas guessed, and they are the ones worth overriding by hand afterwards.
 
@@ -198,7 +200,7 @@ The same panel has an **Export** tab. Pick any theme, built-in or your own, and 
 }
 ```
 
-The base tokens cross verbatim, one block per appearance, because shadcn's names are Atlas's names. `radius`, the font stacks, `tracking-normal`, and `spacing` are appearance-independent, so they are hoisted into `cssVars.theme` and written once. A theme whose two variants disagree about the radius loses that disagreement, since shadcn cannot express it.
+The base tokens cross verbatim, one block per appearance, because shadcn's names are Atlas's names. The export always carries the full set: a token the theme leaves out is derived and written, so the result works anywhere a shadcn theme does. `radius`, the font stacks, `tracking-normal`, and `spacing` are appearance-independent, so they are hoisted into `cssVars.theme` and written once. A theme whose two variants disagree about the radius loses that disagreement, since shadcn cannot express it.
 
 Everything above the base tokens is dropped: the palette, and every theme key covering the editor, terminal, syntax, diffs, and the agent chip. shadcn has no vocabulary for any of them. The report gives the count and breaks it down by family, and notes when only one variant exists, since shadcn consumers usually expect both.
 
