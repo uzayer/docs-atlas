@@ -22,7 +22,7 @@ background = "#101418"
 primary = "#7aa2f7"
 ```
 
-`background`, `foreground` and `primary` are the **seeds**. Every other base token is derived from them: surfaces and borders are the background mixed toward the foreground, text on a fill is whichever of your foreground and background reads better on it, and so on. Leave out `foreground` and it is white in a dark variant and black in a light one. Leave out `primary` and the theme is monochrome, using the foreground as its accent.
+`background`, `foreground` and `primary` are the **seeds**. Every other base token is derived from them: surfaces and borders are the background mixed toward the foreground, text on a fill is whichever of your foreground and background reads better on it, and so on. Leave out `foreground` and it is whichever of white and black reads better on your background. Leave out `primary` and the theme is monochrome, using the foreground as its accent.
 
 Nothing here is required beyond the header and one variant. The [token reference](/docs/themes/tokens#how-a-base-token-you-leave-out-is-derived) lists the rule behind each derived token.
 
