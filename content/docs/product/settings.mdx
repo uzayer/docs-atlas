@@ -6,7 +6,7 @@ icon: Settings
 
 Press <Kbd>⌘,</Kbd> to open Settings, or choose **Settings** from the account menu at the bottom of the sidebar. Settings fills the window. Press <Kbd>⌘,</Kbd> again, or click **Back** at the bottom of its sidebar, to return to your work.
 
-The sidebar has two groups. **Preferences** holds how Atlas behaves: General, Appearance, Chat, Memory, Notifications, Source Control, Keybindings, Privacy and Updates. **Library** holds what you install and manage: Agents, Skills and Layouts. About sits at the bottom.
+The sidebar has two groups. **Preferences** holds how Atlas behaves: General, Appearance, Sessions, Memory, Notifications, Source Control, Keybindings, Privacy and Updates. **Library** holds what you install and manage: Agents, Skills and Layouts. About sits at the bottom.
 
 Atlas saves your preferences to `~/.config/atlas/config.toml`, a commented file you can also edit by hand. [Configuration file](/docs/product/configuration) lists every key. If an edit breaks the file, Atlas keeps using the last valid settings and offers **Open config.toml** or **Recreate defaults** at the top of General.
 
@@ -26,7 +26,7 @@ A setting that does not apply right now is greyed out. Hover it to see why, for 
 
 ## Per-project settings
 
-A few settings can be different in one project: **Default agent**, the two Atlas Agent permissions, **Let agents search code with Atlas**, **Auto-fetch from remote**, **Inline Git blame**, **Nightly memory review** and **Mirror memory as an Agent Memory Repo**. The pages that hold them (Chat, Agents, Memory and Source Control) open with **Applying settings for All projects**.
+A few settings can be different in one project: **Default agent**, the two Atlas Agent permissions, **Let agents search code with Atlas**, **Auto-fetch from remote**, **Inline Git blame**, **Nightly memory review** and **Mirror memory as an Agent Memory Repo**. The pages that hold them (Sessions, Agents, Memory and Source Control) open with **Applying settings for All projects**.
 
 Pick a project there to change its values instead. The agent permissions, auto-fetch and the memory jobs can only be turned **off** for a project: if one is off for all projects, it stays off everywhere, so a repository you clone can never switch it back on. Each of those rows then shows a layers icon: highlighted when the project sets the value itself, dim when it inherits the value for all projects. The reset arrow next to an overridden setting removes the override. Settings that apply to every project are greyed out until you switch back to **All projects**. On Agents, that includes each agent's own settings: only Atlas Agent's permissions and code search stay live for a project.
 
@@ -36,7 +36,7 @@ A project's overrides are saved in its `.atlas/config.toml`, which Atlas keeps o
 
 - **Keep awake while an agent is working** stops your computer from sleeping during a turn. The display can still turn off. It is not available on Windows.
 - **Time format** shows times on a **12-hour** or **24-hour** clock, or as your system does.
-- **Confirm before deleting a chat** asks first when you delete a session from the sidebar or history. Archiving never asks, because you can undo it. On by default.
+- **Confirm before deleting a session** asks first when you delete a session from the sidebar or history. Archiving never asks, because you can undo it. On by default.
 - **Confirm before quitting while an agent is running** asks first when you quit Atlas, or close its window, during a turn. Quitting again while it asks quits anyway. On by default.
 - **Add .atlas to .gitignore** keeps Atlas's per-project data out of version control. On by default.
 - **Show hidden files** shows dotfiles in the [explorer](/docs/product/explorer). On by default.
@@ -58,7 +58,7 @@ Everything about how Atlas looks is on one page.
 
 - **Interface zoom** scales the whole interface, text, icons and spacing together. Press <Kbd>⌘=</Kbd>, <Kbd>⌘-</Kbd> and <Kbd>⌘0</Kbd> anywhere, or use **Interface size** in the account menu, which also offers **Compact**, **Default**, **Large** and **Larger**.
 - **Contrast** strengthens or softens borders and secondary text across the interface, from 50% to 200%. The interface follows the slider as you drag it.
-- **Chat width** lets the conversation and the composer grow from **Normal** (760 pixels) to **Wide** (1080) or **Full**.
+- **Session width** lets the conversation and the composer grow from **Normal** (760 pixels) to **Wide** (1080) or **Full**.
 - **Diff colours** switches added and removed lines from the theme's **Red and green** to **Orange and blue**, which stay distinct with red-green colour blindness. Each option shows its two colours.
 - **App icon** (macOS) changes the icon in the Dock, Finder and Launchpad.
 
@@ -75,14 +75,14 @@ Each picker lists the fonts installed on your computer, every one drawn in its o
 
 A theme can name fonts too, as tweakcn themes do. A font you picked always wins. Where you left the interface or code font on its default, the theme's font is used instead, and the picker's default reads **From theme:** and the font's name, with a warning if it is not installed.
 
-## Chat
+## Sessions
 
 - **Default agent** is the agent a new session starts with. Until that agent is installed, new sessions start with Atlas Agent. A project can choose its own.
-- **Wrap code in chat** wraps long lines in code blocks. Turn it off to keep the lines intact and scroll sideways.
-- **Sort chats by** orders the sidebar's sessions by **Latest activity** or by **Date started**.
+- **Wrap code in sessions** wraps long lines in code blocks. Turn it off to keep the lines intact and scroll sideways.
+- **Sort sessions by** orders the sidebar's sessions by **Latest activity** or by **Date started**.
 - **Enter to send**: <Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> adds a line. Turn it off to make <Kbd>Enter</Kbd> add a line; <Kbd>⌘Enter</Kbd> always sends.
 - **Next-step suggestions** has the agent offer two or three follow-ups as chips after each turn. They come from the agent's own session, with no extra key.
-- **Switching agents in a chat** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Sessions](/docs/product/chat#choose-and-switch-agents).
+- **Switching agents in a session** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Sessions](/docs/product/chat#choose-and-switch-agents).
 - **Save to memory before switching agents** sends `/remember` to the agent you are leaving first. See [Memory](/docs/context/memory#keep-memory-across-agent-switches).
 
 ## Memory
