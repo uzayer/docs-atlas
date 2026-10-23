@@ -4,11 +4,19 @@ description: Browse and manage the files in your project.
 icon: FolderTree
 ---
 
-Press <Kbd>⌘B</Kbd> to open the file tree. Atlas watches your project, so files an agent creates, renames, or deletes appear without a refresh.
+Files is a surface beside your session. Open it with <Kbd>⌘T</Kbd> then <Kbd>F</Kbd>, **Show Files** in the command palette, or **Files** in the review panel's header. Each project has one; opening it again brings it forward. Atlas watches your project, so files an agent creates, renames, or deletes appear without a refresh.
+
+The tree stays quick in very large projects. It loads a folder the first time you open it and only draws the rows on screen.
+
+## Open a file
+
+Click a file to open it in a tab. The tab keeps the project tree beside the file, with the file highlighted, so you can move on to the next one from there. Hide the tree with **Hide file tree** and Atlas remembers the choice. A file outside the project opens without the tree.
+
+A file with uncommitted changes shows its added and removed lines. Right-click it and choose **Open Changes** to jump to its diff in the [review panel](/docs/source-control/git#read-a-diff).
 
 ## Find changed files
 
-Atlas colors files by git status: added, modified, deleted, renamed, conflicted, or untracked. Collapsed folders take the most serious status beneath them.
+Atlas colors files by git status: added, modified, deleted, renamed, conflicted, or untracked. Collapsed folders take the most serious status beneath them. Files your `.gitignore` excludes are dimmed.
 
 ## Select and move files
 
@@ -20,6 +28,7 @@ Right-click a row to work with it:
 
 - create a **New File** or **New Folder** inside a folder
 - **Open** a file, or **Open in Default App** to hand it to your system
+- **Open Changes** to see a changed file's diff
 - **Open in Terminal** to start a shell in a folder
 - **Reveal in Finder** to show it in your system file manager
 - **Cut**, **Copy**, **Duplicate**, **Paste**, **Rename** or **Delete**
