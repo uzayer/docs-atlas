@@ -21,7 +21,7 @@ Atlas keeps its per-project data in a `.atlas/` directory and adds `.atlas/` to 
 
 ## 3. Add an agent
 
-Press <Kbd>⌘T</Kbd> to open an agent chat. Select the agent icon in the composer to pick an agent.
+Choose **Agents** in the sidebar to start a session. Select the agent icon in the composer to pick an agent.
 
 A fresh install comes with Atlas Agent only, and Atlas Agent needs a synced organization (step 7). To start right away, install an agent from the [ACP registry](/docs/agents/registry): the agent picker offers popular ones such as Claude Code, Codex, OpenCode and Cursor as one-click installs, and **Settings → Agents** lists the full registry.
 
@@ -31,7 +31,7 @@ Press <Kbd>⌥/</Kbd> to cycle through your installed agents without leaving the
 
 <Screenshot
   src="/screenshots/getting-started/quickstart-agent-picker.png"
-  alt="The agent picker open above the chat composer, listing installed agents and one-click installs for popular registry agents."
+  alt="The agent picker open above the session composer, listing installed agents and one-click installs for popular registry agents."
   caption="Install a popular agent straight from the picker."
 />
 
@@ -39,19 +39,19 @@ Press <Kbd>⌥/</Kbd> to cycle through your installed agents without leaving the
 
 ## 4. Turn on session capture
 
-Select the project name in the title bar, or press <Kbd>⌘⌥C</Kbd>, to open **Session capture**. Under **Where sessions are stored**, keep **Local** and select **Enable**.
+Select the project name in the breadcrumb at the top of the session, or press <Kbd>⌘⌥C</Kbd>, to open **Session capture**. Under **Where sessions are stored**, keep **Local** and select **Enable**.
 
 Local capture records the project's agent work on this machine, with no account and no network. It also brings in the Claude Code sessions you already ran in this folder. See [Session capture](/docs/source-control/capture).
 
 ## 5. Run a session
 
-Send the agent a message. That conversation is a [session](/docs/getting-started/concepts#session), recorded as it happens and resumable later from your chat history.
+Send the agent a message. That conversation is a [session](/docs/getting-started/concepts#session), recorded as it happens and resumable later from the sidebar.
 
 When the agent's changes are committed, by the agent, by you in Atlas, or from a terminal, Atlas links the commit back to the session. You don't do anything extra.
 
 ## 6. See the checkpoint
 
-That link is a [checkpoint](/docs/getting-started/concepts#checkpoint). Open Source Control (<Kbd>⌘⇧B</Kbd>), go to **History** and select the commit. It shows **Produced by 1 session**, and selecting the session opens it in the [timeline](/docs/team/timeline).
+That link is a [checkpoint](/docs/getting-started/concepts#checkpoint). Open source control (<Kbd>⌘⇧B</Kbd>). It opens beside the session. In **Changes**, go to **History** and select the commit. It shows **Produced by 1 session**, and selecting the session opens it in the [timeline](/docs/team/timeline).
 
 <Screenshot
   src="/screenshots/getting-started/quickstart-produced-by.jpg"
@@ -63,7 +63,7 @@ That link is a [checkpoint](/docs/getting-started/concepts#checkpoint). Open Sou
 
 <Video youtube="Qsmp1ht4yMU" title="Setting up your team" />
 
-Select **Sign In** from the account control in the title bar. Atlas opens your browser; approve the device there and come back. See [Your account](/docs/team/accounts).
+Select your avatar at the bottom of the sidebar, then **Sign in**. Atlas opens your browser; approve the device there and come back. See [Your account](/docs/team/accounts).
 
 Then get into a synced [organization](/docs/team/organizations):
 

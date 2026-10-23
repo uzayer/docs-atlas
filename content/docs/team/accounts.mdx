@@ -29,7 +29,7 @@ You can connect both providers to the same account. In the web app, open **Accou
 
 The desktop app signs in through your browser with a one-time device code.
 
-1. Select the account control in the title bar, then **Sign In**.
+1. Select your avatar at the bottom of the sidebar, then **Sign in**. While you are signed out, clicking **Chat** or **Members** in the sidebar starts the same flow.
 2. Atlas shows **Connect your Atlas account** with an eight-character code, and opens the approval page in your browser.
 3. If the browser asks, sign in to Atlas with Google or GitHub.
 4. Paste the code into **Device code** (the dialog has **Copy code**), then select **Approve**.
@@ -57,11 +57,21 @@ The same page has an **Access token** section with a short-lived personal token 
 
 ## Sign out
 
-Select **Sign Out** from the account menu. Atlas immediately clears the credential, identity and cached photo on this device, then asks the server to end the session in the background.
+Select **Log out** from the account menu. Atlas immediately clears the credential, identity and cached photo on this device, then asks the server to end the session in the background.
 
 If that request can't reach Atlas, the app tells you the server session may stay active until it expires. Sign that device out from **Active sessions** in the web app if it matters.
 
 Signing out does not delete your local organizations or remove you from synced ones. Synced organizations lock until you sign in again.
+
+## The account menu
+
+Select your avatar at the bottom of the sidebar to open it. It shows your name and email, and holds:
+
+- **Sign in**, while you are signed out
+- **Settings** and **Privacy**, which open those pages of [Settings](/docs/product/settings)
+- **Theme**: **System**, **Light** or **Dark**
+- **Interface size**: **−** and **+** buttons around the current percentage, the presets **Compact** (90%), **Default** (100%), **Large** (115%) and **Larger** (130%), and **Reset to default**
+- **Log out**
 
 ## Next
 

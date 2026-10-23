@@ -43,11 +43,11 @@ Only the files the thread has changed are held in the cloud, never your whole re
 
 This is arriving in the desktop app.
 
-1. Open an [agent chat](/docs/product/chat) in the project and click the **Share thread** button (the people icon) in its header.
+1. Open a [session](/docs/product/chat) in the project and click the **Share thread** button (the people icon) in its header.
 2. Click **Share thread…**. Atlas lists exactly which changed files will upload. Files matched by `.gitignore` or `.atlas/shareignore` never sync. Files that look like they hold secrets are blocked unless you tick **Include anyway** for that file.
 3. Share, then click **Copy link** and send the link to your teammates.
 
-The button stays highlighted while the agent chat belongs to a shared thread, with a dot when it is live.
+The button stays highlighted while the session belongs to a shared thread, with a dot when it is live.
 
 To join, click the same button, paste a link that looks like `app.tryatlas.cc/threads/…` under **Join from a link**, and click **Join**. If the owner requires approval, you wait for them to let you in.
 
@@ -58,7 +58,7 @@ You don't need the Base commit already. If you lack it, a teammate's Atlas sends
 Once you have joined, click **Check out replica** to get the thread's files on disk, in a folder of their own beside your checkout.
 
 - **Type together.** Open a thread file in the Atlas editor and everyone's edits and cursors arrive live. Edits made in another editor sync when you save. A badge shows **Up to date**, **Syncing** or **Behind**.
-- **Run an agent.** Click **Run an agent here** to open an agent chat inside the thread. Every prompt you send there is a Run. Runs show as chips with who prompted, which agent ran, the files changed and a status: **Running**, **Merged**, **Ended** or **Interrupted**. On a finished Run, **Continue from here** starts the next prompt with the thread's context up to that point.
+- **Run an agent.** Click **Run an agent here** to open a session inside the thread. Every prompt you send there is a Run. Runs show as chips with who prompted, which agent ran, the files changed and a status: **Running**, **Merged**, **Ended** or **Interrupted**. On a finished Run, **Continue from here** starts the next prompt with the thread's context up to that point.
 - **See what others did.** Each Run's prompt reaches the agent with a short digest of the other Runs in the thread: their prompts, final answers, changed files, open conflicts and unresolved comments.
 
 Binary files and files over 1 MB sync whole, and the last write wins. If a remote change would overwrite a file of yours, Atlas keeps your copy beside it as `<path>.atlas-mine`.

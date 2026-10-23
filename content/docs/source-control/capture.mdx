@@ -6,7 +6,7 @@ icon: CircleDot
 
 Session capture records what agents do in a project: every prompt, response, tool call and file change. It's what feeds the [timeline](/docs/team/timeline), and what lets Atlas link a commit to the session that produced it as a [checkpoint](/docs/getting-started/concepts#checkpoint).
 
-Capture is off until you turn it on, one project at a time. Open it from the project name in the title bar, or press <Kbd>⌘⌥C</Kbd>.
+Capture is off until you turn it on, one project at a time. Open it from the project name in the breadcrumb at the top of the session, from **Capture** in the [session context](/docs/product/chat#session-context) overlay, or press <Kbd>⌘⌥C</Kbd>.
 
 ## Local or Cloud
 
@@ -33,7 +33,7 @@ Both modes record the same way and redact secrets on your machine before anythin
 
 Open **Session capture**, keep **Local**, and select **Enable**. Records stay in `.atlas/` on this machine.
 
-Once capture is on, a green dot pulses beside the project name. Hover it for a one-line status.
+Once capture is on, a steady green dot shows beside the project name and on the session context button. Hover it for a one-line status.
 
 ## Share a project with your team
 
@@ -163,7 +163,7 @@ Select **Pause capture** to stop recording new work. Nothing already recorded is
 
 ## When something is wrong
 
-The dot turns amber when capture is degraded and red when it has stopped. Open the panel to see the reason and what to do next.
+The dot turns amber when capture is degraded and red when it has stopped. Open session capture to see the reason and what to do next.
 
 | Problem | What to do |
 | --- | --- |

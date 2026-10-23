@@ -161,7 +161,7 @@ The value may be written bare or as a one-field table, and the two mean the same
 "syntax.string" = { color = "#9ecf8a" }  # the same thing, as a table
 ```
 
-There is no font style. Nothing between a resolved key and the editor, the chat highlighter, or the markdown renderer can carry one, so `font_style` is refused by name rather than accepted and ignored:
+There is no font style. Nothing between a resolved key and the editor, the session's code highlighter, or the markdown renderer can carry one, so `font_style` is refused by name rather than accepted and ignored:
 
 ```toml
 # This does not load.

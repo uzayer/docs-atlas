@@ -4,9 +4,19 @@ description: Review agent changes, commit them, and see which sessions produced 
 icon: GitBranch
 ---
 
-Agents create diffs. Use the right panel (<Kbd>⌘⇧B</Kbd>) to read them, stage the parts you want, and make the commit. Its tabs are **Source Control**, **Commit** (the git graph) and **GitHub**.
+Agents create diffs. Use source control to read them, stage the parts you want, and make the commit.
 
-## Work in Source Control
+## Open source control
+
+Source control is a tab in the [surfaces pane](/docs/product/power-user#surfaces), beside the session. Open it any of these ways, and use the first two again to close it:
+
+- press <Kbd>⌘⇧B</Kbd>
+- choose **Source control** in the sidebar
+- press <Kbd>⌘T</Kbd> then <Kbd>G</Kbd>
+
+Its sections are **Changes**, **Commit** (the git graph) and **GitHub**. The [session context](/docs/product/chat#session-context) overlay also offers the branch, the next git action and **Open Source Control** without leaving the session.
+
+## Work in Changes
 
 Fetch, pull, push, or publish a new branch from the toolbar. The Pull and Push buttons show how many commits you're behind and ahead. Use the branch switcher to find, create, delete, check out, or merge a branch.
 
@@ -24,7 +34,7 @@ Resolve conflicts from the same view by taking ours or theirs, opening the file,
 
 ## Fetch in the background
 
-With **Settings → General → Auto-fetch from remote** on, Atlas runs `git fetch` for the open project when it opens, when Atlas regains focus, and every few minutes. The Pull badge then shows what the remote has.
+With **Settings → Source Control → Auto-fetch from remote** on, Atlas runs `git fetch` for the open project when it opens, when Atlas regains focus, and every few minutes. The Pull badge then shows what the remote has.
 
 Auto-fetch only updates remote-tracking branches. It never pulls, merges, or touches your files. It's on by default.
 
@@ -32,7 +42,7 @@ Auto-fetch only updates remote-tracking branches. It never pulls, merges, or tou
 
 <Video youtube="2ebqYJYHuV0" title="Tracing a commit back to the agent that wrote it" />
 
-In **History**, select a commit to copy its SHA, revert it, cherry-pick it, tag it, undo it into staging, or reset to it.
+In **Changes**, switch to **History**. Select a commit to copy its SHA, revert it, cherry-pick it, tag it, undo it into staging, or reset to it.
 
 When session capture is on, a commit an agent worked on shows **Produced by N sessions**, listing each session by title. Select one to open it in the [timeline](/docs/team/timeline) and read the prompts, reasoning and tool calls behind the commit. See [Session capture](/docs/source-control/capture#how-commits-become-checkpoints) for how Atlas makes that link.
 
@@ -46,13 +56,13 @@ Use **Stashes** to save the working tree and restore it later.
 
 ## See the git graph
 
-The **Commit** tab draws the repository's history across every branch as a graph. It refreshes when commits, checkouts and fetches happen, including ones made in a terminal. Expand it to the full window for a long history.
+The **Commit** section draws the repository's history across every branch as a graph. It refreshes when commits, checkouts and fetches happen, including ones made in a terminal. Expand it to the full window for a long history.
 
 You can also open it from the command palette (<Kbd>⌘K</Kbd>) with **Show Git Graph**.
 
 ## Clone reference repositories
 
-The **GitHub** tab lets you search public GitHub repositories and clone them into the project's `.atlas/repos/` directory as reference material for you and your agents. Because they live under `.atlas/`, they stay out of your own repository.
+The **GitHub** section lets you search public GitHub repositories and clone them into the project's `.atlas/repos/` directory as reference material for you and your agents. Because they live under `.atlas/`, they stay out of your own repository.
 
 Clones are shallow and track one branch. Switch a clone to another remote branch, fetch its latest commit, open it on GitHub, or delete it from the same list.
 
@@ -68,4 +78,4 @@ Atlas identifies common git failures, including authentication, protected branch
 
 - [Session capture](/docs/source-control/capture): how commits become checkpoints
 - [Timeline](/docs/team/timeline): trace a commit back to its session
-- [Chat & Sessions](/docs/product/chat): return to the agent work
+- [Sessions](/docs/product/chat): return to the agent work

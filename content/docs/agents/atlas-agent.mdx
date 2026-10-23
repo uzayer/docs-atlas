@@ -31,7 +31,7 @@ When one is missing, the composer is disabled and a bar above it says why:
 
 ## Start a session
 
-Press <Kbd>⌘T</Kbd> for a new agent chat and pick **Atlas Agent** in the composer. Choose a model from the list, which comes from the gateway and shows the models your organization can use, and a permission mode.
+Choose **Agents** in the sidebar for a new session and pick **Atlas Agent** in the composer. Choose a model from the list, which comes from the gateway and shows the models your organization can use, and a permission mode.
 
 ## Work in your project
 
@@ -65,12 +65,12 @@ Atlas Agent can act on the Atlas window for you. It can:
 - open a file at a line, a diff, or a settings section
 - show a panel, or switch to or close a tab
 - run any action from the keyboard shortcuts list
-- fill in a chat message for you to send
+- fill in a message for you to send
 - type a command into a terminal for you to run
 
-It never switches projects, sends a message for you or presses Enter in a terminal, and it won't close a file with unsaved changes. It acts only on the project you're looking at. Each action shows in the chat and in the Logs panel.
+It never switches projects, sends a message for you or presses Enter in a terminal, and it won't close a file with unsaved changes. It acts only on the project you're looking at. Each action shows in the session and in the Logs panel.
 
-Turn this off with **Settings → General → Let Atlas Agent navigate the app**.
+Turn this off with **Settings → Agents → Let Atlas Agent navigate the app**.
 
 ## Act in your organization
 
@@ -88,7 +88,7 @@ It can read:
 And it can act:
 
 - **Reply to a comment**, and resolve or reopen a comment thread.
-- **Send a chat message** to a channel or a person, including a session report: a written summary of a recorded session with a card that opens it on the timeline.
+- **Send a team chat message** to a channel or a person, including a session report: a written summary of a recorded session with a card that opens it on the timeline.
 - **Draw in a Space.** Create a page in a conversation's [Space](/docs/team/spaces) and draw a diagram on it.
 
 Admins can also ask for a member's activity: the sessions, checkpoints, lines added and removed, and tokens recorded through Atlas over a period. It counts what Atlas recorded and nothing else, so it's not a measure of anyone's performance.
@@ -106,7 +106,7 @@ Admins can also ask for a member's activity: the sessions, checkpoints, lines ad
 Replying to a comment or sending a message reaches another person in your name, so Atlas Agent asks before it does either. The approval card shows the recipient and the full text before you can allow it.
 
 - For a comment reply, the card offers **Allow**, **Allow for this session** and **Decline**. **Allow for this session** lets later replies through without a card until the session ends.
-- For a chat message, the card offers only **Allow** and **Decline**. Every message asks, because the next one can go to someone else and say something else.
+- For a team chat message, the card offers only **Allow** and **Decline**. Every message asks, because the next one can go to someone else and say something else.
 
 **Allow** is a click. Pressing Enter doesn't send anything, so a keystroke meant for the composer can't approve a message.
 
@@ -116,13 +116,13 @@ Resolving a comment and drawing on a Space page are visible to others and easy t
 
 <Screenshot
   src="/screenshots/agents/atlas-agent-outward-approval.png"
-  alt="An approval card above the Atlas Agent composer showing a chat message addressed to the #backend channel, its full text, and Allow and Decline buttons."
+  alt="An approval card above the Atlas Agent composer showing a team chat message addressed to the #backend channel, its full text, and Allow and Decline buttons."
   caption="You see who a message goes to, and every word of it, before it's sent."
 />
 
 ### Every call is logged
 
-Each organization action, including the ones you declined and the ones that failed, shows in the chat and in the Logs panel. Messages appear under your name, because you approved the exact words.
+Each organization action, including the ones you declined and the ones that failed, shows in the session and in the Logs panel. Messages appear under your name, because you approved the exact words.
 
 Turn this off with **Settings → General → Let Atlas Agent act in your organization**. A running session stops at its next call.
 

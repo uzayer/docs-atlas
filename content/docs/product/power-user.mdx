@@ -21,7 +21,7 @@ These are Atlas's default shortcuts, with macOS labels. On Windows and Linux, <K
 | <Kbd>⌘⌥Space</Kbd> | Hint navigation |
 | <Kbd>⌘⇧N</Kbd> | Add a project |
 | <Kbd>⌘⌥C</Kbd> | Session capture |
-| <Kbd>⌘,</Kbd> | Settings |
+| <Kbd>⌘,</Kbd> | Open or close Settings |
 
 ### Panels
 
@@ -29,11 +29,10 @@ These are Atlas's default shortcuts, with macOS labels. On Windows and Linux, <K
 | --- | --- |
 | <Kbd>⌘⇧.</Kbd> | Show or hide the project rail |
 | <Kbd>⌘B</Kbd> | Left panel (the file tree) |
-| <Kbd>⌘⇧B</Kbd> | Right panel (source control) |
+| <Kbd>⌘⇧B</Kbd> | Source control |
 | <Kbd>⌘⇧C</Kbd> | Team chat |
-| <Kbd>⌘J</Kbd> | Terminal panel |
+| <Kbd>⌘J</Kbd> | Terminal |
 | <Kbd>⌘⌥J</Kbd> | Agent sidebar |
-| <Kbd>⌘⌥T</Kbd> | Tab bar |
 | <Kbd>⌥J</Kbd> | Knowledge base |
 | <Kbd>⌥Z</Kbd> | Zen mode |
 
@@ -41,23 +40,23 @@ These are Atlas's default shortcuts, with macOS labels. On Windows and Linux, <K
 
 | Shortcut | Action |
 | --- | --- |
-| <Kbd>⌘T</Kbd> | New agent chat |
+| <Kbd>⌘T</Kbd> | Open a surface (then a letter picks one, see [Surfaces](#surfaces)) |
 | <Kbd>⌘⇧T</Kbd> | New terminal tab |
 | <Kbd>⌘N</Kbd> | New untitled editor |
 | <Kbd>⌘W</Kbd> | Close tab |
 | <KbdGroup><Kbd>⌘⇧[</Kbd> <Kbd>⌘⇧]</Kbd></KbdGroup> | Previous / next tab |
 | <KbdGroup><Kbd>⌘1</Kbd>–<Kbd>⌘9</Kbd></KbdGroup> | Jump to tab by position (<Kbd>⌘9</Kbd> is the last tab) |
-| <Kbd>⌘\\</Kbd> | Split right, up to three columns |
+| <Kbd>⌘\\</Kbd> | Split right, up to three columns in all |
 | <KbdGroup><Kbd>⌥;</Kbd> <Kbd>⌥'</Kbd></KbdGroup> | Focus the split to the left / right |
 | <Kbd>⌥W</Kbd> | Close the focused split |
 
-### Agent chat
+### Sessions
 
 | Shortcut | Action |
 | --- | --- |
 | <Kbd>⌥/</Kbd> | Cycle the coding agent |
 | <Kbd>⇧Tab</Kbd> | Cycle the permission mode |
-| <Kbd>⌘F</Kbd> | Find in chat |
+| <Kbd>⌘F</Kbd> | Find in session |
 
 ### View
 
@@ -69,7 +68,7 @@ The terminal and the knowledge base have their own shortcuts while they have foc
 
 ## Menu bar
 
-Every command in the menus is also an action you can bind. On macOS the menus sit in the system menu bar: **Atlas**, **File**, **Edit**, **View**, **Window** and **Help**. On Windows and Linux the same menus are in Atlas's title bar. Each item shows the shortcut you have bound to it, so a binding you change in **Settings → Keybindings** shows up in the menu at once.
+Every command in the menus is also an action you can bind. On macOS the menus sit in the system menu bar: **Atlas**, **File**, **Edit**, **View**, **Window** and **Help**. On Windows and Linux the same menus are in Atlas's window bar. Each item shows the shortcut you have bound to it, so a binding you change in **Settings → Keybindings** shows up in the menu at once.
 
 ## Use another editor's keys
 
@@ -87,9 +86,42 @@ Press <Kbd>⌘⌥Space</Kbd> and Atlas puts a short label on every button, tab a
 
 ## Rearrange the window
 
-Press <Kbd>⌘⌥L</Kbd> to apply a layout: **Focus** (just the agent), **Develop** (files, editor and agent), **Research** (knowledge, agent and the web side by side), **Terminal** (agent next to a terminal, with the file tree), **Review** (agent with the review panel) or **Usage**.
+The bar along the top of the window is made of the columns' own headers.
 
-Press <Kbd>⌥Z</Kbd> for zen mode: the knowledge base, an agent chat and a browser in three columns, with the side panels hidden. Press it again to return to the layout you had.
+The main column holds the session you are working in. Its header shows where you are, `organization / project / session title`, and never shows tabs. Switch sessions from the sidebar or the agent sidebar (<Kbd>⌘⌥J</Kbd>). The header's buttons, from the left, show or hide [team chat](/docs/team/chat), open the [session context](/docs/product/chat#session-context) overlay, and show or hide the surfaces pane.
+
+### Surfaces
+
+Files, editors, terminals, the browser and the other tools open in the surfaces pane beside the session. It has its own tab strip, a **+** menu for opening another surface, and an **Expand pane** button that gives it the whole center of the window, in place of the session, until you choose **Restore pane**. Hiding the pane keeps its tabs running.
+
+Press <Kbd>⌘T</Kbd> to open a surface. Atlas opens the pane if it is closed, then shows the list of surfaces. Press a single letter to pick one:
+
+| Key | Surface |
+| --- | --- |
+| <Kbd>A</Kbd> | Agent, another session beside this one |
+| <Kbd>T</Kbd> | Terminal |
+| <Kbd>B</Kbd> | Browser |
+| <Kbd>N</Kbd> | New file |
+| <Kbd>S</Kbd> | Spaces |
+| <Kbd>K</Kbd> | Knowledge |
+| <Kbd>M</Kbd> | Memory |
+| <Kbd>G</Kbd> | Source control |
+| <Kbd>L</Kbd> | Log |
+
+So <Kbd>⌘T</Kbd> then <Kbd>T</Kbd> opens a terminal, and <Kbd>⌘T</Kbd> then <Kbd>G</Kbd> opens [source control](/docs/source-control/git). Press <Kbd>⌘\\</Kbd> to split the surfaces pane into another column.
+
+### Layouts
+
+Press <Kbd>⌘⌥L</Kbd> to apply a layout. Each one puts the session first:
+
+- **Focus**: just the session
+- **Develop**: the file tree, the session and an editor
+- **Research**: the session, knowledge and the web side by side
+- **Terminal**: the session next to a terminal, with the file tree
+- **Review**: the session with source control beside it
+- **Usage**: your organization's token usage and cost
+
+Press <Kbd>⌥Z</Kbd> for zen mode: the session, the knowledge base and a browser in three columns, with the side panels hidden. Press it again to return to the layout you had.
 
 ## Open a folder from your terminal
 

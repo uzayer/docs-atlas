@@ -4,7 +4,9 @@ description: Configure Atlas for the way you work.
 icon: Settings
 ---
 
-Press <Kbd>⌘,</Kbd> to open Settings in a tab. The sidebar has two groups. **Preferences** holds how Atlas behaves: General, Appearance, Chat, Memory, Notifications, Source Control, Keybindings, Privacy and Updates. **Library** holds what you install and manage: Agents, Skills and Layouts. About sits at the bottom.
+Press <Kbd>⌘,</Kbd> to open Settings, or choose **Settings** from the account menu at the bottom of the sidebar. Settings fills the window. Press <Kbd>⌘,</Kbd> again, or click **Back** at the bottom of its sidebar, to return to your work.
+
+The sidebar has two groups. **Preferences** holds how Atlas behaves: General, Appearance, Chat, Memory, Notifications, Source Control, Keybindings, Privacy and Updates. **Library** holds what you install and manage: Agents, Skills and Layouts. About sits at the bottom.
 
 Atlas saves your preferences to `~/.config/atlas/config.toml`, a commented file you can also edit by hand. [Configuration file](/docs/product/configuration) lists every key. If an edit breaks the file, Atlas keeps using the last valid settings and offers **Open config.toml** or **Recreate defaults** at the top of General.
 
@@ -34,7 +36,7 @@ A project's overrides are saved in its `.atlas/config.toml`, which Atlas keeps o
 
 - **Keep awake while an agent is working** stops your computer from sleeping during a turn. The display can still turn off. It is not available on Windows.
 - **Time format** shows times on a **12-hour** or **24-hour** clock, or as your system does.
-- **Confirm before deleting a chat** asks first when you delete a chat from the sidebar or history. Archiving never asks, because you can undo it. On by default.
+- **Confirm before deleting a chat** asks first when you delete a session from the sidebar or history. Archiving never asks, because you can undo it. On by default.
 - **Confirm before quitting while an agent is running** asks first when you quit Atlas, or close its window, during a turn. Quitting again while it asks quits anyway. On by default.
 - **Add .atlas to .gitignore** keeps Atlas's per-project data out of version control. On by default.
 - **Show hidden files** shows dotfiles in the [explorer](/docs/product/explorer). On by default.
@@ -44,7 +46,7 @@ A project's overrides are saved in its `.atlas/config.toml`, which Atlas keeps o
 
 Everything about how Atlas looks is on one page.
 
-**Colour scheme** is **System**, **Light** or **Dark**, each drawn as a small picture of Atlas in the theme it gives you. System follows your operating system and switches with it.
+**Colour scheme** is **System**, **Light** or **Dark**, each drawn as a small picture of Atlas in the theme it gives you. System follows your operating system and switches with it. The **Theme** submenu in the account menu sets it too.
 
 **Themes** shows every installed theme as a card with an orb for its light variant and one for its dark variant. Atlas keeps a light theme and a dark theme: click a card to use it for both, or click one of its orbs to set only that half. **Import theme** converts a shadcn, Zed or VS Code theme. See [Themes](/docs/themes) and [Importing a theme](/docs/themes/importing).
 
@@ -54,7 +56,7 @@ Everything about how Atlas looks is on one page.
 
 ### Interface
 
-- **Interface zoom** scales the whole interface, text, icons and spacing together. Press <Kbd>⌘=</Kbd>, <Kbd>⌘-</Kbd> and <Kbd>⌘0</Kbd> anywhere, or use the interface scale button at the bottom of the rail, which also offers **Compact**, **Default**, **Large** and **Larger**.
+- **Interface zoom** scales the whole interface, text, icons and spacing together. Press <Kbd>⌘=</Kbd>, <Kbd>⌘-</Kbd> and <Kbd>⌘0</Kbd> anywhere, or use **Interface size** in the account menu, which also offers **Compact**, **Default**, **Large** and **Larger**.
 - **Contrast** strengthens or softens borders and secondary text across the interface, from 50% to 200%. The interface follows the slider as you drag it.
 - **Chat width** lets the conversation and the composer grow from **Normal** (760 pixels) to **Wide** (1080) or **Full**.
 - **Diff colours** switches added and removed lines from the theme's **Red and green** to **Orange and blue**, which stay distinct with red-green colour blindness. Each option shows its two colours.
@@ -66,7 +68,7 @@ Four fonts, each with a live sample of where it shows.
 
 - **Interface font** is everything outside code and the terminal. The default is your system font.
 - **Composer font** is the font you type prompts in. It follows the interface font until you pick one.
-- **Code font** is the editor, diffs and code in chats, with the editor's font size beside it. The default is your system's monospace font (SF Mono on macOS).
+- **Code font** is the editor, diffs and code in sessions, with the editor's font size beside it. The default is your system's monospace font (SF Mono on macOS).
 - **Terminal font** follows the code font until you pick one, with the terminal's font size beside it.
 
 Each picker lists the fonts installed on your computer, every one drawn in its own face, and searches as you type. The code and terminal pickers list every font but refuse one that is not monospaced, and say so. **Custom font list…** takes a fallback list such as `Berkeley Mono, SF Mono`, and **Get more fonts** opens Google Fonts; a font you install there appears the next time you open a picker. A saved font that is no longer installed shows a warning on its picker, and Atlas falls back to the default. Interface zoom scales every font size along with everything else.
@@ -75,12 +77,12 @@ A theme can name fonts too, as tweakcn themes do. A font you picked always wins.
 
 ## Chat
 
-- **Default agent** is the agent a new chat starts with. Until that agent is installed, new chats start with Atlas Agent. A project can choose its own.
+- **Default agent** is the agent a new session starts with. Until that agent is installed, new sessions start with Atlas Agent. A project can choose its own.
 - **Wrap code in chat** wraps long lines in code blocks. Turn it off to keep the lines intact and scroll sideways.
-- **Sort chats by** orders the sidebar by **Latest activity** or by **Date started**.
+- **Sort chats by** orders the sidebar's sessions by **Latest activity** or by **Date started**.
 - **Enter to send**: <Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> adds a line. Turn it off to make <Kbd>Enter</Kbd> add a line; <Kbd>⌘Enter</Kbd> always sends.
 - **Next-step suggestions** has the agent offer two or three follow-ups as chips after each turn. They come from the agent's own session, with no extra key.
-- **Switching agents in a chat** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Agent chat](/docs/product/chat#choose-and-switch-agents).
+- **Switching agents in a chat** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Sessions](/docs/product/chat#choose-and-switch-agents).
 - **Save to memory before switching agents** sends `/remember` to the agent you are leaving first. See [Memory](/docs/context/memory#keep-memory-across-agent-switches).
 
 ## Memory
@@ -106,7 +108,7 @@ Below those, notifications come in four groups: **Needs you**, **Outcomes**, **W
 
 - **Inline Git blame** shows who last changed the line under your cursor in the [editor](/docs/product/editor). On by default.
 - **Auto-fetch from remote** runs `git fetch` when a project opens, when Atlas regains focus, and every few minutes, so you can see what the remote has. It never pulls, merges or touches your files.
-- **Hide whitespace changes** leaves out lines that only changed whitespace in a file's diff, a commit and a chat's changes. Your changes list always shows every change, so whatever you stage still applies.
+- **Hide whitespace changes** leaves out lines that only changed whitespace in a file's diff, a commit and a session's changes. Your changes list always shows every change, so whatever you stage still applies.
 - **Start files collapsed** opens a diff of several files with each one folded to its header.
 
 ## Keybindings
@@ -169,10 +171,10 @@ Your agents are listed on the left: Atlas Agent, the agents you installed from t
 An agent's settings open with its name, version and whatever needs doing, such as **Update** or **Turn on**. Below that:
 
 - **Setup**: optional sign-in details. Leave them empty to sign in the agent's own way.
-- **Permissions** (Atlas Agent only): how far it can reach beyond your code. Both are on by default, and every action shows in the chat and in the Logs tab.
-  - **Let Atlas Agent navigate the app**: it can open files at a line, switch tabs and panels, fill in a chat message, and type a command into a terminal for you to run. It never switches projects, sends a message for you, or presses Enter.
+- **Permissions** (Atlas Agent only): how far it can reach beyond your code. Both are on by default, and every action shows in the session and in the Logs tab.
+  - **Let Atlas Agent navigate the app**: it can open files at a line, switch tabs and panels, fill in a message, and type a command into a terminal for you to run. It never switches projects, sends a message for you, or presses Enter.
   - **Let Atlas Agent act in your organization**: in a project bound to the cloud, it can read your organization's recorded sessions, comments, members and conversations, and act there as you. Anything that reaches another person asks you first.
-- **Defaults**: the mode and options a new chat with this agent starts with. They are the ones it offered in its last chat, and picking one in a chat changes it here too.
+- **Defaults**: the mode and options a new session with this agent starts with. They are the ones it offered in its last session, and picking one in a session changes it here too.
 - **Runtime**: the executable Atlas starts and the arguments it adds. Atlas Agent runs inside Atlas and updates with it.
 - **Environment**: variables for the agent's process, such as an API key or a base URL. Mark one sensitive to keep it in the keychain.
 - **Models**: star, reorder and hide models to shape the composer's model picker, or add a custom model by name. Atlas sends it to the agent as is, and the agent decides whether to accept it.
@@ -186,7 +188,7 @@ Under the list, **All agents** holds what applies to every agent:
 
 **Provider keys** lists your own API keys. Atlas uses them for a few features:
 
-- chatting with a recorded session from the [timeline](/docs/team/timeline)
+- asking about a recorded session from the [timeline](/docs/team/timeline)
 - the **Provider** option for memory's handoff summary and extraction (see [Memory](/docs/context/memory#choose-how-the-handoff-is-summarized))
 - external agents that read a provider's key from the environment
 
@@ -200,7 +202,7 @@ Manage skills and packs. See [Skills](/docs/context/skills).
 
 ### Layouts
 
-Apply a ready-made arrangement of panels and tabs: **Focus**, **Develop**, **Research**, **Terminal**, **Review** or **Usage**. Press <Kbd>⌘⌥L</Kbd> anywhere to switch layouts without opening Settings. **Show tab bar** hides or shows the strip of tabs above each column.
+Apply a ready-made arrangement of panels and tabs: **Focus**, **Develop**, **Research**, **Terminal**, **Review** or **Usage**. Each one puts the session first. Press <Kbd>⌘⌥L</Kbd> anywhere to switch layouts without opening Settings. See [Rearrange the window](/docs/product/power-user#rearrange-the-window).
 
 ## About
 

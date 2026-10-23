@@ -56,7 +56,7 @@ Type `/remember` in the [composer](/docs/product/chat) to have the agent save th
 
 ## Keep memory across agent switches
 
-When you switch agents in a chat that already has a conversation, two settings in [Settings → General](/docs/product/settings) decide what carries over:
+When you switch agents in a session that already has a conversation, two settings in [Settings → Chat](/docs/product/settings#chat) decide what carries over:
 
 - **Switching agents in a chat**: choose **Hand off** to attach the conversation to your next message, so the new agent continues where the last one stopped.
 - **Save to memory before switching agents**: Atlas sends `/remember` to the agent you are leaving and waits for it to finish before switching. This costs one turn, and you can skip the wait from the notice.
@@ -102,7 +102,7 @@ Edit an entry to correct it, or forget it to delete it along with the events tha
 
 ## Keep the code index current
 
-Atlas separately indexes your codebase so memory search stays grounded in the repository. When you chat with Atlas Agent, the composer shows how many files are indexed; click it to rebuild the index.
+Atlas separately indexes your codebase so memory search stays grounded in the repository. When you work with Atlas Agent, the composer shows how many files are indexed; click it to rebuild the index.
 
 Embeddings are computed on your machine. Choose the model in [Settings → Memory → Embedding model](/docs/product/settings#memory). Changing it rebuilds the index after Atlas asks for confirmation.
 

@@ -23,7 +23,7 @@ A **synced** organization lives in your Atlas account. It appears on every devic
 | Atlas Agent | No | Yes, with [AI access](/docs/team/ai-access) |
 | Organization ID | No | Yes |
 
-In a local organization, **Chat** and **Members** in the rail are disabled, and Atlas Agent's composer says the organization is local and offers to sync it.
+In a local organization, **Chat** and **Members** in the sidebar are greyed with a lock and a hint to sync the organization, and Atlas Agent's composer says the organization is local and offers to sync it.
 
 ## Create an organization
 
@@ -48,7 +48,7 @@ Turning on sync doesn't upload anything by itself. Each project still stores its
 
 ## Put a project's sessions in the cloud
 
-Sessions reach the organization one project at a time. Open the project and press <Kbd>⌘⌥C</Kbd>, or select the project name in the title bar, to open session capture. Under **Where sessions are stored**, **Local** is "This machine only" and **Cloud** is "Shared with your Organization".
+Sessions reach the organization one project at a time. Open the project and press <Kbd>⌘⌥C</Kbd>, or select the project name in the breadcrumb at the top of the session, to open session capture. Under **Where sessions are stored**, **Local** is "This machine only" and **Cloud** is "Shared with your Organization".
 
 Choosing Cloud offers two ways in:
 
@@ -74,10 +74,14 @@ Cloud needs three things: you are signed in, the active organization is synced, 
 The top of the rail holds the organization-wide destinations:
 
 - **Timeline**: every recorded session in the organization. See [Timeline](/docs/team/timeline).
-- **Chat**: team chat, also <Kbd>⌘⇧C</Kbd>. Disabled until the organization is synced.
-- **Members**: the members manager. Disabled until the organization is synced.
+- **Chat**: team chat, also <Kbd>⌘⇧C</Kbd>. Locked until you are signed in and the organization is synced.
+- **Members**: the members manager. Locked the same way.
+
+A locked item stays visible, greyed, and says what unlocks it. Signed out, clicking it starts signing in.
 
 Below them, under **Modules**: **Agents**, **Knowledge**, **Terminal**, **Source control**, **Memory**, **Usage** and **More**, which opens any other module.
+
+At the bottom of the rail, the help menu on the left holds the docs, feedback, keyboard shortcuts, community links, **Check for updates** and the Atlas version (click it to copy the number). On the right are your notifications and your avatar, which opens the [account menu](/docs/team/accounts#the-account-menu).
 
 ## Switch organizations
 
@@ -97,7 +101,7 @@ A synced organization's name belongs to the server. An admin renames it in the w
 
 ## Delete an organization
 
-Hover an organization in the switcher and select the bin. Atlas removes its projects and their chats from Atlas, and never touches the project files on disk. You can't delete your last organization.
+Hover an organization in the switcher and select the bin. Atlas removes its projects and their sessions from Atlas, and never touches the project files on disk. You can't delete your last organization.
 
 For a synced organization, deleting it on the server takes the Admin role. Without it, Atlas removes only this machine's copy, and the organization can reappear on the next refresh while you are still a member.
 

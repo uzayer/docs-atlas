@@ -41,7 +41,7 @@ Atlas Agent takes text prompts only. It does not accept images yet.
 
 Open **Settings → Agents** to browse the registry, or install a popular agent with one click from the agent picker in the composer. Both routes create the same installation. Atlas does not ship a built-in copy of Claude Code, Codex, Cursor, OpenCode, Kilo Code or any other external agent.
 
-When a newer version of an installed agent is available, an **Update** button appears above the composer of a chat using it. See [ACP registry](/docs/agents/registry) for installing, updating and removing agents.
+When a newer version of an installed agent is available, an **Update** button appears above the composer of a session using it. See [ACP registry](/docs/agents/registry) for installing, updating and removing agents.
 
 ## Expect capabilities to vary
 
@@ -55,9 +55,9 @@ ACP lets an agent advertise what it supports. Atlas shows only the controls and 
 
 An entry in the registry means Atlas can install and start it, not that it implements every optional ACP capability. Use the repository or website on its registry card for account setup and agent-specific behavior.
 
-## Switch agents in a chat
+## Switch agents in a session
 
-Pick another agent from the composer at any point. What happens to a chat that already has a conversation depends on **Settings → General → Switching agents in a chat**:
+Pick another agent from the composer at any point. What happens to a session that already has a conversation depends on **Settings → Chat → Switching agents in a chat**:
 
 - **Start over** switches in place with a clean chat. This is the default.
 - **New tab** keeps the conversation on screen and opens the new agent beside it.
@@ -67,11 +67,11 @@ Every conversation stays in your history either way. Turn on **Save to memory be
 
 ## Bring in earlier sessions
 
-Agents that support session listing can bring their past sessions into Atlas. Open your chat history and select **Import sessions**.
+Agents that support session listing can bring their past sessions into Atlas. Open **All history** in the agent sidebar and select **Import sessions**.
 
 ## Keep the record in Atlas
 
-Every agent runs against the open [project](/docs/getting-started/concepts#project). Atlas keeps its chats in your history, and [session capture](/docs/source-control/capture) adds the work to the timeline and links commits to checkpoints.
+Every agent runs against the open [project](/docs/getting-started/concepts#project). Atlas keeps its sessions in your history, and [session capture](/docs/source-control/capture) adds the work to the timeline and links commits to checkpoints.
 
 To keep running an agent in its own terminal interface instead, the [Atlas CLI](/docs/cli) records it through the agent's hooks.
 
