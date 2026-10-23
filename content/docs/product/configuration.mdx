@@ -48,7 +48,7 @@ Themes, icons, fonts, and how the interface is drawn.
 | `themeOverrides` | A personal patch of base, palette and key colours applied on top of the active theme. | not set | a table | This file only |
 | `iconTheme` | File and folder icons, chosen separately from the colour theme. | `"material-icon-theme"` | a string | Settings → Appearance → **File icon theme** |
 | `appIcon` | The icon in the Dock, Finder and Launchpad. macOS only. | `"dark"` | a string | Settings → Appearance → **App icon** |
-| `wordWrap` | Wrap long lines in file tabs and diffs instead of scrolling sideways. | `true` | `true` or `false` | Settings → Appearance → **Word wrap** |
+| `wordWrap` | Wrap long lines in file tabs, diffs and a session's code blocks instead of scrolling sideways. | `true` | `true` or `false` | Settings → Appearance → **Word wrap** |
 | `chatWidth` | How wide the conversation and the composer may grow. | `"normal"` | `"normal"`, `"wide"`, `"full"` | Settings → Appearance → **Session width** |
 | `uiFontFamily` | The font for everything outside code and the terminal. Empty follows the theme, else the system font. | `""` | a string | Settings → Appearance → **Interface font** |
 | `codeFontFamily` | The font for the editor, diffs and code in chats. Empty follows the theme, else the default. | `""` | a string | Settings → Appearance → **Code font** |
@@ -70,7 +70,6 @@ New sessions, the composer, layout, and switching agents.
 | `rememberBeforeSwitch` | Ask the agent you are leaving to save what it learned to shared memory first. | `false` | `true` or `false` | Settings → Sessions → **Save to memory before switching agents** |
 | `enterToSend` | Enter sends and Shift+Enter inserts a newline. Off: only ⌘/Ctrl+Enter sends. | `true` | `true` or `false` | Settings → Sessions → **Enter to send** |
 | `defaultAgent` | The agent a new session starts with. A project can override it. | `"atlas-agent"` | a string | Settings → Sessions → **Default agent** |
-| `chatCodeWrap` | Wrap long lines in a session's code blocks instead of scrolling sideways. | `true` | `true` or `false` | Settings → Sessions → **Wrap code in sessions** |
 | `autoSettleAfterDays` | Days a session may sit idle before Atlas moves it to the Settled shelf. A running session, one waiting for you, or one you un-settled since its last activity is left alone. `0` turns it off. | `3` | `0` to `90` | Settings → Sessions → **Settle idle sessions after** |
 | `sidebarSort` | Order the sidebar's sessions by their latest activity or by when they started. | `"recent"` | `"recent"`, `"created"` | Settings → Sessions → **Sort sessions by** |
 
