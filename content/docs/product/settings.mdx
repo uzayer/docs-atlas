@@ -127,9 +127,28 @@ Bindings belong to a **profile**. Create, duplicate, rename, reset or delete pro
 
 **Keys from** sets which editor's shortcuts a profile starts from: Atlas, **VS Code**, **Cursor**, **Zed** or **JetBrains**. A preset only changes the commands that editor has a well-known key for. Everything else keeps Atlas's shortcut. Atlas asks which one you want the first time it starts.
 
-To share a profile, choose **Copy as JSON** and send it. A teammate imports it with **Import a profile**.
+To share a profile, choose **Copy as JSON** and send it. A teammate imports it with **Import a profile**. The copy includes any conditions you set.
 
-<Screenshot src="/screenshots/product/settings-keybindings.png" alt="Settings → Keybindings with the profile bar at the top showing the Keys from menu open on VS Code, Cursor, Zed and JetBrains, and the searchable shortcut table below." caption="Keybinding profiles and presets." />
+### Choose where a shortcut works
+
+Each shortcut has a **When** condition under its name. **Always** means it works everywhere. Click the condition to change it. Type an expression such as `!terminalFocus`, or build one with **+ Condition** and **+ Group**. Use **Not** to flip a condition. Changes save as you make them.
+
+An expression joins variables with `!` (not), `&&` (and), `||` (or) and parentheses. The variables are:
+
+| Variable | True while |
+| --- | --- |
+| `terminalFocus` | the terminal has the keyboard |
+| `chatFocus`, `editorFocus`, `knowledgeFocus`, `pdfFocus`, `canvasFocus`, `browserFocus` | that kind of tab is active in the focused split |
+| `inputFocus` | you're typing in a text field |
+| `knowledgeOpen` | Knowledge is the active tab |
+| `modelPickerOpen` | the model picker has focus |
+| `isMac`, `isWindows`, `isLinux` | Atlas is running on that system |
+
+For example, set the command palette to `!terminalFocus` and <Kbd>⌘K</Kbd> stops opening it while the terminal has focus.
+
+Some shortcuts only exist inside one panel, such as find in the terminal or save in Knowledge. Their condition can narrow where they work, for example `terminalFocus && !inputFocus`. It can't move them to another panel. If a condition could never be true there, Atlas shows a warning beside it.
+
+<Screenshot src="/screenshots/product/settings-keybindings.png" alt="Settings → Keybindings with the When condition of Command palette open, showing the expression !terminalFocus and a Not terminalFocus condition below it." caption="Editing where a shortcut works." />
 
 See [Power user](/docs/product/power-user) for the default shortcuts.
 
