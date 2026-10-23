@@ -68,7 +68,7 @@ When you switch agents in a chat that already has a conversation, two settings i
 The handoff is the previous session's tail, as served in the next agent's briefing. Open the sliders button beside **Shared** in the Memory panel to choose how it is prepared:
 
 - **Raw** sends the last turns verbatim. There is no model call and no delay. This is the default.
-- **Provider** condenses the tail with a model from one of your [API keys](/docs/product/settings#api-keys). If the call fails or takes longer than a few seconds, Atlas falls back to the raw tail.
+- **Provider** condenses the tail with a model from one of your [provider keys](/docs/product/settings#agents). If the call fails or takes longer than a few seconds, Atlas falls back to the raw tail.
 
 The same choice decides which model extracts durable entries for the project.
 
@@ -104,7 +104,7 @@ Edit an entry to correct it, or forget it to delete it along with the events tha
 
 Atlas separately indexes your codebase so memory search stays grounded in the repository. When you chat with Atlas Agent, the composer shows how many files are indexed; click it to rebuild the index.
 
-Embeddings are computed on your machine. Choose the model in [Settings → Local Models](/docs/product/settings#local-models). Changing it rebuilds the index after Atlas asks for confirmation.
+Embeddings are computed on your machine. Choose the model in [Settings → Memory → Embedding model](/docs/product/settings#memory). Changing it rebuilds the index after Atlas asks for confirmation.
 
 ## Next
 

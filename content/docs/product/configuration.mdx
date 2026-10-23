@@ -68,9 +68,9 @@ New chats, the composer, layout, switching agents, and what Atlas Agent may do.
 | `agentSwitchBehavior` | What picking another agent does once a chat has a conversation. | `"reset"` | `"reset"`, `"new-tab"`, `"handoff"` | Settings → Chat → **Switching agents in a chat** |
 | `rememberBeforeSwitch` | Ask the agent you are leaving to save what it learned to shared memory first. | `false` | `true` or `false` | Settings → Chat → **Save to memory before switching agents** |
 | `enterToSend` | Enter sends and Shift+Enter inserts a newline. Off: only ⌘/Ctrl+Enter sends. | `true` | `true` or `false` | Settings → Chat → **Enter to send** |
-| `agentUiNavigation` | Open files at a line, switch tabs and panels, and fill in a message or command for you. A project can turn it off, never on. | `true` | `true` or `false` | Settings → Chat → **Let Atlas Agent navigate the app** |
-| `agentOrgAccess` | Read your organization's sessions, comments and conversations, and act there as you. A project can turn it off, never on. | `true` | `true` or `false` | Settings → Chat → **Let Atlas Agent act in your organization** |
-| `agentCodeTools` | Give agents Atlas's in-process grep and find-files, which respect .gitignore and skip secrets. A project can turn it off, never on. | `true` | `true` or `false` | Settings → Chat → **Let agents search code with Atlas** |
+| `agentUiNavigation` | Open files at a line, switch tabs and panels, and fill in a message or command for you. A project can turn it off, never on. | `true` | `true` or `false` | Settings → Agents → Atlas Agent → **Let Atlas Agent navigate the app** |
+| `agentOrgAccess` | Read your organization's sessions, comments and conversations, and act there as you. A project can turn it off, never on. | `true` | `true` or `false` | Settings → Agents → Atlas Agent → **Let Atlas Agent act in your organization** |
+| `agentCodeTools` | Give agents Atlas's in-process grep and find-files, which respect .gitignore and skip secrets. A project can turn it off, never on. | `true` | `true` or `false` | Settings → Agents → All agents → **Let agents search code with Atlas** |
 | `favoriteModels` | Models you starred in the composer's model picker. | `[]` | a list of strings | the star in the composer's model picker |
 | `defaultAgent` | The agent a new chat starts with. A project can override it. | `"atlas-agent"` | a string | Settings → Chat → **Default agent** |
 | `chatCodeWrap` | Wrap long lines in a chat's code blocks instead of scrolling sideways. | `true` | `true` or `false` | Settings → Chat → **Wrap code in chat** |
@@ -82,7 +82,7 @@ Shared memory across agents, and instructions mirrored for them.
 
 | Key | What it does | Default | Accepts | Where to change it |
 | --- | --- | --- | --- | --- |
-| `embeddingModelId` | The on-device model that embeds memory for search by meaning. | `"all-MiniLM-L6-v2"` | a string | Settings → Local Models |
+| `embeddingModelId` | The on-device model that embeds memory for search by meaning. | `"all-MiniLM-L6-v2"` | a string | Settings → Memory → **Embedding model** |
 | `instructionSync` | Keep a marked block of the project's AGENTS.md in step with CLAUDE.md and .claude/rules. | `false` | `true` or `false` | Settings → Memory → **Mirror CLAUDE.md and .claude/rules into AGENTS.md** |
 | `memoryDreams` | Once a day, propose changes to shared memory for you to review. Nothing applies without you. A project can turn it off, never on. | `false` | `true` or `false` | Settings → Memory → **Nightly memory review** |
 | `memoryRepoMirror` | Keep a read-only local git copy of each project's memory, outside the project. A project can turn it off, never on. | `false` | `true` or `false` | Settings → Memory → **Mirror memory as an Agent Memory Repo** |

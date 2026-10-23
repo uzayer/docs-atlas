@@ -4,7 +4,7 @@ description: Configure Atlas for the way you work.
 icon: Settings
 ---
 
-Press <Kbd>⌘,</Kbd> to open Settings in a tab. The sidebar has two groups. **Preferences** holds how Atlas behaves: General, Appearance, Chat, Memory, Notifications, Source Control, Keybindings, Privacy and Updates. **Library** holds what you install and manage: Agents, Skills, API Keys, Local Models and Layouts. About sits at the bottom.
+Press <Kbd>⌘,</Kbd> to open Settings in a tab. The sidebar has two groups. **Preferences** holds how Atlas behaves: General, Appearance, Chat, Memory, Notifications, Source Control, Keybindings, Privacy and Updates. **Library** holds what you install and manage: Agents, Skills and Layouts. About sits at the bottom.
 
 Atlas saves your preferences to `~/.config/atlas/config.toml`, a commented file you can also edit by hand. [Configuration file](/docs/product/configuration) lists every key. If an edit breaks the file, Atlas keeps using the last valid settings and offers **Open config.toml** or **Recreate defaults** at the top of General.
 
@@ -24,9 +24,9 @@ A setting that does not apply right now is greyed out. Hover it to see why, for 
 
 ## Per-project settings
 
-A few settings can be different in one project: **Default agent**, the three Atlas Agent permissions, **Auto-fetch from remote**, **Inline Git blame**, **Nightly memory review** and **Mirror memory as an Agent Memory Repo**. The pages that hold them (Chat, Memory and Source Control) open with **Applying settings for All projects**.
+A few settings can be different in one project: **Default agent**, the two Atlas Agent permissions, **Let agents search code with Atlas**, **Auto-fetch from remote**, **Inline Git blame**, **Nightly memory review** and **Mirror memory as an Agent Memory Repo**. The pages that hold them (Chat, Agents, Memory and Source Control) open with **Applying settings for All projects**.
 
-Pick a project there to change its values instead. The agent permissions, auto-fetch and the memory jobs can only be turned **off** for a project: if one is off for all projects, it stays off everywhere, so a repository you clone can never switch it back on. Each of those rows then shows a layers icon: highlighted when the project sets the value itself, dim when it inherits the value for all projects. The reset arrow next to an overridden setting removes the override. Settings that apply to every project are greyed out until you switch back to **All projects**.
+Pick a project there to change its values instead. The agent permissions, auto-fetch and the memory jobs can only be turned **off** for a project: if one is off for all projects, it stays off everywhere, so a repository you clone can never switch it back on. Each of those rows then shows a layers icon: highlighted when the project sets the value itself, dim when it inherits the value for all projects. The reset arrow next to an overridden setting removes the override. Settings that apply to every project are greyed out until you switch back to **All projects**. On Agents, that includes each agent's own settings: only Atlas Agent's permissions and code search stay live for a project.
 
 A project's overrides are saved in its `.atlas/config.toml`, which Atlas keeps out of git, so they are yours alone. See [Configuration file](/docs/product/configuration#per-project-settings).
 
@@ -82,16 +82,6 @@ A theme can name fonts too, as tweakcn themes do. A font you picked always wins.
 - **Next-step suggestions** has the agent offer two or three follow-ups as chips after each turn. They come from the agent's own session, with no extra key.
 - **Switching agents in a chat** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Agent chat](/docs/product/chat#choose-and-switch-agents).
 - **Save to memory before switching agents** sends `/remember` to the agent you are leaving first. See [Memory](/docs/context/memory#keep-memory-across-agent-switches).
-- **Favorite models** shows how many models you starred in the composer's model picker, and clears them.
-- **Model pricing** fetches per-model prices from models.dev, used for cost estimates and shown in the model picker. Atlas refreshes them on launch.
-
-### Atlas Agent permissions
-
-Three switches decide how far [Atlas Agent](/docs/agents/atlas-agent) can reach beyond your code. All are on by default, and every action shows in the chat and in the Logs tab.
-
-- **Let Atlas Agent navigate the app**: it can open files at a line, switch tabs and panels, fill in a chat message, and type a command into a terminal for you to run. It never switches projects, sends a message for you, or presses Enter.
-- **Let Atlas Agent act in your organization**: in a project bound to the cloud, it can read your organization's recorded sessions, comments, members and conversations, and act there as you. Anything that reaches another person asks you first.
-- **Let agents search code with Atlas**: agents get Atlas's code search, which respects `.gitignore` and never reads secret files such as `.env`. Turn it off and they use their own tools instead.
 
 ## Memory
 
@@ -99,7 +89,7 @@ Three switches decide how far [Atlas Agent](/docs/agents/atlas-agent) can reach 
 - **Nightly memory review** proposes changes to shared memory once a day. Nothing changes until you accept it in Memory › Review.
 - **Mirror memory as an Agent Memory Repo** keeps a read-only local git copy of each project's memory, outside the project. **Open folder** shows it.
 - **Mirror CLAUDE.md and .claude/rules into AGENTS.md** keeps your instructions in sync for agents that read `AGENTS.md`. See [Memory](/docs/context/memory#mirror-your-instructions-into-agentsmd).
-- **Embedding model** shows the on-device model memory search uses. **Manage** opens Local Models.
+- **Embedding model** is the model shared memory searches with. It downloads once and runs on your computer: **Download** a model, then **Use** it. Switching rebuilds the memory index after Atlas asks, and a downloaded model you aren't using can be removed.
 
 ## Notifications
 
@@ -172,29 +162,41 @@ See [Power user](/docs/product/power-user) for the default shortcuts.
 
 ### Agents
 
-Browse the ACP registry, install and remove agents, and update the ones you have. A number next to Agents in the sidebar counts installed agents with an update waiting. See [ACP registry](/docs/agents/registry).
+Your agents are listed on the left: Atlas Agent, the agents you installed from the [ACP registry](/docs/agents/registry), and any found on your `PATH`. Pick one to see its settings on the right. **+ Add agent** browses the registry. A number next to Agents in the sidebar counts installed agents with an update waiting.
 
 <Video youtube="BNfkFyrH86I" title="Bringing your coding agents to Atlas" />
 
-### Skills
+An agent's settings open with its name, version and whatever needs doing, such as **Update** or **Turn on**. Below that:
 
-Manage skills and packs. See [Skills](/docs/context/skills).
+- **Setup**: optional sign-in details. Leave them empty to sign in the agent's own way.
+- **Permissions** (Atlas Agent only): how far it can reach beyond your code. Both are on by default, and every action shows in the chat and in the Logs tab.
+  - **Let Atlas Agent navigate the app**: it can open files at a line, switch tabs and panels, fill in a chat message, and type a command into a terminal for you to run. It never switches projects, sends a message for you, or presses Enter.
+  - **Let Atlas Agent act in your organization**: in a project bound to the cloud, it can read your organization's recorded sessions, comments, members and conversations, and act there as you. Anything that reaches another person asks you first.
+- **Defaults**: the mode and options a new chat with this agent starts with. They are the ones it offered in its last chat, and picking one in a chat changes it here too.
+- **Runtime**: the executable Atlas starts and the arguments it adds. Atlas Agent runs inside Atlas and updates with it.
+- **Environment**: variables for the agent's process, such as an API key or a base URL. Mark one sensitive to keep it in the keychain.
+- **Models**: star, reorder and hide models to shape the composer's model picker, or add a custom model by name. Atlas sends it to the agent as is, and the agent decides whether to accept it.
+- **About**: where it comes from and what it supports.
 
-### API Keys
+Under the list, **All agents** holds what applies to every agent:
 
-Add your own provider keys. Atlas uses them for a few features:
+- **Let agents search code with Atlas**: agents get Atlas's code search, which respects `.gitignore` and never reads secret files such as `.env`. Turn it off and they use their own tools instead.
+- **Favorite models** shows how many models you starred in the composer's model picker, and clears them.
+- **Model pricing** fetches per-model prices from models.dev, used for cost estimates and shown in the model picker. Atlas refreshes them on launch.
+
+**Provider keys** lists your own API keys. Atlas uses them for a few features:
 
 - chatting with a recorded session from the [timeline](/docs/team/timeline)
 - the **Provider** option for memory's handoff summary and extraction (see [Memory](/docs/context/memory#choose-how-the-handoff-is-summarized))
 - external agents that read a provider's key from the environment
 
-Each key is an `export` line in the shell profile you choose, and Atlas reads it back from your environment. Atlas keeps no separate copy of your keys. A key set somewhere Atlas can read but not edit appears read-only.
+Each key is an `export` line in the shell profile shown under **New keys go to**, and Atlas reads it back from your environment. Atlas keeps no separate copy of your keys. A key set somewhere Atlas can read but not edit appears read-only.
 
 Atlas Agent does not use these keys; it runs on your Atlas account. See [AI access & spend](/docs/team/ai-access).
 
-### Local Models
+### Skills
 
-Download the embedding models that run on your machine for code indexing and memory search. Changing the model rebuilds the index after Atlas asks for confirmation.
+Manage skills and packs. See [Skills](/docs/context/skills).
 
 ### Layouts
 
