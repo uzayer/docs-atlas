@@ -90,9 +90,11 @@ The bar along the top of the window is made of the columns' own headers.
 
 The main column holds the session you are working in. Its header shows where you are, `organization / project / session title`, and never shows tabs. Switch sessions from the sidebar or the agent sidebar (<Kbd>⌘⌥J</Kbd>). The header's buttons, from the left, show or hide [team chat](/docs/team/chat), open the [session context](/docs/product/chat#session-context) overlay, and show or hide the surfaces pane.
 
+Every tool opens in one of two places. A **surface** is a tool you use beside the session, as a tab in the surfaces pane: the editor, terminals, the browser, diffs, source control, team chat, PDFs and media, logs and prompt drafts. A **destination** is a full page you go to: Timeline, Usage, Knowledge, the knowledge graph, Memory and Spaces.
+
 ### Surfaces
 
-Files, editors, terminals, the browser and the other tools open in the surfaces pane beside the session. It has its own tab strip, a **+** menu for opening another surface, and an **Expand pane** button that gives it the whole center of the window, in place of the session, until you choose **Restore pane**. Hiding the pane keeps its tabs running.
+Files, editors, terminals, the browser, team chat and the other surfaces open in the surfaces pane beside the session. It has its own tab strip, a **+** menu for opening another surface, and an **Expand pane** button that gives it the whole center of the window, in place of the session, until you choose **Restore pane**. Hiding the pane keeps its tabs running. Each surface has a minimum width, so a column will not resize narrower than its tool can use; team chat's is 320px.
 
 Press <Kbd>⌘T</Kbd> to open a surface. Atlas opens the pane if it is closed, then shows the list of surfaces. Press a single letter to pick one:
 
@@ -102,13 +104,17 @@ Press <Kbd>⌘T</Kbd> to open a surface. Atlas opens the pane if it is closed, t
 | <Kbd>T</Kbd> | Terminal |
 | <Kbd>B</Kbd> | Browser |
 | <Kbd>N</Kbd> | New file |
-| <Kbd>S</Kbd> | Spaces |
-| <Kbd>K</Kbd> | Knowledge |
-| <Kbd>M</Kbd> | Memory |
 | <Kbd>G</Kbd> | Source control |
+| <Kbd>C</Kbd> | Team chat |
 | <Kbd>L</Kbd> | Log |
 
 So <Kbd>⌘T</Kbd> then <Kbd>T</Kbd> opens a terminal, and <Kbd>⌘T</Kbd> then <Kbd>G</Kbd> opens [source control](/docs/source-control/git). Press <Kbd>⌘\\</Kbd> to split the surfaces pane into another column.
+
+### Destinations
+
+Timeline, Usage, Knowledge, the knowledge graph, Memory and Spaces are full pages. Open one from the sidebar rail (**Timeline**, **Knowledge**, **Memory**, **Usage**), from <Kbd>⌘K</Kbd>, with its shortcut (<Kbd>⌥J</Kbd> for Knowledge), or, for a conversation's Space, with its **Spaces** button. It takes the area right of the rail, and the bar reads `organization / project ‹ Timeline`. The session keeps running underneath.
+
+Only one destination shows at a time; opening another replaces it. To get back to the session, press <Kbd>Esc</Kbd>, select the back arrow (**‹** and the page's title) in the bar, or use the same rail item or shortcut again. Opening or focusing any session or surface also takes you back. The page stays as you left it, so returning to it is instant.
 
 ### Layouts
 
@@ -116,12 +122,10 @@ Press <Kbd>⌘⌥L</Kbd> to apply a layout. Each one puts the session first:
 
 - **Focus**: just the session; open tools stay running, out of sight
 - **Develop**: the file tree, the session and an editor
-- **Research**: the session, knowledge and the web side by side
 - **Terminal**: the session next to a terminal, with the file tree
 - **Review**: the session with source control beside it
-- **Usage**: the session with your organization's token usage and cost beside it
 
-Press <Kbd>⌥Z</Kbd> for zen mode: the session, the knowledge base and a browser in three columns, with the side panels hidden. Press it again to return to the layout you had.
+Press <Kbd>⌥Z</Kbd> for zen mode: the session beside a browser, in two columns, with the side panels hidden. Press it again to return to the layout you had.
 
 ## Open a folder from your terminal
 
