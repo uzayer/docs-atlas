@@ -70,6 +70,7 @@ New sessions, the composer, layout, and switching agents.
 | `enterToSend` | Enter sends and Shift+Enter inserts a newline. Off: only ⌘/Ctrl+Enter sends. | `true` | `true` or `false` | Settings → Sessions → **Enter to send** |
 | `defaultAgent` | The agent a new session starts with. A project can override it. | `"atlas-agent"` | a string | Settings → Sessions → **Default agent** |
 | `chatCodeWrap` | Wrap long lines in a session's code blocks instead of scrolling sideways. | `true` | `true` or `false` | Settings → Sessions → **Wrap code in sessions** |
+| `autoSettleAfterDays` | Days a session may sit idle before Atlas moves it to the Settled shelf. A running session, one waiting for you, or one you un-settled since its last activity is left alone. `0` turns it off. | `3` | `0` to `90` | Settings → Sessions → **Settle idle sessions after** |
 | `sidebarSort` | Order the sidebar's sessions by their latest activity or by when they started. | `"recent"` | `"recent"`, `"created"` | Settings → Sessions → **Sort sessions by** |
 
 ## Agents
