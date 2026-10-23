@@ -68,7 +68,19 @@ Clones are shallow and track one branch. Switch a clone to another remote branch
 
 ## Read a diff
 
-Review diffs inline as a searchable unified view, or open a substantial change full-window for a side-by-side comparison, file list, and minimap.
+Diffs open in the review panel on the right, beside your session. There is one per project, and opening another file's diff scrolls to that file.
+
+Choose what to compare at the top left:
+
+- **Uncommitted**: your working tree against `HEAD`, staged and unstaged together.
+- **Branch**: everything on your branch since it left the base branch. Atlas picks the base automatically, or you can choose one under **Compare against**.
+- **This session**: what the open session changed.
+
+The toolbar steps to the **Previous change** and **Next change**, and switches between a split and a unified view. It can also wrap lines, hide whitespace changes, and collapse every file to its header. The changed-files tree on the right jumps to a file; drag its edge to resize it, and Atlas remembers the width. Click a file's path to copy it.
+
+The panel keeps up as an agent edits, without losing your place. A very large file shows its first hunks with a note that it is partial, and its line counts still include every change. A binary file is listed but not shown.
+
+**Show changes** at the end of a turn opens what that turn changed, built from the agent's own edits, so it stays correct after you commit.
 
 ## Handle failures
 
