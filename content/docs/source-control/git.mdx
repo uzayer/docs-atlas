@@ -75,12 +75,13 @@ Choose what to compare at the top left:
 - **Uncommitted**: your working tree against `HEAD`, staged and unstaged together, with new files shown as added.
 - **Branch**: everything on your branch since it left the base branch. Atlas picks the base automatically, or you can choose one under **Compare against**.
 - **This session**: what the open session changed.
+- **Latest turn**, or a numbered turn under **Turn**: what one turn of the session changed. Turns that only read files are left out of the list. A turn shows the agent's own edits, so changes made by commands it ran are not included, and a file Atlas only saw part of is labelled **Excerpt**.
 
 The toolbar steps to the **Previous change** and **Next change**, and switches between a split and a unified view. It can also wrap lines, hide whitespace changes, and collapse every file to its header. The changed-files tree on the right jumps to a file; drag its edge to resize it, and Atlas remembers the width. The copy button beside a file's path copies it.
 
 The panel keeps up as an agent edits, without losing your place. A very large file shows its first hunks with a note that it is partial, and its line counts still include every change. A binary file is listed but not shown.
 
-**Show changes** at the end of a turn opens what that turn changed, built from the agent's own edits, so it stays correct after you commit.
+A turn that changed files ends on a card listing them as a tree, with the lines added and removed. Click a file, or **Open diff**, to see that turn in the review panel. Right-click a file to show its diff, open it, or copy its path. Because the card is built from the agent's own edits, it stays correct after you commit.
 
 ## Handle failures
 
