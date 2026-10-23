@@ -28,33 +28,31 @@ To share a project's history, see [Put a project's sessions in the cloud](/docs/
 
 ## Read the board
 
-The list on the left groups sessions by **Day**, **Week** or **Month**; switch with the control beside the **Timeline** heading. **Jump to Today** brings you back to the top.
+The board lists sessions newest first, grouped by day. The date at the top stays in view as you scroll and changes when you reach the next day. Each day shows who worked that day.
 
-Each row shows the session's title (the first line of its first prompt), its project, and the avatar of the person who ran it. A check before the project name means the session is shared with the organization. A laptop means it is on this machine only.
+Each row has three lines:
 
-The dot on each row says what state the session is in:
+- the session title (the first line of its first prompt), with the model on the right
+- the branch, the tokens it used or how full its context window got, and the project
+- the person who ran it, with its checkpoints and lines added and removed on the right
 
-- **Pulsing green**: live. The session has been written to within the last minute and a half.
-- **Amber**: needs attention. Capture hit a problem recording it; hover the row for the reason.
-- **Plain**: finished, or imported from an earlier Claude Code transcript.
+The mark beside each row says what state the session is in: **live** (written to within the last minute and a half), **needs attention** (capture hit a problem recording it), **finished**, or **imported** from an earlier Claude Code transcript.
 
 The board refreshes on its own: every 15 seconds for the whole organization, and in real time for cloud projects bound on this machine. Your local sessions show even with no connection.
 
-The list holds the newest 500 sessions. Filter by project to see a project's full history.
+The board holds the newest 500 sessions. Filter by project to see a project's full history.
 
 ## Filter and search
 
-Select **Filter sessions** in the header to narrow the board by **Project**, **Agent**, **Model** or **Branch**. Each option shows how many sessions it matches, and a badge on the filter button counts the filters that are on. **Clear all** removes them.
+The **Project**, **Agent** and **People** filters sit in the bar at the top of the page, beside **Timeline**. Each option shows how many sessions it matches.
 
-Type in **Search sessions…** to search the board. It matches session titles, project names, agents, models and branches. To search inside prompts, responses, tool calls and checkpoints, use the timeline in the web app.
+Type in **Search sessions…** at the bottom of the board to search it. It matches session titles, project names, agents, models and branches. To search inside prompts, responses, tool calls and checkpoints, use the timeline in the web app.
 
 ## Follow a commit back to its work
 
 <Video youtube="2ebqYJYHuV0" title="Tracing a commit back to the agent that wrote it" />
 
-Select **Recent checkpoints** in the header for a list of recent commits linked to a session, across your projects. Search it by commit, then select one to open the session at that checkpoint.
-
-You can also start from a commit in [Source Control](/docs/source-control/git), which shows the sessions that contributed to it.
+Start from a commit in [Source Control](/docs/source-control/git), which shows the sessions that contributed to it.
 
 ## Read a session
 
