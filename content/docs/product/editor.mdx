@@ -10,9 +10,21 @@ Press <Kbd>⌘P</Kbd> to go to a file by name, or open one from the [explorer](/
 
 ## Read any file
 
-Atlas loads syntax highlighting when it knows the language. Files without a grammar still open as readable plain text.
+Files open in the same code view as a diff review, so long files scroll smoothly. Atlas highlights the syntax of every language it knows. Files without a grammar open as readable plain text. Files over 8 MB open read-only as plain text.
 
-Markdown opens as source. Use the **Edit** and **Preview** toggle in the tab to switch to the rendered view and back.
+Some files can also be shown rendered. Use the toggle in the file's header to switch between the source and the rendered view. Atlas remembers your choice for each kind of file.
+
+- **Markdown** opens as source.
+- **CSV and TSV** open as a table.
+- **HTML** opens as a rendered page. Scripts don't run and remote images and styles don't load, so the page shows what is in the file itself.
+
+## Edit and save
+
+Click into a file and type to edit it. A dot beside the file's path, and on its tab, marks unsaved changes. If you undo back to what is on disk, the dot clears. Press <Kbd>⌘S</Kbd> to save. Atlas never saves for you, and closing a file doesn't write your edits.
+
+Press <Kbd>⌘F</Kbd> to find in the file. Both shortcuts can be changed under **File** in [Settings → Keybindings](/docs/product/settings#keybindings).
+
+Word wrap is one setting for every file. Turn it on or off with the wrap button in the header.
 
 ## Open more than code
 
@@ -47,7 +59,7 @@ Press <Kbd>⌘\\</Kbd> to split the surfaces pane into another column, so two fi
 
 ## Change the look
 
-One theme colors the editor and the rest of Atlas together, chosen in [Settings → Appearance](/docs/product/settings#appearance). Switching themes keeps your open buffers and undo history. See [Themes](/docs/themes) for what a theme covers and how to write one.
+One theme colors the editor and the rest of Atlas together, chosen in [Settings → Appearance](/docs/product/settings#appearance). Switching themes keeps your unsaved edits. See [Themes](/docs/themes) for what a theme covers and how to write one.
 
 ## Next
 
