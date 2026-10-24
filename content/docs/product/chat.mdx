@@ -88,6 +88,20 @@ The **+** button in the composer adds context too:
 - **Attach a session** to bring in an earlier session
 - **Reference project** to point at another project
 
+### Attach other projects
+
+A session can work in folders besides its own. When you mention another project or a repository, or clone one with **Add from GitHub**, Atlas attaches it to the session. An attached project stays with the session: it is still there on later messages and when you resume the session.
+
+A project is attached **read-only** at first: the agent can read it but not change it. The chip in the composer shows the access. Click its eye icon to let the agent edit files there, and click the pencil to make it read-only again. Atlas tells the agent what it may do in each attached project.
+
+Atlas Agent can write to a project from its next turn. Other agents get write access the next time the session is resumed, and Atlas says so when you grant it.
+
+Atlas never attaches the root of your disk, your home folder, a system folder, or a settings folder such as `~/Library` or `~/.ssh`.
+
+#### When the agent asks for access
+
+When code tools are on, an agent can ask to use a folder outside the session. Atlas shows the request in the session with the folder and the agent's reason. Choose **Allow read and write**, **Allow read-only**, or **Deny**. The agent is told your answer. If you approve after the agent has stopped waiting, the folder is still attached and the agent can use it once it asks again.
+
 ### Run a command
 
 Type `/` to run one of the agent's own commands or [skills](/docs/context/skills). The list is what the agent advertises, and Atlas sends the command through unchanged. The one command Atlas adds is `/login`, which opens the agent's sign-in.
