@@ -22,20 +22,20 @@ Atlas Agent needs an organization that is synced to your account and has AI acce
 
 The sidebar lists your sessions across every project in the organization, newest activity first, with each row's project, branch and status. <Kbd>⌘⇧.</Kbd> or <Kbd>⌘⌥J</Kbd> shows or hides it. Click the session title in the header to search for a session.
 
-- **Search** at the top finds a session by title, project or branch. Use the arrow keys to move through the results and <Kbd>Enter</Kbd> to open one.
-- **Filter** (the funnel) narrows the list to one project. The filter stays set until you change it. Choose **All projects** to clear it.
+- **The project picker** at the very top narrows the list to one project. It shows **All projects** or the chosen project's name, and stays set until you change it. Its menu lists the organization's projects, with a search field once there are more than six; right-click a project, or click its gear, to open its settings. It also holds **Add project**, **Import sessions from agents…** and, at the bottom, the organization (see [Organizations](/docs/team/organizations#find-your-way-around-the-sidebar)). The magnifier beside it opens the command palette.
+- **Search** below it finds a session by title, project or branch. Use the arrow keys to move through the results and <Kbd>Enter</Kbd> to open one.
 - **Pinned** sessions stay at the top. Drag a pinned session to reorder it, drag it down into the list to unpin it, or drag a session up onto the pinned ones to pin it.
 - **Unread** sessions are marked when an agent finishes a turn you haven't seen.
-- **Snoozed** sessions are hidden until the time you picked, then come back marked **Woke**.
+- **Snoozed** sessions move to the **Snoozed** shelf, above Settled, until the time you picked, then come back to the list marked **Woke**. The shelf is collapsed until you open it and shows its count; each row there shows how long until it wakes, and **Wake** brings it back now.
 
-Rest the pointer on a session for a moment to see its project, agent and model, branch and pull request, and, while it is open, whether it is shared and how many comments it has. Use <Kbd>↑</Kbd> and <Kbd>↓</Kbd> to move between sessions and <Kbd>Enter</Kbd> to open one.
+Rest the pointer on a session for a moment to see its project, agent and model, branch and pull request, whether it is shared with the team, and how many comments it has. Use <Kbd>↑</Kbd> and <Kbd>↓</Kbd> to move between sessions and <Kbd>Enter</Kbd> to open one.
 
 Right-click a session, or choose **⋯** on it, for everything else:
 
 - **Pin** or **Unpin**
-- **New session on** its branch
+- **New session on** its branch. For a session in a worktree, the new session starts in that worktree. Otherwise Atlas checks the branch out in the project first, and refuses if the project has uncommitted changes or an agent is working there, offering to start on the current branch instead.
 - **Settle** or **Unsettle**
-- **Snooze**, for a preset time or a custom one
+- **Snooze**, for a preset time or a custom one, or **Wake session** on a snoozed one
 - **Rename**
 - **Mark unread** or **Mark read**
 - **Filter by** its project
@@ -52,7 +52,7 @@ The Settled shelf is collapsed until you open it. It has its own search, and **S
 
 ## Bring in sessions from your agents
 
-Open the project filter at the top of the sidebar and choose **Import sessions from agents…** to pull in sessions an agent kept on its own, such as ones you ran in a terminal. Imported sessions land on the Settled shelf.
+Open the project picker at the top of the sidebar and choose **Import sessions from agents…** to pull in sessions an agent kept on its own, such as ones you ran in a terminal. Imported sessions land on the Settled shelf.
 
 Atlas asks each installed agent for its session list. An agent that cannot list its sessions still appears, grayed out, with the reason.
 

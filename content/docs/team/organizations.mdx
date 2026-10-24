@@ -4,7 +4,7 @@ description: Local and synced organizations, how a project's sessions reach the 
 icon: Building2
 ---
 
-An organization owns your projects. A synced one also owns everything your team shares: members, cloud projects and their timeline, chat, calls, prompt drafts and Spaces. The organization switcher at the top of the sidebar creates, switches, renames and deletes them.
+An organization owns your projects. A synced one also owns everything your team shares: members, cloud projects and their timeline, chat, calls, prompt drafts and Spaces. The organization menu creates, switches, renames and deletes them. Open it from the organization name in the title bar, or from the organization at the bottom of the sidebar's project picker.
 
 <Video youtube="Qsmp1ht4yMU" title="Setting up your team" />
 
@@ -27,7 +27,7 @@ In a local organization, **Team chat** in the sidebar is greyed with a lock and 
 
 ## Create an organization
 
-Open the switcher and select **Create organization…**.
+Open the organization menu and select **Create organization…**.
 
 1. Enter a **Name**. Atlas suggests a **Handle** from it, using lowercase letters, numbers and hyphens.
 2. Choose a **Type**. **Cloud** is "Synced across your devices and shareable with your team" and needs you to be signed in. **Local** is "Private and offline".
@@ -40,7 +40,7 @@ Whoever creates a synced organization is its **Owner** and an **Admin**. See [Me
 
 ## Turn on sync for a local organization
 
-Switch to the local organization, open the switcher, and select **Turn on sync for &lt;name&gt;…** at the bottom. Atlas creates the organization in your account with the same name and handle. Signed out, the same item starts sign-in first.
+Switch to the local organization, open the organization menu, and select **Turn on sync for &lt;name&gt;…** at the bottom. Atlas creates the organization in your account with the same name and handle. Signed out, the same item starts sign-in first.
 
 Once synced, the row reads **&lt;name&gt; is synced**. There is no switch to turn sync off again.
 
@@ -71,7 +71,9 @@ Cloud needs three things: you are signed in, the active organization is synced, 
 
 ## Find your way around the sidebar
 
-The organization switcher sits at the top of the sidebar. **Invite & Manage members** is in its menu; until the organization is synced and you are signed in, it says which is missing. Below it are your [sessions](/docs/product/chat#find-your-sessions-in-the-sidebar), across every project in the organization.
+The project picker sits at the top of the sidebar. The organization is at the bottom of its menu, and opens the organization menu; **Invite & Manage members** is there, and until the organization is synced and you are signed in, it says which is missing. The same menu opens from the organization name in the title bar. Below the picker are your [sessions](/docs/product/chat#find-your-sessions-in-the-sidebar), across every project in the organization.
+
+The button at the top right of the sidebar floats it over the content instead of keeping it docked beside it, and docks it again.
 
 A row of icons at the bottom opens each destination:
 
@@ -86,13 +88,13 @@ Below the icons, the help menu on the left holds the docs, feedback, keyboard sh
 
 ## Switch organizations
 
-Select an organization in the switcher to move into it. Search the list by name or handle, and use the refresh button to pull in organizations you were added to elsewhere. Atlas remembers the project you last opened in each organization.
+Select an organization in the organization menu to move into it. Search the list by name or handle, and use the refresh button to pull in organizations you were added to elsewhere. Atlas remembers the project you last opened in each organization.
 
 A synced organization is locked, with a padlock, when you are signed out or when your account isn't a member of it. Local organizations never lock.
 
 ## Copy the organization ID
 
-Select **Copy organization ID** in the switcher to copy the active organization's server ID. Support may ask for it. A local organization has no ID until you turn on sync.
+Select **Copy organization ID** in the organization menu to copy the active organization's server ID. Support may ask for it. A local organization has no ID until you turn on sync.
 
 ## Rename an organization
 
@@ -102,7 +104,7 @@ A synced organization's name belongs to the server. An admin renames it in the w
 
 ## Delete an organization
 
-Hover an organization in the switcher and select the bin. Atlas removes its projects and their sessions from Atlas, and never touches the project files on disk. You can't delete your last organization.
+Hover an organization in the organization menu and select the bin. Atlas removes its projects and their sessions from Atlas, and never touches the project files on disk. You can't delete your last organization.
 
 For a synced organization, deleting it on the server takes the Admin role. Without it, Atlas removes only this machine's copy, and the organization can reappear on the next refresh while you are still a member.
 
