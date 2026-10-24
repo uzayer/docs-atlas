@@ -32,15 +32,43 @@ Every pull request in the repository, in a tab of its own. Open it with any of t
 
 Each repository gets one list; opening it again focuses the tab.
 
-The list is split into **Authored** (yours), **Review requested** (waiting on you) and **Others**. Each row shows the state, title, number, author, labels, checks, review state, comment count and when it last changed. Select a row to open the pull request in its own tab.
+The list is split into **Authored** (yours), **Review requested** (waiting on you) and **Others**. Each row shows the state, title, number, author, labels, checks, review state, lines added and removed, comment count and when it last changed. Select a row to open the pull request in its own tab.
 
-- **Search** matches the title, the number, the branch and the author.
+- **Search** matches the title, the number, the branch and the author. It also takes the qualifiers below.
 - **State** shows open, closed, merged or every pull request.
 - **Involvement** shows everyone's, the ones you're reviewing, or the ones you wrote.
 - **Sort** orders by merge readiness, blocked on you, recently updated, newest, oldest, largest or smallest.
 - The filter menu narrows by author, label, draft, review state and checks.
 
-Atlas remembers the filters and the sort. Long lists load more as you scroll. With a review state or checks filter on, Atlas loads three pages on its own and then shows **Load more**, so a filter that matches little doesn't page through the whole repository. If a page fails to load, the end of the list says so and offers **Retry**.
+Atlas remembers the filters and the sort, and the list itself: when you open the tab again, the rows you saw last show at once while Atlas checks GitHub for changes. Long lists load more as you scroll. With a review state or checks filter on, Atlas loads three pages on its own and then shows **Load more**, so a filter that matches little doesn't page through the whole repository. If a page fails to load, the end of the list says so and offers **Retry**. The list also refreshes when an agent finishes a turn, since the agent may have pushed or opened a pull request.
+
+### Search qualifiers
+
+Type these in the search box, alongside any words. A qualifier replaces the filter menu's setting for the same thing.
+
+| Qualifier | Shows |
+| --- | --- |
+| `label:bug` | pull requests with the label. Quote a name with spaces: `label:"help wanted"` |
+| `label:bug,ui` | pull requests with either label. Several `label:` qualifiers must all match |
+| `-label:wip` | pull requests without the label |
+| `author:octocat`, `author:@me` | pull requests by that person, or by you |
+| `draft:true`, `draft:false` | only drafts, or no drafts |
+| `review:approved` | the review state: `approved`, `changes_requested`, `required` or `none` |
+| `checks:passing`, `checks:failing` | the checks state. `status:success` and `status:failure` work too |
+
+Any other `name:value`, such as `area:ui`, is read as a label of that name. A qualifier Atlas can't use, such as `draft:maybe`, stays part of the search text.
+
+### Quick actions
+
+Hold <Kbd>Shift</Kbd> over the list and each row shows its actions: **Close** and **Merge** on an open pull request, **Close** and **Ready** on a draft, and **Reopen** on a closed one. They act at once, without opening the pull request. **Merge** still asks you to click a second time, and it uses the merge method you picked last, if this repository allows it.
+
+To close several at once, hold <Kbd>Shift</Kbd>, press **Close** on one row and drag up or down across the others. The rows turn red as you pass them and close when you let go. Only open pull requests in the same group are included. Press <Kbd>Esc</Kbd> before you let go to cancel. The message that follows has a **Reopen** button that puts them all back.
+
+### Row details
+
+- **Right-click** a row to copy its link or open it on GitHub.
+- A row with a **stack** marker, such as `2/3`, is based on another open pull request's branch. Select the marker to see the whole chain, starting from the base, and open any pull request in it.
+- **Hover the line counts** to see how the change splits into code, tests, mocks and fixtures, generated files (lockfiles and build output) and docs. Atlas reads this for the rows on screen. A pull request with more than a hundred changed files isn't split.
 
 ## Link a pull request to a session
 
