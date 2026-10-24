@@ -10,11 +10,11 @@ Press <Kbd>⌘P</Kbd> to go to a file by name, or open one from the [explorer](/
 
 ## Read any file
 
-Files open in the same code view as a diff review, so long files scroll smoothly. Atlas highlights the syntax of every language it knows. Files without a grammar open as readable plain text. Files over 8 MB open read-only as plain text.
+Files open in the same code view as a diff review, so long files scroll smoothly. Atlas highlights the syntax of every language it knows. Files without a grammar open as readable plain text. Files over 8 MB open read-only as plain text. Files over 64 MB don't open in Atlas at all; the tab says the file is too large and offers **Open in** your editor instead.
 
 Some files can also be shown rendered. Use the toggle beside the file's path to switch between the source and the rendered view. Atlas remembers your choice for each kind of file.
 
-- **Markdown** opens as source.
+- **Markdown** opens as source. The rendered view shows the HTML a README uses, such as collapsible sections and sized images, but drops anything that could change Atlas itself: styles, frames, forms, embeds and page redirects. Links open in your browser.
 - **CSV and TSV** open as a table.
 - **HTML** opens as a rendered page. Scripts don't run and remote images and styles don't load, so the page shows what is in the file itself.
 
@@ -30,9 +30,11 @@ If the row is too narrow, the path scrolls sideways and keeps the folder you're 
 
 ## Edit and save
 
-Click into a file and type to edit it. A dot on the file's tab marks unsaved changes. If you undo back to what is on disk, the dot clears. Press <Kbd>⌘S</Kbd> to save. Atlas never saves for you, and closing a file doesn't write your edits.
+Click into a file and type to edit it. A dot on the file's tab marks unsaved changes. If you undo back to what is on disk, the dot clears. Press <Kbd>⌘S</Kbd> to save. Atlas never saves for you. If a save fails, for example because the file is read-only, Atlas shows the error and keeps your edits.
 
-Press <Kbd>⌘F</Kbd> to find in the file. Both shortcuts can be changed under **File** in [Settings → Keybindings](/docs/product/settings#keybindings).
+Closing a tab with unsaved changes asks first: **Save**, **Don't save**, or **Cancel**. Escape cancels. If the save fails, the tab stays open.
+
+Press <Kbd>⌘F</Kbd> to find in the file. In a large read-only file, it opens a simple find bar that jumps between matches. Both shortcuts can be changed under **File** in [Settings → Keybindings](/docs/product/settings#keybindings).
 
 Word wrap is one setting for every file. Turn it on or off with the wrap button beside the file's path.
 
