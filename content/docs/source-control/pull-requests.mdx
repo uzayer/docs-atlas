@@ -152,6 +152,12 @@ The header folds into one line as you scroll down the tab.
 - **Checks** lists every check. The failing ones come first, and each one links to its details. **View log** on a finished GitHub Actions check shows the end of its job's log, around the first error, without leaving Atlas. Atlas reads the log only when you ask for it. The checks pill at the top of the tab opens the same list.
 - **Comments** puts loose comments and review threads in one timeline, newest first or oldest first. Bot comments and resolved threads are hidden until you choose to show them, and Atlas remembers that choice. Long conversations load the newest comments first, with a button to show older ones.
 
+### Files, tables and code in the description
+
+File paths in the description and in comments appear as chips with your [icon theme's](/docs/themes/icon-themes) file icons, labelled with the file's name. When two files share a name, a parent folder is added to tell them apart. A name written without its folder, such as `config.default.toml`, becomes a chip only when it matches a file the pull request changes. Click a chip, or press <Kbd>Enter</Kbd> on it, to open the file. A changed file opens in **Code** when that view is ready; otherwise it opens in a tab from your checkout. Pull request text comes from other people, so a chip opens only inside the repository. A path outside the repository, a folder or an app stays as plain text, and nothing in a pull request opens in your system's apps or your external editor.
+
+Each table and code block has two buttons on its bottom edge. The one on the left collapses a wide table to fit, or a long code block to a few lines; it appears only when collapsing would change something. The one on the right copies the block. A table copies as Markdown or as CSV.
+
 ### Edit or delete your comments
 
 Hover a comment you wrote and a pencil and a bin appear beside it. The same goes for your line comments and the summary of a review you submitted, in **Summary**, **Timeline** and **Code**.
