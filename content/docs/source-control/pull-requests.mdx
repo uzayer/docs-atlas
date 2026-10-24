@@ -16,9 +16,44 @@ If `gh` is missing, signed out, rate limited, or GitHub can't be reached, the ta
 
 - select the pull request badge on a session in the sidebar, or its hover card
 - select a pull request row in the [session context](/docs/product/chat#session-context) card
+- select a row in the repository's [pull request list](#the-pull-request-list)
 - create one with **Create PR**: its tab opens when GitHub confirms it
 
 Opening a pull request that's already open focuses its tab. A second pull request opens in the same column as the first, so you can read down a list in one place. The tabs are saved with the project's layout and come back when you restart Atlas.
+
+## The pull request list
+
+Every pull request in the repository, in a tab of its own. Open it with any of these:
+
+- press <Kbd>⌘T</Kbd> then <Kbd>P</Kbd>
+- run **Show Pull Requests** from the command palette
+- choose **View all pull requests** in the [session context](/docs/product/chat#session-context) card
+- open the project picker at the top of the sidebar and choose the project's **pull requests** item
+
+Each repository gets one list; opening it again focuses the tab.
+
+The list is split into **Authored** (yours), **Review requested** (waiting on you) and **Others**. Each row shows the state, title, number, author, labels, checks, review state, comment count and when it last changed. Select a row to open the pull request in its own tab.
+
+- **Search** matches the title, the number, the branch and the author.
+- **State** shows open, closed, merged or every pull request.
+- **Involvement** shows everyone's, the ones you're reviewing, or the ones you wrote.
+- **Sort** orders by merge readiness, blocked on you, recently updated, newest, oldest, largest or smallest.
+- The filter menu narrows by author, label, draft, review state and checks.
+
+Atlas remembers the filters and the sort. Long lists load more as you scroll.
+
+## Link a pull request to a session
+
+A session keeps a list of the pull requests that belong to it. A pull request joins the list when:
+
+- the session opens it with **Create PR**
+- Atlas finds one on the session's branch
+- you link it: choose **Link a pull request…** from the session's **⋯** menu in the sidebar or from the session context card, then paste its URL, type its number, or pick one of the repository's open pull requests
+- the agent links it with the `link_pull_request` tool
+
+Unlink one from the session's **⋯** menu, under **Unlink pull request**. A pull request found on the branch stays unlinked after you remove it.
+
+Linked pull requests are kept current in the background: every minute while Atlas is in front, when you come back to the window, and when a turn ends. Open ones are checked most often, quiet and closed ones less, and merged ones not at all. When GitHub's rate limit is reached, Atlas waits for the reset.
 
 ## The header
 
@@ -104,4 +139,4 @@ When the agent has made the fix, push it from the session yourself. Atlas never 
 ## Next
 
 - [Git & Diff](/docs/source-control/git): stage and commit before you open a pull request
-- [Sessions](/docs/product/chat): the session context card and its pull requests
+- [Sessions](/docs/product/chat): the sidebar badge, the session context card and its pull requests

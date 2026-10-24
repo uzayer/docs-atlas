@@ -30,6 +30,8 @@ The sidebar lists your sessions across every project in the organization, newest
 
 A session with attached projects shows their initials stacked after its project's badge, two at most and **…** past that; their names are in the badges' tooltip.
 
+A session with [linked pull requests](/docs/source-control/pull-requests#link-a-pull-request-to-a-session) shows the first one's state and number, then **+2** for two more. Hover the badge to list every one with its state and checks, and click one to open it. Search finds a session by its pull request's number or title too.
+
 Rest the pointer on a session for a moment to see its project, the projects attached to it with their access, agent and model, branch and pull request, whether it is shared with the team, and how many comments it has. Use <Kbd>↑</Kbd> and <Kbd>↓</Kbd> to move between sessions and <Kbd>Enter</Kbd> to open one.
 
 Right-click a session, or choose **⋯** on it, for everything else:
@@ -41,6 +43,7 @@ Right-click a session, or choose **⋯** on it, for everything else:
 - **Rename**
 - **Mark unread** or **Mark read**
 - **Filter by** its project
+- **Link a pull request…**, and **Unlink pull request** once one is linked
 - **Copy** its title, path, branch or session ID
 - **Open in** your editor
 - **Project settings**
@@ -175,7 +178,7 @@ The card holds:
 - **Open in your editor**: the editor chosen under **Preferred editor**, or the first one Atlas finds. Its menu lists your other editors, then **Reveal in Finder**, **Open in Terminal** and **Copy path**.
 - **Project scripts**: named commands for the project, such as a dev server or the tests. Click one to run it in a terminal at the project root; the menu lists them all, with a pencil to edit each. Choose **Add project script** to create one. Scripts are saved in the project's `.atlas/config.toml`, so they travel with the repository.
 - **The branch**, with a picker. Type to filter your local branches, or enter a new name and choose **Create branch** to create it and switch to it.
-- **Pull requests** opened from the branch: the open one first, with a check mark or cross for its checks, and earlier ones behind **Show more**. Click one to open it on GitHub.
+- **Pull requests**: the ones linked to the session and the ones opened from the branch, the open one first, with a check mark or cross for its checks, and earlier ones behind **Show more**. Click one to open it. **Link a pull request…** links another, and **View all pull requests** opens the repository's [list](/docs/source-control/pull-requests#the-pull-request-list).
 - **The next git action**, such as **Create PR**, **Push & create PR**, **Commit & push…**, **Pull** or **Push**. **Create PR** pushes the branch if it needs it, then shows the title and description the pull request would open with, for you to edit before it is created. The menu holds **Create draft PR**, **Pull**, **Push** (or **Publish branch**), **Fetch** and **Open Source Control**. The default branch is never offered a pull request.
 - **Projects**: the session's project and the projects attached to it (see [Manage attached projects](#manage-attached-projects)).
 - **Changes**: the lines the session added and removed, across its project and every attached project; the tooltip breaks them down by project. Click it to open the session's diff. With no session changes, it counts the project's uncommitted files and opens [source control](/docs/source-control/git).
