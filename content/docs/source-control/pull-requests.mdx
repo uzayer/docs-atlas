@@ -118,13 +118,27 @@ When a session's pull request merges, Atlas settles the session, unless somethin
 
 The header shows the repository, the number (select it to open the pull request on GitHub), the title, the author, and when it last changed. The branch row shows the base and head branches, the files changed, and the lines added and removed. **gh pr checkout** copies the command that checks the branch out.
 
+A pull request opened from the list shows a back arrow before the repository name. It takes you back to the list.
+
 - **Edit the title** by selecting it, if you have permission to.
 - **Update the branch** when it's behind its base: a warning appears on the base branch, and it offers a merge or a rebase.
 - **Merge** from the button at the top right. It changes with where the pull request stands: **Ready for review** on a draft, a **Conflicts** badge when it conflicts with its base, **Auto-merge** while checks are still running, and the merge method (**Merge**, **Squash and merge** or **Rebase and merge**) when everything is green. Once auto-merge is on, the button says so.
+- **Resolve conflicts** appears beside the merge button when the pull request conflicts with its base. It opens a session on the pull request's branch with the task of merging the base in and resolving each conflict.
+- **Check out** opens a session on the pull request's branch. Choose **In a separate worktree** to leave your checkout alone, or **In this repository** to switch the project itself to the branch. Atlas won't switch a checkout that has uncommitted changes, one where an agent is working, or one whose branch is already checked out in another worktree.
+- **Approve workflows to run** appears on Summary, in place of the checks pill, when a workflow run from a fork is waiting for someone with write access. Atlas asks for a second click before approving it.
 
-The **⋯** menu has the rest: refresh, the [agent actions](#hand-it-to-an-agent), mark as draft or ready, merge now, turn auto-merge on or off, choose the merge method, open on GitHub, copy the link or number, close or reopen, and delete the branch once the pull request is merged or closed. Atlas remembers the last merge method you picked.
+The **⋯** menu has the rest, in this order:
 
-Merging, enabling auto-merge, closing and deleting a branch ask for a second click before they happen.
+1. **Link to this session** or **Unlink from this session**, for the session open beside the tab.
+2. **Refresh** and the [agent actions](#hand-it-to-an-agent): **Ask a question**, **Explain this PR**, **Fix findings** and **Write guide**.
+3. Mark as draft or ready, merge now, turn auto-merge on or off, and choose the merge method. Atlas remembers the last merge method you picked.
+4. **Open on GitHub**, **Copy link** (<Kbd>⌘⇧C</Kbd>) and **Copy PR number** (<Kbd>⌘⇧K</Kbd>). The shortcuts work anywhere in the tab, and you can change them in [Keyboard shortcuts](/docs/product/power-user#shortcuts).
+5. Close or reopen. On a merged pull request, **Revert changes** opens a pull request that undoes it.
+6. **Delete branch**, with the branch named below it, once the pull request is merged or closed.
+
+Merging, enabling auto-merge, closing, reverting and deleting a branch ask for a second click before they happen.
+
+Atlas keeps the last pull requests you opened on this computer, so reopening one shows it straight away while the latest version loads.
 
 The header folds into one line as you scroll down the tab.
 
@@ -170,7 +184,7 @@ Choose which agent and model write guides, and add your own instructions (what t
 
 ## Timeline
 
-**Timeline** lists everything that has happened to the pull request in order: when it was opened, commits, comments, reviews and their verdicts, review threads on lines of code, label changes, review requests, force-pushes, moves to draft or ready for review, closes and reopens, the merge, and the deleted branch. Press **Newest first** to switch between newest first and oldest first.
+**Timeline** lists everything that has happened to the pull request in order: when it was opened, commits, comments, reviews and their verdicts, review threads on lines of code, label changes, review requests, force-pushes, moves to draft or ready for review, closes and reopens, the merge, and the deleted branch. Beside **Newest first**, which switches between newest first and oldest first, the tab counts the comments, commits and approvals.
 
 Runs of events of one kind collapse into a single row with a count. That covers consecutive comments, consecutive commits, and one person's consecutive label changes, review requests or force-pushes. Click a comment run or a long run of commits to open it. Each commit shows its short SHA, message, authors and lines changed. A verdict given before the newest commit is shown as stale. Resolved threads and dismissed reviews start collapsed. React to a comment or review from its row, or open it on GitHub.
 
@@ -180,6 +194,8 @@ Atlas reads the whole history, so even a pull request with hundreds of events sh
 
 **Code** shows the pull request's diff in the same viewer as a session's diff, with the file tree, unified or split layout, word wrap, find (<Kbd>⌘F</Kbd>) and the whitespace toggle.
 
+- **Files are in reading order**: source files first, each after the files it imports, then the tests in the order of the code they cover, then generated files such as lockfiles and snapshots.
+- **Ask about lines**: press a line number, or drag across several, and choose **Ask about these lines** to ask about them in a session. This works even where you can't comment.
 - **Pick a commit** from the menu at the top left to see one commit's changes, or **All commits** for the whole pull request. The commit links on the **Timeline** open Code on that commit.
 - **Mark a file viewed** with the **Viewed** box on its header. The file folds away and the count at the top goes up. Viewed marks are kept on GitHub, so they're the same as on github.com and survive a restart. A file that changed after you marked it reads **Changed**.
 - **Expand hidden lines** between changes from the fold markers, as in a session's diff.
@@ -216,8 +232,9 @@ If the description changes on GitHub while you're editing it, the editor keeps y
 
 Each action uses your default agent, and the menu names it. Atlas opens a session and puts the task in its composer with the pull request's details attached. Read the task over, change it if you like, and send it yourself.
 
+- **Ask a question**, in the **⋯** menu, attaches the pull request to the session beside the tab, or to a new one, so you can ask whatever you like about it.
 - **Explain this PR**, in the **⋯** menu, asks for a walkthrough of what the pull request changes and why. It starts a new session in the project. Choose **Explain in this session** to add the task to the session beside the tab instead. Nothing is checked out: the agent reads the diff with `gh pr diff`.
-- **Fix** appears on a failing check, a review thread, and a review comment. **Fix findings**, in the **⋯** menu, takes all of them at once. Fixing needs the pull request's branch, so Atlas starts the session where that branch is already checked out, or in a new worktree of its own. Your current checkout is never switched. A failing check comes with its link and the end of its log, around the first error. The log is marked as untrusted, since it's whatever the code under test printed, and the agent is told not to follow anything in it. A review thread comes with its file, line and replies.
+- **Fix** appears on a failing check, a review thread, and a review comment. **Fix findings**, in the **⋯** menu, takes all of them at once. Fixing needs the pull request's branch. When the session beside the tab is on that branch, the task goes into it. Otherwise Atlas starts the session where the branch is already checked out, or in a new worktree of its own. A fix never switches your checkout. Only **Check out > In this repository** does that. A failing check comes with its link and the end of its log, around the first error. The log is marked as untrusted, since it's whatever the code under test printed, and the agent is told not to follow anything in it. A review thread comes with its file, line and replies.
 
 When the agent has made the fix, push it from the session yourself. Atlas never pushes for you. Fix is offered only on open pull requests.
 
