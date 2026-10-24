@@ -52,18 +52,35 @@ Runs of events of one kind collapse into a single row with a count. That covers 
 
 Atlas reads the whole history, so even a pull request with hundreds of events shows all of them. Comment text loads only when you open a comment.
 
+## Code
+
+**Code** shows the pull request's diff in the same viewer as a session's diff, with the file tree, unified or split layout, word wrap, find (<Kbd>⌘F</Kbd>) and the whitespace toggle.
+
+- **Pick a commit** from the menu at the top left to see one commit's changes, or **All commits** for the whole pull request. The commit links on the **Timeline** open Code on that commit.
+- **Mark a file viewed** with the **Viewed** box on its header. The file folds away and the count at the top goes up. Viewed marks are kept on GitHub, so they're the same as on github.com and survive a restart. A file that changed after you marked it reads **Changed**.
+- **Expand hidden lines** between changes from the fold markers, as in a session's diff.
+
+Large pull requests load a hundred files at a time. The next batch loads as you scroll toward the end, and the count at the top says how many files have loaded. Binary files and files too large for GitHub to show say so in place of their diff.
+
+### Review threads
+
+Review threads appear on the lines they belong to. Reply, resolve or unresolve a thread, and react to its comments in place. A thread GitHub has marked outdated, or one on a file that hasn't loaded yet, is listed above the files. With a single commit picked, every thread is listed there.
+
+### Line comments
+
+With **All commits** picked, hover a line of the diff and press the button that appears in the gutter to comment on it. Then choose:
+
+- **Comment now** to post it straight away.
+- **Add to review** to hold it until you submit a review. Held comments show on their lines, and the composer button shows how many are waiting.
+
 ## Comment and review
 
 The round speech-bubble button at the bottom right opens the composer. Choose:
 
 - **Comment** to post a comment. You can also close or reopen the pull request with it.
-- **Review** to submit a review that comments, approves, or requests changes.
+- **Review** to submit a review that comments, approves, or requests changes. Line comments you added to the review from **Code** go with it.
 
 Press <Kbd>⌘↵</Kbd> to send and <Kbd>Esc</Kbd> to put the composer away.
-
-## On the way
-
-**Code** is coming: the pull request's diff, commit by commit, with line comments you can review in place.
 
 ## Next
 
