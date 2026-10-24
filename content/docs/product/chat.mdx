@@ -12,7 +12,7 @@ This page is about working with an agent. To message your teammates, see [Team c
 
 ## Start or resume a session
 
-Choose **New session** at the top of the sidebar, or in the session's header, to start a session. It opens in the main column. To run a second session beside it, press <Kbd>⌘T</Kbd> then <Kbd>A</Kbd>, which opens one in the [surfaces pane](/docs/product/power-user#surfaces).
+Choose **New session** at the top of the sidebar, or press <Kbd>⌘N</Kbd>, to start a session. It opens in the main column. To run a second session beside it, press <Kbd>⌘T</Kbd> then <Kbd>A</Kbd>, which opens one in the [surfaces pane](/docs/product/power-user#surfaces).
 
 When you reopen a session, Atlas paints the transcript from disk while the agent reconnects.
 
@@ -20,7 +20,7 @@ Atlas Agent needs an organization that is synced to your account and has AI acce
 
 ## Find your sessions in the sidebar
 
-The sidebar lists your sessions across every project in the organization, newest activity first, with each row's project, branch and status. <Kbd>⌘⇧.</Kbd> or <Kbd>⌘⌥J</Kbd> shows or hides it. Click the session title in the header to search for a session.
+The sidebar lists your sessions across every project in the organization, newest activity first, with each row's project, branch and status. <Kbd>⌘⇧.</Kbd> or <Kbd>⌘⌥J</Kbd> shows or hides it. Search for a session with **Search sessions** at the top of the sidebar.
 
 - **The project picker** at the very top narrows the list to one project. It shows **All projects** or the chosen project's name, and stays set until you change it. Sessions the chosen project is [attached](#attach-other-projects) to are listed too, marked **attached**. Its menu lists the organization's projects, with a search field once there are more than six; right-click a project, or click its gear, to open its settings. It also holds **Add project**, **Import sessions from agents…** and, at the bottom, the organization (see [Organizations](/docs/team/organizations#find-your-way-around-the-sidebar)). The magnifier beside it opens the command palette.
 - **Search** below it finds a session by title, project, attached project or branch. Use the arrow keys to move through the results and <Kbd>Enter</Kbd> to open one.
@@ -148,7 +148,7 @@ Hover a message, or Tab to it, to show the row of actions under it along with th
 
 - **Copy** the prompt or response as markdown
 - **Retry** your latest prompt to replace its response
-- **Pin** a prompt or response, then find it again from the pinned messages menu in the session header. Pins are kept on your machine.
+- **Pin** a prompt or response, then find it again from the pin button in the title bar, or **Pinned messages** in the session's **⋯** menu. Pins are kept on your machine.
 - **Branch from here**, on the latest response, copies the session into a new one when the agent supports it
 - **More** (…) on a prompt holds **Edit and send as new message**, to rework it
 
@@ -160,7 +160,7 @@ Web links are shown in a link colour, and are underlined when you hover or Tab t
 
 Select text in a response and choose **Cite** to point the agent at that passage. Add a note if you like, then **Cite** again to drop a chip into the composer. When you send, the agent gets the quoted passage (up to 2,000 characters) and your note. A cite is private to your agent. On a session shared with your organization, turn on **Share with team** to also post the passage and your note as a comment; a shared cite needs a note.
 
-Search long sessions with <Kbd>⌘F</Kbd>. The header's **More** menu filters the transcript to your messages or the agent's, and opens the **Bash calls** and **Plans** panels, which collect commands and plans without expanding the transcript. When the agent supports it, **Branch from here** in the same menu copies the session into a new one so you can try another direction.
+Search long sessions with <Kbd>⌘F</Kbd>, or **Search in session** in the **⋯** menu at the right end of the title bar. The same menu filters the transcript to your messages or the agent's, and opens the **Bash calls** and **Plans** panels, which collect commands and plans without expanding the transcript. When the agent supports it, **Branch from here** in the same menu copies the session into a new one so you can try another direction.
 
 ### Jump between turns
 
@@ -168,11 +168,19 @@ A column of short ticks down the left edge of a session marks its turns, one tic
 
 The column shows once a session has two turns. In a long session the ticks move closer together rather than running off the screen. When the window is too narrow to leave room beside the conversation, the column appears only while you hover the left edge. Turn it off with **Turn rail** in Settings → Appearance.
 
+## Session overview
+
+The session's name shows once, in the title bar. The session's own controls sit at the right end of the bar: the **⋯** menu, and the session overview button. They show only while a session is open.
+
+Click the session overview button for a card with the session's project and actions, the subagents it delegated to, the files it changed, and what it remembered. When the window is wide enough, the card docks at the top-right of the session, in room the conversation already leaves for it, and stays open across turns until you hide it. In a narrower window it opens as a popover under the button instead. Either way, showing or hiding it never moves the conversation or the composer. Press <Kbd>Esc</Kbd> to close it.
+
+When the window is short, the card first drops the project details, then the Session card, before it scrolls.
+
 ## Session context
 
 Click the session context button (≡) in the main header for everything around the session, in one card.
 
-When the window is wide enough, the card docks at the top-right of the session, beside the conversation, and the button shows or hides it. The conversation already leaves room for the card, so showing or hiding it never moves what you are reading. In a narrower window, or while the overview panel is open, the card opens as a popover instead.
+When the window is wide enough, the card docks at the top-right of the session, beside the conversation, and the button shows or hides it. The conversation already leaves room for the card, so showing or hiding it never moves what you are reading. In a narrower window the card opens as a popover instead. When both this card and the session overview are docked, they stack in the same corner.
 
 The card holds:
 
@@ -199,7 +207,7 @@ A dot on the button shows capture's state while it records: green when it is on,
 
 When a session is shared with your organization through [cloud capture](/docs/source-control/capture), teammates can comment on it from the [timeline](/docs/team/timeline). Their comments appear on the matching messages in your session as they arrive.
 
-Click the comments button (speech bubble) in the session header to see every thread on the session, reply, or add a comment of your own. Each message and tool call has its own comment button too, which shows when you hover it.
+Click the comments button (speech bubble) on the Session card of the [session overview](#session-overview) to see every thread on the session, reply, or add a comment of your own. Each message and tool call has its own comment button too, which shows when you hover it.
 
 <Screenshot src="/screenshots/product/agent-chat-comments.png" alt="A session with the comments panel open on the right, showing a teammate's comment thread anchored to one of the agent's responses." caption="Teammates' comments in a session." />
 
