@@ -14,7 +14,8 @@ If `gh` is missing, signed out, rate limited, or GitHub can't be reached, the ta
 
 ## Open a pull request
 
-- select the pull request badge on a session in the sidebar, or its hover card
+- select the pull request badge on a session in the sidebar, or a line in its hover list
+- select a row in the session's [pull requests](#a-sessions-pull-requests) tab
 - select a pull request row in the [session context](/docs/product/chat#session-context) card
 - select a row in the repository's [pull request list](#the-pull-request-list)
 - create one with **Create PR**: its tab opens when GitHub confirms it
@@ -76,20 +77,33 @@ A session keeps a list of the pull requests that belong to it. A pull request jo
 
 - the session opens it with **Create PR**
 - Atlas finds one opened from the session's branch in the session's own repository. A pull request from a fork that uses the same branch name isn't linked, and sessions on the repository's default branch (such as `main`) aren't searched
-- you link it: choose **Link a pull request…** from the session's **⋯** menu in the sidebar or from the session context card, then paste its URL, type its number, or pick one of the repository's open pull requests
+- you link it: choose **Link a pull request…** from the session's **⋯** menu in the sidebar, from the session context card, or **+ Link** in the session's pull requests tab. Then paste its URL, type its number, or pick one of the repository's open pull requests
 - the agent links it with the `link_pull_request` tool
 
-A URL has to name the session's own repository, on the same host. Atlas takes no URL until it has read which repository the session is in; **Link** stays off with a note until then.
+A number is read in the session's repository. A URL can name any repository: Atlas looks for a checkout of it among the session's folder, the projects attached to the session, and every other project you've opened, and links it there. If none is a checkout of that repository, open it as a project first.
 
-Selecting a linked pull request in the sidebar opens its tab. One from another repository opens on GitHub instead.
+Selecting a linked pull request opens its tab, in a checkout of its own repository. One whose repository isn't open in Atlas opens on GitHub instead. <Kbd>⌘</Kbd>-click opens any of them on GitHub.
 
 Unlink one from the session's **⋯** menu, under **Unlink pull request**. A pull request found on the branch stays unlinked after you remove it.
 
 Linked pull requests are kept current in the background: every minute while Atlas is in front, when you come back to the window, and when a turn ends. Open ones are checked most often, quiet and closed ones less, and merged ones not at all. A linked pull request that no longer exists is checked less and less often. The background checks pause while less than a tenth of your GitHub quota is left, so what you open yourself still loads. When GitHub's rate limit is reached, Atlas waits for the reset.
 
+## A session's pull requests
+
+Each session has a **Pull requests** tab listing everything linked to it. Open it by selecting the sidebar badge on a session with more than one, choosing **Show pull requests** from the session's **⋯** menu, or selecting **Session pull requests** in the [session context](/docs/product/chat#session-context) card.
+
+Each row shows the pull request's state, number and title, an eye if Atlas is [watching](#watch-a-pull-request) it, its checks and review, how many lines it changes, and its branches. A pull request based on another one's branch is drawn indented under it, and the first row of the chain shows how many it holds. The footer counts the open and linked ones and says when Atlas last read them from GitHub.
+
+- Select a row to open the pull request beside it. Its back arrow returns to the list.
+- Hover a row and select **⋯**, or right-click it, for **Open**, **Open on GitHub**, **Copy link**, **Watch for changes** or **Stop watching**, and **Unlink from this session**.
+- Hold <Kbd>Shift</Kbd> for the same [quick actions](#quick-actions) as the pull request list.
+- **+ Link** links another one.
+
+The sidebar badge shows the number of a single pull request, or **+N** for several (a stack glyph when they form one chain). Hover it to list them. Selecting it opens the one pull request, or this tab when there are several. Right-click a pull request in the session context card for the same actions as the tab's rows.
+
 ## Watch a pull request
 
-A session's agent can ask Atlas to watch one of its pull requests with the `watch_pull_request` tool. The agent doesn't have to keep checking, and the session isn't left waiting on it. Atlas checks a watched pull request every two minutes, even while its window is hidden. When something needs the agent, Atlas sends the session a message:
+A session's agent can ask Atlas to watch one of its pull requests with the `watch_pull_request` tool, and you can turn a watch on or off from the session's [pull requests](#a-sessions-pull-requests) tab. The agent doesn't have to keep checking, and the session isn't left waiting on it. Atlas checks a watched pull request every two minutes, even while its window is hidden. When something needs the agent, Atlas sends the session a message:
 
 - a check fails, is cancelled or needs action
 - the required checks pass (all the checks, if none are required)
