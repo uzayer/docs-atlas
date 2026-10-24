@@ -83,7 +83,13 @@ The toolbar shows the total lines added and removed. It can collapse or expand e
 
 The panel keeps up as an agent edits, without losing your place. A very large file shows its first hunks with a note that it is partial, and its line counts still include every change. A binary file is listed but not shown.
 
-A turn that changed files ends on a card listing them as a tree, with the lines added and removed. The expand button opens every folder at once. Click a file, or **Open diff**, to see that turn in the review panel. Right-click a file to show its diff, open it, or copy its path. A renamed file is listed under its new name, with the old one in its tooltip. Because the card is built from the agent's own edits, it stays correct after you commit.
+### Changes across attached projects
+
+When a session has [attached projects](/docs/product/chat#attach-other-projects), the panel groups its files by project: the session's own project first, then each attached project in the order it was attached, then **Other** for files outside every project. Each file shows its path from its own project's root, and the file tree gives each project a header with its lines added and removed; click a header to fold the project. The toolbar total covers every project.
+
+**Uncommitted** reads each attached project's working tree as well as the session's own, for up to four attached git repositories. A project that is not a git repository has no uncommitted view, so its files appear only in the session and turn views. Turn and session views group the agent's edits the same way.
+
+A turn that changed files ends on a card listing them as a tree, with the lines added and removed. The expand button opens every folder at once. Click a file, or **Open diff**, to see that turn in the review panel. Right-click a file to show its diff, open it, or copy its path. A renamed file is listed under its new name, with the old one in its tooltip. When the turn touched attached projects, the card groups the files under a header per project, with its counts. Because the card is built from the agent's own edits, it stays correct after you commit.
 
 ## Handle failures
 

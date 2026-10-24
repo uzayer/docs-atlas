@@ -22,13 +22,15 @@ Atlas Agent needs an organization that is synced to your account and has AI acce
 
 The sidebar lists your sessions across every project in the organization, newest activity first, with each row's project, branch and status. <Kbd>⌘⇧.</Kbd> or <Kbd>⌘⌥J</Kbd> shows or hides it. Click the session title in the header to search for a session.
 
-- **The project picker** at the very top narrows the list to one project. It shows **All projects** or the chosen project's name, and stays set until you change it. Its menu lists the organization's projects, with a search field once there are more than six; right-click a project, or click its gear, to open its settings. It also holds **Add project**, **Import sessions from agents…** and, at the bottom, the organization (see [Organizations](/docs/team/organizations#find-your-way-around-the-sidebar)). The magnifier beside it opens the command palette.
-- **Search** below it finds a session by title, project or branch. Use the arrow keys to move through the results and <Kbd>Enter</Kbd> to open one.
+- **The project picker** at the very top narrows the list to one project. It shows **All projects** or the chosen project's name, and stays set until you change it. Sessions the chosen project is [attached](#attach-other-projects) to are listed too, marked **attached**. Its menu lists the organization's projects, with a search field once there are more than six; right-click a project, or click its gear, to open its settings. It also holds **Add project**, **Import sessions from agents…** and, at the bottom, the organization (see [Organizations](/docs/team/organizations#find-your-way-around-the-sidebar)). The magnifier beside it opens the command palette.
+- **Search** below it finds a session by title, project, attached project or branch. Use the arrow keys to move through the results and <Kbd>Enter</Kbd> to open one.
 - **Pinned** sessions stay at the top. Drag a pinned session to reorder it, drag it down into the list to unpin it, or drag a session up onto the pinned ones to pin it.
 - **Unread** sessions are marked when an agent finishes a turn you haven't seen.
 - **Snoozed** sessions move to the **Snoozed** shelf, above Settled, until the time you picked, then come back to the list marked **Woke**. The shelf is collapsed until you open it and shows its count; each row there shows how long until it wakes, and **Wake** brings it back now.
 
-Rest the pointer on a session for a moment to see its project, agent and model, branch and pull request, whether it is shared with the team, and how many comments it has. Use <Kbd>↑</Kbd> and <Kbd>↓</Kbd> to move between sessions and <Kbd>Enter</Kbd> to open one.
+A session with attached projects shows their initials stacked after its project's badge, two at most and **…** past that; their names are in the badges' tooltip.
+
+Rest the pointer on a session for a moment to see its project, the projects attached to it with their access, agent and model, branch and pull request, whether it is shared with the team, and how many comments it has. Use <Kbd>↑</Kbd> and <Kbd>↓</Kbd> to move between sessions and <Kbd>Enter</Kbd> to open one.
 
 Right-click a session, or choose **⋯** on it, for everything else:
 
@@ -98,6 +100,19 @@ Atlas Agent can write to a project from its next turn. Other agents get write ac
 
 Atlas never attaches the root of your disk, your home folder, a system folder, or a settings folder such as `~/Library` or `~/.ssh`.
 
+#### Manage attached projects
+
+The **Projects** section of the [session context](#session-context) card lists the session's own project first, marked **Main**, then each attached project with:
+
+- **Its access**: an eye for read-only, a pencil for read and write. Click it to switch.
+- **How it was attached**, such as by a mention or an approved request, and when, in its tooltip.
+- **Its branch and uncommitted changes**, when it is a git repository.
+- **⋯**: **Open in** your editor, **Reveal in Finder**, change its access, or **Detach** it from the session.
+
+**+ Attach project** lists the organization's projects that are not attached yet, then **Choose a folder…** for any other folder. The folder rules above still apply. When an agent only takes the change on resume, the section says so.
+
+In the composer, type `@` and the attached projects come first, with their access.
+
 #### When the agent asks for access
 
 When code tools are on, an agent can ask to use a folder outside the session. Atlas shows the request in the session with the folder and the agent's reason. Choose **Allow read and write**, **Allow read-only**, or **Deny**. The agent is told your answer. If you approve after the agent has stopped waiting, the folder is still attached and the agent can use it once it asks again.
@@ -118,7 +133,7 @@ Stop is always available. For a transient provider failure, Atlas shows the retr
 
 While the agent works, the turn shows how long it has been working and what it is doing right now. When it finishes, its work folds behind **Worked for** and the time, leaving the answer in view. Each block of tool calls is summarised by what it did, such as "Ran 3 commands and read 2 files", and a call that failed stays in view after the fold. Select **Worked for** to see every step, with how long each one took. A turn you stop reads **Stopped after** instead, with the time it ran.
 
-Every turn ends with a summary of how long it worked and the files it read or changed, with lines added and removed. Choose **Show changes** to open the turn's diff, or **Save** to keep the conversation as a [knowledge base](/docs/context/knowledge-base) note.
+Every turn ends with a summary of how long it worked and the files it read or changed, with lines added and removed. When the turn touched [attached projects](#attach-other-projects), the files are grouped by project, each group with its own counts and paths shown from that project's root; files outside every project go under **Other**. Choose **Show changes** to open the turn's diff, or **Save** to keep the conversation as a [knowledge base](/docs/context/knowledge-base) note.
 
 The usage pill in the composer shows how full the agent's context window is, along with tokens and cost when the agent reports them.
 
@@ -162,7 +177,8 @@ The card holds:
 - **The branch**, with a picker. Type to filter your local branches, or enter a new name and choose **Create branch** to create it and switch to it.
 - **Pull requests** opened from the branch: the open one first, with a check mark or cross for its checks, and earlier ones behind **Show more**. Click one to open it on GitHub.
 - **The next git action**, such as **Create PR**, **Push & create PR**, **Commit & push…**, **Pull** or **Push**. **Create PR** pushes the branch if it needs it, then shows the title and description the pull request would open with, for you to edit before it is created. The menu holds **Create draft PR**, **Pull**, **Push** (or **Publish branch**), **Fetch** and **Open Source Control**. The default branch is never offered a pull request.
-- **Changes**: the lines the session added and removed. Click it to open the session's diff. With no session changes, it counts the project's uncommitted files and opens [source control](/docs/source-control/git).
+- **Projects**: the session's project and the projects attached to it (see [Manage attached projects](#manage-attached-projects)).
+- **Changes**: the lines the session added and removed, across its project and every attached project; the tooltip breaks them down by project. Click it to open the session's diff. With no session changes, it counts the project's uncommitted files and opens [source control](/docs/source-control/git).
 - **The agent and model** the session runs on.
 - **Usage**: the context window, tokens and cost.
 - **Capture**: whether [session capture](/docs/source-control/capture) is recording this project. Click it to set capture up without leaving the card.
