@@ -80,7 +80,15 @@ The diff opens as a list of its files, each collapsed to one row: a chevron, an 
 
 The toolbar shows the total lines added and removed. It can collapse or expand every file, switch between a stacked and a split view, wrap lines, and hide whitespace changes. When the panel is narrow, the view, wrap and whitespace options move into one **Diff options** menu. Press `⌘F` to search the diff. The file-tree button opens a tree of the changed files beside the diff. Click a file in the tree to jump to it. Drag the tree's edge to resize it, and Atlas remembers the width.
 
+Right-click a file's row for the same actions as in the project tree: **Open**, **Reveal in Finder**, **Open in Default App**, open it in an installed editor, **Copy Path** and **Copy Relative Path**. A file the change deleted offers only its paths.
+
 The panel keeps up as an agent edits, without losing your place. A very large file shows its first hunks with a note that it is partial, and its line counts still include every change. A binary file is listed but not shown.
+
+### Comment on lines
+
+When the diff is beside a session, you can comment on its lines for the agent. Point at a line number and click **+**, or drag down the line numbers to pick a range. Write your comment in the box that opens under the lines, then click **Comment** or press <Kbd>⌘↵</Kbd>. The comment shows up in the session's composer as a chip named after its lines, such as `src/app.ts:12-14`, and stays under those lines in the diff until you send.
+
+When you send, the agent gets each comment with its file, its range and the lines it is on, removed lines included. Comments are part of your next prompt: Atlas never posts them anywhere else. To drop one, click the **×** on its chip, or delete it from under its lines. You can't comment on a diff that isn't beside a session, because there's no session for the comment to go to.
 
 ### Changes across attached projects
 

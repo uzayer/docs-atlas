@@ -34,7 +34,7 @@ Click into a file and type to edit it. A dot on the file's tab marks unsaved cha
 
 Closing a tab with unsaved changes asks first: **Save**, **Don't save**, or **Cancel**. Escape cancels. If the save fails, the tab stays open.
 
-Point at a line number and click **+** to put a reference to that line, such as `src/app.ts:12`, in the session's composer. Drag down the line numbers to send a range.
+Point at a line number and click **+** to comment on that line for the agent, or drag down the line numbers to pick a range. Write in the box that opens under the lines and click **Comment** (<Kbd>⌘↵</Kbd>). The comment goes into the session's composer as a chip named after its lines, such as `src/app.ts:12`, and stays under them in the file until you send. When you send, the agent gets the comment with the lines it is on. Click the chip's **×**, or delete the comment from the file, to drop it. These comments work the same way as [comments on diff lines](/docs/source-control/git#comment-on-lines). They go to the active session, and the **+** only shows when a session is open.
 
 Press <Kbd>⌘F</Kbd> to find in the file. In a large read-only file, it opens a simple find bar that jumps between matches. Both shortcuts can be changed under **File** in [Settings → Keybindings](/docs/product/settings#keybindings).
 
