@@ -77,20 +77,20 @@ A session keeps a list of the pull requests that belong to it. A pull request jo
 
 - the session opens it with **Create PR**
 - Atlas finds one opened from the session's branch in the session's own repository. A pull request from a fork that uses the same branch name isn't linked, and sessions on the repository's default branch (such as `main`) aren't searched
-- you link it: choose **Link a pull request…** from the session's **⋯** menu in the sidebar, from the session context card, or **+ Link** in the session's pull requests tab. Then paste its URL, type its number, or pick one of the repository's open pull requests
+- you link it: choose **Link a pull request…** from the session's right-click menu in the sidebar, from the session context card, or **+ Link** in the session's pull requests tab. Then paste its URL, type its number, or pick one of the repository's open pull requests
 - the agent links it with the `link_pull_request` tool
 
 A number is read in the session's repository. A URL can name any repository: Atlas looks for a checkout of it among the session's folder, the projects attached to the session, and every other project you've opened, and links it there. If none is a checkout of that repository, open it as a project first.
 
 Selecting a linked pull request opens its tab, in a checkout of its own repository. One whose repository isn't open in Atlas opens on GitHub instead. <Kbd>⌘</Kbd>-click opens any of them on GitHub.
 
-Unlink one from the session's **⋯** menu, under **Unlink pull request**. A pull request found on the branch stays unlinked after you remove it.
+Unlink one from the session's right-click menu in the sidebar, under **Unlink pull request**. A pull request found on the branch stays unlinked after you remove it.
 
 Linked pull requests are kept current in the background: every minute while Atlas is in front, when you come back to the window, and when a turn ends. Open ones are checked most often, quiet and closed ones less, and merged ones not at all. A linked pull request that no longer exists is checked less and less often. The background checks pause while less than a tenth of your GitHub quota is left, so what you open yourself still loads. When GitHub's rate limit is reached, Atlas waits for the reset.
 
 ## A session's pull requests
 
-Each session has a **Pull requests** tab listing everything linked to it. Open it by selecting the sidebar badge on a session with more than one, choosing **Show pull requests** from the session's **⋯** menu, or selecting **Session pull requests** in the [session context](/docs/product/chat#session-context) card.
+Each session has a **Pull requests** tab listing everything linked to it. Open it by selecting the sidebar badge on a session with more than one, choosing **Show pull requests** from the session's right-click menu in the sidebar, or selecting **Session pull requests** in the [session context](/docs/product/chat#session-context) card.
 
 Each row shows the pull request's state, number and title, an eye if Atlas is [watching](#watch-a-pull-request) it, its checks and review, how many lines it changes, and its branches. A pull request based on another one's branch is drawn indented under it, and the first row of the chain shows how many it holds. The footer counts the open and linked ones and says when Atlas last read them from GitHub.
 
