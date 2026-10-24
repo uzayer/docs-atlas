@@ -44,6 +44,14 @@ The header folds into one line as you scroll down the tab.
 - **Checks** lists every check. The failing ones come first, and each one links to its details. The checks pill at the top of the tab opens the same list.
 - **Comments** puts loose comments and review threads in one timeline, newest first or oldest first. Bot comments and resolved threads are hidden until you choose to show them, and Atlas remembers that choice. Long conversations load the newest comments first, with a button to show older ones.
 
+## Timeline
+
+**Timeline** lists everything that has happened to the pull request in order: when it was opened, commits, comments, reviews and their verdicts, review threads on lines of code, label changes, review requests, force-pushes, moves to draft or ready for review, closes and reopens, the merge, and the deleted branch. Press **Newest first** to switch between newest first and oldest first.
+
+Runs of events of one kind collapse into a single row with a count. That covers consecutive comments, consecutive commits, and one person's consecutive label changes, review requests or force-pushes. Click a comment run or a long run of commits to open it. Each commit shows its short SHA, message, authors and lines changed. A verdict given before the newest commit is shown as stale. Resolved threads and dismissed reviews start collapsed. React to a comment or review from its row, or open it on GitHub.
+
+Atlas reads the whole history, so even a pull request with hundreds of events shows all of them. Comment text loads only when you open a comment.
+
 ## Comment and review
 
 The round speech-bubble button at the bottom right opens the composer. Choose:
@@ -55,7 +63,7 @@ Press <Kbd>⌘↵</Kbd> to send and <Kbd>Esc</Kbd> to put the composer away.
 
 ## On the way
 
-**Timeline** and **Code** are coming: the pull request's events in order, and its diff with line comments you can review in place.
+**Code** is coming: the pull request's diff, commit by commit, with line comments you can review in place.
 
 ## Next
 
