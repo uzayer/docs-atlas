@@ -10,6 +10,16 @@ Terminals open in the [surfaces pane](/docs/product/power-user#surfaces), beside
 
 <Screenshot src="/screenshots/product/terminal-blocks.png" alt="A terminal tab showing three command blocks, each with its command, output and exit status, and the input line at the bottom showing the current branch." caption="Command blocks in the terminal." />
 
+## Session terminal
+
+Each session has its own terminal under the composer. Press <Kbd>⌘⇧J</Kbd>, or the terminal button at the right end of the title bar, to show or hide it. It opens in the session's working directory: its worktree when it has one, otherwise the project.
+
+Its shells belong to the session. Hiding the terminal, switching to another session or tab, or closing the session's tab leaves them running, and they are there when you come back. Settling a session keeps them too. Deleting the session, closing its last terminal, or closing the project ends them. They do not survive quitting Atlas.
+
+Drag the terminal's top edge to resize it. Atlas remembers the height for each session, and a session that has never had a terminal opens at the height you last chose.
+
+With one terminal, its split, new and close buttons sit at its top-right corner. Add a second terminal and the list of terminals appears beside them, as in a terminal tab. The shortcuts in [Stop or split work](#stop-or-split-work) work here too, and <Kbd>⌘W</Kbd> on the last terminal closes it and hides the terminal rather than closing the session.
+
 ## Work with blocks
 
 Collapse, copy, search, or rerun any block. Finished blocks show their exit status. Click file paths to open them in Atlas or your system file manager, and click URLs to open them in your browser.
