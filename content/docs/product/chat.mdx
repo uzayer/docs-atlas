@@ -12,19 +12,47 @@ This page is about working with an agent. To message your teammates, see [Team c
 
 ## Start or resume a session
 
-Choose **Agents** in the sidebar, or **New session** in the session's header, to start a session. It opens in the main column. To run a second session beside it, press <Kbd>⌘T</Kbd> then <Kbd>A</Kbd>, which opens one in the [surfaces pane](/docs/product/power-user#surfaces).
-
-Your recent sessions are listed in the sidebar. Open the agent sidebar with <Kbd>⌘⌥J</Kbd> to search and reopen the sessions of the projects you are working in, or to archive or delete one.
-
-Settle a session when you are done with it for now. Hover it and choose **Settle**, or press <Kbd>⌘⌥S</Kbd> on the open one. It moves to the **Settled** shelf at the bottom of the list and the next session opens; **Undo** in the notice brings it back. Sending a message to a settled session moves it back to the list. Atlas also settles sessions that have been idle for 3 days, but never one that is running or waiting for you. Change the number of days, or turn it off, with **Settle idle sessions after** in Settings → Sessions.
+Choose **New session** at the top of the sidebar, or in the session's header, to start a session. It opens in the main column. To run a second session beside it, press <Kbd>⌘T</Kbd> then <Kbd>A</Kbd>, which opens one in the [surfaces pane](/docs/product/power-user#surfaces).
 
 When you reopen a session, Atlas paints the transcript from disk while the agent reconnects.
 
 Atlas Agent needs an organization that is synced to your account and has AI access. If the composer says so instead of letting you type, see [AI access & spend](/docs/team/ai-access).
 
+## Find your sessions in the sidebar
+
+The sidebar lists your sessions across every project in the organization, newest activity first, with each row's project, branch and status. <Kbd>⌘⇧.</Kbd> or <Kbd>⌘⌥J</Kbd> shows or hides it. Click the session title in the header to search for a session.
+
+- **Search** at the top finds a session by title, project or branch. Use the arrow keys to move through the results and <Kbd>Enter</Kbd> to open one.
+- **Filter** (the funnel) narrows the list to one project. The filter stays set until you change it. Choose **All projects** to clear it.
+- **Pinned** sessions stay at the top. Drag a pinned session to reorder it, drag it down into the list to unpin it, or drag a session up onto the pinned ones to pin it.
+- **Unread** sessions are marked when an agent finishes a turn you haven't seen.
+- **Snoozed** sessions are hidden until the time you picked, then come back marked **Woke**.
+
+Rest the pointer on a session for a moment to see its project, agent and model, branch and pull request, and, while it is open, whether it is shared and how many comments it has. Use <Kbd>↑</Kbd> and <Kbd>↓</Kbd> to move between sessions and <Kbd>Enter</Kbd> to open one.
+
+Right-click a session, or choose **⋯** on it, for everything else:
+
+- **Pin** or **Unpin**
+- **New session on** its branch
+- **Settle** or **Unsettle**
+- **Snooze**, for a preset time or a custom one
+- **Rename**
+- **Mark unread** or **Mark read**
+- **Filter by** its project
+- **Copy** its title, path, branch or session ID
+- **Open in** your editor
+- **Project settings**
+- **Delete**
+
+## Settle a session
+
+Settle a session when you are done with it for now. Hover it and choose **Settle**, or press <Kbd>⌘⌥S</Kbd> on the open one. It moves to the **Settled** shelf at the bottom of the sidebar and the next session opens; **Undo** in the notice brings it back. Sending a message to a settled session moves it back to the list. Atlas also settles sessions that have been idle for 3 days, but never one that is running or waiting for you. Change the number of days, or turn it off, with **Settle idle sessions after** in Settings → Sessions.
+
+The Settled shelf is collapsed until you open it. It has its own search, and **Show more** pages through older sessions. A settled session that is open or running stays visible even while the shelf is collapsed.
+
 ## Bring in sessions from your agents
 
-The **All history** button at the top of the agent sidebar lists every session you have run in Atlas, archived ones included. Choose **Import** there to pull in sessions an agent kept on its own, such as ones you ran in a terminal.
+Open the project filter at the top of the sidebar and choose **Import sessions from agents…** to pull in sessions an agent kept on its own, such as ones you ran in a terminal. Imported sessions land on the Settled shelf.
 
 Atlas asks each installed agent for its session list. An agent that cannot list its sessions still appears, grayed out, with the reason.
 

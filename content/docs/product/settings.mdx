@@ -36,7 +36,7 @@ A project's overrides are saved in its `.atlas/config.toml`, which Atlas keeps o
 
 - **Keep awake while an agent is working** stops your computer from sleeping during a turn. The display can still turn off. It is not available on Windows.
 - **Time format** shows times on a **12-hour** or **24-hour** clock, or as your system does.
-- **Confirm before deleting a session** asks first when you delete a session from the sidebar or history. Archiving never asks, because you can undo it. On by default.
+- **Confirm before deleting a session** asks first when you delete a session from the sidebar. Settling never asks, because you can undo it. On by default.
 - **Confirm before quitting while an agent is running** asks first when you quit Atlas, or close its window, during a turn. Quitting again while it asks quits anyway. On by default.
 - **Add .atlas to .gitignore** keeps Atlas's per-project data out of version control. On by default.
 - **Preferred editor** is the editor **Open in** uses. **Automatic** picks the first one Atlas finds; **Refresh** looks again after you install one. Files outside a project, and the project folder in the session context, open in your editor only when you choose one here.
@@ -81,7 +81,7 @@ A theme can name fonts too, as tweakcn themes do. A font you picked always wins.
 
 - **Default agent** is the agent a new session starts with. Until that agent is installed, new sessions start with Atlas Agent. A project can choose its own.
 - **Sort sessions by** orders the sidebar's sessions by **Latest activity** or by **Date started**.
-- **Settle idle sessions after** moves a session to the sidebar's **Settled** shelf once it has been idle that many days. The default is 3; **Off** turns it off. See [Sessions](/docs/product/chat#start-or-resume-a-session).
+- **Settle idle sessions after** moves a session to the sidebar's **Settled** shelf once it has been idle that many days. The default is 3; **Off** turns it off. See [Settle a session](/docs/product/chat#settle-a-session).
 - **Enter to send**: <Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> adds a line. Turn it off to make <Kbd>Enter</Kbd> add a line; <Kbd>⌘Enter</Kbd> always sends.
 - **Next-step suggestions** has the agent offer two or three follow-ups as chips after each turn. They come from the agent's own session, with no extra key.
 - **Switching agents in a session** decides what picking another agent does to a conversation: **Start over**, **New tab** or **Hand off**. See [Sessions](/docs/product/chat#choose-and-switch-agents).
