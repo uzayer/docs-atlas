@@ -26,7 +26,7 @@ The sidebar lists your sessions across every project in the organization, newest
 - **Search** below it finds a session by title, project, attached project or branch. Use the arrow keys to move through the results and <Kbd>Enter</Kbd> to open one.
 - **Pinned** sessions stay at the top. Drag a pinned session to reorder it, drag it down into the list to unpin it, or drag a session up onto the pinned ones to pin it.
 - **Unread** sessions are marked when an agent finishes a turn you haven't seen.
-- **Snoozed** sessions move to the **Snoozed** shelf, above Settled, until the time you picked, then come back to the list marked **Woke**. The shelf is collapsed until you open it and shows its count; each row there shows how long until it wakes, and **Wake** brings it back now.
+- **Snoozed** sessions move to the **Snoozed** shelf, above Settled, until the time you picked, then come back to the list marked **Woke**. The shelf is collapsed until you open it and shows its count; each row there shows how long until it wakes, and **Wake** brings it back now. **Undo** in the notice after snoozing puts the session back as it was, without the **Woke** mark.
 
 A session with attached projects shows their initials stacked after its project's badge, two at most and **…** past that; their names are in the badges' tooltip.
 
@@ -37,7 +37,7 @@ Rest the pointer on a session for a moment to see its project, the projects atta
 Right-click a session, or choose **⋯** on it, for everything else:
 
 - **Pin** or **Unpin**
-- **New session on** its branch. For a session in a worktree, the new session starts in that worktree. Otherwise Atlas checks the branch out in the project first, and refuses if the project has uncommitted changes or an agent is working there, offering to start on the current branch instead.
+- **New session on** its branch. For a session in a worktree, the new session starts in that worktree. Otherwise Atlas checks the branch out in the project first, and refuses if the project has uncommitted changes or an agent is working there, in Atlas or in a terminal, offering to start on the current branch instead.
 - **Settle** or **Unsettle**
 - **Snooze**, for a preset time or a custom one, or **Wake session** on a snoozed one
 - **Rename**
@@ -51,7 +51,7 @@ Right-click a session, or choose **⋯** on it, for everything else:
 
 ## Settle a session
 
-Settle a session when you are done with it for now. Hover it and choose **Settle**, or press <Kbd>⌘⌥S</Kbd> on the open one. It moves to the **Settled** shelf at the bottom of the sidebar and the next session opens; **Undo** in the notice brings it back. Sending a message to a settled session moves it back to the list. Atlas also settles sessions that have been idle for 3 days, but never one that is running or waiting for you. Change the number of days, or turn it off, with **Settle idle sessions after** in Settings → Sessions.
+Settle a session when you are done with it for now. Hover it and choose **Settle**, or press <Kbd>⌘⌥S</Kbd> on the open one. It moves to the **Settled** shelf at the bottom of the sidebar and the next session opens; **Undo** in the notice brings it back. Sending a message to a settled session moves it back to the list. Atlas also settles sessions that have been idle for 3 days, but never one that is running or waiting for you. A session that wakes from a snooze, or that you unpin, gets the full 3 days again before it is settled. Change the number of days, or turn it off, with **Settle idle sessions after** in Settings → Sessions.
 
 The Settled shelf is collapsed until you open it. It has its own search, and **Show more** pages through older sessions. A settled session that is open or running stays visible even while the shelf is collapsed.
 
@@ -101,7 +101,7 @@ A project is attached **read-only** at first: the agent can read it but not chan
 
 Atlas Agent can write to a project from its next turn. Other agents get write access the next time the session is resumed, and Atlas says so when you grant it.
 
-Atlas never attaches the root of your disk, your home folder, a system folder, or a settings folder such as `~/Library` or `~/.ssh`.
+Atlas never attaches the root of your disk, your home folder, a system folder, or a settings folder such as `~/Library` or `~/.ssh`. On Windows that means any drive root such as `D:\`, `C:\Windows`, `C:\Program Files`, `C:\ProgramData` and your `AppData` folder.
 
 #### Manage attached projects
 
