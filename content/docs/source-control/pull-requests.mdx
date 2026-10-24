@@ -119,9 +119,18 @@ Press **Write guide** to have your default agent write one. The agent works in i
 
 A pull request from a fork asks before the run starts. The fork's code is its author's, and it can include agent instructions or configuration written to steer the agent. Press **Write guide** to go ahead, and check each permission the agent asks for.
 
-Read the guide in order with <Kbd>J</Kbd> and <Kbd>K</Kbd>, or pick a stop from the list on the left. Select a question under a stop, or **Ask about this stop**, to ask about it in a session.
+Read the guide in order with <Kbd>J</Kbd> and <Kbd>K</Kbd>, or pick a stop from the list on the left. Select a question under a stop, or **Ask about this stop**, to ask about it in a session. The tab widens to the whole window while the guide is open, and goes back when you leave it.
+
+Review from the guide as you read. Press a line number in an excerpt, or drag across several lines, then choose:
+
+- **Add to review** to hold a line comment for your review, as in [Code](#line-comments). Held comments show on their lines in the guide and in Code.
+- **Ask agent** to ask about those lines in a session. The lines go with the question.
+
+On the last stop, **Finish review** opens the composer on **Review** with your held comments attached. Without permission to review, the button reads **Done reading**.
 
 Atlas keeps each guide with the commit it was written for, so it's still there after a restart. When new commits are pushed, the guide says it was written before the latest push and offers **Rewrite**. **Write guide** and **Rewrite guide** are also in the **⋯** menu.
+
+Choose which agent and model write guides, and add your own instructions (what to show first, what to skip), in [Settings](#settings). Turning **Review guides** off there removes the Guide tab.
 
 ## Timeline
 
@@ -159,7 +168,7 @@ If new commits move a held comment's line out of the diff, GitHub would refuse t
 The round speech-bubble button at the bottom right opens the composer. Choose:
 
 - **Comment** to post a comment. You can also close or reopen the pull request with it.
-- **Review** to submit a review that comments, approves, or requests changes. Line comments you added to the review from **Code** go with it.
+- **Review** to submit a review that comments, approves, or requests changes. Line comments you added to the review from **Code** or **Guide** go with it.
 
 Press <Kbd>⌘↵</Kbd> to send and <Kbd>Esc</Kbd> to put the composer away.
 
@@ -177,6 +186,19 @@ Each action uses your default agent, and the menu names it. Atlas opens a sessio
 When the agent has made the fix, push it from the session yourself. Atlas never pushes for you. Fix is offered only on open pull requests.
 
 Atlas removes a Fix worktree once nothing needs it: it's at least three days old, no unsettled session works in it, it has no uncommitted or untracked changes, and its commits are on a branch. The branch itself is kept. Atlas checks once each time it starts.
+
+## Settings
+
+**Settings > Pull Requests** holds these preferences. The ones marked per project can differ between projects.
+
+- **Default merge method** (per project): the method the merge button starts on. **Last used** remembers your last pick on this device.
+- **Remove agent credits when merging** (per project): drops agent co-author and attribution lines from merge and squash messages, keeping human co-authors.
+- **Settle sessions when their pull request merges**, and **Keep sessions with a pull request from settling**: how a session follows its pull request.
+- **Let agents act on watched pull requests**: a watched pull request sends its session's agent an update when a check fails, a review arrives or it conflicts with its base. Off, watches still track but never prompt an agent.
+- **Open pull request links in Atlas**: a link to a pull request in a session or transcript opens it in a tab when it belongs to the project's repository. <Kbd>⌘</Kbd>-click opens it in the browser. Another repository's pull request always opens in the browser.
+- **Review guides**, **Guide agent**, **Guide model** and **Guide instructions** (per project): see [Guide](#guide). Your instructions shape what the guide shows first and dwells on, but its format and its coverage of every changed file stay the same.
+
+When a guide finishes or stops with an error while you're looking elsewhere, Atlas sends a notification. Click it to open the pull request's Guide tab. Notifications are set in **Settings > Notifications**.
 
 ## Next
 
