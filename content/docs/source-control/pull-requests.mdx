@@ -106,6 +106,8 @@ A watch ends when:
 - the agent calls `unwatch_pull_request`
 - Atlas fails to read the pull request 8 times in a row (a GitHub rate limit only delays it)
 
+Closing the session's tab or its project doesn't end a watch. The next update opens the session again.
+
 The agent also gets a short note after 10 comment-only updates in a row, and the watch ends there.
 
 The agent's other tools are `unlink_pull_request` and `list_session_pull_requests`. The list shows each linked pull request's state and checks, and how they stack on one another.
