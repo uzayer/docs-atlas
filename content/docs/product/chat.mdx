@@ -150,18 +150,25 @@ The column shows once a session has two turns. In a long session the ticks move 
 
 ## Session context
 
-Click the session context button (≡) in the main header for everything around the session, in one overlay:
+Click the session context button (≡) in the main header for everything around the session, in one card.
 
-- **The project folder**, with **Open in Finder**, or your editor when you have chosen one under **Preferred editor**. Its menu lists your editors, then **Reveal in Finder**, **Open in Terminal** and **Copy path**.
-- **The branch**, with a picker to switch to another one.
-- **The next git action**, such as **Commit & push…**, **Pull**, **Push** or **Publish branch**. Its menu holds the others: **Pull**, **Push** (or **Publish branch**), **Fetch** and **Open Source Control**.
-- **The pull request** for the branch, when it has one.
+When the window is wide enough, the card docks at the top-right of the session, beside the conversation, and the button shows or hides it. The conversation already leaves room for the card, so showing or hiding it never moves what you are reading. In a narrower window, or while the overview panel is open, the card opens as a popover instead.
+
+The card holds:
+
+- **The machine** the session runs on, with the project folder's path in the folder icon's tooltip.
+- **Open in your editor**: the editor chosen under **Preferred editor**, or the first one Atlas finds. Its menu lists your other editors, then **Reveal in Finder**, **Open in Terminal** and **Copy path**.
+- **Project scripts**: named commands for the project, such as a dev server or the tests. Click one to run it in a terminal at the project root; the menu lists them all, with a pencil to edit each. Choose **Add project script** to create one. Scripts are saved in the project's `.atlas/config.toml`, so they travel with the repository.
+- **The branch**, with a picker. Type to filter your local branches, or enter a new name and choose **Create branch** to create it and switch to it.
+- **Pull requests** opened from the branch: the open one first, with a check mark or cross for its checks, and earlier ones behind **Show more**. Click one to open it on GitHub.
+- **The next git action**, such as **Create PR**, **Push & create PR**, **Commit & push…**, **Pull** or **Push**. **Create PR** pushes the branch if it needs it, then shows the title and description the pull request would open with, for you to edit before it is created. The menu holds **Create draft PR**, **Pull**, **Push** (or **Publish branch**), **Fetch** and **Open Source Control**. The default branch is never offered a pull request.
 - **Changes**: the lines the session added and removed. Click it to open the session's diff. With no session changes, it counts the project's uncommitted files and opens [source control](/docs/source-control/git).
 - **The agent and model** the session runs on.
 - **Usage**: the context window, tokens and cost.
-- **Capture**: whether [session capture](/docs/source-control/capture) is recording this project. Click it to set capture up without leaving the overlay.
+- **Capture**: whether [session capture](/docs/source-control/capture) is recording this project. Click it to set capture up without leaving the card.
+- **Lineage**: the session this one was branched from with **Branch from here**, the sessions branched from it, and the agents it delegated work to. Click a session to open it.
 
-A dot on the button shows capture's state while it records: green when it is on, amber when it is degraded, red when it has stopped. Press <Kbd>⌘⌥C</Kbd>, or run **Open Session Capture** from the command palette, to open the overlay straight on Capture.
+A dot on the button shows capture's state while it records: green when it is on, amber when it is degraded, red when it has stopped. Press <Kbd>⌘⌥C</Kbd>, or run **Open Session Capture** from the command palette, to open the card straight on Capture.
 
 ## See your team's comments
 
