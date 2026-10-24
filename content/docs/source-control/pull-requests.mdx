@@ -40,7 +40,7 @@ The list is split into **Authored** (yours), **Review requested** (waiting on yo
 - **Sort** orders by merge readiness, blocked on you, recently updated, newest, oldest, largest or smallest.
 - The filter menu narrows by author, label, draft, review state and checks.
 
-Atlas remembers the filters and the sort. Long lists load more as you scroll.
+Atlas remembers the filters and the sort. Long lists load more as you scroll. With a review state or checks filter on, Atlas loads three pages on its own and then shows **Load more**, so a filter that matches little doesn't page through the whole repository. If a page fails to load, the end of the list says so and offers **Retry**.
 
 ## Link a pull request to a session
 
@@ -50,6 +50,10 @@ A session keeps a list of the pull requests that belong to it. A pull request jo
 - Atlas finds one on the session's branch
 - you link it: choose **Link a pull request…** from the session's **⋯** menu in the sidebar or from the session context card, then paste its URL, type its number, or pick one of the repository's open pull requests
 - the agent links it with the `link_pull_request` tool
+
+A URL has to name the session's own repository, on the same host. Atlas takes no URL until it has read which repository the session is in; **Link** stays off with a note until then.
+
+Selecting a linked pull request in the sidebar opens its tab. One from another repository opens on GitHub instead.
 
 Unlink one from the session's **⋯** menu, under **Unlink pull request**. A pull request found on the branch stays unlinked after you remove it.
 
@@ -83,7 +87,9 @@ The header folds into one line as you scroll down the tab.
 
 **Guide** is a tour of the change written by an agent: numbered stops through the code in reading order, each with a short explanation, the lines that matter, notes on specific lines, the other files that belong to it, and the decisions only a maintainer can make. Use it to understand a large pull request before you review it line by line.
 
-Press **Write guide** to have your default agent write one. The agent works in its own read-only checkout of the pull request's head, so your branches and working tree are left alone. A large change takes a few minutes. You can leave the tab while it runs, and Atlas tells you when the guide is ready. If the agent asks for permission to run something, the request appears in the Guide tab, because the agent's session isn't shown anywhere else.
+Press **Write guide** to have your default agent write one. The agent works in its own read-only checkout of the pull request's head, so your branches and working tree are left alone. A large change takes a few minutes. You can leave the tab while it runs, and Atlas tells you when the guide is ready. If the agent asks for permission to run something, the request appears in the Guide tab, with the full command or input it wants to run, because the agent's session isn't shown anywhere else.
+
+A pull request from a fork asks before the run starts. The fork's code is its author's, and it can include agent instructions or configuration written to steer the agent. Press **Write guide** to go ahead, and check each permission the agent asks for.
 
 Read the guide in order with <Kbd>J</Kbd> and <Kbd>K</Kbd>, or pick a stop from the list on the left. Select a question under a stop, or **Ask about this stop**, to ask about it in a session.
 
@@ -118,6 +124,8 @@ With **All commits** picked, hover a line of the diff and press the button that 
 - **Comment now** to post it straight away.
 - **Add to review** to hold it until you submit a review. Held comments show on their lines, and the composer button shows how many are waiting.
 
+If new commits move a held comment's line out of the diff, GitHub would refuse the whole review. Such comments are listed above the files and in the composer, each with **Discard**, and the review can't be submitted until they're gone.
+
 ## Comment and review
 
 The round speech-bubble button at the bottom right opens the composer. Choose:
@@ -126,6 +134,10 @@ The round speech-bubble button at the bottom right opens the composer. Choose:
 - **Review** to submit a review that comments, approves, or requests changes. Line comments you added to the review from **Code** go with it.
 
 Press <Kbd>⌘↵</Kbd> to send and <Kbd>Esc</Kbd> to put the composer away.
+
+Unsent work stays with the tab when you switch to another tab and back: the comment, the review summary, an open line comment, and the commit picked in **Code**. Sending clears it, and closing the tab discards it.
+
+If the description changes on GitHub while you're editing it, the editor keeps your text and offers **Reload** or **Keep mine**.
 
 ## Hand it to an agent
 
