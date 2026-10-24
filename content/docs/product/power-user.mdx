@@ -65,6 +65,16 @@ These are Atlas's default shortcuts, with macOS labels. On Windows and Linux, <K
 
 The terminal and the knowledge base have their own shortcuts while they have focus. See [Terminal](/docs/product/terminal#stop-or-split-work) and [Knowledge base](/docs/context/knowledge-base#write-a-note).
 
+## Command palette
+
+Press <Kbd>⌘K</Kbd> to open the command palette. It opens on **Actions**, which covers a new session in the current project, a new session in another project, going to a file, searching the project, adding or creating a project, changing the theme or appearance, pull requests, Usage and Settings. **Recent Sessions** comes next. Each session shows its project, whether it runs locally or in a worktree, its agent and how long ago it was last active. Below that are the project, open, layout and split commands.
+
+Type to search actions, projects and sessions together. A session whose title matches comes before one that only matches its project, and newer sessions come first. Start the query with `>` to search commands only. A row with an arrow, such as **Change theme** or **New session in…**, opens a list of its own. Press <Kbd>Backspace</Kbd> on an empty query, or <Kbd>Esc</Kbd>, to go back. Use <Kbd>↑</Kbd> and <Kbd>↓</Kbd> to move, <Kbd>Enter</Kbd> to run the highlighted row, and <Kbd>Esc</Kbd> to close the palette.
+
+## Go to file
+
+Press <Kbd>⌘P</Kbd>, or choose **Go to file** in the command palette, to find a file in the current project by name or path. Before you type, it lists the files open in tabs, then the files you opened recently. Each file shows its [icon theme](/docs/themes/icon-themes) icon, and the matched letters are in bold. **Reindex** rebuilds the file list. If you opened it from the command palette, <Kbd>Esc</Kbd> takes you back to the palette with your query as you left it.
+
 ## Menu bar
 
 Every command in the menus is also an action you can bind. On macOS the menus sit in the system menu bar: **Atlas**, **File**, **Edit**, **View**, **Window** and **Help**. On Windows and Linux the same menus are in Atlas's window bar. Each item shows the shortcut you have bound to it, so a binding you change in **Settings → Keybindings** shows up in the menu at once.
