@@ -75,13 +75,15 @@ Choose what to compare at the top left:
 - **Uncommitted**: your working tree against `HEAD`, staged and unstaged together, with new files shown as added.
 - **Branch**: everything on your branch since it left the base branch. Atlas picks the base automatically, or you can choose one under **Compare against**.
 - **This session**: what the open session changed.
-- **Latest turn**, or a numbered turn under **Turn**: what one turn of the session changed. Turns that only read files are left out of the list. A turn shows the agent's own edits, so changes made by commands it ran are not included, and a file Atlas only saw part of is labelled **Excerpt**.
+- **Latest turn**, or a numbered turn under **Turn**: what one turn of the session changed. **Turn** lists each turn with the time it ended, newest first, and hovering a turn shows the prompt that started it. Turns that only read files are left out of the list. A turn shows the agent's own edits, so changes made by commands it ran are not included, and a file Atlas only saw part of is labelled **Excerpt**.
 
-The toolbar steps to the **Previous change** and **Next change**, and switches between a split and a unified view. It can also wrap lines, hide whitespace changes, and collapse every file to its header. The changed-files tree on the right jumps to a file; drag its edge to resize it, and Atlas remembers the width. The copy button beside a file's path copies it.
+Each changed file is a row: a chevron, an icon for how it changed (modified, added, deleted or renamed), its path, a button that copies the path, and the lines removed and added. Click the path to open the file. Click anywhere else on the row to fold or unfold its diff. Unchanged lines between changes are folded into a band that says how many lines it hides.
+
+The toolbar shows the total lines added and removed. It can collapse or expand every file, switch between a stacked and a split view, wrap lines, and hide whitespace changes. When the panel is narrow, the view, wrap and whitespace options move into one **Diff options** menu. Press `⌘F` to search the diff. The file-tree button opens a tree of the changed files beside the diff. Click a file in the tree to jump to it. Drag the tree's edge to resize it, and Atlas remembers the width.
 
 The panel keeps up as an agent edits, without losing your place. A very large file shows its first hunks with a note that it is partial, and its line counts still include every change. A binary file is listed but not shown.
 
-A turn that changed files ends on a card listing them as a tree, with the lines added and removed. Click a file, or **Open diff**, to see that turn in the review panel. Right-click a file to show its diff, open it, or copy its path. A renamed file is listed under its new name, with the old one in its tooltip. Because the card is built from the agent's own edits, it stays correct after you commit.
+A turn that changed files ends on a card listing them as a tree, with the lines added and removed. The expand button opens every folder at once. Click a file, or **Open diff**, to see that turn in the review panel. Right-click a file to show its diff, open it, or copy its path. A renamed file is listed under its new name, with the old one in its tooltip. Because the card is built from the agent's own edits, it stays correct after you commit.
 
 ## Handle failures
 
