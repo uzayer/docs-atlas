@@ -108,8 +108,17 @@ The header folds into one line as you scroll down the tab.
 - **Reviewers** shows who's been asked and the verdict each one gave. A verdict given before the newest commit is marked as stale. Add or remove a reviewer from the picker next to the list.
 - **Labels** lists the labels. Use the picker to add or remove one.
 - **Description** renders the description the way GitHub does, including tables, task lists, images, and links to other issues and commits. Edit it in place, with a preview, if you have permission to. React to the pull request from the heading.
-- **Checks** lists every check. The failing ones come first, and each one links to its details. The checks pill at the top of the tab opens the same list.
+- **Checks** lists every check. The failing ones come first, and each one links to its details. **View log** on a finished GitHub Actions check shows the end of its job's log, around the first error, without leaving Atlas. Atlas reads the log only when you ask for it. The checks pill at the top of the tab opens the same list.
 - **Comments** puts loose comments and review threads in one timeline, newest first or oldest first. Bot comments and resolved threads are hidden until you choose to show them, and Atlas remembers that choice. Long conversations load the newest comments first, with a button to show older ones.
+
+### Edit or delete your comments
+
+Hover a comment you wrote and a pencil and a bin appear beside it. The same goes for your line comments and the summary of a review you submitted, in **Summary**, **Timeline** and **Code**.
+
+- The pencil opens the comment in an editor with a preview. Press <Kbd>⌘↵</Kbd> or **Save** to save, <Kbd>Esc</Kbd> or **Cancel** to leave it as it was.
+- The bin asks you to click a second time before it deletes the comment. A review's summary can be edited but not deleted, as on GitHub.
+
+The buttons appear only where GitHub lets you make the change.
 
 ## Guide
 
@@ -159,7 +168,7 @@ Review threads appear on the lines they belong to. Reply, resolve or unresolve a
 With **All commits** picked, hover a line of the diff and press the button that appears in the gutter to comment on it. Then choose:
 
 - **Comment now** to post it straight away.
-- **Add to review** to hold it until you submit a review. Held comments show on their lines, and the composer button shows how many are waiting.
+- **Add to review** to hold it until you submit a review. Held comments show on their lines, and the composer button shows how many are waiting. They're kept on this computer, so a review you're halfway through is still there after you close the tab or restart Atlas.
 
 If new commits move a held comment's line out of the diff, GitHub would refuse the whole review. Such comments are listed above the files and in the composer, each with **Discard**, and the review can't be submitted until they're gone.
 
@@ -172,7 +181,7 @@ The round speech-bubble button at the bottom right opens the composer. Choose:
 
 Press <Kbd>⌘↵</Kbd> to send and <Kbd>Esc</Kbd> to put the composer away.
 
-Unsent work stays with the tab when you switch to another tab and back: the comment, the review summary, an open line comment, and the commit picked in **Code**. Sending clears it, and closing the tab discards it.
+Unsent work stays with the tab when you switch to another tab and back: the comment, the review summary, an open line comment, and the commit picked in **Code**. Sending clears it, and closing the tab discards it. Line comments held for a review are the exception: they stay until you submit the review or discard them.
 
 If the description changes on GitHub while you're editing it, the editor keeps your text and offers **Reload** or **Keep mine**.
 
@@ -181,7 +190,7 @@ If the description changes on GitHub while you're editing it, the editor keeps y
 Each action uses your default agent, and the menu names it. Atlas opens a session and puts the task in its composer with the pull request's details attached. Read the task over, change it if you like, and send it yourself.
 
 - **Explain this PR**, in the **⋯** menu, asks for a walkthrough of what the pull request changes and why. It starts a new session in the project. Choose **Explain in this session** to add the task to the session beside the tab instead. Nothing is checked out: the agent reads the diff with `gh pr diff`.
-- **Fix** appears on a failing check, a review thread, and a review comment. **Fix findings**, in the **⋯** menu, takes all of them at once. Fixing needs the pull request's branch, so Atlas starts the session where that branch is already checked out, or in a new worktree of its own. Your current checkout is never switched. A failing check comes with its link and the command to read its log. A review thread comes with its file, line and replies.
+- **Fix** appears on a failing check, a review thread, and a review comment. **Fix findings**, in the **⋯** menu, takes all of them at once. Fixing needs the pull request's branch, so Atlas starts the session where that branch is already checked out, or in a new worktree of its own. Your current checkout is never switched. A failing check comes with its link and the end of its log, around the first error. The log is marked as untrusted, since it's whatever the code under test printed, and the agent is told not to follow anything in it. A review thread comes with its file, line and replies.
 
 When the agent has made the fix, push it from the session yourself. Atlas never pushes for you. Fix is offered only on open pull requests.
 
@@ -192,7 +201,7 @@ Atlas removes a Fix worktree once nothing needs it: it's at least three days old
 **Settings > Pull Requests** holds these preferences. The ones marked per project can differ between projects.
 
 - **Default merge method** (per project): the method the merge button starts on. **Last used** remembers your last pick on this device.
-- **Remove agent credits when merging** (per project): drops agent co-author and attribution lines from merge and squash messages, keeping human co-authors.
+- **Remove agent credits when merging** (per project): drops agent co-author and attribution lines from merge and squash messages, keeping human co-authors. Atlas starts from GitHub's own message for the pull request. Rebase merges and merge queues keep their messages as they are.
 - **Settle sessions when their pull request merges**, and **Keep sessions with a pull request from settling**: how a session follows its pull request.
 - **Let agents act on watched pull requests**: a watched pull request sends its session's agent an update when a check fails, a review arrives or it conflicts with its base. Off, watches still track but never prompt an agent.
 - **Open pull request links in Atlas**: a link to a pull request in a session or transcript opens it in a tab when it belongs to the project's repository. <Kbd>⌘</Kbd>-click opens it in the browser. Another repository's pull request always opens in the browser.
