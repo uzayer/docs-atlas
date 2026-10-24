@@ -1,4 +1,4 @@
 {
   "title": "Source Control",
-  "pages": ["capture", "git", "issues", "self-healing"]
+  "pages": ["capture", "git", "pull-requests", "issues", "self-healing"]
 }

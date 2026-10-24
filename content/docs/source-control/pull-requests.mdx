@@ -1,0 +1,63 @@
+---
+title: Pull Requests
+description: Read, review and merge a GitHub pull request in a tab beside the session.
+icon: GitPullRequestArrow
+---
+
+A pull request opens in its own tab in the [surfaces pane](/docs/product/power-user#surfaces), beside the session that made it. From that tab you can read it, review it, and merge it without switching to a browser.
+
+## Before you start
+
+Atlas talks to GitHub through the GitHub CLI and uses the account it's signed in to. Install [`gh`](https://cli.github.com) and run `gh auth login` once. Atlas never asks for a token of its own.
+
+If `gh` is missing, signed out, rate limited, or GitHub can't be reached, the tab says which one it is. It offers **Retry** and **Open on GitHub**, and when you hit the rate limit it counts down to the reset.
+
+## Open a pull request
+
+- select the pull request badge on a session in the sidebar, or its hover card
+- select a pull request row in the [session context](/docs/product/chat#session-context) card
+- create one with **Create PR**: its tab opens when GitHub confirms it
+
+Opening a pull request that's already open focuses its tab. A second pull request opens in the same column as the first, so you can read down a list in one place. The tabs are saved with the project's layout and come back when you restart Atlas.
+
+## The header
+
+The header shows the repository, the number (select it to open the pull request on GitHub), the title, the author, and when it last changed. The branch row shows the base and head branches, the files changed, and the lines added and removed. **gh pr checkout** copies the command that checks the branch out.
+
+- **Edit the title** by selecting it, if you have permission to.
+- **Update the branch** when it's behind its base: a warning appears on the base branch, and it offers a merge or a rebase.
+- **Merge** from the button at the top right. It changes with where the pull request stands: **Ready for review** on a draft, a **Conflicts** badge when it conflicts with its base, **Auto-merge** while checks are still running, and the merge method (**Merge**, **Squash and merge** or **Rebase and merge**) when everything is green. Once auto-merge is on, the button says so.
+
+The **⋯** menu has the rest: refresh, mark as draft or ready, merge now, turn auto-merge on or off, choose the merge method, open on GitHub, copy the link or number, close or reopen, and delete the branch once the pull request is merged or closed. Atlas remembers the last merge method you picked.
+
+Merging, enabling auto-merge, closing and deleting a branch ask for a second click before they happen.
+
+The header folds into one line as you scroll down the tab.
+
+## Summary
+
+**Summary** is the first of the tab's views.
+
+- **Reviewers** shows who's been asked and the verdict each one gave. A verdict given before the newest commit is marked as stale. Add or remove a reviewer from the picker next to the list.
+- **Labels** lists the labels. Use the picker to add or remove one.
+- **Description** renders the description the way GitHub does, including tables, task lists, images, and links to other issues and commits. Edit it in place, with a preview, if you have permission to. React to the pull request from the heading.
+- **Checks** lists every check. The failing ones come first, and each one links to its details. The checks pill at the top of the tab opens the same list.
+- **Comments** puts loose comments and review threads in one timeline, newest first or oldest first. Bot comments and resolved threads are hidden until you choose to show them, and Atlas remembers that choice. Long conversations load the newest comments first, with a button to show older ones.
+
+## Comment and review
+
+The round speech-bubble button at the bottom right opens the composer. Choose:
+
+- **Comment** to post a comment. You can also close or reopen the pull request with it.
+- **Review** to submit a review that comments, approves, or requests changes.
+
+Press <Kbd>⌘↵</Kbd> to send and <Kbd>Esc</Kbd> to put the composer away.
+
+## On the way
+
+**Timeline** and **Code** are coming: the pull request's events in order, and its diff with line comments you can review in place.
+
+## Next
+
+- [Git & Diff](/docs/source-control/git): stage and commit before you open a pull request
+- [Sessions](/docs/product/chat): the session context card and its pull requests
