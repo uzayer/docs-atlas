@@ -97,13 +97,18 @@ Press <Kbd>⌘⌥Space</Kbd> and Atlas puts a short label on every button, tab a
 
 The bar along the top of the window is made of the columns' own headers.
 
-The main column holds the session you are working in. Its header shows where you are, `organization / project / session title`, and never shows tabs. Switch sessions from the sidebar; click the session title to search for one. The header's buttons, from the left, show or hide [team chat](/docs/team/chat), show or hide the [session context](/docs/product/chat#session-context) card, and show or hide the surfaces pane.
+The main column holds the session you are working in. Its header shows where you are, `organization / project / session title`, and never shows tabs. Switch sessions from the sidebar; click the session title to search for one. The header's buttons, from the left, show or hide [team chat](/docs/team/chat), show or hide the [session context](/docs/product/chat#session-context) card, and, while the surfaces pane is hidden, show it again.
 
 Every tool opens in one of two places. A **surface** is a tool you use beside the session, as a tab in the surfaces pane: the editor, terminals, the browser, diffs, source control, team chat, PDFs and media, logs and prompt drafts. A **destination** is a full page you go to: Timeline, Usage, Knowledge, the knowledge graph, Memory and Spaces.
 
 ### Surfaces
 
-Files, editors, terminals, the browser, team chat and the other surfaces open in the surfaces pane beside the session. It has its own tab strip, a **+** menu for opening another surface, and an **Expand pane** button that gives it the whole center of the window, in place of the session, until you choose **Restore pane**. Hiding the pane keeps its tabs running. Each surface has a minimum width, so a column will not resize narrower than its tool can use; team chat's is 320px.
+Files, editors, terminals, the browser, team chat and the other surfaces open in the surfaces pane beside the session. It has its own tab strip and a **+** menu for opening another surface. Middle-click a tab to close it, or right-click it to close it, the others, the ones to its right or all of them, or to copy a file's path. The strip ends in three buttons:
+
+- **Maximize panel** gives the pane the whole center of the window, in place of the session, until you choose **Restore panel size**.
+- **Dock panel at the bottom** and **Dock panel on the right** put the pane under or beside the session. Atlas remembers where you put it. Click the lit one to hide the pane.
+
+Hiding the pane keeps its tabs running. Each surface has a minimum width, so a column will not resize narrower than its tool can use; team chat's is 320px.
 
 Press <Kbd>⌘T</Kbd> to open a surface. Atlas opens the pane if it is closed, then shows the list of surfaces. Press a single letter to pick one:
 

@@ -20,7 +20,7 @@ Some files can also be shown rendered. Use the toggle beside the file's path to 
 
 ## Move around with the path
 
-The tab names the file. The row below it shows the file's path, from the project down to the file, with the file's buttons on the right. The project tree beside the file shares that row.
+The tab names the file. The row below it shows the file's path, from the project down to the file, and the file's buttons on the right: **Open in** your editor, the rendered view for Markdown, CSV and HTML, word wrap, and the project tree. The tree sits on the right of the file, under that row.
 
 - Click a folder in the path to find it in the tree. If the tree is hidden, it opens. The rest of the path stays, dimmed, so you can click back down to the file.
 - Click the arrow after a folder to list what's in it, and pick a file to open it.
@@ -33,6 +33,8 @@ If the row is too narrow, the path scrolls sideways and keeps the folder you're 
 Click into a file and type to edit it. A dot on the file's tab marks unsaved changes. If you undo back to what is on disk, the dot clears. Press <Kbd>⌘S</Kbd> to save. Atlas never saves for you. If a save fails, for example because the file is read-only, Atlas shows the error and keeps your edits.
 
 Closing a tab with unsaved changes asks first: **Save**, **Don't save**, or **Cancel**. Escape cancels. If the save fails, the tab stays open.
+
+Point at a line number and click **+** to put a reference to that line, such as `src/app.ts:12`, in the session's composer. Drag down the line numbers to send a range.
 
 Press <Kbd>⌘F</Kbd> to find in the file. In a large read-only file, it opens a simple find bar that jumps between matches. Both shortcuts can be changed under **File** in [Settings → Keybindings](/docs/product/settings#keybindings).
 
@@ -51,7 +53,7 @@ For a file Atlas cannot display, choose **Open in Default App** from the explore
 
 ## Open in your editor
 
-Atlas finds the editors installed on your computer, such as VS Code, Cursor, Zed, Windsurf, Sublime Text, the JetBrains IDEs and Xcode. **Open in**, beside the file's path, opens the file in your editor at the cursor's line; its arrow lists the others. The explorer's context menu and the command palette (**Open file in …**, **Open project in …**, named for your editor) do the same. Choose which editor with **Preferred editor** in [Settings → General](/docs/product/settings#general). **Automatic** uses the first editor Atlas finds. If an editor fails to start, Atlas shows its error.
+Atlas finds the editors installed on your computer, such as VS Code, Cursor, Zed, Windsurf, Sublime Text, the JetBrains IDEs and Xcode. **Open in**, the editor's icon beside the file's path, opens the file in your editor at the cursor's line; its arrow lists the others. The explorer's context menu and the command palette (**Open file in …**, **Open project in …**, named for your editor) do the same. Choose which editor with **Preferred editor** in [Settings → General](/docs/product/settings#general). **Automatic** uses the first editor Atlas finds. If an editor fails to start, Atlas shows its error.
 
 <Screenshot alt="A PDF open in an Atlas tab with the annotation toolbar showing Select, Highlight, Draw, Note and Erase, and a highlighted passage on the page." caption="Annotating a PDF." />
 
@@ -67,7 +69,7 @@ Atlas never overwrites unsaved work.
 
 ## Work side by side
 
-Press <Kbd>⌘\\</Kbd> to split the surfaces pane into another column, so two files sit side by side. Choose **Expand pane** in the pane's header to give the editor the whole center of the window. See [Power user](/docs/product/power-user#tabs-and-splits) for moving between splits.
+Press <Kbd>⌘\\</Kbd> to split the surfaces pane into another column, so two files sit side by side. Choose **Maximize panel** at the right end of the pane's tabs to give the editor the whole center of the window. See [Power user](/docs/product/power-user#tabs-and-splits) for moving between splits.
 
 ## Change the look
 

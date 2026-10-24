@@ -12,11 +12,13 @@ The tree stays quick in very large projects. It loads a folder the first time yo
 
 Type in **Search files** at the top of the tree. The tree narrows to the files whose path contains what you typed, with their folders opened and the match in bold. Press <Kbd>↓</Kbd> to move into the results and <Kbd>Esc</Kbd> to clear the search. Opening a result keeps the search in the tree beside that file.
 
-Refresh and **Collapse All** sit on the same row. A chain of folders that each hold a single folder shows as one row, such as `vendor / atlas-engine`.
+Refresh and **Collapse All** sit on the same row. New files and folders are on the [context menu](#use-the-context-menu). A chain of folders that each hold a single folder shows as one row, such as `vendor / atlas-engine`.
 
 ## Open a file
 
-Click a file to open it in a tab. The tab keeps the project tree beside the file, with the file highlighted, so you can move on to the next one from there. Hide the tree with **Hide file tree** and Atlas remembers the choice. A file outside the project opens without the tree.
+Click a file to open it in a tab. The file takes the Files tab's place, and the tree moves to the right of the file, with the file highlighted, so you can move on to the next one from there. Each file after that opens in a tab of its own beside the first; a file that already has a tab brings that tab forward.
+
+It is the same tree throughout. Moving between the Files tab and your file tabs keeps its scroll position, your search and the folders you opened. Hide it with the tree button at the right end of the file's header and Atlas remembers the choice. A file outside the project opens without the tree.
 
 A file with uncommitted changes shows its added and removed lines. Right-click it and choose **Open Changes** to jump to its diff in the [review panel](/docs/source-control/git#read-a-diff).
 
