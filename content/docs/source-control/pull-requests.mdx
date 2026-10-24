@@ -28,7 +28,7 @@ The header shows the repository, the number (select it to open the pull request 
 - **Update the branch** when it's behind its base: a warning appears on the base branch, and it offers a merge or a rebase.
 - **Merge** from the button at the top right. It changes with where the pull request stands: **Ready for review** on a draft, a **Conflicts** badge when it conflicts with its base, **Auto-merge** while checks are still running, and the merge method (**Merge**, **Squash and merge** or **Rebase and merge**) when everything is green. Once auto-merge is on, the button says so.
 
-The **⋯** menu has the rest: refresh, mark as draft or ready, merge now, turn auto-merge on or off, choose the merge method, open on GitHub, copy the link or number, close or reopen, and delete the branch once the pull request is merged or closed. Atlas remembers the last merge method you picked.
+The **⋯** menu has the rest: refresh, the [agent actions](#hand-it-to-an-agent), mark as draft or ready, merge now, turn auto-merge on or off, choose the merge method, open on GitHub, copy the link or number, close or reopen, and delete the branch once the pull request is merged or closed. Atlas remembers the last merge method you picked.
 
 Merging, enabling auto-merge, closing and deleting a branch ask for a second click before they happen.
 
@@ -43,6 +43,16 @@ The header folds into one line as you scroll down the tab.
 - **Description** renders the description the way GitHub does, including tables, task lists, images, and links to other issues and commits. Edit it in place, with a preview, if you have permission to. React to the pull request from the heading.
 - **Checks** lists every check. The failing ones come first, and each one links to its details. The checks pill at the top of the tab opens the same list.
 - **Comments** puts loose comments and review threads in one timeline, newest first or oldest first. Bot comments and resolved threads are hidden until you choose to show them, and Atlas remembers that choice. Long conversations load the newest comments first, with a button to show older ones.
+
+## Guide
+
+**Guide** is a tour of the change written by an agent: numbered stops through the code in reading order, each with a short explanation, the lines that matter, notes on specific lines, the other files that belong to it, and the decisions only a maintainer can make. Use it to understand a large pull request before you review it line by line.
+
+Press **Write guide** to have your default agent write one. The agent works in its own read-only checkout of the pull request's head, so your branches and working tree are left alone. A large change takes a few minutes. You can leave the tab while it runs, and Atlas tells you when the guide is ready. If the agent asks for permission to run something, the request appears in the Guide tab, because the agent's session isn't shown anywhere else.
+
+Read the guide in order with <Kbd>J</Kbd> and <Kbd>K</Kbd>, or pick a stop from the list on the left. Select a question under a stop, or **Ask about this stop**, to ask about it in a session.
+
+Atlas keeps each guide with the commit it was written for, so it's still there after a restart. When new commits are pushed, the guide says it was written before the latest push and offers **Rewrite**. **Write guide** and **Rewrite guide** are also in the **⋯** menu.
 
 ## Timeline
 
@@ -81,6 +91,15 @@ The round speech-bubble button at the bottom right opens the composer. Choose:
 - **Review** to submit a review that comments, approves, or requests changes. Line comments you added to the review from **Code** go with it.
 
 Press <Kbd>⌘↵</Kbd> to send and <Kbd>Esc</Kbd> to put the composer away.
+
+## Hand it to an agent
+
+Each action uses your default agent, and the menu names it. Atlas opens a session and puts the task in its composer with the pull request's details attached. Read the task over, change it if you like, and send it yourself.
+
+- **Explain this PR**, in the **⋯** menu, asks for a walkthrough of what the pull request changes and why. It starts a new session in the project. Choose **Explain in this session** to add the task to the session beside the tab instead. Nothing is checked out: the agent reads the diff with `gh pr diff`.
+- **Fix** appears on a failing check, a review thread, and a review comment. **Fix findings**, in the **⋯** menu, takes all of them at once. Fixing needs the pull request's branch, so Atlas starts the session where that branch is already checked out, or in a new worktree of its own. Your current checkout is never switched. A failing check comes with its link and the command to read its log. A review thread comes with its file, line and replies.
+
+When the agent has made the fix, push it from the session yourself. Atlas never pushes for you. Fix is offered only on open pull requests.
 
 ## Next
 
