@@ -87,6 +87,33 @@ Unlink one from the session's **⋯** menu, under **Unlink pull request**. A pul
 
 Linked pull requests are kept current in the background: every minute while Atlas is in front, when you come back to the window, and when a turn ends. Open ones are checked most often, quiet and closed ones less, and merged ones not at all. A linked pull request that no longer exists is checked less and less often. The background checks pause while less than a tenth of your GitHub quota is left, so what you open yourself still loads. When GitHub's rate limit is reached, Atlas waits for the reset.
 
+## Watch a pull request
+
+A session's agent can ask Atlas to watch one of its pull requests with the `watch_pull_request` tool. The agent doesn't have to keep checking, and the session isn't left waiting on it. Atlas checks a watched pull request every two minutes, even while its window is hidden. When something needs the agent, Atlas sends the session a message:
+
+- a check fails, is cancelled or needs action
+- the required checks pass (all the checks, if none are required)
+- someone other than you comments, reviews or replies, after the watch started
+- the branch starts to conflict with its base
+
+The message appears in the session as its own row, marked **Pull request watch**, rather than as something you typed. Open **Details** to see the full message the agent got. If the session isn't open, Atlas opens it first. If the agent is busy with a turn, the message waits until the turn ends, after anything you queued. If the session is in another tab, Atlas sends a **Pull request watch updates** notification. While Atlas watches one of a session's pull requests, the session shows as working in the sidebar.
+
+A watch ends when:
+
+- the pull request merges or closes
+- the session settles
+- you press **Stop** in the session
+- the agent calls `unwatch_pull_request`
+- Atlas fails to read the pull request 8 times in a row (a GitHub rate limit only delays it)
+
+The agent also gets a short note after 10 comment-only updates in a row, and the watch ends there.
+
+The agent's other tools are `unlink_pull_request` and `list_session_pull_requests`. The list shows each linked pull request's state and checks, and how they stack on one another.
+
+### Settle on merge
+
+When a session's pull request merges, Atlas settles the session, unless something is still running in it. Turn this off with **Settle sessions when their pull request merges** in [Settings](#settings). **Keep sessions with a pull request from settling** keeps a session with any linked pull request from settling because it has been idle. A session with a watched pull request never settles that way.
+
 ## The header
 
 The header shows the repository, the number (select it to open the pull request on GitHub), the title, the author, and when it last changed. The branch row shows the base and head branches, the files changed, and the lines added and removed. **gh pr checkout** copies the command that checks the branch out.
@@ -203,7 +230,7 @@ Atlas removes a Fix worktree once nothing needs it: it's at least three days old
 - **Default merge method** (per project): the method the merge button starts on. **Last used** remembers your last pick on this device.
 - **Remove agent credits when merging** (per project): drops agent co-author and attribution lines from merge and squash messages, keeping human co-authors. Atlas starts from GitHub's own message for the pull request. Rebase merges and merge queues keep their messages as they are.
 - **Settle sessions when their pull request merges**, and **Keep sessions with a pull request from settling**: how a session follows its pull request.
-- **Let agents act on watched pull requests**: a watched pull request sends its session's agent an update when a check fails, a review arrives or it conflicts with its base. Off, watches still track but never prompt an agent.
+- **Let agents act on watched pull requests**: a watched pull request sends its session's agent an update when a check fails, a review arrives or it conflicts with its base. With this off, Atlas doesn't check watched pull requests, never prompts an agent, and won't start new watches. See [Watch a pull request](#watch-a-pull-request).
 - **Open pull request links in Atlas**: a link to a pull request in a session or transcript opens it in a tab when it belongs to the project's repository. <Kbd>⌘</Kbd>-click opens it in the browser. Another repository's pull request always opens in the browser.
 - **Review guides**, **Guide agent**, **Guide model** and **Guide instructions** (per project): see [Guide](#guide). Your instructions shape what the guide shows first and dwells on, but its format and its coverage of every changed file stay the same.
 
