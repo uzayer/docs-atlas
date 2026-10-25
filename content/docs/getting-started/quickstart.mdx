@@ -13,9 +13,16 @@ Download Atlas for macOS, Windows or Linux and open it. See [Install](/docs/gett
 
 ## 2. Add a project
 
-Press <Kbd>⌘⇧N</Kbd> (**Add project…**) or select **Open Folder** on the welcome screen, then pick a folder. That folder becomes a [project](/docs/getting-started/concepts#project) in the sidebar. Atlas asks you to configure nothing first.
+Press <Kbd>⌘⇧N</Kbd> (**Add project**) or select **Open Folder** on the welcome screen. **Add project** opens in the command palette and offers four sources:
 
-You can also add projects from **Add project** in the project picker at the top of the sidebar, which lists your recent projects. On macOS, `atlas .` from a terminal opens the current folder (see [Install](/docs/getting-started/install)).
+- **New project**: give it a name and Atlas creates the folder in `~/.atlas/projects` with an empty Git repository. Check **Create private repository on GitHub** to publish it as well.
+- **Local folder**: browse to a folder, or type a path such as `~/code/app`. <Kbd>⌘Enter</Kbd> adds the folder you are in.
+- **Git URL**: paste a clone URL and Atlas clones it into `~/.atlas/projects`.
+- **GitHub repository**: type `owner/repo` to clone it with the GitHub CLI, so private repositories work too.
+
+The folder becomes a [project](/docs/getting-started/concepts#project) in the sidebar. Atlas asks you to configure nothing first. The GitHub sources need the GitHub CLI (`gh`). When it is missing or signed out, they say **Setup required**, and choosing one walks you through installing it and signing in.
+
+You can also choose **Add project** in the project picker at the top of the sidebar. On macOS, `atlas .` from a terminal opens the current folder (see [Install](/docs/getting-started/install)).
 
 Atlas keeps its per-project data in a `.atlas/` directory and adds `.atlas/` to the project's `.gitignore` for you.
 
