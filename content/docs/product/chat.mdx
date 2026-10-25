@@ -138,6 +138,8 @@ When Atlas Agent needs an answer to continue, it asks you in the session and wai
 
 Stop is always available. For a transient provider failure, Atlas shows the retry countdown and the reason.
 
+If Atlas quits, crashes or restarts to update while an agent is in the middle of a turn, the next launch opens that session and tells the agent to continue where it left off. The transcript marks it with **Atlas restarted and resumed this turn**. Settled and snoozed sessions are left alone, and a turn that keeps getting cut short is let go after three tries in a row. Turn this off with **Continue sessions after a restart** in Settings → Sessions.
+
 ## Review the result
 
 While the agent works, the turn shows how long it has been working and what it is doing right now. A thought shows open while the agent is in it, its newest lines in view, and folds to one line once the agent moves on. A running command is named by its program, such as **Running cargo**. Calls to an MCP server are counted per server, such as "Used browser 2 times". When it finishes, its work folds behind **Worked for** and the time, leaving the answer in view. Each block of tool calls is summarised by what it did, such as "Ran 3 commands and read 2 files", and a call that failed stays in view after the fold. Select **Worked for** to see every step, with how long each one took. A turn you stop reads **Stopped after** instead, with the time it ran.
