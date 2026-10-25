@@ -77,13 +77,17 @@ Every conversation stays in your history either way. Turn on **Save to memory be
 
 The composer shows the controls the connected agent advertises, such as the permission mode, model and reasoning effort. Press <Kbd>⇧Tab</Kbd> to cycle the permission mode.
 
-<Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> adds a line. <Kbd>⌘Enter</Kbd> always sends. To make <Kbd>Enter</Kbd> add a line instead, turn off **Enter to send** in Settings → Sessions.
+<Kbd>Enter</Kbd> sends and <Kbd>⇧Enter</Kbd> or <Kbd>⌃J</Kbd> adds a line. <Kbd>⌘Enter</Kbd> always sends. To make <Kbd>Enter</Kbd> add a line instead, turn off **Enter to send** in Settings → Sessions.
+
+Lists continue on their own. On a line that starts with `- `, `1. `, `- [ ] ` or `> `, a new line carries the marker over, and a numbered list renumbers. A new line on an empty item ends the list. <Kbd>Tab</Kbd> and <Kbd>⇧Tab</Kbd> nest and unnest a list item; <Kbd>⌘]</Kbd> and <Kbd>⌘[</Kbd> indent any line.
 
 ### Add context
 
 Type `@` to mention context: files, folders, symbols, knowledge notes, pack components, repositories, other projects, branches, and earlier messages or sessions. In a project shared with your organization through cloud capture, you can also mention teammates, team conversations, recorded sessions and comments. Atlas shows larger references below your message so you can see what the agent receives.
 
 Paste more than 4,000 characters or 80 lines and the text becomes a chip in the composer, so your message stays readable. The agent still receives all of it, and editing a queued message keeps the chip.
+
+Paste, drop or pick an image and it becomes a chip in your sentence, with its name and size, and a thumbnail above the field when the agent accepts images. The two are one attachment: remove either and the other goes with it. A pasted screenshot is saved to a file first, so the agent gets the picture and a path it can open at full size.
 
 The **+** button in the composer adds context too:
 
@@ -201,13 +205,15 @@ The card holds:
 
 A dot on the button shows capture's state while it records: green when it is on, amber when it is degraded, red when it has stopped. Press <Kbd>⌘⌥C</Kbd>, or run **Open session capture** from the command palette, to open the card straight on Capture.
 
-## See your team's comments
+## Comment on a session
 
 <Video youtube="bDvUsOU3dyA" title="Reviewing agent work together" />
 
-When a session is shared with your organization through [cloud capture](/docs/source-control/capture), teammates can comment on it from the [timeline](/docs/team/timeline). Their comments appear on the matching messages in your session as they arrive.
+Comments live in the transcript. Click anywhere in a prompt or a response to start a thread about it; select a passage and choose **Comment** to start one about those words. The composer opens under the message. <Kbd>Enter</Kbd> posts, <Kbd>⇧Enter</Kbd> adds a line and <Kbd>Esc</Kbd> puts it away. Each thread sits under its message with the passage it is about quoted and marked in the text above. Reply, resolve or reopen a thread from the thread itself; a resolved thread folds to one line. The hover footer under a message has a comment button too.
 
-Click the comments button (speech bubble) on the Session card of the [session overview](#session-overview) to see every thread on the session, reply, or add a comment of your own. Each message and tool call has its own comment button too, which shows when you hover it.
+Every session can be commented on. On a session that is only on your machine, the comments stay there. When the session is shared with your organization through [cloud capture](/docs/source-control/capture), Atlas posts those threads to the team once, and from then on teammates can comment from the [timeline](/docs/team/timeline) and their comments appear on the matching messages as they arrive.
+
+On a shared session, the comments button (speech bubble) on the Session card of the [session overview](#session-overview) lists every thread on the session. Thinking steps and tool calls keep a comment button of their own, which shows when you hover them.
 
 <Screenshot src="/screenshots/product/agent-chat-comments.png" alt="A session with the comments panel open on the right, showing a teammate's comment thread anchored to one of the agent's responses." caption="Teammates' comments in a session." />
 
