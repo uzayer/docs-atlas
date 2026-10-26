@@ -16,7 +16,7 @@ If `gh` is missing, signed out, rate limited, or GitHub can't be reached, the ta
 
 - select the pull request badge on a session in the sidebar, or a line in its hover list
 - select a row in the session's [pull requests](#a-sessions-pull-requests) tab
-- select a pull request row in the [session context](/docs/product/chat#session-context) card
+- select a pull request row in the [session details](/docs/product/chat#session-details) card
 - select a row in the repository's [pull request list](#the-pull-request-list)
 - create one with **Create PR**: its tab opens when GitHub confirms it
 
@@ -28,7 +28,6 @@ Every pull request in the repository, in a tab of its own. Open it with any of t
 
 - press <Kbd>⌘T</Kbd> then <Kbd>P</Kbd>
 - run **Open pull requests** from the command palette
-- choose **View all pull requests** in the [session context](/docs/product/chat#session-context) card
 - open the project picker at the top of the sidebar and choose the project's **pull requests** item
 
 Each repository gets one list; opening it again focuses the tab.
@@ -77,7 +76,7 @@ A session keeps a list of the pull requests that belong to it. A pull request jo
 
 - the session opens it with **Create PR**
 - Atlas finds one opened from the session's branch in the session's own repository. A pull request from a fork that uses the same branch name isn't linked, and sessions on the repository's default branch (such as `main`) aren't searched
-- you link it: choose **Link a pull request…** from the session's right-click menu in the sidebar, from the session context card, or **+ Link** in the session's pull requests tab. Then paste its URL, type its number, or pick one of the repository's open pull requests
+- you link it: choose **Link a pull request…** from the session's right-click menu in the sidebar, or **+ Link** in the session's pull requests tab. Then paste its URL, type its number, or pick one of the repository's open pull requests
 - the agent links it with the `link_pull_request` tool
 
 A number is read in the session's repository. A URL can name any repository: Atlas looks for a checkout of it among the session's folder, the projects attached to the session, and every other project you've opened, and links it there. If none is a checkout of that repository, open it as a project first.
@@ -90,7 +89,7 @@ Linked pull requests are kept current in the background: every minute while Atla
 
 ## A session's pull requests
 
-Each session has a **Pull requests** tab listing everything linked to it. Open it by selecting the sidebar badge on a session with more than one, choosing **Show pull requests** from the session's right-click menu in the sidebar, or selecting **Session pull requests** in the [session context](/docs/product/chat#session-context) card.
+Each session has a **Pull requests** tab listing everything linked to it. Open it by selecting the sidebar badge on a session with more than one, or choosing **Show pull requests** from the session's right-click menu in the sidebar.
 
 Each row shows the pull request's state, number and title, an eye if Atlas is [watching](#watch-a-pull-request) it, its checks and review, how many lines it changes, and its branches. A pull request based on another one's branch is drawn indented under it, and the first row of the chain shows how many it holds. The footer counts the open and linked ones and says when Atlas last read them from GitHub.
 
@@ -99,7 +98,7 @@ Each row shows the pull request's state, number and title, an eye if Atlas is [w
 - Hold <Kbd>Shift</Kbd> for the same [quick actions](#quick-actions) as the pull request list.
 - **+ Link** links another one.
 
-The sidebar badge shows the number of a single pull request, or **+N** for several (a stack glyph when they form one chain). Hover it to list them. Selecting it opens the one pull request, or this tab when there are several. Right-click a pull request in the session context card for the same actions as the tab's rows.
+The sidebar badge shows the number of a single pull request, or **+N** for several (a stack glyph when they form one chain). Hover it to list them. Selecting it opens the one pull request, or this tab when there are several. Right-click a pull request in the session details card for the same actions as the tab's rows.
 
 ## Watch a pull request
 
@@ -278,4 +277,4 @@ When a guide finishes or stops with an error while you're looking elsewhere, Atl
 ## Next
 
 - [Git & Diff](/docs/source-control/git): stage and commit before you open a pull request
-- [Sessions](/docs/product/chat): the sidebar badge, the session context card and its pull requests
+- [Sessions](/docs/product/chat): the sidebar badge, the session details card and its pull requests

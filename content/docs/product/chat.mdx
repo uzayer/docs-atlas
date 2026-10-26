@@ -111,7 +111,7 @@ Atlas never attaches the root of your disk, your home folder, a system folder, o
 
 #### Manage attached projects
 
-The **Projects** section of the [session context](#session-context) card lists the session's own project first, marked **Main**, then each attached project with:
+The **Projects** section of the [session details](#session-details) card lists the session's own project first, marked **Main**, then each attached project with:
 
 - **Its access**: an eye for read-only, a pencil for read and write. Click it to switch.
 - **How it was attached**, such as by a mention or an approved request, and when, in its tooltip.
@@ -176,38 +176,29 @@ A column of short ticks down the left edge of a session marks its turns, one tic
 
 The column shows once a session has two turns. In a long session the ticks move closer together rather than running off the screen. When the window is too narrow to leave room beside the conversation, the column appears only while you hover the left edge. Turn it off with **Turn rail** in Settings → Appearance.
 
-## Session overview
+## Session details
 
-The session's name shows once, in the title bar. The session's own controls sit at the right end of the bar: the **⋯** menu, and the session overview button. They show only while a session is open.
+The session's name shows once, in the title bar. The session's own controls sit at the right end of the bar: the **⋯** menu, and the session details button (≡). They show only while a session is open.
 
-Click the session overview button for a card with the session's project and actions, the subagents it delegated to, the files it changed, and what it remembered. When the window is wide enough, the card docks at the top-right of the session, in room the conversation already leaves for it. It shows there by default; hide it with the button and it stays hidden for that session. In a narrower window it opens as a popover under the button instead. Either way, showing or hiding it never moves the conversation or the composer. Press <Kbd>Esc</Kbd> to close it.
-
-When the window is short, the card first drops the project details, then the Session card, before it scrolls.
-
-## Session context
-
-Click the session context button (≡) in the main header for everything around the session, in one card.
-
-When the window is wide enough, the card docks at the top-right of the session, beside the conversation, and the button shows or hides it. The conversation already leaves room for the card, so showing or hiding it never moves what you are reading. In a narrower window the card opens as a popover instead. When both this card and the session overview are docked, they stack in the same corner.
+Click the details button, or press <Kbd>⌘⌥B</Kbd>, for one card with where the session works and what it changed. When the window is wide enough, the card docks at the top-right of the session, in room the conversation already leaves for it. It shows there by default; hide it with the button and it stays hidden for that session. In a narrower window it opens as a popover under the button instead. Either way, showing or hiding it never moves the conversation or the composer. Press <Kbd>Esc</Kbd> to close the popover.
 
 The card holds:
 
-- **The machine** the session runs on, with the session's folder in the folder icon's tooltip.
-- **Open in your editor**: the editor chosen under **Preferred editor**, or the first one Atlas finds. Its menu lists your other editors, then **Reveal in Finder**, **Open in Terminal** and **Copy path**. In a session that works in its own folder, such as a pull request's worktree, these open that folder.
+- **The machine** the session runs on. Hover it for the session's folder; right-click it to copy the path.
+- **Open in your editor**: opens where the session works in your [preferred editor](/docs/product/settings), or the first one Atlas finds. The menu beside it picks which editor that is, Finder included, without opening anything. <Kbd>⌘O</Kbd> does the same as the button. In a session that works in its own folder, such as a pull request's worktree, it opens that folder.
 - **Project scripts**: named commands for the project, such as a dev server or the tests. Each shows its command beside its name. Click one to run it in a terminal where the session works; the menu lists them all, with a pencil to edit each. Choose **Add project script** to create one. Scripts are saved in the project's `.atlas/config.toml`, so they travel with the repository.
 
   Because anyone who can change the repository can change that file, a script you did not add in Atlas asks before its first run, showing the whole command. Choose **Run script** to run it; Atlas remembers your approval for that project and asks again if the command changes. Scripts you add or edit in Atlas don't ask.
-- **The branch**, with a picker. Type to filter your local branches, or enter a new name and choose **Create branch** to create it and switch to it. A session working in a pull request's worktree shows only its pull requests and changes here: the branch picker and git actions act on the project's own checkout, so they are left out.
-- **Pull requests**: the ones linked to the session and the ones opened from the branch, the open one first, with a check mark or cross for its checks, and earlier ones behind **Show more**. Click one to open it. **Link a pull request…** links another, and **View all pull requests** opens the repository's [list](/docs/source-control/pull-requests#the-pull-request-list).
-- **The next git action**, such as **Create PR**, **Push & create PR**, **Commit & push…**, **Pull** or **Push**. **Create PR** pushes the branch if it needs it, then shows the title and description the pull request would open with, for you to edit before it is created. The menu holds **Create draft PR**, **Pull**, **Push** (or **Publish branch**), **Fetch** and **Open Source Control**. The default branch is never offered a pull request.
+- **The branch**, with a picker. Type to filter local and remote branches; choosing a remote one creates the local branch. Enter a new name and choose **Create branch** to create it and switch to it. Right-click the branch to copy its name.
+- **Pull requests**: the ones linked to the session and the ones opened from the branch, the open one first with its number, its checks and whether Atlas watches it, and earlier ones behind **Show more**. Click one to open it. The open one offers the next step it is waiting on: **Resolve** for a conflict, **Ready** for a draft, or **Merge** once its checks pass (click **Merge** again to confirm). Right-click a pull request for the same actions as the session's pull requests tab, or **Link to this session** for one found on the branch.
+- **The git action** the branch calls for, such as **Commit, push & PR**, **Commit & push**, **Push**, **Pull** or **Create PR**. When there is nothing to do it says why. Its menu holds **Commit**, **Push** and **Create PR**, each with the reason when it is unavailable.
+
+  An action that commits asks for the message and lets you leave files out; **Commit on new branch** moves the work onto a new branch named from the message. An action that would push to the default branch, or open a pull request from it, asks first, and offers a new branch instead. While it runs, the row shows each step, the last line of output (a commit hook's, for instance) and how long it has taken; when it lands, a check says what happened. **Create PR** opens with the title and description the pull request would have, for you to edit before it is created.
+- **Changes**: the lines added and removed since the branch left the default branch, uncommitted changes included. Click it to open the session's diff.
 - **Projects**: the session's project and the projects attached to it (see [Manage attached projects](#manage-attached-projects)).
-- **Changes**: the lines the session added and removed, across its project and every attached project; the tooltip breaks them down by project. Click it to open the session's diff. With no session changes, it counts the project's uncommitted files and opens [source control](/docs/source-control/git).
-- **The agent and model** the session runs on.
-- **Usage**: the context window, tokens and cost.
-- **Capture**: whether [session capture](/docs/source-control/capture) is recording this project. Click it to set capture up without leaving the card.
 - **Lineage**: the session this one was branched from with **Branch from here**, the sessions branched from it, and the agents it delegated work to. Click a session to open it.
 
-A dot on the button shows capture's state while it records: green when it is on, amber when it is degraded, red when it has stopped. Press <Kbd>⌘⌥C</Kbd>, or run **Open session capture** from the command palette, to open the card straight on Capture.
+Everything in the card works on the session's own folder, so a pull request session's worktree shows and acts on its own branch. When the window is short, the card first drops the machine, Projects and Lineage, then **Open in** and the git action, before it scrolls. A git action that is running still shows.
 
 ## Comment on a session
 
@@ -217,7 +208,7 @@ Comments live in the transcript. Click anywhere in a prompt or a response to sta
 
 Every session can be commented on. On a session that is only on your machine, the comments stay there. When the session is shared with your organization through [cloud capture](/docs/source-control/capture), Atlas posts those threads to the team once, and from then on teammates can comment from the [timeline](/docs/team/timeline) and their comments appear on the matching messages as they arrive.
 
-On a shared session, the comments button (speech bubble) on the Session card of the [session overview](#session-overview) lists every thread on the session. Thinking steps and tool calls keep a comment button of their own, which shows when you hover them.
+On a shared session, the session's page in the [timeline](/docs/team/timeline) lists every thread on it. Thinking steps and tool calls keep a comment button of their own, which shows when you hover them.
 
 <Screenshot src="/screenshots/product/agent-chat-comments.png" alt="A session with the comments panel open on the right, showing a teammate's comment thread anchored to one of the agent's responses." caption="Teammates' comments in a session." />
 
