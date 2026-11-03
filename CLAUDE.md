@@ -88,7 +88,7 @@ Internal links are written as absolute site paths such as `/docs/getting-started
 
 ### Screenshots
 
-Screenshots live in `public/screenshots/`, one folder per section, named for the page and what they show: `public/screenshots/team/chat-channel.png`, referenced as `src="/screenshots/team/chat-channel.png"`. Take them from the real app (or `bun run dev` in the atlas repo, its browser mock), at 2x, cropped to the part of the window the text is about. When the shot differs by appearance, save both with `-light` and `-dark` suffixes and pass them as `src` and `srcDark`. Always write `alt` for a reader who cannot see the image.
+Screenshots live in `public/screenshots/`, one folder per section, named `<page>-<what it shows>.webp`: `public/screenshots/team/web-app-timeline.webp`, referenced as `src="/screenshots/team/web-app-timeline.webp"`. New shots are WebP: convert a capture with the `sharp` already in `node_modules` (`sharp(in).webp({ quality: 80, effort: 6 })`); older PNGs stay until retaken. Take them from the real app (or `bun run dev` in the atlas repo, its browser mock), at 2x, cropped to the part of the window the text is about. When the shot differs by appearance, save both with `-light` and `-dark` suffixes and pass them as `src` and `srcDark`. Always write `alt` for a reader who cannot see the image.
 
 ## Writing conventions
 
