@@ -8,19 +8,21 @@
  *
  * Asset names are not stable across releases (they carry the version), so
  * there is no `releases/latest/download/<name>` shortcut. The Linux files
- * attached to a release can lag the desktop version by one: alpha-0.3.4
- * carries 0.3.3 Linux packages. Copy each name from the release page, never
- * from a pattern.
+ * can live on a different release from the macOS and Windows ones:
+ * alpha-0.4.1-org-agent carries no Linux files, so Linux comes from
+ * alpha-0.4.1. Copy each name from the release page, never from a pattern.
  */
 
 export const RELEASES_URL = 'https://github.com/pacifio/atlas/releases';
 
-const TAG = 'alpha-0.3.4';
-const asset = (name: string) => `${RELEASES_URL}/download/${TAG}/${name}`;
+const TAG = 'alpha-0.4.1-org-agent';
+const LINUX_TAG = 'alpha-0.4.1';
+const asset = (name: string, tag: string = TAG) => `${RELEASES_URL}/download/${tag}/${name}`;
+const linuxAsset = (name: string) => asset(name, LINUX_TAG);
 
 export const LATEST_RELEASE = {
   tag: TAG,
-  version: '0.3.4',
+  version: '0.4.1',
   url: `${RELEASES_URL}/tag/${TAG}`,
 } as const;
 
@@ -46,24 +48,24 @@ export const DOWNLOADS: Record<Platform, PlatformDownloads> = {
     name: 'macOS',
     requirement: 'macOS 11 or later',
     downloads: [
-      { label: 'Apple silicon', detail: '.dmg', href: asset('Atlas_0.3.4_aarch64.dmg') },
-      { label: 'Intel', detail: '.dmg', href: asset('Atlas_0.3.4_x86_64.dmg') },
+      { label: 'Apple silicon', detail: '.dmg', href: asset('Atlas_0.4.1_aarch64.dmg') },
+      { label: 'Intel', detail: '.dmg', href: asset('Atlas_0.4.1_x86_64.dmg') },
     ],
   },
   windows: {
     name: 'Windows',
     requirement: 'Windows 10 or later, x64',
-    downloads: [{ label: 'Windows', detail: '.msi', href: asset('Atlas_0.3.4_x64_en-US.msi') }],
+    downloads: [{ label: 'Windows', detail: '.msi', href: asset('Atlas_0.4.1_x64_en-US.msi') }],
   },
   linux: {
     name: 'Linux',
     requirement: 'x86-64 with WebKitGTK 4.1',
     downloads: [
-      { label: 'Debian, Ubuntu', detail: '.deb', href: asset('tryatlas_0.3.3_amd64.deb') },
-      { label: 'Fedora, openSUSE', detail: '.rpm', href: asset('tryatlas-0.3.3-1.x86_64.rpm') },
-      { label: 'Arch', detail: '.pkg.tar.zst', href: asset('tryatlas-bin-0.3.3-1-x86_64.pkg.tar.zst') },
-      { label: 'AppImage', detail: '.AppImage', href: asset('tryatlas_0.3.3_amd64.AppImage') },
-      { label: 'Tarball', detail: '.tar.gz', href: asset('atlas-0.3.3-linux-x86_64.tar.gz') },
+      { label: 'Debian, Ubuntu', detail: '.deb', href: linuxAsset('tryatlas_0.4.1_amd64.deb') },
+      { label: 'Fedora, openSUSE', detail: '.rpm', href: linuxAsset('tryatlas-0.4.1-1.x86_64.rpm') },
+      { label: 'Arch', detail: '.pkg.tar.zst', href: linuxAsset('tryatlas-bin-0.4.1-1-x86_64.pkg.tar.zst') },
+      { label: 'AppImage', detail: '.AppImage', href: linuxAsset('tryatlas_0.4.1_amd64.AppImage') },
+      { label: 'Tarball', detail: '.tar.gz', href: linuxAsset('atlas-0.4.1-linux-x86_64.tar.gz') },
     ],
   },
 };
