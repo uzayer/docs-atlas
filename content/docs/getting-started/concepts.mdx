@@ -88,6 +88,18 @@ A coding agent Atlas drives: either [Atlas Agent](#atlas-agent) or an agent inst
 
 The agent built into Atlas. It runs through the Atlas gateway on your Atlas account, billed to your organization, so it needs a synced organization with AI access. In a Cloud project it can also read and act in your organization. See [Atlas Agent](/docs/agents/atlas-agent).
 
+### Atlas (the organization's agent)
+
+Your organization's own agent, which runs on Atlas's servers rather than in a project. Ask it about the team's sessions, projects, comments and chat from the web app or the desktop app's **Ask Atlas** panel, and it answers from what you can read. It's separate from [Atlas Agent](#atlas-agent), the coding agent. See [Ask Atlas](/docs/team/ask-atlas).
+
+### Fact
+
+Something your team confirmed as true, with the sessions, messages or comments it rests on as sources. [Atlas](#atlas-the-organizations-agent) proposes facts and uses them in its answers, and shows each one only to people who can open all of its sources. It's not the facts agents record in [shared memory](#shared-memory). See [Facts](/docs/team/ask-atlas#facts).
+
+### Loop
+
+An instruction Atlas runs for you on a schedule or when something happens in the organization, posting one result each time. See [Loops](/docs/team/ask-atlas#loops).
+
 ### Shared memory
 
 A record of plans, decisions, facts, file changes and failures from work in a repository, shared by every agent you run there. Agents that support Atlas's memory tools pull from it and write to it.

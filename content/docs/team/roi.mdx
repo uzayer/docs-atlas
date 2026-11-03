@@ -1,0 +1,108 @@
+---
+title: AI ROI
+description: Set your organization's AI spend against the commits it shipped, by project, developer, model and session.
+icon: TrendingUp
+---
+
+AI ROI answers one question: what did the organization spend on AI, and what did it ship for it? It puts spend next to commits, active time and lines changed, then breaks both down by project, developer, model and session.
+
+It lives in the [web app](/docs/team/web-app) at [app.tryatlas.cc](https://app.tryatlas.cc). Select **ROI** in the sidebar, under **Organization**, or choose **Go to AI ROI** from the command menu. The desktop app has no ROI page.
+
+<Screenshot
+  alt="The AI ROI page in the web app with Last 30 days selected. A row of headline figures runs across the top: Spend with its Coding sessions and Cloud AI (Atlas) parts, Commits, Cost per commit, Active time, Cost per active hour, Active sessions and Lines changed. Below it is the Spend and commits chart, with spend as bars and commits as a line."
+  caption="AI ROI: headline figures and the spend and commits chart."
+/>
+
+## Who can open it
+
+AI ROI is for the people who answer for the budget:
+
+- members with the **Admin** or **Product Owner** [role](/docs/team/members#roles)
+- the organization's [owner](/docs/team/members#the-owner), whatever their role
+
+Everyone else sees **Only admins and product owners can see ROI** instead of the figures. The sidebar shows **ROI** only to admins and product owners, so an owner with another role opens it at `app.tryatlas.cc/roi`.
+
+The page covers the projects you can read yourself. An admin who isn't on a restricted project doesn't see that project here either.
+
+## Choose a period and a project
+
+Pick **7 days**, **30 days** or **90 days** at the top of the page. It starts at 30 days.
+
+The project picker beside it starts at **All projects**. Choose one project to see only its figures.
+
+The period and project are part of the page's address, so you can send a link to exactly the view you're looking at.
+
+## Read the headline figures
+
+Each figure shows its change against the period of the same length just before it.
+
+| Figure | What it counts |
+| --- | --- |
+| **Spend** | Everything spent on AI in the period, with its two parts underneath: **Coding sessions** and **Cloud AI (Atlas)**. |
+| **Commits** | Commits made during recorded sessions, usually with commits per active hour underneath. |
+| **Cost per commit** | Coding session spend divided by commits. |
+| **Active time** | Time spent in sessions. |
+| **Cost per active hour** | Coding session spend divided by active hours. |
+| **Active sessions** | Sessions with any activity in the period, and how many of them made a commit. |
+| **Lines changed** | Lines added and removed by those commits, and the files they touched. |
+
+When there are no commits or no active time to divide by, a ratio shows a dash rather than $0.
+
+A change in commits or active time reads as good when it goes up. A change in a cost ratio reads as good when it goes down. A change in spend is neither, on its own.
+
+## Estimated and measured spend
+
+Spend has two parts, and the page never blurs them. The headline **Spend** and each of its parts carry a badge saying which is estimated and which is measured.
+
+- **Coding sessions** is **estimated**. Agents in the desktop app run on people's own subscriptions and keys, so Atlas sees the tokens a session used, never a bill. It prices input, output and cache tokens at Atlas's own rate for models Atlas sells, otherwise at the model's public list price.
+- **Cloud AI (Atlas)** is **measured**. It is what the organization spent through Atlas itself, such as [Atlas Agent](/docs/agents/atlas-agent) and Atlas's other AI features, from Atlas's own billing records.
+
+The estimate is the same one the web app's dashboard shows as cost. The measured part is the same figure the **Usage** page labels measured; see [AI access & spend](/docs/team/ai-access#see-who-spent-what).
+
+**Cost per commit** and **Cost per active hour** use coding session spend only. Cloud AI is in total spend, but it isn't what made the commits.
+
+## How work is counted
+
+**A session counts in the period it was last active.** Its spend, tokens and active time are running totals with no record of when each token was used, so the whole session lands in one place. A session that started before the period and was last active inside it counts wholly inside it.
+
+**Commits are the checkpoints the desktop app observed.** A commit appears here when Atlas linked it to a recorded session as a [checkpoint](/docs/getting-started/concepts#checkpoint). See [How sessions link to commits](/docs/team/timeline#how-sessions-link-to-commits).
+
+Each commit counts once per project, in the period Atlas first saw it, credited to the person whose session saw it first. It is dated when Atlas observed it, not when it was authored.
+
+**Active time** adds up the gaps between messages in each session, counting at most 5 minutes for any one gap.
+
+## See where it went
+
+Below the headline figures:
+
+- **Spend and commits**: spend as bars and commits as a line, **By day** for 7 and 30 days and **By week** for 90 days. Days are UTC days, and the last column is today, still filling up.
+- **By project**: spend, commits, cost **Per commit**, sessions, active time and lines for each project, highest spend first. Select a project to open it.
+- **By developer**: each person's **Session spend**, their **Cloud AI** spend when anyone used it, commits, cost per commit and active time. Someone who has left shows as **Former member**.
+- **By model**: what each model cost, and under **Priced at** where its price came from: **Atlas price**, **List price** or **Unpriced**.
+- **Sessions**: newest first, with the commits each one made. Select a session to open it on the [timeline](/docs/team/timeline), and **Load more** for older ones.
+
+Select a column heading to sort a table by it.
+
+<Screenshot
+  alt="The lower half of the AI ROI page: the By project and By developer tables side by side, then the By model table with Atlas price and List price badges beside the Pull requests card, then the Sessions list with commit chips under each session."
+  caption="Spend broken down by project, developer, model and session."
+/>
+
+## What the figures don't show
+
+- **Spend is mostly an estimate.** List prices change, and discounts and plans with your provider are invisible to Atlas. Treat coding session spend as a guide, not a bill.
+- **Unpriced models add no cost.** A model with neither an Atlas price nor a public list price has its tokens counted but not priced. The spend figure notes how many tokens weren't priced.
+- **The breakdowns don't add up to total spend.** Cloud AI belongs to no project, model or session, so it appears only in the totals, the chart and **By developer**. A single project's view has no cloud AI spend at all.
+- **Commits made outside a recorded session aren't counted.** That includes commits in projects without [session capture](/docs/source-control/capture) turned on.
+- **Pull requests aren't tracked.** The **Pull requests** card says **Not tracked yet**. Commits are the measure of what shipped.
+- **Only 50 projects count.** The page covers the first 50 projects you can read, in order of name.
+- **Deleted sessions are gone.** When the owner deletes a session, its spend and commits leave these figures too.
+
+These figures count work recorded in Atlas. They are not a measure of anyone's performance.
+
+## Next
+
+- [AI access & spend](/docs/team/ai-access): budgets and measured spend per person
+- [Timeline](/docs/team/timeline): the sessions and checkpoints behind each figure
+- [Usage](/docs/context/usage): the usage recorded on your own machine
+- [Members & roles](/docs/team/members): who is an admin or product owner

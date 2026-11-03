@@ -7,12 +7,14 @@
     "organizations",
     "members",
     "timeline",
+    "ask-atlas",
     "chat",
     "calls",
     "prompt-drafts",
     "spaces",
     "shared-threads",
     "ai-access",
+    "roi",
     "web-app",
     "mobile"
   ]
