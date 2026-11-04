@@ -1,17 +1,11 @@
 import { getPageImageUrl, getPageMarkdownUrl, source } from '@/lib/source';
-import {
-  DocsBody,
-  DocsDescription,
-  DocsPage,
-  MarkdownCopyButton,
-  ViewOptionsPopover,
-} from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsDescription, DocsPage } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
-import { buttonVariants } from '@/components/ui/button';
+import { PageActions } from '@/components/shell/page-actions';
 import { PageFooter } from '@/components/shell/page-footer';
 import { TopBarActions } from '@/components/shell/docs-frame';
 import { DocsBreadcrumb } from '@/components/shell/docs-breadcrumb';
@@ -28,19 +22,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const status = isUnshipped(page.data.status) ? page.data.status : undefined;
 
   const githubUrl = `https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`;
-  const actions = (
-    <>
-      <MarkdownCopyButton
-        markdownUrl={markdownUrl}
-        className={buttonVariants({ variant: 'secondary', size: 'sm' })}
-      />
-      <ViewOptionsPopover
-        className={buttonVariants({ variant: 'secondary', size: 'sm' })}
-        markdownUrl={markdownUrl}
-        githubUrl={githubUrl}
-      />
-    </>
-  );
+  const actions = <PageActions markdownUrl={markdownUrl} githubUrl={githubUrl} />;
 
   return (
     <DocsPage
@@ -66,11 +48,11 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         <h1 className="type-title">{page.data.title}</h1>
         {status ? <StatusBadge status={status} /> : null}
       </div>
-      <DocsDescription className="mb-0 text-md font-normal text-muted-foreground">
+      <DocsDescription className="mb-0 text-lg font-normal text-muted-foreground">
         {page.data.description}
       </DocsDescription>
       <div className="flex flex-row items-center gap-1.5 md:hidden">{actions}</div>
-      <hr className="rule-dashed my-2" />
+      <hr className="my-2 border-t border-dashed border-border" />
       <DocsBody>
         {status ? <StatusCallout status={status} /> : null}
         <MDX

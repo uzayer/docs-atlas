@@ -1,23 +1,21 @@
-/* Import order matters, and mirrors standards' src/styles.css:
+/* Import order matters:
      1. tailwindcss                   the engine and preflight
      2. shadcn/tailwind.css           the data-* variants Base UI components use
      3. fumadocs-ui colours + preset  registers the --color-fd-* utilities
                                       (values come from docs.css), then the
                                       layouts, MDX components and prose plugin
-     4. standards tokens → utilities  verbatim copies, see src/styles/
-     5. docs.css                      the bridge: Fumadocs colours, reading
-                                      scale and the frame
-   Standards comes after Fumadocs so its theme bridge and base layer win. */
+     4. @tryatlas/design              Geist, the tokens, the generated themes
+                                      and the Tailwind bridge
+     5. docs.css                      the bridge: Fumadocs colours, base
+                                      layer, reading scale and the frame
+   The design package comes after Fumadocs so its theme bridge wins. */
 
 @import 'tailwindcss';
 @import 'shadcn/tailwind.css';
 @import 'fumadocs-ui/css/lib/default-colors.css';
 @import 'fumadocs-ui/css/preset.css';
 
-@import '../styles/tokens.css';
-@import '../styles/themes.css';
-@import '../styles/globals.css';
-@import '../styles/utilities.css';
+@import '@tryatlas/design/styles.css';
 @import '../styles/docs.css';
 @import '../styles/mdx.css';
 
@@ -35,7 +33,7 @@
   margin-inline: -0.5rem;
   padding-inline: 0.5rem;
   border-radius: var(--radius-md);
-  animation: heading-highlight-fade 3.2s var(--ease-panel);
+  animation: heading-highlight-fade 3.2s var(--ease-out-strong);
 }
 
 @media (prefers-reduced-motion: reduce) {

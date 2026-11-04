@@ -1,3 +1,5 @@
+'use client';
+
 import {
   AlertTriangleIcon,
   CheckCircle2Icon,
@@ -8,11 +10,12 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { cva } from 'class-variance-authority';
+import { Icon } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { Icon } from '@/components/ui/icon';
 
 /**
- * Standards' inline notice, at the reading size.
+ * The design package's inline notice (its `Callout`), at the reading size
+ * and with Fumadocs' props.
  *
  * Accepts Fumadocs' Callout props (`type`, `title`, `icon`) so MDX written
  * against the default component keeps working. The fill and the glyph carry
@@ -42,7 +45,7 @@ const ICON_FOR_TYPE: Record<CalloutType, LucideIcon> = {
 };
 
 const calloutVariants = cva(
-  'my-6 flex items-start gap-3 rounded-xl px-4 py-3 text-sm text-secondary-foreground',
+  'my-6 flex items-start gap-3 rounded-xl px-4 py-3 text-md text-secondary-foreground',
   {
     variants: {
       tone: {
@@ -78,7 +81,7 @@ function Callout({ type = 'info', title, icon, className, children, ...props }: 
           {icon}
         </span>
       ) : (
-        <Icon icon={ICON_FOR_TYPE[known]} size="md" className="mt-0.5" />
+        <Icon data-slot="icon" icon={ICON_FOR_TYPE[known]} size="lg" className="mt-0.5" />
       )}
       <div className="prose-no-margin min-w-0 flex-1">
         {title ? <p className="font-medium text-foreground">{title}</p> : null}

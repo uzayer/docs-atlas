@@ -10,11 +10,11 @@ import {
   CodeBlockTabsTrigger as FdCodeBlockTabsTrigger,
   Pre,
 } from 'fumadocs-ui/components/codeblock';
+import { IconButton } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { IconButton } from '@/components/ui/icon-button';
 
 /**
- * A fenced code block in standards' chrome: a raised block (card fill, ring,
+ * A fenced code block in desktop's chrome: a raised block (card fill, border,
  * rounded-xl), Geist Mono at the code size, a quiet title bar when the fence
  * has `title="…"`, and a ghost pill copy button.
  *
@@ -65,14 +65,14 @@ function CodeBlock({
       style={style}
       className={cn(
         'shiki not-prose group/code relative overflow-hidden',
-        inTabs ? 'rounded-none bg-transparent' : 'my-6 rounded-xl bg-card ring-1 ring-foreground/10',
+        inTabs ? 'rounded-none bg-transparent' : 'my-6 rounded-xl border border-border bg-card',
         className,
       )}
     >
       {title ? (
         <div
           data-slot="code-block-title"
-          className="flex h-control-lg items-center gap-2 border-b border-hairline ps-4 pe-1.5 text-xs text-muted-foreground"
+          className="flex h-control-lg items-center gap-2 border-b border-border-subtle ps-4 pe-1.5 text-sm text-muted-foreground"
         >
           {typeof icon === 'string' ? (
             <span
@@ -101,7 +101,7 @@ function CodeBlock({
         role="region"
         tabIndex={0}
         aria-label={typeof title === 'string' ? title : 'Code'}
-        className="mono max-h-150 overflow-auto py-3.5 text-xs leading-5 focus-visible:outline-none"
+        className="mono max-h-150 overflow-auto py-3.5 text-sm leading-5 focus-visible:outline-none"
         style={viewportStyle}
       >
         {children}
@@ -165,7 +165,7 @@ function CodeBlockTabs({ className, children, ...props }: ComponentProps<typeof 
       {...props}
       className={(state) =>
         cn(
-          'my-6 overflow-hidden rounded-xl border-0 bg-card ring-1 ring-foreground/10',
+          'my-6 overflow-hidden rounded-xl border border-border bg-card',
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -181,7 +181,7 @@ function CodeBlockTabsList({ className, ...props }: ComponentProps<typeof FdCode
       {...props}
       className={(state) =>
         cn(
-          'border-b border-hairline px-2',
+          'border-b border-border-subtle px-2',
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -195,7 +195,7 @@ function CodeBlockTabsTrigger({ className, ...props }: ComponentProps<typeof FdC
       {...props}
       className={(state) =>
         cn(
-          'h-control-lg text-xs',
+          'h-control-lg text-sm',
           state.active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
           typeof className === 'function' ? className(state) : className,
         )

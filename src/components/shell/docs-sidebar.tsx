@@ -22,11 +22,8 @@ import { useDocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { SidebarProps } from 'fumadocs-ui/layouts/docs/slots/sidebar';
 import { usePathname } from 'fumadocs-core/framework';
 import type { Item as PageTreeItem } from 'fumadocs-core/page-tree';
+import { Icon, SPRING_PILL, ScrollFade, iconButtonVariants, useScrollEdges } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { SPRING_PILL } from '@/lib/motion';
-import { buttonVariants } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
-import { ScrollFade } from '@/components/ui/scroll-fade';
 import { SearchButton } from './search-button';
 import { SidebarControls } from './sidebar-controls';
 import { StatusBadge } from '@/components/status';
@@ -53,7 +50,7 @@ import { isUnshipped, type StatusTreeItem } from '@/lib/status';
  *   └──────────────────────┘
  */
 
-/** The shared id the active pill animates between, as standards' rail does. */
+/** The shared id the active pill animates between, as desktop's rail does. */
 const PILL_ID = 'docs-rail-pill';
 
 function Item({ className, children, ...props }: React.ComponentProps<typeof SidebarItem>) {
@@ -147,12 +144,12 @@ function FolderContent({
   );
 }
 
-/** A `---Section---` in meta.json: a labeled group, with air above it. */
+/** A `---Section---` in meta.json: a group with an eyebrow, as desktop's rail labels one. */
 function Separator({ className, ...props }: React.ComponentProps<typeof SidebarSeparator>) {
   return (
     <SidebarSeparator
       className={cn(
-        'mt-6 mb-1.5 flex items-center gap-2 px-2 text-xs font-medium text-muted-foreground first:mt-0 [&_svg]:size-3.5',
+        'eyebrow mt-6 mb-1.5 flex items-center gap-2 px-2 first:mt-0 [&_svg]:size-3.5',
         className,
       )}
       {...props}
@@ -166,7 +163,7 @@ function Pill() {
       aria-hidden="true"
       layoutId={PILL_ID}
       transition={SPRING_PILL}
-      className="absolute inset-0 -z-10 rounded-md bg-sidebar-accent"
+      className="absolute inset-0 -z-10 rounded-md bg-element-selected"
     />
   );
 }
@@ -176,7 +173,7 @@ function Pill() {
  * these are page titles a reader scans, not destinations they already know.
  */
 const rowClass = cn(
-  'relative isolate flex min-h-8 items-center gap-2 rounded-md px-2 py-1 text-start text-sm text-muted-foreground wrap-anywhere',
+  'relative isolate flex min-h-8 items-center gap-2 rounded-md px-2 py-1 text-start text-md text-muted-foreground wrap-anywhere',
   'duration-fast transition-colors ease-out-strong',
   'hover:bg-element-hover hover:text-foreground',
   'data-[active=true]:font-medium data-[active=true]:text-foreground data-[active=true]:hover:bg-transparent',
@@ -197,42 +194,51 @@ const LinkItem = createLinkItemRenderer(internal);
 function PanelBody({ components }: Pick<SidebarProps, 'components'>) {
   const { menuItems } = useDocsLayout();
   const links = menuItems.filter((item) => item.type !== 'icon');
+  const pathname = usePathname();
+  const scroller = useRef<HTMLDivElement>(null);
+  // Re-measured on navigation too: an opened folder grows the content, not
+  // the scroller, so its resize observer would not see it.
+  const edges = useScrollEdges(scroller, [pathname]);
 
   return (
     <>
       <div className="px-2 pb-2">
         <SearchButton />
       </div>
-      <ScrollFade fade={24} className="min-h-0 flex-1 px-2 pt-1 pb-4">
-        {/* motion's springs are JS, so standards' reduced-motion CSS cannot
-            reach them; "user" makes the pill jump instead of slide. */}
-        <MotionConfig reducedMotion="user">
-        <LayoutGroup id="docs-rail">
-          {links.length > 0 && (
-            <div className="mb-4 flex flex-col gap-px">
-              {links.map((item, i) => (
-                <LinkItem key={i} item={item} />
-              ))}
-            </div>
-          )}
-          <div className="flex flex-col gap-px">
-            <PageTree {...components} Item={components?.Item ?? TreeItem} />
-          </div>
-        </LayoutGroup>
-        </MotionConfig>
-      </ScrollFade>
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto px-2 pt-1 pb-4">
+          {/* motion's springs are JS, so the reduced-motion CSS cannot
+              reach them; "user" makes the pill jump instead of slide. */}
+          <MotionConfig reducedMotion="user">
+            <LayoutGroup id="docs-rail">
+              {links.length > 0 && (
+                <div className="mb-4 flex flex-col gap-px">
+                  {links.map((item, i) => (
+                    <LinkItem key={i} item={item} />
+                  ))}
+                </div>
+              )}
+              <div className="flex flex-col gap-px">
+                <PageTree {...components} Item={components?.Item ?? TreeItem} />
+              </div>
+            </LayoutGroup>
+          </MotionConfig>
+        </div>
+        <ScrollFade at="top" visible={edges.top} className="h-6 from-background" />
+        <ScrollFade at="bottom" visible={edges.bottom} className="h-6 from-background" />
+      </div>
       <SidebarControls />
     </>
   );
 }
 
 const panelClass =
-  'flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-shell-edge bg-background pt-2';
+  'flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-background pt-2';
 
 function Brand({ className }: { className?: string }) {
   const { slots } = useDocsLayout();
   if (!slots.navTitle) return null;
-  return <slots.navTitle className={cn('inline-flex min-w-0 items-center gap-2 text-sm font-medium', className)} />;
+  return <slots.navTitle className={cn('inline-flex min-w-0 items-center gap-2 text-md font-medium', className)} />;
 }
 
 export function DocsSidebar({ components, collapsible = true, className, ref: refProp, ...rest }: SidebarProps) {
@@ -265,7 +271,7 @@ export function DocsSidebar({ components, collapsible = true, className, ref: re
                   collapsed && [
                     'inset-y-2 w-(--docs-sidebar-width) transition-transform duration-slow ease-out-strong',
                     hovered
-                      ? 'translate-x-2 rounded-xl bg-shell-canvas shadow-lg'
+                      ? 'translate-x-2 rounded-xl bg-sidebar shadow-lg'
                       : '-translate-x-full',
                   ],
                   className,
@@ -277,16 +283,9 @@ export function DocsSidebar({ components, collapsible = true, className, ref: re
                   <div className="flex h-10 shrink-0 items-center gap-1 ps-2 pb-2">
                     <Brand className="me-auto" />
                     {collapsible && (
-                                              <SidebarCollapseTrigger
-                          // It is expanded whenever it is visible; the ghost
-                          // button's aria-expanded fill would read as pressed.
-                          className={cn(
-                            buttonVariants({ variant: 'ghost', size: 'icon-sm' }),
-                            'aria-expanded:bg-transparent aria-expanded:text-muted-foreground aria-expanded:hover:bg-element-hover',
-                          )}
-                        >
-                          <Icon icon={PanelLeftIcon} size="sm" />
-                        </SidebarCollapseTrigger>
+                      <SidebarCollapseTrigger className={iconButtonVariants({ variant: 'ghost', size: 'sm' })}>
+                        <Icon icon={PanelLeftIcon} size="sm" />
+                      </SidebarCollapseTrigger>
                     )}
                   </div>
                   <div className={panelClass}>
@@ -302,7 +301,7 @@ export function DocsSidebar({ components, collapsible = true, className, ref: re
 
       {/* Below md the rail is a drawer, drawn on the canvas like the app's. */}
       <SidebarDrawerOverlay className="fixed inset-0 z-drawer scrim-soft backdrop-blur-sm data-[state=closed]:animate-fade-out data-[state=open]:animate-fade-in" />
-      <SidebarDrawerContent className="fixed inset-y-0 start-0 z-drawer flex w-[85%] max-w-80 flex-col bg-shell-canvas p-2 shadow-lg data-[state=closed]:animate-fd-sidebar-out data-[state=open]:animate-fd-sidebar-in">
+      <SidebarDrawerContent className="fixed inset-y-0 start-0 z-drawer flex w-[85%] max-w-80 flex-col bg-sidebar p-2 shadow-lg data-[state=closed]:animate-fd-sidebar-out data-[state=open]:animate-fd-sidebar-in">
         <div className="flex h-10 shrink-0 items-center gap-1 ps-2 pb-2">
           <Brand className="me-auto" />
         </div>

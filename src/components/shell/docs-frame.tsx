@@ -7,8 +7,7 @@ import { useDocsLayout } from 'fumadocs-ui/layouts/docs';
 import { Container } from 'fumadocs-ui/layouts/docs/slots/container';
 import { SidebarCollapseTrigger, SidebarTrigger } from 'fumadocs-ui/components/sidebar/base';
 import { cn } from '@/lib/cn';
-import { buttonVariants } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
+import { Icon, iconButtonVariants } from '@tryatlas/design';
 import { SearchButton } from './search-button';
 import { DocsBreadcrumb } from './docs-breadcrumb';
 
@@ -53,14 +52,14 @@ export function DocsFrame({ children, className, style, ...props }: React.Compon
   return (
     <ActionsSlot value={{ slot, setSlot }}>
       <Container
-        className={cn('bg-shell-canvas', className)}
+        className={cn('bg-sidebar', className)}
         style={{ gridTemplate: GRID_TEMPLATE, ...style }}
         {...props}
       >
         <div
           aria-hidden="true"
           data-docs-panel=""
-          className="pointer-events-none mx-2 mb-2 rounded-xl border border-shell-edge bg-background [grid-column:2/6] [grid-row:2/4] md:ms-0 md:mt-2 md:[grid-row:1/4] md:in-data-[sidebar-collapsed=true]:ms-2"
+          className="pointer-events-none mx-2 mb-2 rounded-xl border border-border bg-background [grid-column:2/6] [grid-row:2/4] md:ms-0 md:mt-2 md:[grid-row:1/4] md:in-data-[sidebar-collapsed=true]:ms-2"
         />
         {children}
       </Container>
@@ -94,31 +93,31 @@ export function DocsHeader(props: React.ComponentProps<'header'>) {
       className={cn(
         'sticky top-(--fd-docs-row-1) z-titlebar [grid-area:header]',
         'layout:[--fd-header-height:--spacing(12)] md:layout:[--fd-header-height:--spacing(14)]',
-        'h-(--fd-header-height) bg-shell-canvas md:pt-2 md:pe-2 md:in-data-[sidebar-collapsed=true]:ps-2',
+        'h-(--fd-header-height) bg-sidebar md:pt-2 md:pe-2 md:in-data-[sidebar-collapsed=true]:ps-2',
         props.className,
       )}
     >
       {/* Below md */}
       <div className="flex h-full items-center gap-1 ps-4 pe-2 md:hidden">
         {slots.navTitle && (
-          <slots.navTitle className="me-auto inline-flex items-center gap-2 text-sm font-medium" />
+          <slots.navTitle className="me-auto inline-flex items-center gap-2 text-md font-medium" />
         )}
         <SearchButton iconOnly />
-        <SidebarTrigger className={buttonVariants({ variant: 'ghost', size: 'icon-sm' })}>
+        <SidebarTrigger className={iconButtonVariants({ variant: 'ghost', size: 'sm' })}>
           <Icon icon={PanelLeftIcon} size="sm" />
         </SidebarTrigger>
       </div>
 
       {/* From md */}
-      <div className="h-full rounded-t-xl border border-shell-edge border-b-hairline bg-background ps-4 pe-3 max-md:hidden">
+      <div className="h-full rounded-t-xl border border-border border-b-border-subtle bg-background ps-4 pe-3 max-md:hidden">
         <div className="flex h-full min-w-0 items-center gap-2">
           {collapsed && (
             <div className="-ms-1 flex items-center gap-0.5">
-              <SidebarCollapseTrigger className={buttonVariants({ variant: 'ghost', size: 'icon-sm' })}>
+              <SidebarCollapseTrigger className={iconButtonVariants({ variant: 'ghost', size: 'sm' })}>
                 <Icon icon={PanelLeftIcon} size="sm" />
               </SidebarCollapseTrigger>
               <SearchButton iconOnly />
-              <span aria-hidden="true" className="mx-1.5 h-4 w-px bg-hairline" />
+              <span aria-hidden="true" className="mx-1.5 h-4 w-px bg-border-subtle" />
             </div>
           )}
           <DocsBreadcrumb className="flex-1" />

@@ -11,7 +11,7 @@
  * that file, so this page cannot drift from the app the way a hand-written
  * table would. The prose around the table is here, in `INTRO`.
  *
- * Refuses an uncommitted registry, like sync:standards: the stamp has to name
+ * Refuses an uncommitted registry: the stamp has to name
  * a commit that actually contains what was copied. \`ALLOW_DIRTY=1\` writes the
  * page anyway for a local preview, stamped as uncommitted; never ship that.
  */

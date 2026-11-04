@@ -2,8 +2,8 @@
 
 import { useState, type ReactNode } from 'react';
 import { PlayIcon, VideoIcon } from 'lucide-react';
+import { Icon } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { Icon } from '@/components/ui/icon';
 
 /**
  * A video: a YouTube embed or an MP4.
@@ -35,7 +35,7 @@ type VideoProps = {
 function Video({ youtube, src, poster, title, caption, className }: VideoProps) {
   return (
     <figure data-slot="video" className={cn('not-prose my-6', className)}>
-      <div className="rounded-xl bg-card p-1.5 ring-1 ring-foreground/10">
+      <div className="rounded-xl border border-border bg-card p-1.5">
         <div className="relative aspect-video overflow-hidden rounded-lg bg-muted">
           {youtube ? (
             <YouTube id={youtube} poster={poster} title={title} />
@@ -54,16 +54,16 @@ function Video({ youtube, src, poster, title, caption, className }: VideoProps) 
             <div
               role="img"
               aria-label={title}
-              className="flex size-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border px-6 text-center text-sm text-muted-foreground"
+              className="flex size-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border px-6 text-center text-md text-muted-foreground"
             >
-              <Icon icon={VideoIcon} size="lg" />
+              <Icon icon={VideoIcon} size="xl" />
               <span>Video coming soon: {title}</span>
             </div>
           )}
         </div>
       </div>
       {caption ? (
-        <figcaption className="mt-2 text-center text-xs text-muted-foreground">{caption}</figcaption>
+        <figcaption className="mt-2 text-center text-sm text-muted-foreground">{caption}</figcaption>
       ) : null}
     </figure>
   );
@@ -99,8 +99,8 @@ function YouTube({ id, poster, title }: { id: string; poster?: string; title: st
         decoding="async"
         className="absolute inset-0 size-full object-cover"
       />
-      <span className="relative flex size-control-xl items-center justify-center rounded-full bg-primary text-primary-foreground ring-1 ring-foreground/10 duration-fast transition-[background-color,transform] ease-out-strong group-hover/play:scale-105 group-hover/play:bg-primary-hover">
-        <Icon icon={PlayIcon} size="md" />
+      <span className="relative flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground duration-fast transition-[background-color,transform] ease-out-strong group-hover/play:scale-105 group-hover/play:bg-primary-hover">
+        <Icon icon={PlayIcon} size="lg" />
       </span>
     </button>
   );

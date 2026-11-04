@@ -1,9 +1,10 @@
+'use client';
+
 import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from 'react';
 import Link from 'fumadocs-core/link';
 import { CheckCircle2Icon, CircleDashedIcon, CircleDotIcon, type LucideIcon } from 'lucide-react';
+import { GoChevron, Icon } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { Icon } from '@/components/ui/icon';
-import { GoChevron } from './go-chevron';
 import type { PageStatus } from '@/lib/status';
 
 /**
@@ -41,23 +42,23 @@ function RoadmapItem({ title, href, status = 'roadmapped', meta, children }: Roa
   const glyph = GLYPH[status];
   return (
     <li data-slot="roadmap-item" data-status={status} className="flex gap-3 px-4 py-3">
-      <Icon icon={glyph.icon} size="md" className={cn('mt-0.5', glyph.className)} />
+      <Icon icon={glyph.icon} size="lg" className={cn('mt-0.5', glyph.className)} />
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-3">
           {href ? (
             <Link
               href={href}
-              className="group/go inline-flex min-w-0 items-center gap-1 text-sm font-medium text-foreground hover:underline hover:underline-offset-2"
+              className="group/go inline-flex min-w-0 items-center gap-1 text-md font-medium text-foreground hover:underline hover:underline-offset-2"
             >
               <span className="truncate">{title}</span>
               <GoChevron className="text-muted-foreground" />
             </Link>
           ) : (
-            <span className="text-sm font-medium text-foreground">{title}</span>
+            <span className="text-md font-medium text-foreground">{title}</span>
           )}
-          {meta ? <span className="ms-auto shrink-0 text-xs text-muted-foreground">{meta}</span> : null}
+          {meta ? <span className="ms-auto shrink-0 text-sm text-muted-foreground">{meta}</span> : null}
         </div>
-        {children ? <div className="mt-0.5 text-sm text-muted-foreground">{children}</div> : null}
+        {children ? <div className="mt-0.5 text-md text-muted-foreground">{children}</div> : null}
       </div>
     </li>
   );
@@ -67,7 +68,7 @@ function RoadmapList({ status, children }: { status: PageStatus; children: React
   return (
     <ul
       data-slot="roadmap-list"
-      className="not-prose my-6 divide-y divide-hairline overflow-hidden rounded-xl bg-card ring-1 ring-foreground/10"
+      className="not-prose my-6 divide-y divide-border-subtle overflow-hidden rounded-xl border border-border bg-card"
     >
       {Children.map(children, (child) =>
         isValidElement(child)

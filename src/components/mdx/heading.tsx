@@ -3,8 +3,8 @@
 import { CheckIcon, LinkIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { ComponentProps } from 'react';
+import { IconButton } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { IconButton } from '@/components/ui/icon-button';
 
 /**
  * A prose heading with a quiet anchor. The heading text links to its own

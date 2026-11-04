@@ -4,16 +4,15 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 /**
- * The ratchet, from Atlas Standards (tests/design-system-ratchet.test.ts),
- * held over this site's own components.
+ * The design-system ratchet, held over this site's own components.
  *
  * Every rule is at zero, and a rule at zero cannot quietly become one. The
  * escape hatch is friction, not a flag: append `ratchet-allow: <reason>` to
  * the line with at least 20 characters explaining why the token layer could
  * not express it.
  *
- * The rules match standards' word for word, so a component can move between
- * the two repos without being restyled.
+ * The rules are a superset of @tryatlas/design's (its `/ratchet` entry), so a
+ * component can move into the package without being restyled.
  */
 
 const ROOT = join(import.meta.dir, '..');
@@ -41,7 +40,7 @@ const RULES: Rule[] = [
   {
     name: 'arbitrary-text-size',
     pattern: /text-\[[^\]]*(?:px|rem|em)\]/,
-    why: 'Use a step from the type scale (text-4xs … text-2xl).',
+    why: 'Use a step from the type scale (text-3xs … text-2xl).',
   },
   {
     name: 'arbitrary-radius',

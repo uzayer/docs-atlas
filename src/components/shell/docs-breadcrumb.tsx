@@ -36,7 +36,7 @@ export function DocsBreadcrumb({ className }: { className?: string }) {
   if (crumbs.length === 0) return null;
 
   return (
-    <nav aria-label="Breadcrumb" className={cn('flex min-w-0 items-center gap-1.5 text-xs', className)}>
+    <nav aria-label="Breadcrumb" className={cn('flex min-w-0 items-center gap-1.5 text-sm', className)}>
       {crumbs.map((crumb, i) => {
         const last = i === crumbs.length - 1;
         return (

@@ -17,10 +17,10 @@ import { cn } from '@/lib/cn';
  * it meant and leave the rest of the page intact.
  */
 /**
- * The site's palette, read from the standards roles (themes.css), in a form
+ * The site's palette, read from the design package's roles (its themes.css), in a form
  * mermaid can do color arithmetic on.
  *
- * Standards writes these as `oklch(...)`, which mermaid's color library does
+ * A theme may write these as `oklch(...)`, which mermaid's color library does
  * not parse, and the browser keeps oklch when it serialises a computed
  * color. So each one is painted into a single canvas pixel and read back as
  * sRGB bytes. Everything read here is achromatic, so the diagram carries no
@@ -77,7 +77,7 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
           suppressErrorRendering: true,
           theme: 'base',
           // Mermaid 12 defaults to the 'neo' look, which drops a shadow under
-          // every node. Standards raises with rings, never shadows.
+          // every node. Atlas raises with borders, never shadows.
           look: 'classic',
           // Borders carry the structure, not fills: in light the ramp
           // saturates at white after the card, so nested boxes told apart by
@@ -138,7 +138,7 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
     return (
       <pre
         className={cn(
-          'not-prose code my-6 overflow-x-auto rounded-xl bg-card p-4 text-secondary-foreground ring-1 ring-foreground/10',
+          'not-prose code my-6 overflow-x-auto rounded-xl border border-border bg-card p-4 text-secondary-foreground',
           className,
         )}
       >
@@ -148,7 +148,7 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
   }
 
   const wrapper = cn(
-    'not-prose my-6 flex justify-center overflow-x-auto rounded-xl bg-card p-4 ring-1 ring-foreground/10',
+    'not-prose my-6 flex justify-center overflow-x-auto rounded-xl border border-border bg-card p-4',
     '[&_svg]:h-auto [&_svg]:max-w-full',
     className,
   );
@@ -170,7 +170,7 @@ export function Mermaid({ chart, className }: { chart: string; className?: strin
 
   return (
     <div data-slot="mermaid" className={wrapper}>
-      <span className="text-xs text-muted-foreground">Loading diagram…</span>
+      <span className="text-sm text-muted-foreground">Loading diagram…</span>
     </div>
   );
 }

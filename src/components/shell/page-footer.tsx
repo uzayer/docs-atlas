@@ -5,12 +5,12 @@ import Link from 'fumadocs-core/link';
 import { usePathname } from 'fumadocs-core/framework';
 import { useFooterItems } from 'fumadocs-ui/utils/use-footer-items';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import { Icon } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { Icon } from '@/components/ui/icon';
 
 /**
- * Previous and next, as two raised blocks: `bg-card` with a ring, never a
- * shadow. The direction is a `micro` label; the page's own title carries it.
+ * Previous and next, as two raised blocks: `bg-card` with a border, never a
+ * shadow. The direction is an `eyebrow`; the page's own title carries it.
  */
 export function PageFooter({ className, ...props }: React.ComponentProps<'nav'>) {
   // The tree also holds outbound links (Community → Discord, X, Facebook);
@@ -52,12 +52,12 @@ function FooterLink({
     <Link
       href={item.url}
       className={cn(
-        'group flex flex-col gap-1.5 rounded-xl bg-card px-4 py-3 ring-1 ring-foreground/10',
+        'group flex flex-col gap-1.5 rounded-xl border border-border bg-card px-4 py-3',
         'duration-fast transition-colors ease-out-strong hover:bg-element-hover',
         isNext && 'items-end text-end',
       )}
     >
-      <span className={cn('micro inline-flex items-center gap-1', isNext && 'flex-row-reverse')}>
+      <span className={cn('eyebrow inline-flex items-center gap-1', isNext && 'flex-row-reverse')}>
         <Icon
           icon={isNext ? ChevronRightIcon : ChevronLeftIcon}
           size="xs"
@@ -68,7 +68,7 @@ function FooterLink({
         />
         {isNext ? 'Next' : 'Previous'}
       </span>
-      <span className="text-sm font-medium text-foreground">{item.name}</span>
+      <span className="text-md font-medium text-foreground">{item.name}</span>
     </Link>
   );
 }

@@ -1,17 +1,10 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
-import { Geist, Geist_Mono } from 'next/font/google';
 import type { Metadata } from 'next';
-import { cn } from '@/lib/cn';
+import { TooltipProvider } from '@/components/design-client';
 import { UiScaleProvider } from '@/lib/ui-scale';
 import { uiScaleInitScript } from '@/lib/ui-scale-init';
-import { TooltipProvider } from '@/components/ui/tooltip';
 import SearchDialog from '@/components/search-dialog';
-
-// Standards' faces. Registered under their own variables; docs.css points
-// standards' --font-sans / --font-mono stacks at them.
-const geist = Geist({ subsets: ['latin'], variable: '--font-geist' });
-const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://docs.tryatlas.cc'),
@@ -19,7 +12,9 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={cn(geist.variable, geistMono.variable)} suppressHydrationWarning>
+    // Geist and Geist Mono come with the design package's stylesheet. The
+    // theme is always Atlas; next-themes writes the appearance.
+    <html lang="en" data-theme="atlas" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         {/* Before first paint, so a reader at 115% never sees a 100% frame.
             First in <body>, as next-themes places its own: an inline script
@@ -30,9 +25,9 @@ export default function Layout({ children }: LayoutProps<'/'>) {
         <RootProvider
           search={{ SearchDialog }}
           theme={{
-            // Standards keys every theme off `data-theme`; Fumadocs' Shiki
-            // and its own dark variant key off the `.dark` class. Both.
-            attribute: ['class', 'data-theme'],
+            // The design package's themes key off `data-appearance`;
+            // Fumadocs' Shiki and its own dark variant key off `.dark`. Both.
+            attribute: ['class', 'data-appearance'],
             defaultTheme: 'system',
             enableSystem: true,
             disableTransitionOnChange: true,

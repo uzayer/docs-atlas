@@ -1,7 +1,9 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import { ImageIcon } from 'lucide-react';
+import { Icon } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { Icon } from '@/components/ui/icon';
 
 /**
  * A screenshot of the app, in a frame.
@@ -10,7 +12,7 @@ import { Icon } from '@/components/ui/icon';
  * referenced from the site root: `src="/screenshots/team/chat-channel.png"`.
  * Pass `srcDark` too when the shot exists in both appearances; the page
  * shows whichever matches the reader's theme (mdx.css swaps them on
- * `data-theme`, since a `dark:` variant is off limits to components).
+ * `data-appearance`, since a `dark:` variant is off limits to components).
  *
  * Leave `src` out while the shot does not exist yet: the frame renders as a
  * dashed placeholder that names what belongs there, so a page can be written
@@ -45,13 +47,13 @@ function Screenshot({ src, srcDark, alt, caption, width, height, className }: Sc
       height={height}
       loading="lazy"
       decoding="async"
-      className="block h-auto w-full rounded-lg ring-1 ring-foreground/5"
+      className="block h-auto w-full rounded-lg border border-border-subtle"
     />
   );
 
   return (
     <figure data-slot="screenshot" className={cn('not-prose my-6', className)}>
-      <div className="rounded-xl bg-card p-1.5 ring-1 ring-foreground/10">
+      <div className="rounded-xl border border-border bg-card p-1.5">
         {src ? (
           srcDark ? (
             <>
@@ -65,15 +67,15 @@ function Screenshot({ src, srcDark, alt, caption, width, height, className }: Sc
           <div
             role="img"
             aria-label={alt}
-            className="flex aspect-video flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border px-6 text-center text-sm text-muted-foreground"
+            className="flex aspect-video flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border px-6 text-center text-md text-muted-foreground"
           >
-            <Icon icon={ImageIcon} size="lg" />
+            <Icon icon={ImageIcon} size="xl" />
             <span>Screenshot: {alt}</span>
           </div>
         )}
       </div>
       {caption ? (
-        <figcaption className="mt-2 text-center text-xs text-muted-foreground">{caption}</figcaption>
+        <figcaption className="mt-2 text-center text-sm text-muted-foreground">{caption}</figcaption>
       ) : null}
     </figure>
   );

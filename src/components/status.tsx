@@ -1,9 +1,10 @@
+'use client';
+
 import Link from 'fumadocs-core/link';
 import { CircleDashedIcon, HammerIcon } from 'lucide-react';
+import { Badge, Icon } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { Badge } from '@/components/ui/badge';
 import { Callout } from '@/components/mdx/callout';
-import { Icon } from '@/components/ui/icon';
 import { ROADMAP_URL, STATUS_LABEL, STATUS_NOTICE, type PageStatus } from '@/lib/status';
 
 /**
@@ -13,7 +14,7 @@ import { ROADMAP_URL, STATUS_LABEL, STATUS_NOTICE, type PageStatus } from '@/lib
  *   is the default and carries no mark.
  * - in-progress: the info chip.
  * - roadmapped: a dashed, unfilled chip. Dashed is this system's mark for
- *   "not here yet" (standards' empty states and drop targets), and it reads
+ *   "not here yet" (empty states and drop targets), and it reads
  *   quieter than any filled chip, which is the point.
  */
 
