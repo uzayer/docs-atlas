@@ -22,10 +22,9 @@ bun start            # serve the production build
 bun run types:check  # next typegen && tsc --noEmit
 bun run lint         # oxlint
 bun run test         # the design-system ratchet (bun test)
-bun run sync:standards  # re-copy standards' stylesheets from ../standards
 ```
 
-`types:check`, `lint` and `test` are the full verification pass. `types:check` must run `next typegen` first because route types under `.next/types` are generated. The only test is `tests/design-system-ratchet.test.ts`, standards' ratchet held over `src/`: no colour literals, raised shadows, `dark:` variants, stock Tailwind palettes or arbitrary sizes in components. Escape a line with `ratchet-allow: <reason>` only when the token layer genuinely cannot express it.
+`types:check`, `lint` and `test` are the full verification pass. `types:check` must run `next typegen` first because route types under `.next/types` are generated. The only test is `tests/design-system-ratchet.test.ts`, the design-system ratchet held over `src/`: no colour literals, raised shadows, `dark:` variants, stock Tailwind palettes or arbitrary sizes in components. Escape a line with `ratchet-allow: <reason>` only when the token layer genuinely cannot express it.
 
 Content changes are validated by the build, not the linter: MDX frontmatter is checked against `pageSchema` when `bun run build` (or `bun dev`) compiles the collection.
 
@@ -51,13 +50,14 @@ Next.js 16 App Router + Fumadocs. Source lives under `src/`, content under `cont
 
 ## Design system
 
-The site wears **Atlas Standards** (`../standards`), the design system for Atlas products. Fumadocs keeps the behaviour; standards decides the look.
+The site wears **`@tryatlas/design`** (repo `tryatlas/design`, checked out at `../standards`), the design package shared by desktop, the web app and the docs. It is pinned to an exact git tag in `package.json` (`github:tryatlas/design#vX.Y.Z`); bump the tag to take a new version. Fumadocs keeps the behaviour; the package decides the look.
 
-- `src/styles/{tokens,themes,globals,utilities}.css` are **verbatim copies** of standards' `src/styles/`, with the source commit in each header. Never edit them here: change standards, commit there, then `bun run sync:standards` (it refuses uncommitted styles, so the stamp always names a real commit).
-- `src/styles/docs.css` is the only bridge. It maps every Fumadocs `--color-fd-*` onto a standards role, sets the reading scale (prose at 15px via `--tw-prose-size`, against standards' 12px app body) and draws the frame. `src/styles/mdx.css` holds the content components' CSS.
-- Theme is written to **both** `class` and `data-theme` on `<html>` (`RootProvider` in `src/app/layout.tsx`): standards keys off `data-theme`, Fumadocs' Shiki and `dark:` off `.dark`.
-- The shell is Fumadocs' `DocsLayout` with standards components in its **slots** (`src/components/shell/`): `DocsFrame` (container; owns the full-bleed grid template, with the text column and TOC centred together in the page panel), `DocsHeader` (the brand bar below md, the sticky top bar with breadcrumb and page actions from md; a page fills the actions with `<TopBarActions>`), `DocsSidebar` (built from `fumadocs-ui/components/sidebar/base` parts, so tree, collapse, drawer and auto-scroll stay Fumadocs'), and `PageFooter`. Restyle through a slot before reaching for `@fumadocs/cli` to eject.
-- `src/components/ui/` holds standards primitives (badge, button, icon, icon-button, popover, tooltip, kbd, scroll-fade), copied with `cn` from `@/lib/cn`. Use them rather than Fumadocs' own `buttonVariants`.
+- `src/app/global.css` imports `@tryatlas/design/styles.css` after Tailwind and Fumadocs: Geist and Geist Mono, the tokens, every built-in theme (generated CSS) and the Tailwind bridge. Theme variables are unprefixed (`--element-hover`, written `bg-element-hover`). The type and control scales are px, desktop's; the docs' content components are a step up from the chrome for reading.
+- `src/styles/docs.css` is the only bridge. It maps every Fumadocs `--color-fd-*` onto a design role, holds the base layer the package leaves to each app (border colour, focus ring, selection, hidden scrollbars, reduced motion), sets the reading scale (prose at 16px via `--tw-prose-size`) and draws the frame. `src/styles/mdx.css` holds the content components' CSS.
+- `<html>` carries `data-theme="atlas"` (static, in `src/app/layout.tsx`) and next-themes writes the appearance to **both** `class` and `data-appearance`: the package's themes key off the `data-theme` + `data-appearance` pair, Fumadocs' Shiki and `dark:` off `.dark`.
+- The shell is Fumadocs' `DocsLayout` with package components in its **slots** (`src/components/shell/`): `DocsFrame` (container; owns the full-bleed grid template, with the text column and TOC centred together in the page panel), `DocsHeader` (the brand bar below md, the sticky top bar with breadcrumb and page actions from md; a page fills the actions with `<TopBarActions>`), `DocsSidebar` (built from `fumadocs-ui/components/sidebar/base` parts, so tree, collapse, drawer and auto-scroll stay Fumadocs'), and `PageFooter`. Restyle through a slot before reaching for `@fumadocs/cli` to eject.
+- Primitives (button, icon button, icon, badge, kbd, popover, tooltip, scroll fade, the interface-scale control) come from `@tryatlas/design`. Use them rather than Fumadocs' own `buttonVariants`. Its components are client modules, which has two consequences in a server component: call `buttonVariants()` and friends only from a client module, and import a package component through `src/components/design-client.ts` rather than the package root, or the whole barrel ships to every page.
+- The interface scale is CSS `zoom` on `<html>` (`src/lib/ui-scale.tsx`), since the package's scales are px.
 - The window stays the scroll container (unlike the app shell's fixed panels) so anchors, TOC scroll-spy and find-in-page work.
 
 ## Content
@@ -76,7 +76,7 @@ The root `content/docs/meta.json` uses the full syntax: `---Section Name---` ins
 
 **Moving or renaming a page needs a redirect** in `next.config.mjs`, or its old URL 404s for everyone who linked it. Cover the `.md` form too (see the team-era rules there): `src/proxy.ts` rewrites `/docs/x.md` to the markdown route, which only exists at the new path. Then rewrite internal links: `rg '/docs/<old-path>' content src`.
 
-Available MDX components come from `src/components/mdx.tsx`: Fumadocs' default set with the standards-styled overrides layered on top, plus these site components:
+Available MDX components come from `src/components/mdx.tsx`: Fumadocs' default set with the design-package-styled overrides layered on top, plus these site components:
 
 - `<Screenshot src srcDark? alt caption? width? height? />`: an app screenshot in a raised frame. Leave `src` out for a dashed placeholder until the shot exists.
 - `<Video youtube? src? poster? title caption? />`: a YouTube id (loads the player only on click, via youtube-nocookie) or an MP4; with neither, a "Video coming soon" placeholder.
