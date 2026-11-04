@@ -21,10 +21,15 @@ bun run build        # next build
 bun start            # serve the production build
 bun run types:check  # next typegen && tsc --noEmit
 bun run lint         # oxlint
-bun run test         # the design-system ratchet (bun test)
+bun run test         # bun test; run `bun run build` first (the sentinel reads it)
 ```
 
-`types:check`, `lint` and `test` are the full verification pass. `types:check` must run `next typegen` first because route types under `.next/types` are generated. The only test is `tests/design-system-ratchet.test.ts`, the design-system ratchet held over `src/`: no colour literals, raised shadows, `dark:` variants, stock Tailwind palettes or arbitrary sizes in components. Escape a line with `ratchet-allow: <reason>` only when the token layer genuinely cannot express it.
+`types:check`, `lint`, `build` and `test` are the full verification pass, in that order (`bun run build && bun run test`). `types:check` must run `next typegen` first because route types under `.next/types` are generated. `bun run test` runs four suites in `tests/`, each guarding something that fails with every other gate green:
+
+- `design-system-ratchet`: `@tryatlas/design/ratchet`'s `strictRules` held over `src/` (`.ts`, `.tsx`, `.css`): no colour literals, raised shadows, `dark:` variants, stock Tailwind palettes or arbitrary sizes. Escape a line with `ratchet-allow: <reason>` only when the token layer genuinely cannot express it.
+- `package-roles`: every `var(--name)` the docs read is declared by the package, Tailwind or the docs' CSS, and is not a name the package renamed. An unknown variable renders transparent.
+- `package-sentinel`: the last build compiled the package's classes (its `@source`) and its Geist `@font-face`. Reads `.next/static`.
+- `singletons`: one copy each of `react`, `react-dom`, `@base-ui/react`, `@tryatlas/design` and `motion` in `node_modules`. After a lockfile change leaves a nested duplicate, dedupe it rather than relaxing the test.
 
 Content changes are validated by the build, not the linter: MDX frontmatter is checked against `pageSchema` when `bun run build` (or `bun dev`) compiles the collection.
 

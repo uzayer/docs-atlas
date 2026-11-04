@@ -281,7 +281,7 @@ These derive from the theme's own foreground, so they invert correctly between a
 
 ## What a theme cannot set
 
-Six colors reach the app as `--atlas-*` custom properties but are not theme keys. Each is a pure function of a key that is, so writing one in a theme file is an unknown-key warning rather than an override.
+Six colors reach the app as CSS custom properties but are not theme keys. Each is a pure function of a key that is, so writing one in a theme file is an unknown-key warning rather than an override.
 
 | Variable | Derived from | How |
 |---|---|---|
@@ -296,7 +296,7 @@ The reason is that none of them is a judgment call. A status badge's fill is its
 
 ## Where these end up
 
-Atlas resolves the whole set on every theme change and writes it out as CSS custom properties. A base token becomes `--` plus its name, so `sidebar-border` is `--sidebar-border`. A theme key becomes `--atlas-` plus its name with dots and underscores turned into dashes, so `terminal.ansi.bright_red` is `--atlas-terminal-ansi-bright-red`. The six derived variables use the same `--atlas-` spelling.
+Atlas resolves the whole set on every theme change and writes it out as CSS custom properties. A base token becomes `--` plus its name, so `sidebar-border` is `--sidebar-border`. A theme key becomes `--` plus its name with dots and underscores turned into dashes, so `terminal.ansi.bright_red` is `--terminal-ansi-bright-red`. The six derived variables are spelled the same way, so `status.success.background` is `--status-success-background`.
 
 ## Next
 

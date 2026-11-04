@@ -1,17 +1,17 @@
 /* Import order matters:
      1. tailwindcss                   the engine and preflight
-     2. shadcn/tailwind.css           the data-* variants Base UI components use
-     3. fumadocs-ui colours + preset  registers the --color-fd-* utilities
+     2. fumadocs-ui colours + preset  registers the --color-fd-* utilities
                                       (values come from docs.css), then the
                                       layouts, MDX components and prose plugin
-     4. @tryatlas/design              Geist, the tokens, the generated themes
+     3. @tryatlas/design              Geist, the tokens, the generated themes
                                       and the Tailwind bridge
-     5. docs.css                      the bridge: Fumadocs colours, base
+     4. docs.css                      the bridge: Fumadocs colours, base
                                       layer, reading scale and the frame
-   The design package comes after Fumadocs so its theme bridge wins. */
+   The design package comes after Fumadocs so its theme bridge wins. Base UI
+   writes bare `data-open`/`data-closed` attributes, which Tailwind's own
+   `data-*` variants match, so no variant stylesheet sits in between. */
 
 @import 'tailwindcss';
-@import 'shadcn/tailwind.css';
 @import 'fumadocs-ui/css/lib/default-colors.css';
 @import 'fumadocs-ui/css/preset.css';
 
