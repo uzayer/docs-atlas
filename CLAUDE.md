@@ -50,7 +50,7 @@ Next.js 16 App Router + Fumadocs. Source lives under `src/`, content under `cont
 
 ## Design system
 
-The site wears **`@tryatlas/design`** (repo `tryatlas/design`, checked out at `../standards`), the design package shared by desktop, the web app and the docs. It is pinned to an exact git tag in `package.json` (`github:tryatlas/design#vX.Y.Z`); bump the tag to take a new version. Fumadocs keeps the behaviour; the package decides the look.
+The site wears **`@tryatlas/design`** (repo `tryatlas/design`; a read-only checkout usually sits at `../standards` for reading its README and Storybook stories), the design package shared by desktop, the web app and the docs. It is pinned to an exact git tag in `package.json` (`github:tryatlas/design#vX.Y.Z`); bump the tag to take a new version. Fumadocs keeps the behaviour; the package decides the look.
 
 - `src/app/global.css` imports `@tryatlas/design/styles.css` after Tailwind and Fumadocs: Geist and Geist Mono, the tokens, every built-in theme (generated CSS) and the Tailwind bridge. Theme variables are unprefixed (`--element-hover`, written `bg-element-hover`). The type and control scales are px, desktop's; the docs' content components are a step up from the chrome for reading.
 - `src/styles/docs.css` is the only bridge. It maps every Fumadocs `--color-fd-*` onto a design role, holds the base layer the package leaves to each app (border colour, focus ring, selection, hidden scrollbars, reduced motion), sets the reading scale (prose at 16px via `--tw-prose-size`) and draws the frame. `src/styles/mdx.css` holds the content components' CSS.
