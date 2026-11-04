@@ -26,7 +26,7 @@ bun run test         # bun test; run `bun run build` first (the sentinel reads i
 
 `types:check`, `lint`, `build` and `test` are the full verification pass, in that order (`bun run build && bun run test`). `types:check` must run `next typegen` first because route types under `.next/types` are generated. `bun run test` runs four suites in `tests/`, each guarding something that fails with every other gate green:
 
-- `design-system-ratchet`: `@tryatlas/design/ratchet`'s `strictRules` held over `src/` (`.ts`, `.tsx`, `.css`): no colour literals, raised shadows, `dark:` variants, stock Tailwind palettes or arbitrary sizes. Escape a line with `ratchet-allow: <reason>` only when the token layer genuinely cannot express it.
+- `design-system-ratchet`: `@tryatlas/design/ratchet`'s built-in rules plus `strictRules`, held over `src/app`, `src/components`, `src/lib` and `src/styles` (`.ts`, `.tsx`, `.css`): no hex, `rgb()` or `hsl()` literals, raised shadows, `dark:` variants, stock Tailwind palettes or arbitrary sizes. It does not see `oklch()` or `color-mix()`. Escape a line with `ratchet-allow: <reason>` only when the token layer genuinely cannot express it.
 - `package-roles`: every `var(--name)` the docs read is declared by the package, Tailwind or the docs' CSS, and is not a name the package renamed. An unknown variable renders transparent.
 - `package-sentinel`: the last build compiled the package's classes (its `@source`) and its Geist `@font-face`. Reads `.next/static`.
 - `singletons`: one copy each of `react`, `react-dom`, `@base-ui/react`, `@tryatlas/design` and `motion` in `node_modules`. After a lockfile change leaves a nested duplicate, dedupe it rather than relaxing the test.

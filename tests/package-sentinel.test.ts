@@ -37,11 +37,11 @@ describe('package sentinel', () => {
     // Never write the class out in this repo: Tailwind scans tests/ too, so
     // the literal here would generate the rule and the suite could not fail.
     const [name, value] = PACKAGE_SENTINEL_CLASS.slice(1, -1).split(':');
-    expect(css).toMatch(new RegExp(`${name}\\s*:\\s*${value}`));
+    expect(css).toMatch(new RegExp(`${name}\\s*:\\s*${value}\\s*[;}]`));
   });
 
   it("Geist comes from the package's @font-face", () => {
     expect(css).toMatch(/@font-face\s*\{[^}]*Geist Variable/);
-    expect(files.some((file) => file.endsWith('.woff2'))).toBe(true);
+    expect(files.some((file) => /\/geist-[^/]*\.woff2$/.test(file))).toBe(true);
   });
 });

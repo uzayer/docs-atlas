@@ -10,9 +10,10 @@ import { D23_RENAMES } from '@tryatlas/design';
  * An unknown `var(--name)` is not an error anywhere: the declaration is
  * dropped and the element renders transparent or unstyled. A role the
  * package renames (its D23 table) or removes therefore breaks the docs with
- * every gate green. This suite lists the names declared by the package, by
- * Tailwind's theme and by the docs' own CSS, and fails on any name a docs
- * file reads that none of them declares, or that is an old D23 name.
+ * every gate green. This suite lists the names declared by the package,
+ * Tailwind's theme, Fumadocs' colours and the docs' own CSS, and fails on any
+ * name a docs file reads that none of them declares, or that is an old D23
+ * name.
  */
 
 const ROOT = join(import.meta.dir, '..');
@@ -20,11 +21,13 @@ const DOCS_CSS = ['src/styles/docs.css', 'src/styles/mdx.css', 'src/app/global.c
 const DECLARING_CSS = [
   ...DOCS_CSS,
   'node_modules/tailwindcss/theme.css',
+  'node_modules/fumadocs-ui/css/lib/default-colors.css',
   ...[...new Glob('node_modules/@tryatlas/design/src/styles/*.css').scanSync({ cwd: ROOT })],
 ];
 
-/** Set at runtime by someone else: Fumadocs, Tailwind, Shiki, Base UI. */
-const EXTERNAL_PREFIXES = ['--fd-', '--color-fd-', '--tw-', '--shiki-'];
+/** Set at runtime by someone else: Fumadocs' layout, Tailwind, Shiki, Base UI.
+ *  `--color-fd-*` is not here: docs.css and Fumadocs' colours declare it. */
+const EXTERNAL_PREFIXES = ['--fd-', '--tw-', '--shiki-'];
 const BASE_UI_RUNTIME = new Set([
   '--available-height',
   '--available-width',
