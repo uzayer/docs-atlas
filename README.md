@@ -15,9 +15,10 @@ bun run build        # next build
 bun start            # serve the production build
 bun run types:check  # next typegen && tsc --noEmit
 bun run lint         # oxlint
+bun run test         # bun test; needs a build first
 ```
 
-There's no test suite. `types:check` plus `lint` is the full verification pass. Content changes are validated by the build, not the linter: MDX frontmatter is checked against the page schema when the collection compiles.
+`types:check`, `lint`, then `bun run build && bun run test` is the full verification pass. The tests hold the design-system ratchet, check that every CSS variable the docs read exists, that the build compiled `@tryatlas/design`'s classes and fonts, and that React, Base UI, motion and the design package each have one copy. Content changes are validated by the build, not the linter: MDX frontmatter is checked against the page schema when the collection compiles.
 
 ## Structure
 

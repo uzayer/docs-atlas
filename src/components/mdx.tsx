@@ -1,7 +1,7 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
 import { Kbd, KbdGroup } from '@/components/design-client';
-import { Mermaid } from '@/components/ui/mermaid';
+import { Mermaid } from '@/components/mdx/mermaid';
 import { Callout } from '@/components/mdx/callout';
 import { Card, Cards } from '@/components/mdx/card';
 import {
