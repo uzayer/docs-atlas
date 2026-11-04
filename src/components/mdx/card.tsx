@@ -1,12 +1,12 @@
 import Link from 'fumadocs-core/link';
 import type { ReactNode } from 'react';
+import { GoChevron } from '@/components/design-client';
 import { cn } from '@/lib/cn';
-import { GoChevron } from './go-chevron';
 
 /**
  * A raised block linking to another page. Fumadocs' Card props (`title`,
  * `description`, `icon`, `href`, children) so existing MDX is unchanged.
- * Hover lifts the fill one step and strengthens the ring; nothing moves but
+ * Hover lifts the fill one step and strengthens the border; nothing moves but
  * the chevron.
  */
 
@@ -32,28 +32,28 @@ function Card({ title, description, icon, href, className, children, ...props }:
       {icon ? (
         <span
           data-slot="card-icon"
-          className="mb-3 flex size-control-md items-center justify-center rounded-lg bg-muted text-muted-foreground ring-1 ring-foreground/10 [&_svg]:size-4"
+          className="mb-3 flex size-control-md items-center justify-center rounded-lg border border-border bg-muted text-muted-foreground [&_svg]:size-4"
         >
           {icon}
         </span>
       ) : null}
-      <span className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+      <span className="flex items-center gap-1.5 text-md font-medium text-foreground">
         <span className="min-w-0 truncate">{title}</span>
         {href ? <GoChevron className="text-muted-foreground" /> : null}
       </span>
       {description ? (
-        <span className="mt-1 block text-sm text-muted-foreground">{description}</span>
+        <span className="mt-1 block text-md text-muted-foreground">{description}</span>
       ) : null}
       {children ? (
-        <span className="mt-1 block text-sm text-muted-foreground">{children}</span>
+        <span className="mt-1 block text-md text-muted-foreground">{children}</span>
       ) : null}
     </>
   );
 
   const classes = cn(
-    'group/go block rounded-xl bg-card p-4 ring-1 ring-foreground/10',
-    'duration-fast ease-out-strong transition-[background-color,box-shadow]',
-    href && 'hover:bg-element-hover hover:ring-foreground/15',
+    'group/go block rounded-xl border border-border bg-card p-4',
+    'duration-fast ease-out-strong transition-[background-color,border-color]',
+    href && 'hover:border-border-strong hover:bg-element-hover',
     className,
   );
 

@@ -8,12 +8,12 @@ import { cn } from '@/lib/cn';
  * rules for what is inside them (cells, rows, quote text) live in mdx.css.
  */
 
-/** A table on a raised block. The wrapper scrolls; the ring is its edge. */
+/** A table on a raised block. The wrapper scrolls; the border is its edge. */
 function Table({ className, ...props }: ComponentProps<'table'>) {
   return (
     <div
       data-slot="mdx-table"
-      className="prose-no-margin relative my-6 overflow-x-auto rounded-xl bg-card ring-1 ring-foreground/10"
+      className="prose-no-margin relative my-6 overflow-x-auto rounded-xl border border-border bg-card"
     >
       <table className={className} {...props} />
     </div>
@@ -28,7 +28,7 @@ function Image({ className, ...props }: ComponentProps<'img'>) {
       // MDX hands the `img` slot plain attributes; a `src` is always a string
       // or a static import there, never the Blob the DOM type also allows.
       {...(props as ImageProps)}
-      className={cn('rounded-xl ring-1 ring-foreground/10', className)}
+      className={cn('rounded-xl border border-border', className)}
     />
   );
 }

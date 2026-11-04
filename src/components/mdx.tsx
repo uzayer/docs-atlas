@@ -1,6 +1,6 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
-import { Kbd, KbdGroup } from '@/components/ui/kbd';
+import { Kbd, KbdGroup } from '@/components/design-client';
 import { Mermaid } from '@/components/ui/mermaid';
 import { Callout } from '@/components/mdx/callout';
 import { Card, Cards } from '@/components/mdx/card';
@@ -20,8 +20,8 @@ import { Video } from '@/components/mdx/video';
 import { StatusBadge } from '@/components/status';
 
 /**
- * Fumadocs' defaults, with every visible piece swapped for a standards
- * version. Props match the defaults, so content written for Fumadocs needs
+ * Fumadocs' defaults, with every visible piece swapped for one in the
+ * design package's language. Props match the defaults, so content written for Fumadocs needs
  * no edits.
  */
 export function getMDXComponents(components?: MDXComponents) {

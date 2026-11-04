@@ -3,9 +3,8 @@
 import Link from 'next/link';
 import { SearchIcon } from 'lucide-react';
 import { useSearchContext } from 'fumadocs-ui/contexts/search';
+import { Icon, buttonVariants } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { buttonVariants } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 
 /**
  * What a reader sees at a URL that is not a page: what happened, and the two
@@ -17,9 +16,9 @@ export function NotFoundContent({ className }: { className?: string }) {
 
   return (
     <div className={cn('flex flex-col items-start gap-3', className)}>
-      <span className="micro">404</span>
+      <span className="eyebrow">404</span>
       <h1 className="type-title">Page not found</h1>
-      <p className="text-md text-muted-foreground">
+      <p className="text-lg text-muted-foreground">
         This page may have moved, or the link may be mistyped.
       </p>
       <div className="mt-3 flex items-center gap-1.5">

@@ -24,7 +24,7 @@ import { cn } from '@/lib/cn';
 
 /**
  * Fumadocs' default search dialog, rebuilt from its composable parts in
- * standards' dialog chrome: a scrim, a popover-step panel with a ring and
+ * the design package's dialog chrome: a scrim, a popover-step panel with a border and
  * the dialog shadow (`shadow-lg`, the only elevation a dialog may cast), the
  * `z-modal` layer, hairline dividers, an input at the reading size and an
  * Esc keycap instead of an outlined button.
@@ -80,7 +80,7 @@ export default function SearchDialog({
         <SearchPanel>
           <SearchDialogHeader className="gap-2.5 px-4 py-3">
             <SearchDialogIcon className="size-4" />
-            <SearchDialogInput className="text-sm placeholder:text-muted-foreground" />
+            <SearchDialogInput className="text-md placeholder:text-muted-foreground" />
             <EscKey />
           </SearchDialogHeader>
           <SearchDialogList items={query.data !== 'empty' ? query.data : defaultItems} />
@@ -107,7 +107,7 @@ export default function SearchDialog({
 /**
  * The panel. Mirrors Fumadocs' SearchDialogContent (its id is how the result
  * list finds the panel to listen for arrow keys, and focus goes to the input
- * on open) with standards' dialog classes in place of Fumadocs'.
+ * on open) with the package's dialog classes in place of Fumadocs'.
  */
 function SearchPanel({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -127,10 +127,10 @@ function SearchPanel({ children }: { children: ReactNode }) {
       data-slot="search-dialog"
       className={cn(
         'fixed inset-x-2 top-4 z-modal mx-auto max-w-xl overflow-hidden md:top-24',
-        'rounded-xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-none',
+        'rounded-xl border border-border bg-popover text-popover-foreground shadow-lg outline-none',
         'data-closed:animate-scale-out data-open:animate-scale-in',
         // Hairlines between header, list and footer; none under an empty list.
-        '*:border-b *:border-hairline *:last:border-b-0 *:data-[empty=true]:border-b-0',
+        '*:border-b *:border-border-subtle *:last:border-b-0 *:data-[empty=true]:border-b-0',
         '*:has-[+:last-child[data-empty=true]]:border-b-0',
       )}
     >
@@ -140,7 +140,7 @@ function SearchPanel({ children }: { children: ReactNode }) {
   );
 }
 
-/** Close, drawn as standards' keycap so it reads as the shortcut it is. */
+/** Close, drawn as the package's keycap so it reads as the shortcut it is. */
 function EscKey() {
   const { onOpenChange } = useSearch();
   return (
@@ -149,7 +149,7 @@ function EscKey() {
       aria-label="Close search"
       onClick={() => onOpenChange(false)}
       className={cn(
-        'inline-flex h-control-xs min-w-control-xs cursor-pointer items-center justify-center',
+        'inline-flex h-control-xs min-w-(--control-xs) cursor-pointer items-center justify-center',
         'rounded-sm border border-border bg-card px-1.5 text-2xs font-medium text-muted-foreground',
         'duration-fast transition-colors ease-out-strong hover:text-foreground',
       )}

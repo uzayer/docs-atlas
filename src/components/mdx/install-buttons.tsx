@@ -1,7 +1,8 @@
+'use client';
+
 import { DownloadIcon } from 'lucide-react';
+import { Icon, buttonVariants } from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { buttonVariants } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 import { DOWNLOADS, LATEST_RELEASE, RELEASES_URL, type Platform } from '@/lib/downloads';
 
 /**
@@ -10,7 +11,8 @@ import { DOWNLOADS, LATEST_RELEASE, RELEASES_URL, type Platform } from '@/lib/do
  *
  * One raised block per platform: its name and requirement, then a filled
  * button for the primary file and quiet ones for the rest. These are links,
- * so they are anchors styled with `buttonVariants`, never `<Button>`.
+ * so they are anchors styled with `buttonVariants`, never `<Button>`. A client
+ * module, because that function lives in one of the package's.
  *
  * `compact` drops each platform to its primary file, for a page that only
  * needs to point at the download (the Get Started index); the install page
@@ -36,11 +38,11 @@ function InstallButtons({ platforms = ORDER, compact = false, className }: Insta
           return (
             <div
               key={platform}
-              className="flex flex-col gap-3 rounded-xl bg-card p-4 ring-1 ring-foreground/10"
+              className="flex flex-col gap-3 rounded-xl border border-border bg-card p-4"
             >
               <div>
-                <p className="text-sm font-medium text-foreground">{name}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">{requirement}</p>
+                <p className="text-md font-medium text-foreground">{name}</p>
+                <p className="mt-0.5 text-sm text-muted-foreground">{requirement}</p>
               </div>
               <div className="flex flex-col gap-1.5">
                 {shown.map((download, i) => (
@@ -57,7 +59,7 @@ function InstallButtons({ platforms = ORDER, compact = false, className }: Insta
                       <span className="truncate">{download.label}</span>
                     </span>
                     {download.detail ? (
-                      <span className="font-mono text-xs font-normal opacity-70">{download.detail}</span>
+                      <span className="font-mono text-sm font-normal opacity-70">{download.detail}</span>
                     ) : null}
                   </a>
                 ))}
@@ -66,7 +68,7 @@ function InstallButtons({ platforms = ORDER, compact = false, className }: Insta
           );
         })}
       </div>
-      <p className="mt-2 text-xs text-muted-foreground">
+      <p className="mt-2 text-sm text-muted-foreground">
         Atlas {LATEST_RELEASE.version}.{' '}
         <a href={LATEST_RELEASE.url} className="underline underline-offset-2 hover:text-foreground">
           Release notes and checksums

@@ -9,20 +9,19 @@ interface DocsOgImageProps {
 
 /**
  * The share card, drawn as the docs are: a curved panel set into the canvas,
- * on standards' dark theme.
+ * on the design package's Atlas dark theme.
  *
- * next/og renders this to a PNG with Satori, which reads neither CSS variables
- * nor oklch(), so the standards grays are written out as hex. Each is the
- * exact sRGB of its token (achromatic OKLCH converts as L³ through the sRGB
- * transfer curve):
+ * next/og renders this to a PNG with Satori, which cannot read CSS variables,
+ * so the theme's values are written out as hex, copied from
+ * @tryatlas/design's themes.css ([data-theme="atlas"][data-appearance="dark"]):
  */
 const tokens = {
-  shellCanvas: '#0f0f0f', // --shell-canvas    oklch(0.17 0 0)
-  shellEdge: '#262626', //   --shell-edge      oklch(0.27 0 0)
-  background: '#020202', //  --background      oklch(0.08 0 0)
-  foreground: '#f5f5f5', //  --foreground      oklch(0.97 0 0)
-  muted: '#868686', //       --muted-foreground oklch(0.62 0 0)
-  rule: '#262626', //        a dashed section rule, at the edge's weight
+  shellCanvas: '#0a0a0a', // --sidebar, the canvas the docs' panels sit in
+  shellEdge: '#1e1e1e', //   --border
+  background: '#000000', //  --background
+  foreground: '#ffffff', //  --foreground
+  muted: '#585858', //       --muted-foreground
+  rule: '#1e1e1e', //        a dashed section rule, at the border's weight
 };
 
 /** The Atlas mark's own color (src/app/icon.svg). Identity, so it keeps its hue. */

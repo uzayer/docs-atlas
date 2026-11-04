@@ -4,11 +4,17 @@ import { useSyncExternalStore } from 'react';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useDocsLayout } from 'fumadocs-ui/layouts/docs';
+import {
+  IconButton,
+  SegmentedIconGroup,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  UiScaleControl,
+  iconButtonVariants,
+} from '@tryatlas/design';
 import { cn } from '@/lib/cn';
-import { buttonVariants } from '@/components/ui/button';
-import { IconButton } from '@/components/ui/icon-button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { UiScaleControl } from './ui-scale';
+import { useUiScale } from '@/lib/ui-scale';
 
 /**
  * The rail's footer, as the app shell's: the outbound links on the left, the
@@ -18,6 +24,7 @@ import { UiScaleControl } from './ui-scale';
 export function SidebarControls() {
   const { menuItems } = useDocsLayout();
   const icons = menuItems.filter((item) => item.type === 'icon');
+  const { scale, setScale } = useUiScale();
 
   return (
     <div className="flex items-center justify-between gap-1 border-t border-sidebar-border p-2">
@@ -30,10 +37,9 @@ export function SidebarControls() {
                   href={item.url}
                   aria-label={item.label}
                   {...(item.external !== false && { target: '_blank', rel: 'noreferrer noopener' })}
-                  className={cn(
-                    buttonVariants({ variant: 'ghost', size: 'icon-sm' }),
-                    'text-muted-foreground [&_svg]:size-3.5',
-                  )}
+                  // The marks arrive as bare SVGs; size them as IconButton
+                  // sizes its glyph at `sm`.
+                  className={cn(iconButtonVariants({ variant: 'ghost', size: 'sm' }), '[&_svg]:size-3')}
                 >
                   {item.icon}
                 </a>
@@ -43,13 +49,10 @@ export function SidebarControls() {
           </Tooltip>
         ))}
       </div>
-      <div
-        role="group"
-        className="flex w-fit items-center gap-0.5 rounded-full bg-segment-track p-0.5 ring-1 ring-foreground/8 [&_[data-slot=icon-button]]:rounded-full"
-      >
+      <SegmentedIconGroup>
         <ThemeToggle />
-        <UiScaleControl iconOnly />
-      </div>
+        <UiScaleControl iconOnly scale={scale} onScaleChange={setScale} />
+      </SegmentedIconGroup>
     </div>
   );
 }

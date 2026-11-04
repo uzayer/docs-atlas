@@ -18,7 +18,7 @@
 
 /* ──────────────────────────────────────────────────────────────────────────
    Tables. The wrapper (prose.tsx) is the raised block, so the table itself
-   draws no outer edge: `--border` under the header, `--hairline` between
+   draws no outer edge: `--border` under the header, `--border-subtle` between
    rows and columns, header text small and muted.
    ────────────────────────────────────────────────────────────────────────── */
 
@@ -31,14 +31,14 @@
   border-spacing: 0;
   background: transparent;
   overflow: visible;
-  font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
+  font-size: var(--text-md);
+  line-height: var(--text-md--line-height);
 }
 
 .prose [data-slot="mdx-table"] :is(th, td) {
   padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 3.5);
-  border-inline-start: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
+  border-inline-start: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
   vertical-align: top;
 }
 
@@ -53,8 +53,8 @@
 .prose [data-slot="mdx-table"] thead th {
   background: transparent;
   border-bottom-color: var(--border);
-  font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
   font-weight: 500;
   color: var(--muted-foreground);
   white-space: nowrap;
@@ -80,23 +80,23 @@
 
 /* ──────────────────────────────────────────────────────────────────────────
    Shiki on a theme subtree. Fumadocs flips token colours on `.dark` only;
-   standards lets any element switch theme with `data-theme`, so a code block
-   inside a flipped subtree follows it too.
+   the package lets any element switch appearance with `data-appearance`, so
+   a code block inside a flipped subtree follows it too.
    ────────────────────────────────────────────────────────────────────────── */
 
-[data-theme="dark"] .shiki:not(.not-fumadocs-codeblock *) code span {
+[data-appearance="dark"] .shiki:not(.not-fumadocs-codeblock *) code span {
   color: var(--shiki-dark);
   font-style: var(--shiki-dark-font-style);
 }
 
-[data-theme="light"] .shiki:not(.not-fumadocs-codeblock *) code span {
+[data-appearance="light"] .shiki:not(.not-fumadocs-codeblock *) code span {
   color: var(--shiki-light);
   font-style: var(--shiki-light-font-style);
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
    Screenshots with a light and a dark shot (screenshot.tsx). Both render;
-   the theme hides one. Keyed off `data-theme`, as every theme rule here is,
+   the theme hides one. Keyed off `data-appearance`, as every theme rule here is,
    because a component may not carry a `dark:` variant.
    ────────────────────────────────────────────────────────────────────────── */
 
@@ -104,10 +104,10 @@
   display: none;
 }
 
-[data-theme="dark"] [data-slot="screenshot"] [data-variant="dark"] {
+[data-appearance="dark"] [data-slot="screenshot"] [data-variant="dark"] {
   display: block;
 }
 
-[data-theme="dark"] [data-slot="screenshot"] [data-variant="light"] {
+[data-appearance="dark"] [data-slot="screenshot"] [data-variant="light"] {
   display: none;
 }
