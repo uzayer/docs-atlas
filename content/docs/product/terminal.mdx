@@ -4,44 +4,23 @@ description: Run commands beside your agent.
 icon: Terminal
 ---
 
-Atlas groups each command and its output into a block, so you can read a terminal session without losing where one command ended.
+A terminal in Atlas is your own shell in a tab, themed with the app. Full-screen programs like `vim` and `htop` work as they do in any other terminal.
 
 Terminals open in the [surfaces pane](/docs/product/power-user#surfaces), beside the session. Press <Kbd>⌘J</Kbd> to show or hide a terminal, and <Kbd>⌘⇧T</Kbd> or <Kbd>⌘T</Kbd> then <Kbd>T</Kbd> to open a new one. From the [file tree](/docs/product/explorer), choose **Open in Terminal** to start in a specific folder.
 
-<Screenshot src="/screenshots/product/terminal-blocks.png" alt="A terminal tab showing three command blocks, each with its command, output and exit status, and the input line at the bottom showing the current branch." caption="Command blocks in the terminal." />
+## Find and open links
 
-## Session terminal
+Press <Kbd>⌘F</Kbd> to search the terminal's scrollback. The find bar counts the matches and steps through them. A match that wraps onto the next line is not found.
 
-Each session has its own terminal under the composer. Press <Kbd>⌘⇧J</Kbd>, or the terminal button at the right end of the title bar, to show or hide it. It opens in the session's working directory: its worktree when it has one, otherwise the project.
+<Kbd>⌘</Kbd>-click a file path to open it in Atlas, or a URL to open it in your browser.
 
-Its shells belong to the session. Hiding the terminal, switching to another session or tab, or closing the session's tab leaves them running, and they are there when you come back. Settling a session keeps them too. Deleting the session, closing its last terminal, or closing the project ends them. They do not survive quitting Atlas.
+## Split work
 
-Drag the terminal's top edge to resize it. Atlas remembers the height for each session, and a session that has never had a terminal opens at the height you last chose.
-
-With one terminal, its split, new and close buttons sit at its top-right corner. Add a second terminal and the list of terminals appears beside them, as in a terminal tab. The shortcuts in [Stop or split work](#stop-or-split-work) work here too, and <Kbd>⌘W</Kbd> on the last terminal closes it and hides the terminal rather than closing the session.
-
-## Work with blocks
-
-Collapse, copy, search, or rerun any block. Finished blocks show their exit status. Click file paths to open them in Atlas or your system file manager, and click URLs to open them in your browser.
-
-Atlas throttles very noisy live output and trims excessive output so a long-running command does not overwhelm the view.
-
-## Run commands
-
-The input completes command names and paths. It also shows the current branch and whether the tree has changes.
-
-While a command runs, the input sends it stdin. Full-screen programs switch to a real terminal until they exit, and password prompts show a masked field.
-
-## Stop or split work
-
-Stop sends an interrupt first, then offers a force stop if the command remains active.
-
-Split a terminal tab into panes to run independent shells side by side. These shortcuts work while the terminal has focus:
+Split a terminal tab into panes, stacked one above the other, to run independent shells at once. These shortcuts work while the terminal has focus:
 
 | Shortcut | Action |
 | --- | --- |
-| <Kbd>⌘D</Kbd> | Split right |
-| <Kbd>⌘⇧D</Kbd> | Split down |
+| <KbdGroup><Kbd>⌘D</Kbd> <Kbd>⌘⇧D</Kbd></KbdGroup> | Split down |
 | <Kbd>⌘⇧W</Kbd> | Close the focused pane |
 | <Kbd>⌘⌥←</Kbd> <Kbd>⌘⌥→</Kbd> <Kbd>⌘⌥↑</Kbd> <Kbd>⌘⌥↓</Kbd> | Focus the pane in that direction |
 | <KbdGroup><Kbd>⌘⌥[</Kbd> <Kbd>⌘⌥]</Kbd></KbdGroup> | Focus the previous or next pane |
@@ -57,7 +36,7 @@ Rebind any of them in [Settings → Keybindings](/docs/product/settings#keybindi
 Atlas can tell you when a command finishes, with a system banner while you are in another app. A failed command, or one waiting for your input, notifies however long it ran. A successful one notifies only if it ran longer than **Notify on command success after** in [Settings → General](/docs/product/settings#notifications), which is 10 seconds by default.
 
 <Callout type="info">
-  Atlas uses zsh shell integration for command blocks. Other shells still work as one continuous terminal stream.
+  Finish notifications need zsh, the macOS default. Atlas adds its shell integration to zsh, and that is how it knows a command finished. Other shells run normally, without notifications.
 </Callout>
 
 ## Next
