@@ -1,0 +1,166 @@
+---
+title: Branches and releases
+description: How a change travels from your branch to an installed Atlas. One shared branch, titles that decide the version, and releases a bot prepares.
+icon: GitBranch
+---
+
+Atlas is **trunk-based**. There is one shared branch, `main`, and every pull request targets it. A release is not a branch. It is a **tag**: a fixed bookmark on one commit of `main`.
+
+Two words this page leans on:
+
+- A **branch** is a name that points at the newest commit in a line of work. It moves forward as commits are added.
+- A **tag** is a name for one commit, and it never moves. `alpha-0.6.0` always means the same snapshot.
+
+## The whole picture
+
+```
+  you/fix-sidebar ──┐     sam/vim-keys ──┐     you/paste-images ──┐
+                    ▼                    ▼                        ▼
+  main ──●──────────■────────────────────■────────────────────────■──────►
+                    │                    │                        │
+                    └──────────┬─────────┴────────────────────────┘
+                               ▼
+                 ┌──────────────────────────────┐   merge it when
+                 │ PR: chore: release 0.6.0     │   you want to ship
+                 │  version, CHANGELOG.md       │ ─────────────────►  tag alpha-0.6.0
+                 │  (kept up to date by a bot)  │                     + installers
+                 └──────────────────────────────┘
+```
+
+Everyone merges small pull requests into `main`. A bot keeps a release pull request open that describes what would ship. Merging that pull request is the release.
+
+## Why not version branches
+
+Until November 2026, Atlas collected work on a branch named for the next version (`0.4.1`) and merged that branch into `main` to release:
+
+```
+  BEFORE                                    NOW
+
+  feature ─┐                                feature ─┐
+  fix ─────┼─► 0.4.1 ──► main               fix ─────┼─► main ──●──●──●──►
+  thing ───┘    │                           thing ───┘             │  │
+                └ number chosen before                   alpha-0.6.0  alpha-0.6.1
+                  anyone knew what was in it              (number chosen at release)
+```
+
+- The version number was fixed when the branch opened. Moving to the next one meant a new branch and retargeting everyone's pull requests, so it rarely happened: `0.4.1` collected a month of work and shipped twice under the same number.
+- The auto-updater only offers a version **strictly newer** than the installed one, so the second `0.4.1` build never reached anyone who had the first.
+- Every contributor first had to work out which branch was current.
+
+Now the number is chosen when you release, from what actually landed.
+
+## The life of a pull request
+
+```
+  1. branch off main          2. work, push, open a PR      3. squash-merge
+                                                              (branch is deleted)
+  main ──●──●                     you/fix-sidebar
+            └──► you/fix-sidebar   ●──●──●──●  ──► PR ──►  main ──●──●──●──■
+                                   wip  typo  …                       ▲
+                                                                      │
+                                              one commit on main, titled with
+                                              the PR title: "fix(sidebar): …"
+```
+
+1. Branch from `main` as `<you>/<short-slug>`. Keep it to days, not weeks: a long-lived branch drifts away from everyone else's work.
+2. Push and open a pull request against `main`.
+3. When CI passes and it's reviewed, it is **squash-merged**. The whole pull request becomes one commit on `main`, and its branch is deleted.
+
+<Callout title="main must stay shippable">
+Anything merged can go out in the next release. Unfinished work waits on its branch, or lands switched off behind a setting until it's ready.
+</Callout>
+
+## Pull request titles
+
+Squash-merging makes the pull request title the commit message, and those commit messages decide the next version and fill the changelog. So titles follow [Conventional Commits](https://www.conventionalcommits.org/), and a check on every pull request enforces it:
+
+```
+  type(scope): what changed, in the present tense
+  ────  ─────  ──────────────────────────────────
+   │      │      └─ what a user or a teammate would notice
+   │      └──────── optional: the area (chat, terminal, settings, …)
+   └─────────────── feat · fix · perf · refactor · docs · style · test · build · ci · chore · revert
+```
+
+| Title | In the changelog | Next version |
+| --- | --- | --- |
+| `feat(chat): paste images into the composer` | Features | minor bump |
+| `fix(terminal): keep the close button clickable` | Fixes | patch bump |
+| `perf(timeline): virtualise long sessions` | Performance | patch bump |
+| `revert: …` | Reverts | patch bump |
+| `refactor`, `docs`, `style`, `test`, `build`, `ci`, `chore` | not listed | no bump |
+
+The commits inside your branch can say anything. Only the title reaches `main`.
+
+## How a release happens
+
+Nobody bumps versions or writes the changelog by hand. A bot, [release-please](https://github.com/googleapis/release-please), reads the titles that land on `main` and keeps one pull request open called **`chore: release X.Y.Z`**:
+
+```
+  main ──■──────■──────■──────■──────────────────■───────────────────►
+         │      │      │      │                  ▲
+       feat:  fix:   fix:   feat:                │ merge the release PR
+         │      │      │      │                  │
+         ▼      ▼      ▼      ▼                  │
+     ┌─────────────────────────────────────────┐ │
+     │ PR: chore: release 0.6.0                │─┘
+     │  • version → 0.6.0 everywhere           │       tag alpha-0.6.0
+     │  • CHANGELOG.md: Features / Fixes       │ ───►  GitHub release
+     │  updated on every merge to main         │       installers built and attached
+     └─────────────────────────────────────────┘
+```
+
+1. Every merge to `main` updates the release pull request: the next version and the changelog.
+2. When you want to ship, review the release pull request and merge it. That is the whole decision, and anyone on the team can make it.
+3. Merging tags `alpha-X.Y.Z`, publishes the GitHub release with the changelog as its notes, and builds the installers:
+
+```
+  tag alpha-0.6.0
+        │
+   ┌────┴────────────┬──────────────────┬──────────────────────────────┐
+   ▼                 ▼                  ▼                              ▼
+ Linux            macOS DMGs         Windows MSI                  after a try-out:
+ (verified on     (signed and        (x64)                        tell installed apps
+  4 distros)       notarized)                                     an update exists
+```
+
+Linux builds on every release. The macOS and Windows jobs are switched on once their signing secrets and keys are in place; until then those installers are built by hand and attached to the same release.
+
+The last step stays manual on purpose: installed apps are told about a release only after someone has used the build.
+
+## Version numbers
+
+Atlas is before 1.0, so a version is `0.MINOR.PATCH`:
+
+```
+  0 . 6 . 2
+  │   │   └─ PATCH: a release with only fixes          0.6.1 → 0.6.2
+  │   └───── MINOR: a release with any new feature     0.6.2 → 0.7.0
+  └───────── stays 0 until 1.0
+```
+
+Every release gets a new number. At 1.0 the first number starts meaning "breaking change", as in [semver](https://semver.org/).
+
+## Hotfixes
+
+Sometimes a shipped version needs a fix while `main` already holds work that isn't ready. Then, and only then, a `release/X.Y` branch is made from that release's tag:
+
+```
+  main ──●──────●──────●──────●(fix)──────●──────►
+         │                     │
+    alpha-0.6.0                │ cherry-pick: copy just that one commit
+         │                     ▼
+         └──► release/0.6 ──────●──► tag alpha-0.6.1
+```
+
+The fix lands on `main` first, as a normal pull request. Then it is copied onto `release/0.6` (a **cherry-pick** copies one commit onto another branch) and tagged `alpha-0.6.1`. The branch is never merged back, since `main` already has the fix. The repository's [CONTRIBUTING.md](https://github.com/tryatlas/atlas/blob/main/CONTRIBUTING.md#hotfixes) has the exact commands.
+
+## What lives where
+
+| Name | What it is | Lives for |
+| --- | --- | --- |
+| `main` | The trunk. Always builds, passes CI and could ship | forever |
+| `<you>/<short-slug>` | One issue's worth of work | days; deleted on merge |
+| `release-please--…` | The bot's release pull request branch | until the release |
+| `release/X.Y` | Hotfixes for a shipped version | as long as needed |
+| `alpha-X.Y.Z` (tag) | A release | forever |

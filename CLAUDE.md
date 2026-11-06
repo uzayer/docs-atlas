@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-The public documentation site for **Atlas**, the desktop app whose source lives in the GitHub repo `pacifio/atlas`. This repo contains no product code, only docs content and the Fumadocs site that renders it.
+The public documentation site for **Atlas**, the desktop app whose source lives in the GitHub repo `tryatlas/atlas`. This repo contains no product code, only docs content and the Fumadocs site that renders it.
 
 Atlas is positioned as **source control for coding agents**: agents run against your codebase, every commit becomes a checkpoint linked back to the session that produced it, and the timeline is the per-project record of both.
 

@@ -10,6 +10,11 @@ const config = {
   async redirects() {
     return [
       {
+        source: '/docs/community/contributing',
+        destination: '/docs/contributing',
+        permanent: true,
+      },
+      {
         source: '/',
         destination: '/docs/getting-started',
         permanent: false,

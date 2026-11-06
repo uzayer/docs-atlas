@@ -45,7 +45,7 @@ export function baseOptions(): BaseLayoutProps {
         </span>
       ),
     },
-    githubUrl: 'https://github.com/pacifio/atlas',
+    githubUrl: 'https://github.com/tryatlas/atlas',
     links: [
       {
         type: 'icon',

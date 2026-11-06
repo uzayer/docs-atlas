@@ -1,6 +1,6 @@
 # docs-atlas
 
-Public documentation site for [Atlas](https://github.com/pacifio/atlas), source control for coding agents. Built with [Fumadocs](https://fumadocs.dev) on Next.js.
+Public documentation site for [Atlas](https://github.com/tryatlas/atlas), source control for coding agents. Built with [Fumadocs](https://fumadocs.dev) on Next.js.
 
 This repo has no product code, only docs content and the site that renders it.
 

@@ -4,25 +4,25 @@ description: Atlas is open source. Where help goes furthest, how to build it, an
 icon: GitPullRequest
 ---
 
-Atlas is developed in the open at [github.com/pacifio/atlas](https://github.com/pacifio/atlas). Anyone can send a change. Contributing is part of the [beta program](/docs/community/beta-program): join it to get early builds and to talk changes through in atlas-beta's `#dev` channel.
+Atlas is developed in the open at [github.com/tryatlas/atlas](https://github.com/tryatlas/atlas). Anyone can send a change, and you can talk one through on [Discord](https://discord.gg/GmnFggaPfP) before you start.
 
 Contributors whose work keeps making a difference are invited into **Atlas Contributors**, the small group with the Atlas team that is on the way to maintaining Atlas.
 
-The repository's [CONTRIBUTING.md](https://github.com/pacifio/atlas/blob/main/CONTRIBUTING.md) is the full guide. This page is the short version.
+The repository's [CONTRIBUTING.md](https://github.com/tryatlas/atlas/blob/main/CONTRIBUTING.md) is the full guide. This page is the short version.
 
 ## Where help goes furthest
 
 Start with the labeled issues:
 
-- [`good first issue`](https://github.com/pacifio/atlas/labels/good%20first%20issue): small, well-scoped changes, mostly in the interface.
-- [`help wanted`](https://github.com/pacifio/atlas/labels/help%20wanted): harder problems we'd welcome help on.
+- [`good first issue`](https://github.com/tryatlas/atlas/labels/good%20first%20issue): small, well-scoped changes, mostly in the interface.
+- [`help wanted`](https://github.com/tryatlas/atlas/labels/help%20wanted): harder problems we'd welcome help on.
 
 Issues also carry an `area:` label, so you can filter to the part of the app you know. Areas where outside help has gone furthest so far:
 
-- **Linux and Windows.** Atlas runs on both, and the team works mostly on macOS. Testing and fixes there are always welcome: [`platform: linux`](https://github.com/pacifio/atlas/labels/platform%3A%20linux), [`platform: windows`](https://github.com/pacifio/atlas/labels/platform%3A%20windows).
-- **The workspace interface**: navigation, tabs and discoverability ([`area: workspace ui`](https://github.com/pacifio/atlas/labels/area%3A%20workspace%20ui)).
-- **Agents and chat** ([`area: agents & chat`](https://github.com/pacifio/atlas/labels/area%3A%20agents%20%26%20chat)).
-- **The editor and the built-in browser** ([`area: editor`](https://github.com/pacifio/atlas/labels/area%3A%20editor), [`area: browser`](https://github.com/pacifio/atlas/labels/area%3A%20browser)).
+- **Linux and Windows.** Atlas runs on both, and the team works mostly on macOS. Testing and fixes there are always welcome: [`platform: linux`](https://github.com/tryatlas/atlas/labels/platform%3A%20linux), [`platform: windows`](https://github.com/tryatlas/atlas/labels/platform%3A%20windows).
+- **The workspace interface**: navigation, tabs and discoverability ([`area: workspace ui`](https://github.com/tryatlas/atlas/labels/area%3A%20workspace%20ui)).
+- **Agents and chat** ([`area: agents & chat`](https://github.com/tryatlas/atlas/labels/area%3A%20agents%20%26%20chat)).
+- **The editor and the built-in browser** ([`area: editor`](https://github.com/tryatlas/atlas/labels/area%3A%20editor), [`area: browser`](https://github.com/tryatlas/atlas/labels/area%3A%20browser)).
 - **Themes.** A new theme needs no Rust at all; see [Authoring themes](/docs/themes/authoring).
 
 The larger items on the [roadmap](/docs/community/roadmap) are being designed by the core team. If one of them interests you, talk to us before writing code.
@@ -51,12 +51,13 @@ CONTRIBUTING.md covers the rest: the two run modes in detail, the browser mock's
 
 ## Branches
 
-Atlas uses **version branches**. Work collects on a branch named for the next release, and merging that branch into `main` is the release. So `main` always equals what has shipped.
+Atlas is **trunk-based**: everything lands on `main`, and a release is a tag on `main`.
 
-- Fork the repository, and branch from the **current version branch**, not `main`. It is the highest-numbered branch in the [branch list](https://github.com/pacifio/atlas/branches), such as `0.4.0`.
-- Name your branch `<you>/<short-slug>`, with the issue number first if there is one: `alex/42-fix-sidebar-collapse`.
-- Open the pull request against that same version branch.
-- Target `main` only for a change that doesn't need to wait for a release, such as a docs fix or a one-line hotfix.
+- Fork the repository and branch from `main`. Name your branch `<you>/<short-slug>`, with the issue number first if there is one: `alex/42-fix-sidebar-collapse`.
+- Open the pull request against `main`.
+- Title it as a [Conventional Commit](https://www.conventionalcommits.org/): `fix(terminal): keep the close button clickable while dragging`. Pull requests are squash-merged, so the title becomes the commit, and the commit decides the next version and the changelog. A check on the pull request holds the title to this shape.
+
+[Branches and releases](/docs/contributing/branches-and-releases) explains the whole flow, with diagrams.
 
 ## Before you open the pull request
 
@@ -75,10 +76,10 @@ The pull request template asks **What?**, **Why?** and **How?**, and has a short
 ## Review
 
 - Leave **Allow edits from maintainers** checked. We often push small fixes to your branch rather than send them back to you.
-- Review happens on GitHub, in the pull request. Questions you'd rather talk through can go to `#dev` in atlas-beta or on Discord.
-- An issue is closed when its fix merges into the version branch, not when the release reaches `main`. Before starting on an issue that looks unclaimed, check the version branch's open pull requests.
+- Review happens on GitHub, in the pull request. Questions you'd rather talk through can go to Discord.
+- An issue closes when its fix merges into `main` (put `Fixes #N` in the pull request). Before starting on an issue that looks unclaimed, check the open pull requests.
 - Merged contributions ship in the next release, and contributors are credited in its release notes and in the [changelog](/docs/community/changelog).
 
 ## Code of conduct
 
-Taking part is covered by the [Code of Conduct](https://github.com/pacifio/atlas/blob/main/.github/CODE_OF_CONDUCT.md).
+Taking part is covered by the [Code of Conduct](https://github.com/tryatlas/atlas/blob/main/.github/CODE_OF_CONDUCT.md).

@@ -1,5 +1,5 @@
 /**
- * Where Atlas is downloaded from: the GitHub releases of pacifio/atlas.
+ * Where Atlas is downloaded from: the GitHub releases of tryatlas/atlas.
  *
  * The single source of truth for every install link on the site. The landing
  * page (atlas repo, landing/index.html) and the credits site hard-code the
@@ -13,7 +13,7 @@
  * alpha-0.4.1. Copy each name from the release page, never from a pattern.
  */
 
-export const RELEASES_URL = 'https://github.com/pacifio/atlas/releases';
+export const RELEASES_URL = 'https://github.com/tryatlas/atlas/releases';
 
 const TAG = 'alpha-0.4.1-org-agent';
 const LINUX_TAG = 'alpha-0.4.1';
